@@ -61,7 +61,6 @@ public class ResultListFragment extends BaseFragment {
     private ArrayList<ResultListBean> mDataList = new ArrayList<>();
 
     private int page = 1;
-    private int pageSize = 20;
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
 
 
@@ -214,7 +213,7 @@ public class ResultListFragment extends BaseFragment {
                         .params("type", mType)
                         .params("userid", id)
                         .params("page", page)
-                        .params("size", 20)
+                        .params("size", 10)
                         .params("deviceId", deviceId)
                         .success(new ISuccess() {
                             @Override
@@ -248,7 +247,7 @@ public class ResultListFragment extends BaseFragment {
                         .url(BiaoXunTongApi.URL_GETRESULTLIST)
                         .params("type", mType)
                         .params("page", page)
-                        .params("size", 20)
+                        .params("size", 10)
                         .params("deviceId", deviceId)
                         .success(new ISuccess() {
                             @Override

@@ -18,7 +18,7 @@ import java.util.List;
  * 描述:     TODO
  */
 
-public class MyCompanyRyzzAllListAdapter extends BaseQuickAdapter<MyCompanyRyzzAllListBean,BaseViewHolder> {
+public class MyCompanyRyzzAllListAdapter extends BaseQuickAdapter<MyCompanyRyzzAllListBean, BaseViewHolder> {
     public MyCompanyRyzzAllListAdapter(int layoutResId, @Nullable List<MyCompanyRyzzAllListBean> data) {
         super(layoutResId, data);
     }
@@ -28,7 +28,8 @@ public class MyCompanyRyzzAllListAdapter extends BaseQuickAdapter<MyCompanyRyzzA
         String ry_name = item.getRyname();
         String zgmc = item.getZg_mcdj();
         String zgzy = item.getZgzy();
-        helper.setText(R.id.tv_company_qyzz, ry_name + "_" + zgmc + "_" + "_" + zgzy);
+        helper.setText(R.id.tv_ryzz_name, ry_name);
+        helper.setText(R.id.tv_ryzz, zgmc + "__" + zgzy);
     }
 }
 

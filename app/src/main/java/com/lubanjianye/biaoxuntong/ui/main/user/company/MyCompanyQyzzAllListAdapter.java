@@ -32,7 +32,7 @@ public class MyCompanyQyzzAllListAdapter extends BaseQuickAdapter<MyCompanyQyzzA
         String zy_name = item.getZy_name();
         String dj = item.getDj();
         String dq = item.getDq();
-        helper.setText(R.id.tv_company_qyzz, lx_name + "_" + dl_name + "_" + "_" + zy_name + "_" + dj);
+        helper.setText(R.id.tv_company_qyzz, lx_name + "__" + zy_name + "__" + dj);
 
     }
 }

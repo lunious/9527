@@ -51,8 +51,6 @@ public class IndexHyzxListFragment extends BaseFragment {
     private ArrayList<IndexHyzxListBean> mDataList = new ArrayList<>();
 
     private int page = 1;
-    private int pageSize = 20;
-
 
     @Override
     public Object setLayout() {
@@ -168,7 +166,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                         .url(BiaoXunTongApi.URL_GETINDEXHYZXLIST)
                         .params("userid", id)
                         .params("page", page)
-                        .params("size", 20)
+                        .params("size", 10)
                         .success(new ISuccess() {
                             @Override
                             public void onSuccess(Headers headers, String response) {
@@ -179,7 +177,7 @@ public class IndexHyzxListFragment extends BaseFragment {
 
 
                                 if (array.size() > 0) {
-                                    setData(isRefresh, array,nextPage);
+                                    setData(isRefresh, array, nextPage);
                                 } else {
                                     if (mDataList != null) {
                                         mDataList.clear();
@@ -200,7 +198,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                 RestClient.builder()
                         .url(BiaoXunTongApi.URL_GETINDEXHYZXLIST)
                         .params("page", page)
-                        .params("size", 20)
+                        .params("size", 10)
                         .success(new ISuccess() {
                             @Override
                             public void onSuccess(Headers headers, String response) {
@@ -212,7 +210,7 @@ public class IndexHyzxListFragment extends BaseFragment {
 
 
                                 if (array.size() > 0) {
-                                    setData(isRefresh, array,nextPage);
+                                    setData(isRefresh, array, nextPage);
                                 } else {
                                     if (mDataList != null) {
                                         mDataList.clear();
@@ -234,7 +232,7 @@ public class IndexHyzxListFragment extends BaseFragment {
     }
 
 
-    private void setData(int isRefresh, JSONArray data,boolean nextPage) {
+    private void setData(int isRefresh, JSONArray data, boolean nextPage) {
         page++;
         List<Integer> imgs = new ArrayList<>();
         final int size = data == null ? 0 : data.size();

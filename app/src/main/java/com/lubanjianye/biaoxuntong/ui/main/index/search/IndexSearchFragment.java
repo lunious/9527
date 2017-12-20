@@ -75,8 +75,6 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
     private View noDataView = null;
 
     private int page = 1;
-    private int pageSize = 20;
-
 
     private long id = 0;
     private String nickName = "";
@@ -309,7 +307,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                         .params("type", mType)
                         .params("page", page)
                         .params("keyWord", mKeyWord)
-                        .params("size", 20)
+                        .params("size", 10)
                         .success(new ISuccess() {
                             @Override
                             public void onSuccess(Headers headers, String response) {
@@ -350,7 +348,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                         .params("area", mArea)
                         .params("type", mType)
                         .params("keyWord", mKeyWord)
-                        .params("size", 20)
+                        .params("size", 10)
                         .success(new ISuccess() {
                             @Override
                             public void onSuccess(Headers headers, String response) {

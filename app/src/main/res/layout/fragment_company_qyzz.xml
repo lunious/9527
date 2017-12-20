@@ -9,16 +9,15 @@
     android:foreground="?android:attr/selectableItemBackground"
     android:orientation="vertical"
     app:cardCornerRadius="@dimen/d4"
-    app:cardElevation="@dimen/p1">
+    app:cardElevation="@dimen/p2">
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/d6"
-        android:layout_marginLeft="@dimen/d6"
-        android:layout_marginRight="@dimen/d4"
-        android:layout_marginTop="@dimen/d4"
-        android:background="#ffffff"
+        android:layout_height="@dimen/d48"
+        android:background="@color/white"
+        android:gravity="center"
+        android:paddingLeft="@dimen/d10"
+        android:paddingRight="@dimen/d10"
         android:orientation="vertical">
 
         <LinearLayout
@@ -31,10 +30,10 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="3"
+                android:maxLines="2"
                 android:text="This is main title."
                 android:textColor="#ff6c6c6c"
-                android:textSize="@dimen/s16" />
+                android:textSize="@dimen/s15" />
 
         </LinearLayout>
 

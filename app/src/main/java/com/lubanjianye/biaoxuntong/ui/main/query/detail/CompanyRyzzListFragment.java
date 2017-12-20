@@ -212,8 +212,9 @@ public class CompanyRyzzListFragment extends BaseFragment implements View.OnClic
         for (int i = 0; i < data.size(); i++) {
             CompanyRyzzListBean bean = new CompanyRyzzListBean();
             JSONObject list = data.getJSONObject(i);
-            bean.setRy(i + 1 + "、" + list.getString("ry"));
+            bean.setRy(list.getString("ry"));
             bean.setZgMcdj(list.getString("zgMcdj"));
+            bean.setZgZy(list.getString("zgZy"));
             mDataList.add(bean);
         }
         companyRyzzRefresh.setRefreshing(false);

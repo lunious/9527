@@ -59,7 +59,6 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
     private ArrayList<MyCompanyQyzzAllListBean> mDataList = new ArrayList<>();
 
     private int page = 1;
-    private int pageSize = 20;
 
     @Override
     public Object setLayout() {
@@ -235,7 +234,7 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
                     .params("userId", id)
                     .params("type", 0)
                     .params("page", page)
-                    .params("size", 20)
+                    .params("size", 10)
                     .success(new ISuccess() {
                         @Override
                         public void onSuccess(Headers headers, String response) {

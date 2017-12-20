@@ -54,7 +54,6 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
     private ArrayList<MyCompanyRyzzAllListBean> mDataList = new ArrayList<>();
 
     private int page = 1;
-    private int pageSize = 20;
 
     PromptDialog promptDialog = null;
 
@@ -233,7 +232,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                     .url(BiaoXunTongApi.URL_GETALLCOMPANYRYZZ)
                     .params("userId", id)
                     .params("type", 0)
-                    .params("size", 20)
+                    .params("size", 10)
                     .params("page", page)
                     .success(new ISuccess() {
                         @Override
@@ -287,6 +286,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
         final int size = data == null ? 0 : data.size();
         if (isRefresh == 0 || isRefresh == 1) {
             mDataList.clear();
+            loadingStatus.showContent();
             for (int i = 0; i < data.size(); i++) {
                 MyCompanyRyzzAllListBean bean = new MyCompanyRyzzAllListBean();
                 JSONObject list = data.getJSONObject(i);
@@ -301,6 +301,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
             mAdapter.setEnableLoadMore(true);
             mAdapter.notifyDataSetChanged();
         } else {
+            loadingStatus.showContent();
             if (size > 0) {
                 for (int i = 0; i < data.size(); i++) {
                     MyCompanyRyzzAllListBean bean = new MyCompanyRyzzAllListBean();

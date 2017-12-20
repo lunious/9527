@@ -69,8 +69,6 @@ public class IndexListFragment extends BaseFragment {
     private ArrayList<IndexListBean> mDataList = new ArrayList<>();
 
     private int page = 1;
-    private int pageSize = 20;
-
 
     public String getTitle() {
         return mTitle;
@@ -311,7 +309,7 @@ public class IndexListFragment extends BaseFragment {
                         .params("type", mTitle)
                         .params("userid", id)
                         .params("page", page)
-                        .params("size", 20)
+                        .params("size", 10)
                         .params("deviceId", deviceId)
                         .success(new ISuccess() {
                             @Override
@@ -326,7 +324,7 @@ public class IndexListFragment extends BaseFragment {
 
                                 if ("200".equals(status)) {
                                     if (array.size() > 0) {
-                                        setData(isRefresh, array,nextPage);
+                                        setData(isRefresh, array, nextPage);
                                     } else {
                                         if (mDataList != null) {
                                             mDataList.clear();
@@ -351,7 +349,7 @@ public class IndexListFragment extends BaseFragment {
                         .url(BiaoXunTongApi.URL_GETINDEXLIST)
                         .params("type", mTitle)
                         .params("page", page)
-                        .params("size", 20)
+                        .params("size", 10)
                         .params("deviceId", deviceId)
                         .success(new ISuccess() {
                             @Override
@@ -366,7 +364,7 @@ public class IndexListFragment extends BaseFragment {
 
                                 if ("200".equals(status)) {
                                     if (array.size() > 0) {
-                                        setData(isRefresh, array,nextPage);
+                                        setData(isRefresh, array, nextPage);
                                     } else {
                                         if (mDataList != null) {
                                             mDataList.clear();
@@ -391,7 +389,7 @@ public class IndexListFragment extends BaseFragment {
 
     }
 
-    private void setData(int isRefresh, JSONArray data,boolean nextPage) {
+    private void setData(int isRefresh, JSONArray data, boolean nextPage) {
         page++;
         final int size = data == null ? 0 : data.size();
         if (isRefresh == 0 || isRefresh == 1) {

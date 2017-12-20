@@ -159,6 +159,7 @@ public class QueryTabFragment extends BaseFragment implements View.OnClickListen
             @Override
             public void onItemClickListener(MarqueeFactory.ViewHolder<TextView, String> holder) {
                 etQuery.setText(holder.data);
+                etQuery.setSelection(holder.data.length());
                 llSearch.setVisibility(View.VISIBLE);
             }
         });

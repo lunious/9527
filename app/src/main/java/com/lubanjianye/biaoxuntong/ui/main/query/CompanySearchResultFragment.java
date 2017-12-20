@@ -68,7 +68,6 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
     private ArrayList<CompanySearchResultListBean> mDataList = new ArrayList<>();
 
     private int page = 1;
-    private int pageSize = 20;
 
     @Override
     public Object setLayout() {
@@ -329,12 +328,6 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
                 mAdapter.notifyDataSetChanged();
             }
         }
-//        if (size < pageSize) {
-//            //第一页如果不够一页就不显示没有更多数据布局
-//            mAdapter.loadMoreEnd();
-//        } else {
-//            mAdapter.loadMoreComplete();
-//        }
 
 
     }

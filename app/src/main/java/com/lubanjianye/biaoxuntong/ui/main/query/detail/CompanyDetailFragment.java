@@ -47,6 +47,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
     private AppCompatTextView tvMainTitle = null;
     private AppCompatTextView tvFaren = null;
     private AppCompatTextView tvZcData = null;
+    private AppCompatTextView tvZcType = null;
     private AppCompatTextView tvJyArea = null;
     private AppCompatTextView tvPuNum = null;
     private MultipleStatusView companyDetailStatusView = null;
@@ -91,6 +92,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
         tvMainTitle = getView().findViewById(R.id.tv_main_title);
         tvFaren = getView().findViewById(R.id.tv_faren);
         tvZcData = getView().findViewById(R.id.tv_zc_data);
+        tvZcType = getView().findViewById(R.id.tv_zc_type);
         tvJyArea = getView().findViewById(R.id.tv_jy_area);
         tvPuNum = getView().findViewById(R.id.tv_pu_num);
         companyDetailStatusView = getView().findViewById(R.id.company_detail_status_view);
@@ -175,6 +177,11 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                                 tvZcData.setText("/");
                             }
                             String zclx = data.getString("zclx");
+                            if (!TextUtils.isEmpty(zclx)) {
+                                tvZcType.setText(zclx);
+                            } else {
+                                tvZcType.setText("/");
+                            }
                             String dz = data.getString("dz");
                             if (!TextUtils.isEmpty(dz)) {
                                 tvJyArea.setText(dz);
