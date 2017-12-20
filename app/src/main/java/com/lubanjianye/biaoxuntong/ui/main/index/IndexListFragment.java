@@ -436,7 +436,7 @@ public class IndexListFragment extends BaseFragment {
                 mAdapter.notifyDataSetChanged();
             }
         }
-        if (size < pageSize) {
+        if (size <= pageSize) {
             //第一页如果不够一页就不显示没有更多数据布局
             mAdapter.loadMoreEnd();
         } else {

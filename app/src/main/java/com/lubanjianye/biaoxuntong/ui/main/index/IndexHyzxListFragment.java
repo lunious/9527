@@ -5,7 +5,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -26,7 +25,6 @@ import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexHyzxDetailActivity;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +63,7 @@ public class IndexHyzxListFragment extends BaseFragment {
     public void initView() {
         indexHyzxRecycler = getView().findViewById(R.id.index_hyzx_recycler);
         indexHyzxRefresh = getView().findViewById(R.id.index_hyzx_refresh);
-        loadingStatus = getView().findViewById(R.id.index_hyzx_list_status_view);
+
 
     }
 
@@ -104,8 +102,7 @@ public class IndexHyzxListFragment extends BaseFragment {
 
     private void initRecyclerView() {
 
-        final LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        indexHyzxRecycler.setLayoutManager(manager);
+        indexHyzxRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
         indexHyzxRecycler.addOnItemTouchListener(new OnItemClickListener() {
             @Override
@@ -147,10 +144,10 @@ public class IndexHyzxListFragment extends BaseFragment {
 
     public void requestData(final int isRefresh) {
 
-        if (!AppNetworkMgr.isNetworkConnected(getActivity())){
+        if (!AppNetworkMgr.isNetworkConnected(getActivity())) {
             loadingStatus.showNoNetwork();
             indexHyzxRefresh.setEnabled(false);
-        }else {
+        } else {
             if (isRefresh == 0) {
                 loadingStatus.showLoading();
             }
@@ -231,7 +228,6 @@ public class IndexHyzxListFragment extends BaseFragment {
         }
 
 
-
     }
 
 
@@ -286,7 +282,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                 mAdapter.notifyDataSetChanged();
             }
         }
-        if (size < pageSize) {
+        if (size <= pageSize) {
             //第一页如果不够一页就不显示没有更多数据布局
             mAdapter.loadMoreEnd();
         } else {

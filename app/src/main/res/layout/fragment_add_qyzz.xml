@@ -11,7 +11,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d20"
+        android:layout_height="@dimen/d14"
         android:background="#eeeeee" />
 
     <LinearLayout
@@ -28,9 +28,9 @@
             android:padding="@dimen/d10">
 
             <ImageView
-                android:layout_width="@dimen/d16"
-                android:layout_height="@dimen/d16"
-                android:layout_marginEnd="@dimen/d10"
+                android:layout_width="@dimen/d14"
+                android:layout_height="@dimen/d14"
+                android:layout_marginEnd="@dimen/d8"
                 android:contentDescription="@null"
                 android:src="@mipmap/ic_choose"
                 tools:ignore="RtlHardcoded" />
@@ -39,9 +39,9 @@
                 android:layout_width="@dimen/d0"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="选择企业资质条件"
+                android:text="设置企业资质条件"
                 android:textColor="#6c6c6c"
-                android:textSize="@dimen/s16" />
+                android:textSize="@dimen/s15" />
 
         </LinearLayout>
 
@@ -54,10 +54,10 @@
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d40"
-        android:layout_marginBottom="@dimen/d5"
-        android:layout_marginLeft="@dimen/d5"
-        android:layout_marginTop="@dimen/d5"
+        android:layout_height="@dimen/d36"
+        android:layout_marginBottom="@dimen/d4"
+        android:layout_marginLeft="@dimen/d4"
+        android:layout_marginTop="@dimen/d4"
         android:background="@color/white"
         android:scrollbars="none">
 

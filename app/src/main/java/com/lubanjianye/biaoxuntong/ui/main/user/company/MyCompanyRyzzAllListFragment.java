@@ -7,13 +7,12 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemLongClickListener;
+import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.bean.MyCompanyRyzzAllListBean;
@@ -24,6 +23,7 @@ import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
+import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
 
 import java.util.ArrayList;
@@ -45,8 +45,10 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
+
     private RecyclerView companyRyzzRecycler = null;
     private SwipeRefreshLayout companyRyzzRefresh = null;
+    private MultipleStatusView loadingStatus = null;
 
     private MyCompanyRyzzAllListAdapter mAdapter;
     private ArrayList<MyCompanyRyzzAllListBean> mDataList = new ArrayList<>();
@@ -74,6 +76,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
         mainBarName = getView().findViewById(R.id.main_bar_name);
         companyRyzzRecycler = getView().findViewById(R.id.company_ryzz_recycler);
         companyRyzzRefresh = getView().findViewById(R.id.company_ryzz_refresh);
+        loadingStatus = getView().findViewById(R.id.mycompany_all_ryzz_list_status_view);
         llIvBack.setOnClickListener(this);
 
     }
@@ -86,15 +89,17 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
         promptDialog = new PromptDialog(getActivity());
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+
+        initRecyclerView();
+        initAdapter();
+        initRefreshLayout();
+        companyRyzzRefresh.setRefreshing(false);
+        requestData(0);
     }
 
     @Override
     public void initEvent() {
-        initRecyclerView();
-        initAdapter();
-        initRefreshLayout();
-        companyRyzzRefresh.setRefreshing(true);
-        requestData(true);
+
     }
 
     private void initRefreshLayout() {
@@ -109,7 +114,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
             public void onRefresh() {
                 //TODO 刷新数据
                 mAdapter.setEnableLoadMore(false);
-                requestData(true);
+                requestData(1);
 
             }
         });
@@ -163,7 +168,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                                                                     if (mDataList != null) {
                                                                         mDataList.clear();
                                                                     }
-                                                                    requestData(true);
+                                                                    requestData(1);
                                                                 } else {
                                                                     promptDialog.showError("删除失败！");
                                                                 }
@@ -191,7 +196,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
             @Override
             public void onLoadMoreRequested() {
                 //TODO 去加载更多数据
-                requestData(false);
+                requestData(2);
             }
         });
         //设置列表动画
@@ -204,69 +209,81 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
 
     private long id = 0;
 
-    public void requestData(final boolean isRefresh) {
+    public void requestData(final int isRefresh) {
 
-        if (isRefresh) {
-            page = 1;
-        }
-        List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
-        long id = 0;
-        String token = "";
-        for (int i = 0; i < users.size(); i++) {
-            id = users.get(0).getId();
-            token = users.get(0).getToken();
-        }
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETALLCOMPANYRYZZ)
-                .params("userId", id)
-                .params("type", 0)
-                .params("size", 20)
-                .params("page", page)
-                .success(new ISuccess() {
-                    @Override
-                    public void onSuccess(Headers headers, String response) {
+        if (!AppNetworkMgr.isNetworkConnected(getActivity())){
+            loadingStatus.showNoNetwork();
+            companyRyzzRefresh.setEnabled(false);
+        }else {
+            if (isRefresh == 0) {
+                loadingStatus.showLoading();
+            }
+            if (isRefresh == 0 || isRefresh == 1) {
+                page = 1;
+            }
 
-                        final JSONObject object = JSON.parseObject(response);
-                        String status = object.getString("status");
+            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+            long id = 0;
+            String token = "";
+            for (int i = 0; i < users.size(); i++) {
+                id = users.get(0).getId();
+                token = users.get(0).getToken();
+            }
+            RestClient.builder()
+                    .url(BiaoXunTongApi.URL_GETALLCOMPANYRYZZ)
+                    .params("userId", id)
+                    .params("type", 0)
+                    .params("size", 20)
+                    .params("page", page)
+                    .success(new ISuccess() {
+                        @Override
+                        public void onSuccess(Headers headers, String response) {
 
-                        if ("200".equals(status)) {
-                            final JSONObject dataObj = object.getJSONObject("data");
+                            final JSONObject object = JSON.parseObject(response);
+                            String status = object.getString("status");
 
-                            int pageCount = dataObj.getInteger("pageCount");
-                            final JSONArray array = dataObj.getJSONArray("list");
+                            if ("200".equals(status)) {
+                                final JSONObject dataObj = object.getJSONObject("data");
 
-                            for (int i = 0; i < array.size(); i++) {
-                                final JSONObject data = array.getJSONObject(i);
-                                zzbm.add(data.getString("zzbm"));
-                                zgzy_code.add(data.getString("zgzy_code"));
-                                ryname.add(data.getString("ryname"));
-                            }
+                                int pageCount = dataObj.getInteger("pageCount");
+                                final JSONArray array = dataObj.getJSONArray("list");
 
-                            if (array.size() > 0) {
-                                setData(isRefresh, array);
-                            } else {
-                                if (mDataList != null) {
-                                    mDataList.clear();
-                                    mAdapter.notifyDataSetChanged();
+                                for (int i = 0; i < array.size(); i++) {
+                                    final JSONObject data = array.getJSONObject(i);
+                                    zzbm.add(data.getString("zzbm"));
+                                    zgzy_code.add(data.getString("zgzy_code"));
+                                    ryname.add(data.getString("ryname"));
                                 }
-                                //TODO 内容为空的处理
-                                Toasty.info(getContext(), "", Toast.LENGTH_SHORT, true).show();
-                            }
-                        } else {
-                            //TODO 请求数据失败的处理
-                        }
 
-                    }
-                })
-                .build()
-                .post();
+                                if (array.size() > 0) {
+                                    setData(isRefresh, array);
+                                } else {
+                                    if (mDataList != null) {
+                                        mDataList.clear();
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                    //TODO 内容为空的处理
+                                    loadingStatus.showEmpty();
+                                    companyRyzzRefresh.setEnabled(false);
+                                }
+                            } else {
+                                //TODO 请求数据失败的处理
+                            }
+
+                        }
+                    })
+                    .build()
+                    .post();
+        }
+
+
 
     }
 
-    private void setData(boolean isRefresh, JSONArray data) {
+    private void setData(int isRefresh, JSONArray data) {
         page++;
         final int size = data == null ? 0 : data.size();
-        if (isRefresh) {
+        if (isRefresh == 0 || isRefresh == 1) {
             mDataList.clear();
             for (int i = 0; i < data.size(); i++) {
                 MyCompanyRyzzAllListBean bean = new MyCompanyRyzzAllListBean();
@@ -296,9 +313,9 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                 mAdapter.notifyDataSetChanged();
             }
         }
-        if (size < pageSize) {
+        if (size <= pageSize) {
             //第一页如果不够一页就不显示没有更多数据布局
-            mAdapter.loadMoreEnd(isRefresh);
+            mAdapter.loadMoreEnd();
         } else {
             mAdapter.loadMoreComplete();
         }

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue"
     android:orientation="vertical">
 
 
@@ -63,25 +64,26 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/d10"
-        android:background="@color/view"/>
+        android:background="@color/view" />
 
     <ScrollView
         android:id="@+id/sl_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <com.lubanjianye.biaoxuntong.searchview.SearchListView
                 android:id="@+id/listView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/d18"
+                android:layout_height="wrap_content"
+                android:divider="@color/view"
                 android:dividerHeight="@dimen/p1"
-                android:divider="@color/view">
+                android:paddingLeft="@dimen/d18">
 
             </com.lubanjianye.biaoxuntong.searchview.SearchListView>
 
@@ -96,5 +98,6 @@
                 android:visibility="invisible" />
         </LinearLayout>
     </ScrollView>
+
 
 </LinearLayout>

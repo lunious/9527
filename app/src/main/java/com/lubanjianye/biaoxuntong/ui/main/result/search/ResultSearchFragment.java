@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -342,7 +341,7 @@ public class ResultSearchFragment extends BaseFragment {
                 mAdapter.notifyDataSetChanged();
             }
         }
-        if (size < pageSize) {
+        if (size <= pageSize) {
             //第一页如果不够一页就不显示没有更多数据布局
             mAdapter.loadMoreEnd();
         } else {
