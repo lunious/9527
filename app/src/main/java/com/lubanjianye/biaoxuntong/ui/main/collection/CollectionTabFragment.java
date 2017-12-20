@@ -297,9 +297,10 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                 final JSONObject data = object.getJSONObject("data");
                                 final JSONArray array = data.getJSONArray("list");
                                 final int count = data.getInteger("count");
+                                final boolean nextPage = data.getBoolean("nextpage");
 
                                 if (array.size() > 0) {
-                                    setData(isRefresh, array);
+                                    setData(isRefresh, array, nextPage);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 } else {
                                     llEmpty.setVisibility(View.VISIBLE);
@@ -319,7 +320,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
     }
 
-    private void setData(int isRefresh, JSONArray data) {
+    private void setData(int isRefresh, JSONArray data, boolean nextPage) {
         page++;
         final int size = data == null ? 0 : data.size();
         if (isRefresh == 0 || isRefresh == 1) {
@@ -340,6 +341,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
             mAdapter.setEnableLoadMore(true);
             mAdapter.notifyDataSetChanged();
 
+
         } else {
             loadingStatus.showContent();
             if (size > 0) {
@@ -356,12 +358,13 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 }
                 mAdapter.notifyDataSetChanged();
             }
-        }
-        if (size <= pageSize) {
-            //第一页如果不够一页就不显示没有更多数据布局
-            mAdapter.loadMoreEnd();
-        } else {
-            mAdapter.loadMoreComplete();
+
+            if (!nextPage) {
+                //第一页如果不够一页就不显示没有更多数据布局
+                mAdapter.loadMoreEnd();
+            } else {
+                mAdapter.loadMoreComplete();
+            }
         }
 
 

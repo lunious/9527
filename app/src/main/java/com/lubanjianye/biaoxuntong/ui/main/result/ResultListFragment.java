@@ -324,6 +324,5 @@ public class ResultListFragment extends BaseFragment {
             mAdapter.loadMoreComplete();
         }
 
-
     }
 }
