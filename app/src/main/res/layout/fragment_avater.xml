@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/fragment_main_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/d20"
+        android:paddingStart="@dimen/d12"
+        android:paddingRight="@dimen/d12"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d40"
+            android:orientation="horizontal">
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="昵      称"
+                android:textSize="@dimen/s16" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="@dimen/d0"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text=""
+                android:textColor="#ff434343"
+                android:textSize="@dimen/s16" />
+
+
+        </LinearLayout>
+
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/p10"
+            android:layout_marginTop="@dimen/d4"
+            android:background="#f9eeeeee" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d40"
+            android:layout_marginTop="@dimen/d20"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="关联手机"
+                android:textSize="@dimen/s16" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_user_mobile"
+                android:layout_width="@dimen/d0"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/blue"
+                android:textSize="@dimen/s16" />
+
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/p10"
+            android:layout_marginTop="@dimen/d4"
+            android:background="#f9eeeeee" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d40"
+            android:layout_marginTop="@dimen/d20"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="绑定企业"
+                android:textSize="@dimen/s16" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_user_company"
+                android:layout_width="@dimen/d0"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/blue"
+                android:textSize="@dimen/s16" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/p10"
+            android:layout_marginTop="@dimen/d4"
+            android:background="#f9eeeeee" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/p1"
+                    android:background="#eeeeee"/>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="温馨提示!"
+                    android:textSize="@dimen/s14"
+                    android:textColor="@color/blue"
+                    android:paddingTop="5dp"/>
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/d10"
+                    android:text="        通过第三方登录的用户，只有绑定手机后才能查看企业信息和绑定企业！"
+                    android:textSize="@dimen/s12"
+                    android:layout_marginBottom="@dimen/s14"/>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

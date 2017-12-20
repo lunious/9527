@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/fragment_main_bar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d10"
+        android:background="@color/view" />
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d0"
+        android:layout_weight="1"
+        android:scrollbars="none"
+        tools:ignore="RtlHardcoded">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="@dimen/d8"
+            android:paddingStart="@dimen/d8">
+
+
+            <LinearLayout
+                android:id="@+id/ll_company_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="@dimen/d14"
+                android:layout_marginTop="@dimen/d14"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:layout_width="@dimen/d18"
+                    android:layout_height="@dimen/d18"
+                    android:layout_gravity="center_vertical"
+                    android:src="@mipmap/qyzz" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/d6"
+                    android:text="企业名称"
+                    android:textColor="#434343"
+                    android:textSize="@dimen/s15" />
+
+                <RelativeLayout
+                    android:layout_width="@dimen/d0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_my_company"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:gravity="center"
+                        android:text="未来科技有限公司"
+                        android:textColor="#9c9c9c"
+                        android:textSize="@dimen/s15" />
+
+                </RelativeLayout>
+
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d6"
+                android:background="#eeeeee" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d40"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/d4"
+                        android:layout_weight="1"
+                        android:background="@color/blue" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="@dimen/d0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:gravity="center"
+                        android:text="企业资质"
+                        android:textColor="#ff434343"
+                        android:textSize="@dimen/s16" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/d4"
+                        android:layout_weight="1"
+                        android:background="@color/blue" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5" />
+
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rlv_qyzz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/d10"
+                    android:paddingEnd="@dimen/d6"
+                    android:paddingStart="@dimen/d6" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_qyzz_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="(点击右上角的+号可以添加企业资质！)"
+                    android:visibility="gone" />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_more_qyzz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/d6"
+                    android:paddingTop="@dimen/d8">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="全部"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/s12"
+                        android:visibility="visible" />
+
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/qyzz_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/s12"
+                        android:visibility="visible" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="个企业资质 >"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/s12"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d6"
+                    android:layout_marginBottom="@dimen/d14"
+                    android:layout_marginTop="@dimen/d14"
+                    android:background="#eeeeee" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d40"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/d4"
+                        android:layout_weight="1"
+                        android:background="@color/blue" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="@dimen/d0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:gravity="center"
+                        android:text="人员资质"
+                        android:textColor="#ff434343"
+                        android:textSize="@dimen/s16" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/d4"
+                        android:layout_weight="1"
+                        android:background="@color/blue" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5" />
+
+
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rlv_ryzz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/d10"
+                    android:paddingEnd="@dimen/d6"
+                    android:paddingStart="@dimen/d6" />
+
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_ryzz_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="(点击右上角的+号可以添加人员资质！)"
+                    android:visibility="visible" />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_more_ryzz"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/d12"
+                    android:paddingTop="@dimen/d8">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="全部"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/s12"
+                        android:visibility="visible" />
+
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/ryzz_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/s12"
+                        android:visibility="visible" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="个人员资质 >"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/s12"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>

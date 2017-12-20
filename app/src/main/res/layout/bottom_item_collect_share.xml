@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="wrap_content">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/p1"
+        android:background="#eeeeee"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d40"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="end|bottom"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:weightSum="9"
+            tools:ignore="DisableBaselineAlignment,ObsoleteLayoutParam">
+
+            <LinearLayout
+                android:id="@+id/ll_fav"
+                android:layout_width="@dimen/d0"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:id="@+id/iv_fav"
+                    android:layout_width="@dimen/d18"
+                    android:layout_height="@dimen/d18"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_fav" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_fav_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d8"
+                    android:text="收藏"
+                    android:textColor="#9d9d9d"
+                    android:textSize="@dimen/s14"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="@dimen/d0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
+
+                <View
+                    android:layout_width="@dimen/p1"
+                    android:layout_height="wrap_content"
+                    android:background="#9d9d9d"
+                    android:layout_marginTop="@dimen/d12"
+                    android:layout_marginBottom="@dimen/d12"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_share"
+                android:layout_width="@dimen/d0"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                android:gravity="center"
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
+
+                <ImageView
+                    android:layout_width="@dimen/d18"
+                    android:layout_height="@dimen/d18"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_share_black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d8"
+                    android:text="分享"
+                    android:textColor="#9d9d9d"
+                    android:textSize="@dimen/s14"
+                    tools:ignore="HardcodedText,RtlHardcoded" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+

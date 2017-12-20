@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="vertical">
+
+<include layout="@layout/fragment_main_bar" />
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/d20"
+    android:background="#eeeeee" />
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/d42"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/d8"
+    android:paddingLeft="@dimen/d4"
+    android:paddingRight="@dimen/d8"
+    android:paddingTop="@dimen/d8">
+
+
+    <android.support.v7.widget.SearchView
+        android:id="@+id/view_bind"
+        android:layout_width="@dimen/d0"
+        android:layout_height="wrap_content"
+        android:layout_weight="8"
+        android:background="@drawable/bg_searchbox"
+        android:textColor="#ff434343"
+        android:textSize="@dimen/s14"
+        app:iconifiedByDefault="false"
+        app:queryBackground="@color/transparent"
+        app:queryHint="请输入企业名称" />
+
+    <View
+        android:layout_width="@dimen/p2"
+        android:layout_height="match_parent"
+        android:background="#eeeeee"
+        android:paddingBottom="@dimen/d2"
+        android:paddingTop="@dimen/d2" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/tv_bind"
+        android:layout_width="@dimen/d0"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/d8"
+        android:layout_marginStart="@dimen/d8"
+        android:layout_weight="1"
+        android:text="绑定"
+        android:textColor="@color/blue"
+        android:textSize="@dimen/s16"
+        android:visibility="gone" />
+
+
+</LinearLayout>
+
+<View
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/d10"
+    android:background="#eeeeee" />
+
+
+
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/bind_company_refresh"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/bind_company_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</android.support.v4.widget.SwipeRefreshLayout>
+
+
+
+</LinearLayout>

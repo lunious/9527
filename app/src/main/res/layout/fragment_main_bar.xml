@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/blue">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d42"
+        android:layout_marginTop="@dimen/d24"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_iv_back"
+            android:layout_width="@dimen/d0"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:visibility="invisible">
+
+            <ImageView
+                android:layout_width="@dimen/d16"
+                android:layout_height="@dimen/d16"
+                android:layout_gravity="center"
+                android:background="#00ffffff"
+                android:src="@mipmap/white_back" />
+
+        </LinearLayout>
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/main_bar_name"
+            android:layout_width="@dimen/d0"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="10"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/white"
+            android:textSize="@dimen/s18"
+            tools:text="鲁班标讯通" />
+
+
+        <LinearLayout
+            android:id="@+id/ll_ib_add"
+            android:layout_width="@dimen/d0"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:visibility="invisible">
+
+            <ImageView
+                android:layout_width="@dimen/d16"
+                android:layout_height="@dimen/d16"
+                android:layout_gravity="center"
+                android:background="#00ffffff"
+                android:src="@mipmap/jiahao" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

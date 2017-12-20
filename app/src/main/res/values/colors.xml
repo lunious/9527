@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#21a9ff</color>
+    <color name="colorPrimaryDark">#21a9ff</color>
+    <color name="colorAccent">#21a9ff</color>
+    <color name="tab_icon_unselect">#c6c6c6</color>
+    <color name="tab_text_unselect">#6c6c6c</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#FFFFFF</color>
+    <color name="blue">#21a9ff</color>
+    <color name="light_blue">#66bfdc</color>
+    <color name="line">#eeeeee</color>
+    <color name="view">#eeeeee</color>
+    <color name="main_background">#eeeeee</color>
+    <color name="main_text_color">#3c3c3c</color>
+    <color name="toast_background">#66000000</color>
+    <color name="colorRed">#B62222</color>
+
+    <color name="bg_press">#ebebeb</color>
+    <color name="transparent">#00000000</color>
+    <color name="search_hint">#9d9d9d</color>
+    <color name="transparent_ffffff">#00ffffff</color>
+    <color name="transparent_ffffff15">#33ffffff</color>
+    <color name="welcome_bg">#21a9ff</color>
+    <color name="status_text_color">#6c6c6c</color>
+</resources>

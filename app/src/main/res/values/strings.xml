@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">鲁班标讯通</string>
+    <string name="first">首页</string>
+    <string name="second">资质查询</string>
+    <string name="third">收藏</string>
+    <string name="four">招标结果</string>
+    <string name="five">我</string>
+
+    <string name="register_sms_hint">获取验证码</string>
+    <string name="share_to">分享</string>
+    <string name="platform_sina">微博</string>
+    <string name="platform_wechat_circle">朋友圈</string>
+    <string name="platform_wechat">微信</string>
+    <string name="platform_qq">QQ</string>
+    <string name="platform_tweet">动弹</string>
+    <string name="platform_browser">浏览器</string>
+    <string name="platform_copy_link">复制链接</string>
+    <string name="platform_more_option">更多</string>
+    <string name="platform_preview">预览</string>
+    <string name="share_title">标讯通分享</string>
+    <string name="progress_submit">正在提交…</string>
+    <string name="cancel">""</string>
+    <string name="login_wechat_hint">正在启动微信中&#8230;</string>
+    <string name="login_tencent_hint">正在启动QQ中&#8230;</string>
+    <string name="login_weibo_hint">正在启动微博中&#8230;</string>
+    <string name="state_network_error">网络错误</string>
+    <string name="state_loading">正在加载…</string>
+    <string name="state_not_more">没有更多数据</string>
+    <string name="state_load_error">加载失败</string>
+    <string name="state_refreshing">正在刷新</string>
+    <string name="state_loading_more">上拉加载更多</string>
+</resources>

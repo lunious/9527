@@ -1,0 +1,82 @@
+package com.lubanjianye.biaoxuntong.sign;
+
+import android.content.Intent;
+import android.support.v7.widget.AppCompatTextView;
+import android.view.View;
+import android.widget.LinearLayout;
+
+import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
+import com.lubanjianye.biaoxuntong.ui.main.user.setting.GZHActivity;
+import com.lubanjianye.biaoxuntong.util.appinfo.AppApplicationMgr;
+
+/**
+ * 项目名:   AppLunious
+ * 包名:     com.lubanjianye.biaoxuntong.sign
+ * 文件名:   AboutFragment
+ * 创建者:   lunious
+ * 创建时间: 2017/12/14  11:42
+ * 描述:     TODO
+ */
+
+public class AboutFragment extends BaseFragment implements View.OnClickListener {
+
+    private LinearLayout llIvBack = null;
+    private AppCompatTextView mainBarName = null;
+    private AppCompatTextView tvVersionName = null;
+    private AppCompatTextView tvGongzhonghao = null;
+    private AppCompatTextView tvLuban = null;
+
+    @Override
+    public Object setLayout() {
+        return R.layout.fragment_about;
+    }
+
+    @Override
+    public void initView() {
+        llIvBack = getView().findViewById(R.id.ll_iv_back);
+        mainBarName = getView().findViewById(R.id.main_bar_name);
+        tvVersionName = getView().findViewById(R.id.tv_version_name);
+        tvGongzhonghao = getView().findViewById(R.id.tv_gongzhonghao);
+        tvLuban = getView().findViewById(R.id.tv_luban);
+        llIvBack.setOnClickListener(this);
+        tvGongzhonghao.setOnClickListener(this);
+        tvLuban.setOnClickListener(this);
+
+
+    }
+
+    @Override
+    public void initData() {
+        llIvBack.setVisibility(View.VISIBLE);
+        tvVersionName.setText(AppApplicationMgr.getVersionName(getContext()));
+        mainBarName.setText("关于我们");
+
+    }
+
+    @Override
+    public void initEvent() {
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.ll_iv_back:
+                getActivity().onBackPressed();
+                break;
+            case R.id.tv_gongzhonghao:
+                startActivity(new Intent(getActivity(), GZHActivity.class));
+                break;
+            case R.id.tv_luban:
+                Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                intent.putExtra("url", "http://www.lubanjianye.com/");
+                intent.putExtra("title", "");
+                startActivity(intent);
+                break;
+            default:
+                break;
+        }
+    }
+}

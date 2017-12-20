@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/fragment_main_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d48"
+        android:layout_marginLeft="@dimen/d30"
+        android:layout_marginRight="@dimen/d30"
+        android:layout_marginTop="@dimen/d48"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/et_bind_tel"
+            android:layout_width="@dimen/d0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请输入要绑定的手机号码"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingLeft="@dimen/d4"
+            android:paddingRight="@dimen/d4"
+            android:textColor="#ff434343"
+            android:textColorHint="#c9c9c9"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/s16"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/p6"
+        android:background="#f9eeeeee"
+        android:layout_marginLeft="@dimen/d30"
+        android:layout_marginRight="@dimen/d30"/>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d48"
+        android:layout_marginLeft="@dimen/d30"
+        android:layout_marginRight="@dimen/d30"
+        android:layout_marginTop="@dimen/d16"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/et_bind_code"
+            android:layout_width="@dimen/d0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="请输入验证码"
+            android:inputType="text"
+            android:maxLines="1"
+            android:minLines="1"
+            android:paddingLeft="@dimen/d4"
+            android:paddingRight="@dimen/d4"
+            android:textColor="#ff434343"
+            android:textColorHint="#c9c9c9"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/s16"/>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_bind_sms_call"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/d16"
+            android:alpha="0.4"
+            android:background="@drawable/bg_register_call_sms"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/d2"
+            android:paddingLeft="@dimen/d4"
+            android:paddingRight="@dimen/d4"
+            android:paddingTop="@dimen/d2"
+            android:text="@string/register_sms_hint"
+            android:textColorHint="#c9c9c9"
+            android:textSize="@dimen/s14" />
+    </LinearLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/p6"
+        android:background="#f9eeeeee"
+        android:layout_marginLeft="@dimen/d30"
+        android:layout_marginRight="@dimen/d30"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_bind_submit"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d40"
+        android:layout_marginLeft="@dimen/d30"
+        android:layout_marginRight="@dimen/d30"
+        android:layout_marginTop="@dimen/d48"
+        android:background="@drawable/bg_login_submit_lock"
+        android:text="点击绑定"
+        android:textColor="@color/white"
+        android:textSize="@dimen/s16" />
+</LinearLayout>

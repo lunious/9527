@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/d16">
+
+        <include layout="@layout/fragment_main_bar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d48"
+            android:layout_marginLeft="@dimen/d30"
+            android:layout_marginRight="@dimen/d30"
+            android:layout_marginTop="@dimen/d28"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_login_username"
+                android:layout_width="@dimen/d0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="请输入手机号"
+                android:maxLines="1"
+                android:minLines="1"
+                android:paddingLeft="@dimen/d4"
+                android:paddingRight="@dimen/d4"
+                android:textColor="#000000"
+                android:textColorHint="#c9c9c9"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/s16" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/p6"
+            android:layout_marginLeft="@dimen/d30"
+            android:layout_marginRight="@dimen/d30"
+            android:background="#f9eeeeee" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d48"
+            android:layout_marginLeft="@dimen/d30"
+            android:layout_marginRight="@dimen/d30"
+            android:layout_marginTop="@dimen/d16"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/et_login_pwd"
+                android:layout_width="@dimen/d0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@null"
+                android:hint="请输入密码"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:minLines="1"
+                android:paddingLeft="@dimen/d4"
+                android:paddingRight="@dimen/d4"
+                android:textColor="#000000"
+                android:textColorHint="#c9c9c9"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/s16" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/p6"
+            android:layout_marginLeft="@dimen/d30"
+            android:layout_marginRight="@dimen/d30"
+            android:background="#eeeeee" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d48"
+            android:layout_marginLeft="@dimen/d24"
+            android:layout_marginRight="@dimen/d24"
+            android:layout_marginTop="@dimen/d12"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_login_forget_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:paddingBottom="@dimen/d4"
+                android:paddingLeft="@dimen/d4"
+                android:paddingTop="@dimen/d4"
+                android:text="忘记密码？"
+                android:textColor="#1196db"
+                android:textSize="@dimen/s14" />
+
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_login_fast"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:paddingBottom="@dimen/d4"
+                android:paddingLeft="@dimen/d4"
+                android:paddingTop="@dimen/d4"
+                android:text="快捷登陆"
+                android:textColor="#1196db"
+                android:textSize="@dimen/s14" />
+        </RelativeLayout>
+
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/bt_login_submit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d48"
+            android:layout_marginLeft="@dimen/d30"
+            android:layout_marginRight="@dimen/d30"
+            android:layout_marginTop="@dimen/d20"
+            android:background="@drawable/bg_login_submit"
+            android:text="登 陆"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/s18" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/bt_login_register"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d48"
+            android:layout_marginLeft="@dimen/d30"
+            android:layout_marginRight="@dimen/d30"
+            android:layout_marginTop="@dimen/d16"
+            android:background="@drawable/bg_login_register"
+            android:text="注 册"
+            android:textColor="#aaaaaa"
+            android:textSize="@dimen/s18" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d0"
+            android:layout_weight="3" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/d10"
+            android:paddingRight="@dimen/d10">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/d10"
+                android:layout_marginLeft="@dimen/d30"
+                android:layout_marginRight="@dimen/d30"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="@dimen/d0"
+                    android:layout_height="@dimen/p1"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="#dddddd" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="@dimen/d0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="其它登陆方式"
+                    android:textColor="#cacaca"
+                    android:textSize="@dimen/s12" />
+
+                <View
+                    android:layout_width="@dimen/d0"
+                    android:layout_height="@dimen/p1"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="#dddddd" />
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/d10">
+
+
+                <ImageView
+                    android:id="@+id/iv_login_weibo"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@null"
+                    android:padding="8dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_login_3party_weibo" />
+
+                <ImageView
+                    android:id="@+id/iv_login_wx"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@null"
+                    android:padding="8dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_login_3party_wechat" />
+
+                <ImageView
+                    android:id="@+id/iv_login_qq"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:contentDescription="@null"
+                    android:padding="8dp"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/ic_login_3party_qq" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>

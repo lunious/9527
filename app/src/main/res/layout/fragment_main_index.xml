@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/blue"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d42"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/d24"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/d4"
+        android:paddingStart="@dimen/d4">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/d4"
+            android:text="鲁班标讯通"
+            android:textColor="@color/white"
+            android:textSize="@dimen/s17" />
+
+        <LinearLayout
+            android:id="@+id/ll_search"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d24"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/d2"
+            android:background="@drawable/bg_index_title_bar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/d14"
+                    android:layout_height="@dimen/d14"
+                    android:layout_gravity="center"
+                    android:src="@mipmap/search" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingEnd="@dimen/d2"
+                    android:paddingStart="@dimen/d6"
+                    android:text="搜索你感兴趣的内容"
+                    android:textColor="#9d9d9d"
+                    android:textSize="@dimen/s14" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d34"
+        android:background="#F6F6F6"
+        android:orientation="horizontal">
+
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/index_stl_tab"
+            android:layout_width="@dimen/d0"
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:background="@color/white"
+            tl:tl_indicator_color="@color/blue"
+            tl:tl_indicator_height="@dimen/d2"
+            tl:tl_indicator_width_equal_title="true"
+            tl:tl_tab_padding="@dimen/d14"
+            tl:tl_textAllCaps="true"
+            tl:tl_textSelectColor="@color/blue"
+            tl:tl_textUnselectColor="#6c6c6c"
+            tl:tl_textsize="@dimen/s15" />
+
+        <LinearLayout
+            android:layout_width="@dimen/d0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_add"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@null"
+                android:gravity="center"
+                android:paddingBottom="@dimen/d10"
+                android:paddingLeft="@dimen/d10"
+                android:paddingRight="@dimen/d6"
+                android:paddingTop="@dimen/d10"
+                android:src="@mipmap/ic_subscribe" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/p1"
+        android:background="#dddddd"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/index_vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white" />
+
+</LinearLayout>

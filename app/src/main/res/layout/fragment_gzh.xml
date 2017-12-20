@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include layout="@layout/fragment_main_bar" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/d60"
+        android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:padding="@dimen/d20">
+
+            <ImageView
+                android:layout_width="@dimen/d200"
+                android:layout_height="@dimen/d200"
+                android:src="@mipmap/erweima"
+                android:layout_gravity="center"/>
+            <android.support.v7.widget.AppCompatTextView
+                android:paddingTop="@dimen/d25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="扫码关注建业通微信公众号"/>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

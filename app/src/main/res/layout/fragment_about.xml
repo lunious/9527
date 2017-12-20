@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eeeeee"
+    android:orientation="vertical">
+
+    <include layout="@layout/fragment_main_bar" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d0"
+            android:layout_weight="1"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="@dimen/d72"
+                android:layout_height="@dimen/d72"
+                android:layout_marginTop="@dimen/d20"
+                android:layout_gravity="center_horizontal"
+                android:contentDescription="@null"
+                android:src="@mipmap/log" />
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="鲁班标讯通"
+                android:textColor="#ff434343"
+                android:paddingTop="@dimen/d4"
+                android:textSize="@dimen/s15" />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_version_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/d5"
+                android:textColor="#6e6e6e"
+                android:textSize="@dimen/s15" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/p1"
+                android:background="#eeeeee"
+                android:layout_marginTop="@dimen/d10" />
+
+            <RelativeLayout
+                android:gravity="center_vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="@dimen/d0">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_gongzhonghao"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:background="@color/white"
+                    android:paddingBottom="@dimen/d12"
+                    android:paddingLeft="@dimen/d16"
+                    android:paddingRight="@dimen/d16"
+                    android:paddingTop="@dimen/d12"
+                    android:text="关注微信公众号"
+                    android:textColor="#6c6c6c"
+                    android:textSize="@dimen/d15" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d0"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="招标中标尽在掌握"
+                android:textSize="@dimen/s15"
+                android:textColor="#6e6e6e"/>
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_marginTop="@dimen/d20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/d5"
+                android:paddingRight="@dimen/d5"
+                android:lineSpacingMultiplier = "1.5"
+                android:text="        用大数据打造精准的招标资讯平台，提供全面、及时的工程招标公告、政府采购公告，答疑、补遗，工程招标中标公示、政府采购结果公告。让您随时随地掌握最新、最全的招标资讯，让您的关注尽在掌握。"
+                android:textSize="@dimen/s15"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/d10">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/tv_luban"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/d15"
+                android:text="官网"
+                android:textColor="@color/blue" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/d16"
+            android:text="© 2017 lubanjianye.com All rights reserved."
+            android:textColor="#6e6e6e" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

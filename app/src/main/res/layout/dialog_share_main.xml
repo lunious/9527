@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/d8"
+        android:layout_marginLeft="@dimen/d16"
+        android:layout_marginRight="@dimen/d16"
+        android:layout_marginTop="@dimen/d8"
+        android:text="@string/share_to"
+        android:textSize="@dimen/s14" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/p1"
+        android:layout_marginBottom="@dimen/d8"
+        android:background="#eeeeee" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/share_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/d8" />
+
+</LinearLayout>

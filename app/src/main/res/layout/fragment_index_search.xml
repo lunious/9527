@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/blue"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d42"
+        android:background="@color/blue"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/d8"
+        android:paddingLeft="@dimen/d4"
+        android:paddingRight="@dimen/d8"
+        android:paddingTop="@dimen/d8"
+        android:layout_marginTop="@dimen/d24">
+
+        <LinearLayout
+            android:id="@+id/ll_iv_back"
+            android:layout_width="@dimen/d0"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="@dimen/d16"
+                android:layout_height="@dimen/d16"
+                android:layout_gravity="center"
+                android:background="#00ffffff"
+                android:src="@mipmap/btn_back" />
+
+        </LinearLayout>
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/view_searcher"
+            android:layout_width="@dimen/d0"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:background="@drawable/shape_search_view"
+            android:gravity="center"
+            app:closeIcon="@null"
+            app:defaultQueryHint="输入关键字搜索"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@null" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/tv_search"
+            android:layout_width="@dimen/d0"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/d8"
+            android:layout_marginStart="@dimen/d8"
+            android:layout_weight="1"
+            android:text="搜索"
+            android:textColor="@color/white"
+            android:textSize="@dimen/s16"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d34"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="@dimen/d0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_area"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawableEnd="@drawable/icon_down"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="@dimen/d5"
+                    android:text="地区"
+                    android:textSize="@dimen/s15" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="@dimen/p1"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/d8"
+                android:layout_marginTop="@dimen/d8"
+                android:background="#cccccc" />
+
+            <LinearLayout
+                android:layout_width="@dimen/d0"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:drawableEnd="@drawable/icon_down"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:padding="@dimen/d5"
+                    android:text="类型"
+                    android:textSize="@dimen/s15" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/p1"
+            android:background="#cccccc"
+            android:paddingBottom="@dimen/d10"
+            android:paddingTop="@dimen/d10" />
+
+    </LinearLayout>
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/search_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/search_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</LinearLayout>

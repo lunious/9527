@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/fragment_detail_bar" />
+
+    <com.classic.common.MultipleStatusView
+        android:id="@+id/xjggg_detail_status_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:emptyView="@layout/custom_empty_view"
+        app:errorView="@layout/custom_error_view"
+        app:loadingView="@layout/custom_loading_view"
+        app:noNetworkView="@layout/custom_no_network_view">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/d12"
+            android:paddingRight="@dimen/d12"
+            android:paddingTop="@dimen/d5">
+
+            <android.support.v4.widget.NestedScrollView
+                android:id="@+id/detail_nsv"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d0"
+                android:layout_weight="1"
+                android:scrollbars="none"
+                tools:ignore="RtlHardcoded">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_main_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#ff434343"
+                        android:textSize="@dimen/s20" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_main_area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d8"
+                        android:text=""
+                        android:textColor="#ff999999"
+                        android:textSize="@dimen/s16"
+                        android:visibility="gone" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/d8">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="来        源"
+                                android:textSize="@dimen/s16" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_main_pub_type"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/d10"
+                                android:text=""
+                                android:textColor="@color/colorRed"
+                                android:textSize="@dimen/s16" />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="采购方式"
+                                android:textSize="@dimen/s16" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_main_pub_method"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/d10"
+                                android:text=""
+                                android:textColor="@color/blue"
+                                android:textSize="@dimen/s16" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="定标日期"
+                                android:textSize="@dimen/s16" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_main_pub_data"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/d10"
+                                android:text=""
+                                android:textColor="@color/blue"
+                                android:textSize="@dimen/s16" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="发布时间"
+                                android:textSize="@dimen/s16" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_main_pub_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/d10"
+                                android:text=""
+                                android:textColor="@color/blue"
+                                android:textSize="@dimen/s16" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="项目编号"
+                            android:textSize="@dimen/s16" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_pu_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/d10"
+                            android:text=""
+                            android:textColor="@color/blue"
+                            android:textSize="@dimen/s16" />
+                    </LinearLayout>
+
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/p35"
+                        android:layout_marginTop="@dimen/d10"
+                        android:background="#f9eeeeee" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/d8"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/d10"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="采购项目名称"
+                                android:textColor="#ff434343"
+                                android:textSize="@dimen/s18" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_ower_cainame"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d2"
+                                android:text=""
+                                android:textSize="@dimen/s16" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/p1"
+                            android:layout_marginTop="@dimen/d10"
+                            android:background="#eeeeee" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/d10"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="采购人"
+                                android:textColor="#ff434343"
+                                android:textSize="@dimen/s18" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_ower_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d2"
+                                android:text=""
+                                android:textSize="@dimen/s16" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/p1"
+                            android:layout_marginTop="@dimen/d10"
+                            android:background="#eeeeee" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/d10"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="采购代理机构名称"
+                                android:textColor="#ff434343"
+                                android:textSize="@dimen/s18" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_ower_daili"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d2"
+                                android:text=""
+                                android:textSize="@dimen/s16" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/p1"
+                            android:layout_marginTop="@dimen/d10"
+                            android:background="#eeeeee" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/d10"
+                            android:orientation="horizontal">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="项目包个数:"
+                                android:textColor="#ff434343"
+                                android:textSize="@dimen/s18" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_ower_baoshu"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/d4"
+                                android:text=""
+                                android:textSize="@dimen/s16" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/p1"
+                            android:layout_marginTop="@dimen/d10"
+                            android:background="#eeeeee" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/d10"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="采购结果总金额"
+                                android:textColor="#ff434343"
+                                android:textSize="@dimen/s18" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_ower_jine"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d2"
+                                android:textColor="#ff434343"
+                                android:textSize="@dimen/s16" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/p1"
+                            android:layout_marginTop="@dimen/d10"
+                            android:background="#eeeeee" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/d10"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="各包中标/成交供应商名称、地址及报价"
+                                android:textColor="#ff434343"
+                                android:textSize="@dimen/s18" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_ower_baojia"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d2"
+                                android:text=""
+                                android:textSize="@dimen/s16" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/p1"
+                            android:layout_marginTop="@dimen/d10"
+                            android:background="#eeeeee" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/d10"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="评审委员会成员名单"
+                                android:textColor="#ff434343"
+                                android:textSize="@dimen/s18" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_ower_mingdan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/p2"
+                                android:text=""
+                                android:textSize="@dimen/s16" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/p1"
+                            android:layout_marginTop="@dimen/d10"
+                            android:background="#eeeeee" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/d10"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="采购人地址和联系方式"
+                                android:textColor="#ff434343"
+                                android:textSize="@dimen/s18" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_ower_lianxi"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d2"
+                                android:text=""
+                                android:textSize="@dimen/s16" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/p1"
+                            android:layout_marginTop="@dimen/d10"
+                            android:background="#eeeeee" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/d10"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="采购代理机构地址和联系方式"
+                                android:textColor="#ff434343"
+                                android:textSize="@dimen/s18" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_ower_lianxi2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d2"
+                                android:text=""
+                                android:textSize="@dimen/s16" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/p1"
+                            android:layout_marginTop="@dimen/d10"
+                            android:background="#eeeeee" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/d10"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="采购项目联系人姓名和电话"
+                                android:textColor="#ff434343"
+                                android:textSize="@dimen/s18" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_ower_lianxi_number"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d2"
+                                android:text=""
+                                android:textSize="@dimen/s16" />
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/p1"
+                            android:layout_marginTop="@dimen/d10"
+                            android:background="#eeeeee" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/d10"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="候选人公告连接"
+                                android:textColor="#ff434343"
+                                android:textSize="@dimen/s18" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d4"
+                                android:background="@drawable/bg_rect">
+
+                                <TextView
+                                    android:id="@+id/tv_ower_lianxi_link"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/d2"
+                                    android:text=""
+                                    android:textColor="@color/blue"
+                                    android:textSize="@dimen/s16" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/p1"
+                            android:layout_marginTop="@dimen/d10"
+                            android:background="#eeeeee" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/d10"
+                            android:orientation="vertical">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="评审情况"
+                                android:textColor="#ff434343"
+                                android:textSize="@dimen/s18" />
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d4"
+                                android:background="@drawable/bg_rect">
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/tv_ower_pinshen"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/d2"
+                                    android:text=""
+                                    android:textColor="@color/blue"
+                                    android:textSize="@dimen/s16" />
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+
+            <include layout="@layout/bottom_item_collect_share" />
+
+        </LinearLayout>
+    </com.classic.common.MultipleStatusView>
+
+
+</LinearLayout>

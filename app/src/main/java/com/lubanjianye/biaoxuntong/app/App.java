@@ -1,0 +1,132 @@
+package com.lubanjianye.biaoxuntong.app;
+
+import android.app.Application;
+import android.graphics.Color;
+import android.graphics.Typeface;
+
+import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.database.DatabaseManager;
+import com.lubanjianye.biaoxuntong.ui.push.PushService;
+import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.mixpush.client.core.MixPushClient;
+import com.mixpush.client.core.MixPushManager;
+import com.mixpush.client.getui.GeTuiManager;
+
+import java.util.Map;
+
+import me.shaohui.shareutil.ShareConfig;
+import me.shaohui.shareutil.ShareManager;
+import me.yokeyword.fragmentation.Fragmentation;
+import me.yokeyword.fragmentation.helper.ExceptionHandler;
+
+/**
+ * 项目名:   AppLunious
+ * 包名:     com.lubanjianye.biaoxuntong.app
+ * 文件名:   App
+ * 创建者:   lunious
+ * 创建时间: 2017/12/8  23:58
+ * 描述:     TODO
+ */
+
+public class App extends Application {
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        //初始化Fragmentation
+        initFragment();
+        //初始化Toasty
+        initToasty();
+        //初始化网络配置
+        initNet();
+        //初始化greenDao
+        initGreenDao();
+        //初始化推送
+        initPush();
+        // 初始化ShareUtil
+        initShareUtil();
+
+    }
+
+    private void initFragment() {
+        Fragmentation.builder()
+                // 设置 栈视图 模式为 悬浮球模式   SHAKE: 摇一摇唤出  默认NONE：隐藏， 仅在Debug环境生效
+                .stackViewMode(Fragmentation.NONE)
+                // 开发环境：true时，遇到异常："Can not perform this action after onSaveInstanceState!"时，抛出，并Crash;
+                // 生产环境：false时，不抛出，不会Crash，会捕获，可以在handleException()里监听到
+                .debug(true) // 实际场景建议.debug(BuildConfig.DEBUG)
+                // 生产环境时，捕获上述异常（避免crash），会捕获
+                // 建议在回调处上传下面异常到崩溃监控服务器
+                .handleException(new ExceptionHandler() {
+                    @Override
+                    public void onException(Exception e) {
+                        // 以Bugtags为例子: 把捕获到的 Exception 传到 Bugtags 后台。
+                        // Bugtags.sendException(e);
+                    }
+                })
+                .install();
+    }
+
+    private void initToasty() {
+        Toasty.Config.getInstance()
+                .setErrorColor(getResources().getColor(R.color.toast_background))
+                .setInfoColor(getResources().getColor(R.color.toast_background))
+                .setSuccessColor(getResources().getColor(R.color.toast_background))
+                .setWarningColor(getResources().getColor(R.color.toast_background))
+                .setTextColor(Color.WHITE)
+                .tintIcon(true)
+                .setTextSize(16)
+                .setToastTypeface(Typeface.DEFAULT)
+                .apply();
+    }
+
+    private void initNet() {
+        //配置初始化
+        BiaoXunTong.init(this)
+                .withApiHost("http://api.lubanjianye.com/")
+                .configure();
+    }
+
+    private void initGreenDao() {
+        DatabaseManager.getInstance().init(this);
+    }
+
+    private void initPush() {
+        MixPushClient.addPushManager(new GeTuiManager());
+        MixPushClient.setPushIntentService(PushService.class);
+        MixPushClient.setSelector(new MixPushClient.Selector() {
+            @Override
+            public String select(Map<String, MixPushManager> pushAdapterMap, String brand) {
+                return GeTuiManager.NAME;
+                //底层已经做了小米推送、魅族推送、个推判断，也可以按照自己的需求来选择推送
+//                return super.select(pushAdapterMap, brand);
+            }
+        });
+        // 配置接收推送消息的服务类
+        MixPushClient.setPushIntentService(PushService.class);
+        // 注册推送
+        MixPushClient.registerPush(this);
+        // 绑定别名，一般是填写用户的ID，便于定向推送
+        MixPushClient.setAlias(this, getUserId());
+        // 设置标签，用于对用户进行划分
+        MixPushClient.setTags(this, "测试");
+
+
+    }
+
+    private String getUserId() {
+        return "007";
+    }
+
+    private void initShareUtil(){
+        ShareConfig config = ShareConfig.instance()
+                .qqId("1106195613")
+                .wxId("wxd7123ee6007bc26a")
+                .weiboId("356365773")
+                // 下面两个，如果不需要登录功能，可不填写
+                .weiboRedirectUrl("https://api.weibo.com/oauth2/default.html")
+                .wxSecret("5e85681e8a0c78d140dd7f49e4be3117");
+        ShareManager.init(config);
+    }
+}

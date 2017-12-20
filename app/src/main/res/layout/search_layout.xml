@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/search_block"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d42"
+        android:layout_marginTop="@dimen/d26"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/search_back"
+            android:layout_width="@dimen/d0"
+            android:layout_height="@dimen/d16"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:src="@mipmap/ib_back" />
+
+        <LinearLayout
+            android:id="@+id/ll_search"
+            android:layout_width="@dimen/d0"
+            android:layout_height="@dimen/d26"
+            android:layout_gravity="center"
+            android:layout_marginRight="@dimen/d6"
+            android:layout_weight="6"
+            android:background="@drawable/bg_index_title_bar">
+
+
+            <com.lubanjianye.biaoxuntong.searchview.EditText_Clear
+                android:id="@+id/et_search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/d10"
+                android:layout_marginRight="@dimen/d10"
+                android:background="@null"
+                android:drawableLeft="@mipmap/search"
+                android:drawablePadding="8dp"
+                android:gravity="start|center_vertical"
+                android:imeOptions="actionSearch"
+                android:singleLine="true" />
+        </LinearLayout>
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/atv_search"
+            android:layout_width="@dimen/d0"
+            android:layout_height="@dimen/d42"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="@dimen/d6"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="搜索"
+            android:textColor="@color/white"
+            android:textSize="@dimen/s16" />
+
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d10"
+        android:background="@color/view"/>
+
+    <ScrollView
+        android:id="@+id/sl_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.lubanjianye.biaoxuntong.searchview.SearchListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/d18"
+                android:dividerHeight="@dimen/p1"
+                android:divider="@color/view">
+
+            </com.lubanjianye.biaoxuntong.searchview.SearchListView>
+
+            <TextView
+                android:id="@+id/tv_clear"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d38"
+                android:background="#66eeeeee"
+                android:gravity="center"
+                android:text="清空搜索历史"
+                android:textSize="@dimen/s15"
+                android:visibility="invisible" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

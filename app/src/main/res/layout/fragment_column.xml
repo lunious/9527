@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d40"
+        android:layout_marginTop="@dimen/d24">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="栏目定制"
+            android:textColor="#6c6c6c"
+            android:textSize="@dimen/s18" />
+
+        <ImageView
+            android:id="@+id/iv_close"
+            android:layout_width="@dimen/d35"
+            android:layout_height="@dimen/d35"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/d10"
+            android:src="@mipmap/close" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#eeeeee" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d0"
+        android:layout_weight="1"
+        android:scrollbars="none"
+        tools:ignore="RtlHardcoded">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/d10"
+                        android:layout_marginTop="@dimen/d20"
+                        android:text="我的栏目"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/s16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/d16"
+                        android:layout_marginTop="@dimen/d20"
+                        android:text="(点击删除，按住拖动调整顺序)"
+                        android:textColor="#6c6c6c"
+                        android:textSize="@dimen/s12" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/old_column_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/d10" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/p1"
+                android:background="#eeeeee"
+                android:paddingLeft="@dimen/d10"
+                android:paddingRight="@dimen/d10"
+                android:paddingTop="@dimen/d10" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:layout_marginTop="@dimen/d10"
+                    android:text="点击添加新栏目"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/s16" />
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/new_column_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/d10" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/p1"
+                android:background="#eeeeee"
+                android:paddingLeft="@dimen/d10"
+                android:paddingRight="@dimen/d10"
+                android:paddingTop="@dimen/d10" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d10"
+                    android:layout_marginTop="@dimen/d10"
+                    android:text="推荐地区"
+                    android:textColor="@color/blue"
+                    android:textSize="@dimen/s16" />
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/area_column_rv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/d10" />
+
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+</LinearLayout>
