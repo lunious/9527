@@ -247,6 +247,8 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
 
                                 int pageCount = dataObj.getInteger("pageCount");
                                 final JSONArray array = dataObj.getJSONArray("list");
+                                final boolean nextPage = dataObj.getBoolean("nextpage");
+
 
                                 for (int i = 0; i < array.size(); i++) {
                                     final JSONObject data = array.getJSONObject(i);
@@ -256,7 +258,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                                 }
 
                                 if (array.size() > 0) {
-                                    setData(isRefresh, array);
+                                    setData(isRefresh, array,nextPage);
                                 } else {
                                     if (mDataList != null) {
                                         mDataList.clear();
@@ -280,7 +282,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
 
     }
 
-    private void setData(int isRefresh, JSONArray data) {
+    private void setData(int isRefresh, JSONArray data,boolean nextPage) {
         page++;
         final int size = data == null ? 0 : data.size();
         if (isRefresh == 0 || isRefresh == 1) {
@@ -313,7 +315,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                 mAdapter.notifyDataSetChanged();
             }
         }
-        if (size <= pageSize) {
+        if (!nextPage) {
             //第一页如果不够一页就不显示没有更多数据布局
             mAdapter.loadMoreEnd();
         } else {

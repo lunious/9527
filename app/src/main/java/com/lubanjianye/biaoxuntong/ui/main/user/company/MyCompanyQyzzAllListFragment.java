@@ -3,13 +3,10 @@ package com.lubanjianye.biaoxuntong.ui.main.user.company;
 import android.content.DialogInterface;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -27,8 +24,6 @@ import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -254,13 +249,15 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
                                 final JSONObject dataObj = object.getJSONObject("data");
                                 final JSONArray array = dataObj.getJSONArray("list");
 
+                                final boolean nextPage = dataObj.getBoolean("nextpage");
+
                                 for (int i = 0; i < array.size(); i++) {
                                     final JSONObject data = array.getJSONObject(i);
                                     zy_code.add(data.getString("zy_code"));
                                 }
 
                                 if (array.size() > 0) {
-                                    setData(isRefresh, array);
+                                    setData(isRefresh, array,nextPage);
                                 } else {
                                     if (mDataList != null) {
                                         mDataList.clear();
@@ -286,7 +283,7 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
     }
 
 
-    private void setData(int isRefresh, JSONArray data) {
+    private void setData(int isRefresh, JSONArray data,boolean nextPage) {
         page++;
         final int size = data == null ? 0 : data.size();
         if (isRefresh == 0 || isRefresh == 1) {
@@ -307,12 +304,6 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
             mAdapter.setEnableLoadMore(true);
             mAdapter.notifyDataSetChanged();
 
-            if (size < pageSize) {
-                //第一页如果不够一页就不显示没有更多数据布局
-                mAdapter.loadMoreEnd();
-            } else {
-                mAdapter.loadMoreComplete();
-            }
 
         } else {
             loadingStatus.showContent();
@@ -331,13 +322,12 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
                 mAdapter.notifyDataSetChanged();
             }
 
-            if (size <= pageSize) {
+            if (!nextPage) {
                 //第一页如果不够一页就不显示没有更多数据布局
                 mAdapter.loadMoreEnd();
             } else {
                 mAdapter.loadMoreComplete();
             }
-
         }
 
     }

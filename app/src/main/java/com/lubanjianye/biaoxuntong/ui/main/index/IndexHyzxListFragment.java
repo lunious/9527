@@ -63,6 +63,7 @@ public class IndexHyzxListFragment extends BaseFragment {
     public void initView() {
         indexHyzxRecycler = getView().findViewById(R.id.index_hyzx_recycler);
         indexHyzxRefresh = getView().findViewById(R.id.index_hyzx_refresh);
+        loadingStatus = getView().findViewById(R.id.index_hyzx_list_status_view);
 
 
     }
@@ -174,10 +175,11 @@ public class IndexHyzxListFragment extends BaseFragment {
                                 final JSONObject object = JSON.parseObject(response);
                                 final JSONObject data = object.getJSONObject("data");
                                 final JSONArray array = data.getJSONArray("list");
+                                final boolean nextPage = data.getBoolean("nextpage");
 
 
                                 if (array.size() > 0) {
-                                    setData(isRefresh, array);
+                                    setData(isRefresh, array,nextPage);
                                 } else {
                                     if (mDataList != null) {
                                         mDataList.clear();
@@ -206,10 +208,11 @@ public class IndexHyzxListFragment extends BaseFragment {
                                 final JSONObject object = JSON.parseObject(response);
                                 final JSONObject data = object.getJSONObject("data");
                                 final JSONArray array = data.getJSONArray("list");
+                                final boolean nextPage = data.getBoolean("nextpage");
 
 
                                 if (array.size() > 0) {
-                                    setData(isRefresh, array);
+                                    setData(isRefresh, array,nextPage);
                                 } else {
                                     if (mDataList != null) {
                                         mDataList.clear();
@@ -231,7 +234,7 @@ public class IndexHyzxListFragment extends BaseFragment {
     }
 
 
-    private void setData(int isRefresh, JSONArray data) {
+    private void setData(int isRefresh, JSONArray data,boolean nextPage) {
         page++;
         List<Integer> imgs = new ArrayList<>();
         final int size = data == null ? 0 : data.size();
@@ -282,7 +285,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                 mAdapter.notifyDataSetChanged();
             }
         }
-        if (size <= pageSize) {
+        if (!nextPage) {
             //第一页如果不够一页就不显示没有更多数据布局
             mAdapter.loadMoreEnd();
         } else {

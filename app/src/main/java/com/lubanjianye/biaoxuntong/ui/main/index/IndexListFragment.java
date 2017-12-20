@@ -322,10 +322,11 @@ public class IndexListFragment extends BaseFragment {
                                 final String status = object.getString("status");
                                 final String message = object.getString("message");
                                 final JSONArray array = data.getJSONArray("list");
+                                final boolean nextPage = data.getBoolean("nextpage");
 
                                 if ("200".equals(status)) {
                                     if (array.size() > 0) {
-                                        setData(isRefresh, array);
+                                        setData(isRefresh, array,nextPage);
                                     } else {
                                         if (mDataList != null) {
                                             mDataList.clear();
@@ -361,10 +362,11 @@ public class IndexListFragment extends BaseFragment {
                                 final String status = object.getString("status");
                                 final String message = object.getString("message");
                                 final JSONArray array = data.getJSONArray("list");
+                                final boolean nextPage = data.getBoolean("nextpage");
 
                                 if ("200".equals(status)) {
                                     if (array.size() > 0) {
-                                        setData(isRefresh, array);
+                                        setData(isRefresh, array,nextPage);
                                     } else {
                                         if (mDataList != null) {
                                             mDataList.clear();
@@ -389,7 +391,7 @@ public class IndexListFragment extends BaseFragment {
 
     }
 
-    private void setData(int isRefresh, JSONArray data) {
+    private void setData(int isRefresh, JSONArray data,boolean nextPage) {
         page++;
         final int size = data == null ? 0 : data.size();
         if (isRefresh == 0 || isRefresh == 1) {
@@ -436,7 +438,7 @@ public class IndexListFragment extends BaseFragment {
                 mAdapter.notifyDataSetChanged();
             }
         }
-        if (size <= pageSize) {
+        if (!nextPage) {
             //第一页如果不够一页就不显示没有更多数据布局
             mAdapter.loadMoreEnd();
         } else {
