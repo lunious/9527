@@ -212,9 +212,15 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
             CompanySgyjListBean bean = new CompanySgyjListBean();
             JSONObject list = data.getJSONObject(i);
             bean.setXmmc(list.getString("xmmc"));
-            bean.setZbje(list.getString("zbje"));
             bean.setZbsj(list.getString("zbsj"));
             bean.setXmfzr(list.getString("xmfzr"));
+
+            String zbje = list.getString("zbje");
+            if ("0.0".equals(zbje)) {
+                bean.setZbje("暂无");
+            } else {
+                bean.setZbje(list.getString("zbje"));
+            }
             mDataList.add(bean);
         }
         companySgyjRefresh.setRefreshing(false);

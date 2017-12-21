@@ -46,7 +46,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/d2"
                 android:layout_weight="6"
-                android:flipInterval="3000"
+                android:flipInterval="5000"
                 app:smvTextColor="#9e9e9e"
                 app:smvTextGravity="center_vertical"
                 app:smvTextSize="@dimen/s14" />

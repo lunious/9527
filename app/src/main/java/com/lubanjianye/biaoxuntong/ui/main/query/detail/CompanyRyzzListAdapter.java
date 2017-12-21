@@ -31,6 +31,6 @@ public class CompanyRyzzListAdapter extends BaseQuickAdapter<CompanyRyzzListBean
         String zgmc = item.getZgMcdj();
         String zgzy = item.getZgZy();
         helper.setText(R.id.tv_ryzz_name, ry_name);
-        helper.setText(R.id.tv_ryzz, zgzy + "__" + zgmc);
+        helper.setText(R.id.tv_ryzz, zgmc + "__" + zgzy);
     }
 }
