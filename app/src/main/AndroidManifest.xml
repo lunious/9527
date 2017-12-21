@@ -183,6 +183,14 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
+            android:name=".ui.main.user.company.BindCompanyActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Main"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
             android:name=".ui.main.user.company.MyCompanyActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"

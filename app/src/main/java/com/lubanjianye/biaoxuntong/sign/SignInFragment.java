@@ -7,12 +7,10 @@ import android.support.v7.widget.AppCompatTextView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -123,6 +121,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
         //初始化控件状态数据
         String holdUsername = (String) AppSharePreferenceMgr.get(getContext(), "username", "");
         etLoginUsername.setText(holdUsername);
+        etLoginUsername.setSelection(holdUsername.length());
 
         //创建对象
         promptDialog = new PromptDialog(getActivity());
@@ -235,6 +234,8 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                             token = headers.get("token");
                                             mobile = userInfo.getString("mobile");
                                             comid = userInfo.getString("comid");
+
+                                            Log.d("IUGASUIDGUISADUIGYS", id + "");
 
                                             if (comid != null) {
                                                 RestClient.builder()
@@ -536,6 +537,8 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                 mobile = userInfo.getString("mobile");
                                 imageUrl = null;
 
+                                Log.d("IUGASUIDGUISADUIGYS", id + "");
+
                                 if (comid != null) {
                                     RestClient.builder()
                                             .url(BiaoXunTongApi.URL_GETCOMPANYNAME)
@@ -601,6 +604,9 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
     private void holdAccount() {
         String username = etLoginUsername.getText().toString().trim();
         if (!TextUtils.isEmpty(username)) {
+            if (AppSharePreferenceMgr.contains(getContext(), "username")) {
+                AppSharePreferenceMgr.remove(getContext(), "username");
+            }
             AppSharePreferenceMgr.put(getContext(), "username", username);
         }
     }

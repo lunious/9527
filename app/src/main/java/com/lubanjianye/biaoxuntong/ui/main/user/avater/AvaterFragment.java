@@ -11,6 +11,7 @@ import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
+import com.lubanjianye.biaoxuntong.ui.main.user.company.BindCompanyActivity;
 import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
 
 import java.util.List;
@@ -81,6 +82,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
 
                     if (!TextUtils.isEmpty(mobile)) {
                         //进入绑定企业界面
+                        startActivity(new Intent(getActivity(), BindCompanyActivity.class));
                     } else {
                         Toasty.error(getContext(), "请先绑定手机号！", Toast.LENGTH_SHORT, true).show();
                     }

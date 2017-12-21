@@ -23,8 +23,10 @@ import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.IFailure;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.util.parser.RichTextParser;
+import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
 
+import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Headers;
 
 /**
@@ -37,6 +39,8 @@ import okhttp3.Headers;
  */
 
 public class SignUpFragment extends BaseFragment implements View.OnClickListener {
+
+    private PromptDialog promptDialog = null;
 
     protected LinearLayout llIvBack = null;
     protected AppCompatTextView mainBarName = null;
@@ -78,6 +82,11 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
     public void initData() {
         llIvBack.setVisibility(View.VISIBLE);
         mainBarName.setText("注册");
+
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
     }
 
     @Override
@@ -278,6 +287,8 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
 
     //请求注册
     private void requestRegister() {
+        promptDialog.showLoading("正在注册...");
+
         final String mobile = etRegisterUsername.getText().toString().trim();
         final String code = etRegisterCode.getText().toString().trim();
         final String pass = etRegisterPwd.getText().toString().trim();
@@ -310,11 +321,14 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
+                            promptDialog.dismissImmediately();
                             Toasty.success(getContext(), "注册成功，请登录！", Toast.LENGTH_SHORT, true).show();
                             //跳到登陆页面
                             startActivity(new Intent(getActivity(), SignInActivity.class));
                             getActivity().onBackPressed();
+                            holdAccount();
                         } else {
+                            promptDialog.dismissImmediately();
                             Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
                         }
 
@@ -333,6 +347,17 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                 })
                 .build()
                 .post();
+    }
+
+    //保存账号信息
+    private void holdAccount() {
+        String username = etRegisterUsername.getText().toString().trim();
+        if (!TextUtils.isEmpty(username)) {
+            if (AppSharePreferenceMgr.contains(getContext(), "username")) {
+                AppSharePreferenceMgr.remove(getContext(), "username");
+            }
+            AppSharePreferenceMgr.put(getContext(), "username", username);
+        }
     }
 
     @Override

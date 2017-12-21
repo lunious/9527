@@ -124,9 +124,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
         //修改字体大小
         searchText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         //重新布局，使其居中
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, 9);
-        lp.gravity = Gravity.CENTER_VERTICAL;
-        searchText.setLayoutParams(lp);
+
         //修改字体颜色
         searchText.setTextColor(ContextCompat.getColor(getContext(), R.color.blue));
         searchText.setHintTextColor(ContextCompat.getColor(getContext(), R.color.search_hint));
@@ -134,10 +132,6 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
         //根据id-search_mag_icon获取ImageView
         ImageView searchButton = (ImageView) viewSearcher.findViewById(R.id.search_mag_icon);
 
-        //重新设置ImageView的宽高，使其为自适应图片宽高
-        LinearLayout.LayoutParams lpimg = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-        lpimg.gravity = Gravity.CENTER_HORIZONTAL;
-        searchButton.setLayoutParams(lpimg);
         searchButton.setImageResource(R.mipmap.search);
 
 

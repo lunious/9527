@@ -43,6 +43,7 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
+
     private AppCompatEditText etBindTel = null;
     private AppCompatEditText etBindCode = null;
     private AppCompatTextView tvBindSmsCall = null;
