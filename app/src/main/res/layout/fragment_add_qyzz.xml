@@ -250,29 +250,29 @@
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_update"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/d40"
             android:layout_below="@+id/ll_jieguo"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginTop="180dp"
+            android:layout_marginLeft="@dimen/d10"
+            android:layout_marginRight="@dimen/d10"
+            android:layout_marginTop="@dimen/d180"
             android:background="@drawable/button_selected"
             android:gravity="center"
             android:text="提交"
             android:textColor="@color/white"
-            android:textSize="20sp"
+            android:textSize="@dimen/s20"
             android:visibility="visible" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/d20"
             android:background="#eeeeee"
             android:orientation="vertical">
 
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/d5"
                 android:gravity="center"
                 android:text="温馨提示！"
                 android:textColor="@color/blue" />
