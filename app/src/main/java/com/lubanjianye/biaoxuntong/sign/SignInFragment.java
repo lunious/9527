@@ -25,10 +25,24 @@ import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.util.aes.CXAESUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.KeyGenerator;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import me.leefeng.promptlibrary.PromptDialog;
 import me.shaohui.shareutil.LoginUtil;
@@ -456,6 +470,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
         };
     }
 
+
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -468,6 +483,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
             case R.id.bt_login_submit:
                 //账号密码登录
                 loginRequest();
+
                 break;
             case R.id.bt_login_register:
                 //用户注册
@@ -502,6 +518,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
         }
 
     }
+
 
     @SuppressWarnings("ConstantConditions")
     private void loginRequest() {

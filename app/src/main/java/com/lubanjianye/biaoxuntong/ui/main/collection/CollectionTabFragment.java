@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -35,6 +36,7 @@ import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgtableDetailA
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexXcgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
+import com.lubanjianye.biaoxuntong.util.aes.CXAESUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 
@@ -44,6 +46,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import okhttp3.Headers;
 
@@ -140,7 +143,9 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
     public void initData() {
         mainBarName.setVisibility(View.VISIBLE);
         mainBarName.setText("我的收藏");
+
     }
+
 
     @Override
     public void initEvent() {

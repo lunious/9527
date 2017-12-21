@@ -1,6 +1,8 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.avater;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,8 +13,13 @@ import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
+import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.ui.main.user.company.BindCompanyActivity;
 import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -46,8 +53,22 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
         return R.layout.fragment_avater;
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        //取消注册EventBus
+        EventBus.getDefault().unregister(this);
+    }
+
+
     @Override
     public void initView() {
+
+        //注册EventBus
+        EventBus.getDefault().register(this);
+
         llIvBack = getView().findViewById(R.id.ll_iv_back);
         mainBarName = getView().findViewById(R.id.main_bar_name);
         tvUserName = getView().findViewById(R.id.tv_user_name);
@@ -58,6 +79,19 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
         tvUserMobile.setOnClickListener(this);
 
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void XXXXXX(EventMessage message) {
+
+        if (EventMessage.BIND_MOBILE_SUCCESS.equals(message.getMessage())) {
+            //绑定手机号成功后更新UI
+            requestData();
+        } else if (EventMessage.BIND_COMPANY_SUCCESS.equals(message.getMessage())) {
+            //绑定企业成功后更新UI
+            requestData();
+        }
+    }
+
 
     @Override
     public void initData() {

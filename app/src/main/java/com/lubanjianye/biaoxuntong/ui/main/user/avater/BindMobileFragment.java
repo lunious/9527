@@ -18,12 +18,15 @@ import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
+import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.IFailure;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.util.parser.RichTextParser;
 import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -334,6 +337,7 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
 
                                 final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
                                 DatabaseManager.getInstance().getDao().update(profile);
+                                EventBus.getDefault().post(new EventMessage(EventMessage.BIND_MOBILE_SUCCESS));
                                 getActivity().onBackPressed();
                                 Toasty.success(getContext(), "绑定成功", Toast.LENGTH_SHORT, true).show();
                             } else {

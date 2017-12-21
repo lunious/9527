@@ -15,6 +15,8 @@ public class EventMessage {
     public static final String LOGIN_OUT = "login_out";
     public static final String CLICK_FAV = "click_fav";
     public static final String TAB_CHANGE = "tab_change";
+    public static final String BIND_MOBILE_SUCCESS = "bind_mobile_success";
+    public static final String BIND_COMPANY_SUCCESS = "bind_company_success";
 
     public final String message;
 
