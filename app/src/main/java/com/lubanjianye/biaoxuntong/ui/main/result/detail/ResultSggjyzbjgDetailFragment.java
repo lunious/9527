@@ -562,7 +562,7 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                 getActivity().finish();
                 break;
             case R.id.ll_share:
-                toShare(mEntityId, shareTitle, shareContent, shareUrl);
+                toShare(mEntityId, shareTitle, shareContent, BiaoXunTongApi.SHARE_URL + shareUrl);
                 break;
             case R.id.ll_fav:
                 if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {

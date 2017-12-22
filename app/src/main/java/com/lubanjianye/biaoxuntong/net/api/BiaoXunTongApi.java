@@ -13,7 +13,13 @@ public abstract class BiaoXunTongApi {
 
     public static final String PAS_KEY = "老子不死你1";
 
+
     public static final String BASEURL = "http://api.lubanjianye.com/";
+
+    /**
+     * 分享模板
+     */
+    public static final String SHARE_URL = BASEURL+"bxtajax/Entryajax/share?url=";
     /**
      * 得到首页Tab数据
      */

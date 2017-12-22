@@ -810,7 +810,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                 }
                 break;
             case R.id.ll_share:
-                toShare(mEntityId, shareTitle, shareContent, shareUrl);
+                toShare(mEntityId, shareTitle, shareContent, BiaoXunTongApi.SHARE_URL + shareUrl);
                 break;
             default:
                 break;

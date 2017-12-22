@@ -494,7 +494,7 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
                 getActivity().onBackPressed();
                 break;
             case R.id.ll_share:
-                toShare(mEntityId, shareTitle, shareContent, shareUrl);
+                toShare(mEntityId, shareTitle, shareContent, BiaoXunTongApi.SHARE_URL + shareUrl);
                 break;
             case R.id.ll_fav:
 
