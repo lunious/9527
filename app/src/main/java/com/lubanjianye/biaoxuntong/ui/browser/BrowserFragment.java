@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.GestureDetector;
@@ -323,6 +322,7 @@ public class BrowserFragment extends BaseFragment implements View.OnClickListene
                         || url.startsWith("alipays://") //支付宝
                         || url.startsWith("mailto://") //邮件
                         || url.startsWith("tel://")//电话
+                        || url.startsWith("tel:")//电话
                         || url.startsWith("dianping://")//大众点评
                         //其他自定义的scheme
                         || url.startsWith("mqqwpa://")) {

@@ -8,11 +8,12 @@
         android:id="@+id/index_item_banner"
         android:layout_width="match_parent"
         android:layout_height="@dimen/d130"
+        android:background="@mipmap/default_banner"
+        android:visibility="gone"
         app:indicator_drawable_selected="@color/blue"
         app:indicator_drawable_unselected="@android:color/white"
-        app:indicator_margin="@dimen/d6"
         app:indicator_height="@dimen/d4"
-        app:indicator_width="@dimen/d4"
-        android:visibility="gone"/>
+        app:indicator_margin="@dimen/d6"
+        app:indicator_width="@dimen/d4" />
 
 </LinearLayout>

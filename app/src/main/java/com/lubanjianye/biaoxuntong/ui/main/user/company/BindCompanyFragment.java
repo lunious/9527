@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -264,6 +265,7 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                                             promptDialog.dismissImmediately();
                                             final UserProfile profile = new UserProfile(userId, mobile, nickName, token, comid, imageUrl, companyName);
                                             DatabaseManager.getInstance().getDao().update(profile);
+                                            Log.d("IUDAHSUIDBUIASDU", companyName);
                                             EventBus.getDefault().post(new EventMessage(EventMessage.BIND_COMPANY_SUCCESS));
                                             getActivity().onBackPressed();
                                             Toasty.success(getContext(), "绑定成功", Toast.LENGTH_SHORT, true).show();

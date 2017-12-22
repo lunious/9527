@@ -49,6 +49,20 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".test.TestActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Main"
+            android:windowSoftInputMode="adjustPan">
+            <!--<intent-filter>-->
+            <!--<action android:name="android.intent.action.MAIN" />-->
+
+            <!--<category android:name="android.intent.category.LAUNCHER" />-->
+            <!--</intent-filter>-->
+        </activity>
+
         <activity android:name="me.shaohui.shareutil._ShareActivity" />
 
         <activity-alias

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -20,7 +19,6 @@ import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
-import com.lubanjianye.biaoxuntong.sign.AboutActivity;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
@@ -65,7 +63,7 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     private RelativeLayout rlLogin = null;
     private RelativeLayout rlNoLogin = null;
     private AppCompatTextView tvUserCompany = null;
-    private ImageView defaultErweima = null;
+    private AppCompatTextView tvUserName = null;
 
 
     long id = 0;
@@ -113,16 +111,15 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
         llQuestion = getView().findViewById(R.id.ll_questions);
         llSetting = getView().findViewById(R.id.ll_setting);
         tvUserCompany = getView().findViewById(R.id.tv_user_company);
+        tvUserName = getView().findViewById(R.id.tv_user_name);
         rlLogin = getView().findViewById(R.id.rl_login);
         rlNoLogin = getView().findViewById(R.id.rl_no_login);
-        defaultErweima = getView().findViewById(R.id.iv_default_erweima);
         imgUserAvatar.setOnClickListener(this);
         imgDefaultAvatar.setOnClickListener(this);
         llCompany.setOnClickListener(this);
         llHelper.setOnClickListener(this);
         llQuestion.setOnClickListener(this);
         llSetting.setOnClickListener(this);
-        defaultErweima.setOnClickListener(this);
 
         //开启轮播图
         initBanner();
@@ -154,6 +151,12 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
             rlNoLogin.setVisibility(View.GONE);
             tvUserCompany.setVisibility(View.VISIBLE);
             rlLogin.setVisibility(View.VISIBLE);
+
+            if (!TextUtils.isEmpty(mobile)) {
+                tvUserName.setText(mobile);
+            } else {
+                tvUserName.setText(nickName);
+            }
 
             if (!TextUtils.isEmpty(companyName)) {
                 tvUserCompany.setText(companyName);
@@ -232,6 +235,12 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
             tvUserCompany.setVisibility(View.VISIBLE);
             rlLogin.setVisibility(View.VISIBLE);
 
+            if (!TextUtils.isEmpty(mobile)) {
+                tvUserName.setText(mobile);
+            } else {
+                tvUserName.setText(nickName);
+            }
+
             if (!TextUtils.isEmpty(companyName)) {
                 tvUserCompany.setText(companyName);
             } else {
@@ -251,7 +260,6 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
 
     }
 
-    //轮播图
     public void initBanner() {
         RestClient.builder()
                 .url(BiaoXunTongApi.URL_GETINDEXBANNER)
@@ -320,10 +328,6 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
             case R.id.img_default_avatar:
                 //跳到登陆界面
                 startActivity(new Intent(getActivity(), SignInActivity.class));
-                break;
-            case R.id.iv_default_erweima:
-                //关于我们界面
-                startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;
             case R.id.ll_company:
                 if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {

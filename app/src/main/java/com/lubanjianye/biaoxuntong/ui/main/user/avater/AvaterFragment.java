@@ -90,7 +90,6 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
         }
     }
 
-
     @Override
     public void initData() {
         llIvBack.setVisibility(View.VISIBLE);

@@ -59,14 +59,17 @@
                         android:orientation="vertical">
 
                         <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/tv_user_company"
+                            android:id="@+id/tv_user_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="未绑定企业"
+                            android:paddingRight="@dimen/d8"
+                            android:paddingStart="@dimen/d8"
+                            android:text="lunious"
                             android:textColor="@android:color/white"
                             android:textSize="@dimen/s16" />
 
                         <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_user_company"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/d14"
@@ -75,25 +78,10 @@
                             android:paddingRight="@dimen/d8"
                             android:paddingStart="@dimen/d8"
                             android:paddingTop="@dimen/d2"
-                            android:text="招标、采购讯息尽在掌握"
+                            android:text="未绑定企业"
                             android:textColor="@color/blue"
                             android:textSize="@dimen/s14" />
                     </LinearLayout>
-
-
-                    <RelativeLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center">
-
-                        <ImageView
-                            android:id="@+id/iv_default_erweima"
-                            android:layout_width="@dimen/d22"
-                            android:layout_height="@dimen/d22"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/d20"
-                            android:src="@mipmap/default_erweima" />
-                    </RelativeLayout>
 
 
                 </LinearLayout>
@@ -107,7 +95,8 @@
             android:id="@+id/rl_no_login"
             android:layout_width="match_parent"
             android:layout_height="@dimen/d180"
-            android:background="@mipmap/avatar_bg">
+            android:background="@mipmap/avatar_bg"
+            android:visibility="visible">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/atv_me"
@@ -159,7 +148,7 @@
             android:id="@+id/banner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@mipmap/hyzx_3"
+            android:background="@mipmap/default_banner"
             app:indicator_drawable_selected="@color/blue"
             app:indicator_drawable_unselected="@android:color/white"
             app:indicator_height="@dimen/d1"
