@@ -33,6 +33,7 @@ import com.lubanjianye.biaoxuntong.searchview.bCallBack;
 import com.lubanjianye.biaoxuntong.ui.main.result.ResultListAdapter;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
+import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
@@ -244,14 +245,15 @@ public class ResultSearchFragment extends BaseFragment {
                         .success(new ISuccess() {
                             @Override
                             public void onSuccess(Headers headers, String response) {
+                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
 
-                                final JSONObject object = JSON.parseObject(response);
+                                final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
                                 final JSONArray array = data.getJSONArray("list");
                                 final boolean nextPage = data.getBoolean("nextpage");
 
                                 if (array.size() > 0) {
-                                    setData(isRefresh, array,nextPage);
+                                    setData(isRefresh, array, nextPage);
                                 } else {
                                     if (mDataList != null) {
                                         mDataList.clear();
@@ -277,16 +279,15 @@ public class ResultSearchFragment extends BaseFragment {
                         .success(new ISuccess() {
                             @Override
                             public void onSuccess(Headers headers, String response) {
+                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
 
-                                Log.d("BAJSBDBASDASD", response);
-
-                                final JSONObject object = JSON.parseObject(response);
+                                final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
                                 final JSONArray array = data.getJSONArray("list");
                                 final boolean nextPage = data.getBoolean("nextpage");
 
                                 if (array.size() > 0) {
-                                    setData(isRefresh, array,nextPage);
+                                    setData(isRefresh, array, nextPage);
                                 } else {
                                     if (mDataList != null) {
                                         mDataList.clear();
@@ -309,7 +310,7 @@ public class ResultSearchFragment extends BaseFragment {
 
     }
 
-    private void setData(int isRefresh, JSONArray data,boolean nextPage) {
+    private void setData(int isRefresh, JSONArray data, boolean nextPage) {
         page++;
         final int size = data == null ? 0 : data.size();
         if (isRefresh == 0 || isRefresh == 1) {

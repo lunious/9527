@@ -24,6 +24,7 @@ import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
@@ -217,8 +218,10 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
                         .success(new ISuccess() {
                             @Override
                             public void onSuccess(Headers headers, String response) {
+                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+
                                 //判断是否收藏过
-                                final JSONObject object = JSON.parseObject(response);
+                                final JSONObject object = JSON.parseObject(jiemi);
                                 String status = object.getString("status");
                                 int favorite = object.getInteger("favorite");
                                 if (favorite == 1) {
@@ -330,7 +333,9 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
                             @Override
                             public void onSuccess(Headers headers, String response) {
 
-                                final JSONObject object = JSON.parseObject(response);
+                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+
+                                final JSONObject object = JSON.parseObject(jiemi);
                                 String status = object.getString("status");
 
                                 if ("200".equals(status)) {

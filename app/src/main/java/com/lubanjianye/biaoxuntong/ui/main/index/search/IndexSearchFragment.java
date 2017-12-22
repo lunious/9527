@@ -41,6 +41,7 @@ import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexBxtgdjDetailActivit
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjyDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgtableDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexXcgggDetailActivity;
+import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
@@ -305,7 +306,10 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                         .success(new ISuccess() {
                             @Override
                             public void onSuccess(Headers headers, String response) {
-                                final JSONObject object = JSON.parseObject(response);
+
+                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+
+                                final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
                                 final String status = object.getString("status");
                                 final String message = object.getString("message");
@@ -314,7 +318,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
 
                                 if ("200".equals(status)) {
                                     if (array.size() > 0) {
-                                        setData(isRefresh, array,nextPage);
+                                        setData(isRefresh, array, nextPage);
                                     } else {
                                         if (mDataList != null) {
                                             mDataList.clear();
@@ -346,7 +350,9 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                         .success(new ISuccess() {
                             @Override
                             public void onSuccess(Headers headers, String response) {
-                                final JSONObject object = JSON.parseObject(response);
+                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+
+                                final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
                                 final String status = object.getString("status");
                                 final String message = object.getString("message");
@@ -355,7 +361,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
 
                                 if ("200".equals(status)) {
                                     if (array.size() > 0) {
-                                        setData(isRefresh, array,nextPage);
+                                        setData(isRefresh, array, nextPage);
                                     } else {
                                         if (mDataList != null) {
                                             mDataList.clear();
@@ -383,7 +389,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
 
     }
 
-    private void setData(boolean isRefresh, JSONArray data,boolean nextPage) {
+    private void setData(boolean isRefresh, JSONArray data, boolean nextPage) {
         page++;
         final int size = data == null ? 0 : data.size();
         if (isRefresh) {

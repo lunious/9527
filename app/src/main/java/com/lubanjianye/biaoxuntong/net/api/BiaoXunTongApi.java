@@ -11,6 +11,8 @@ package com.lubanjianye.biaoxuntong.net.api;
 
 public abstract class BiaoXunTongApi {
 
+    public static final String PAS_KEY = "老子不死你1";
+
     public static final String BASEURL = "http://api.lubanjianye.com/";
     /**
      * 得到首页Tab数据
@@ -59,21 +61,21 @@ public abstract class BiaoXunTongApi {
      */
     public static final String URL_GETCOLLECTIONLIST = BASEURL + "bxtajax/FavoriteAjax/listAll";
     /**
-     * 首页列表详情
+     * 首页列表详情(加密)
      */
-    public static final String URL_GETCOLLECTIONLISTDETAIL = BASEURL + "bxtajax/Entryajax/getDetailsData";
+    public static final String URL_GETCOLLECTIONLISTDETAIL = BASEURL + "bxtajax/Entryajax/getDetailsDataSer";
     /**
-     * 公共结果列表
+     * 公共结果列表(加密)
      */
-    public static final String URL_GETRESULTLIST = BASEURL + "bxtajax/Entryjgajax/getEntryjgList";
+    public static final String URL_GETRESULTLIST = BASEURL + "bxtajax/Entryjgajax/getEntryjgListSer";
     /**
-     * 公共结果列表详情
+     * 公共结果列表详情(加密)
      */
-    public static final String URL_GETRESULTLISTDETAIL = BASEURL + "bxtajax/Entryjgajax/getDetailsData";
+    public static final String URL_GETRESULTLISTDETAIL = BASEURL + "bxtajax/Entryjgajax/getDetailsDataSer";
     /**
-     * 首页公共列表
+     * 首页公共列表(加密)
      */
-    public static final String URL_GETINDEXLIST = BASEURL + "bxtajax/Entryajax/getEntryList";
+    public static final String URL_GETINDEXLIST = BASEURL + "bxtajax/Entryajax/getEntryListSer";
     /**
      * 首页行业资讯列表
      */

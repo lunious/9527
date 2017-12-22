@@ -30,6 +30,7 @@ import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjyDetailActivity
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgrowDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgtableDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexXcgggDetailActivity;
+import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.loader.GlideImageLoader;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
@@ -315,7 +316,9 @@ public class IndexListFragment extends BaseFragment {
                             @Override
                             public void onSuccess(Headers headers, String response) {
 
-                                final JSONObject object = JSON.parseObject(response);
+                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+
+                                final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
                                 final String status = object.getString("status");
                                 final String message = object.getString("message");
@@ -338,7 +341,6 @@ public class IndexListFragment extends BaseFragment {
                                     Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
                                 }
 
-
                             }
                         })
                         .build()
@@ -355,7 +357,9 @@ public class IndexListFragment extends BaseFragment {
                             @Override
                             public void onSuccess(Headers headers, String response) {
 
-                                final JSONObject object = JSON.parseObject(response);
+                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+
+                                final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
                                 final String status = object.getString("status");
                                 final String message = object.getString("message");

@@ -29,6 +29,7 @@ import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.search.ResultSearchActivity;
+import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
@@ -218,8 +219,9 @@ public class ResultListFragment extends BaseFragment {
                         .success(new ISuccess() {
                             @Override
                             public void onSuccess(Headers headers, String response) {
+                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
 
-                                final JSONObject object = JSON.parseObject(response);
+                                final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
                                 final JSONArray array = data.getJSONArray("list");
                                 final boolean nextPage = data.getBoolean("nextpage");
@@ -253,9 +255,9 @@ public class ResultListFragment extends BaseFragment {
                             @Override
                             public void onSuccess(Headers headers, String response) {
 
-                                Log.d("BAJSBDBASDASD", response);
+                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
 
-                                final JSONObject object = JSON.parseObject(response);
+                                final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
                                 final JSONArray array = data.getJSONArray("list");
                                 final boolean nextPage = data.getBoolean("nextpage");
