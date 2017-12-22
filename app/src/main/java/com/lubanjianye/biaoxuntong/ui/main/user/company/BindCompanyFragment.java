@@ -1,6 +1,5 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.company;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
@@ -20,18 +19,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.bean.BindCompanyBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
-import com.lubanjianye.biaoxuntong.sign.SignInActivity;
-import com.lubanjianye.biaoxuntong.ui.main.index.IndexFragmentAdapter;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
 
@@ -95,7 +90,6 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
         bindCompanyRecycler = getView().findViewById(R.id.bind_company_recycler);
 
         llIvBack.setOnClickListener(this);
-
 
     }
 

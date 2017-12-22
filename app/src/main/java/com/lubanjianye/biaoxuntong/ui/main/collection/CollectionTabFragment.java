@@ -7,7 +7,6 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -36,7 +35,6 @@ import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgtableDetailA
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexXcgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
-import com.lubanjianye.biaoxuntong.util.aes.CXAESUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 
