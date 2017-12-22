@@ -1,13 +1,9 @@
 package com.lubanjianye.biaoxuntong.ui.main.index.detail;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
@@ -224,7 +220,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
     @Override
     public void initData() {
         llIvBack.setVisibility(View.VISIBLE);
-        mainBarName.setText("资讯详情");
+        mainBarName.setText("标讯详情");
         xcgggDetailStatusView.setOnRetryClickListener(mRetryClickListener);
     }
 
@@ -259,7 +255,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
 
                 if (scrollY == 0) {
                     // 顶部
-                    mainBarName.setText("资讯详情");
+                    mainBarName.setText("标讯详情");
                 }
 
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {

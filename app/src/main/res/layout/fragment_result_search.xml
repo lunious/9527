@@ -12,7 +12,7 @@
         app:searchBlockColor="@color/blue"
         app:searchBlockHeight="120"
         app:textColorSearch="#6c6c6c"
-        app:textHintSearch="请输入要查询的内容"
+        app:textHintSearch="输入你感兴趣的项目名称关键字"
         app:textSizeSearch="@dimen/d5" />
 
     <android.support.v4.widget.SwipeRefreshLayout

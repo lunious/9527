@@ -96,17 +96,17 @@ public class IndexListFragment extends BaseFragment {
                 if (position == 0) {
                     intent = new Intent(getActivity(), BrowserActivity.class);
                     intent.putExtra("url", detail_1);
-                    intent.putExtra("title", "");
+                    intent.putExtra("title", "鲁班建业通-招投标神器");
                     startActivity(intent);
                 } else if (position == 1) {
                     intent = new Intent(getActivity(), BrowserActivity.class);
                     intent.putExtra("url", detail_2);
-                    intent.putExtra("title", "");
+                    intent.putExtra("title", "鲁班建业通-招投标神器");
                     startActivity(intent);
                 } else {
                     intent = new Intent(getActivity(), BrowserActivity.class);
                     intent.putExtra("url", detail_3);
-                    intent.putExtra("title", "");
+                    intent.putExtra("title", "鲁班建业通-招投标神器");
                     startActivity(intent);
                 }
             }

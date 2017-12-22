@@ -53,7 +53,7 @@ public class IndexListAdapter extends BaseQuickAdapter<IndexListBean, BaseViewHo
         if (!TextUtils.isEmpty(deadTime)) {
             helper.setText(R.id.tv_index_time, deadTime);
             helper.setText(R.id.tv_index_time_type, "截止");
-            helper.setTextColor(R.id.tv_index_time_type, android.graphics.Color.parseColor("#cccc99"));
+            helper.setTextColor(R.id.tv_index_time_type, android.graphics.Color.parseColor("#ff6666"));
         } else {
             helper.setVisible(R.id.tv_index_time, false);
             helper.setVisible(R.id.tv_index_time_type, false);
@@ -61,7 +61,7 @@ public class IndexListAdapter extends BaseQuickAdapter<IndexListBean, BaseViewHo
         if (!TextUtils.isEmpty(sysTime)) {
             helper.setText(R.id.tv_index_pub_time, sysTime.substring(0, 10));
             helper.setText(R.id.tv_index_pub_time_type, "发布");
-            helper.setTextColor(R.id.tv_index_pub_time_type, android.graphics.Color.parseColor("#21a9ff"));
+            helper.setTextColor(R.id.tv_index_pub_time_type, android.graphics.Color.parseColor("#9c9c9c"));
         } else {
             helper.setVisible(R.id.tv_index_pub_time, false);
             helper.setVisible(R.id.tv_index_pub_time_type, false);

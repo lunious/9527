@@ -31,14 +31,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/d8"
                     android:gravity="center"
-                    android:text="我"
+                    android:text="我的企业"
                     android:textColor="@color/white"
                     android:textSize="@dimen/d16" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d8"
+                    android:layout_marginLeft="@dimen/d12"
                     android:layout_marginTop="@dimen/d34"
                     android:orientation="horizontal">
 

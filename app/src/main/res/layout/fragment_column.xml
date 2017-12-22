@@ -62,7 +62,7 @@
                         android:layout_marginTop="@dimen/d20"
                         android:text="我的栏目"
                         android:textColor="@color/blue"
-                        android:textSize="@dimen/s16" />
+                        android:textSize="@dimen/s15" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -102,9 +102,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/d10"
                     android:layout_marginTop="@dimen/d10"
-                    android:text="点击添加新栏目"
+                    android:text="点击添加感兴趣的栏目"
                     android:textColor="@color/blue"
-                    android:textSize="@dimen/s16" />
+                    android:textSize="@dimen/s15" />
 
             </LinearLayout>
 
@@ -132,9 +132,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/d10"
                     android:layout_marginTop="@dimen/d10"
-                    android:text="推荐地区"
+                    android:text="点击添加感兴趣的地区"
                     android:textColor="@color/blue"
-                    android:textSize="@dimen/s16" />
+                    android:textSize="@dimen/s15" />
 
             </LinearLayout>
 

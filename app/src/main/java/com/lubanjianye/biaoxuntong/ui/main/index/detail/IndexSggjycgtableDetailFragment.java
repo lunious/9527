@@ -157,7 +157,7 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
     @Override
     public void initData() {
         llIvBack.setVisibility(View.VISIBLE);
-        mainBarName.setText("资讯详情");
+        mainBarName.setText("标讯详情");
         sggjycgtableDetailStatusView.setOnRetryClickListener(mRetryClickListener);
     }
 
@@ -192,7 +192,7 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
 
                 if (scrollY == 0) {
                     // 顶部
-                    mainBarName.setText("资讯详情");
+                    mainBarName.setText("标讯详情");
                 }
 
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {

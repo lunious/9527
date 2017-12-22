@@ -7,7 +7,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
@@ -89,7 +88,7 @@ public class IndexHyzxDetailFragment extends BaseFragment implements View.OnClic
     @Override
     public void initData() {
         llIvBack.setVisibility(View.VISIBLE);
-        mainBarName.setText("资讯详情");
+        mainBarName.setText("标讯详情");
         hyzxDetailStatusView.setOnRetryClickListener(mRetryClickListener);
     }
 
@@ -121,7 +120,7 @@ public class IndexHyzxDetailFragment extends BaseFragment implements View.OnClic
 
                 if (scrollY == 0) {
                     // 顶部
-                    mainBarName.setText("资讯详情");
+                    mainBarName.setText("标讯详情");
                 }
 
                 if (scrollY == (v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight())) {

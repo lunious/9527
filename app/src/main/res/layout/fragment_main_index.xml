@@ -49,7 +49,7 @@
                     android:layout_gravity="center"
                     android:paddingEnd="@dimen/d2"
                     android:paddingStart="@dimen/d6"
-                    android:text="搜索你感兴趣的内容"
+                    android:text="输入你感兴趣的招标公告名称"
                     android:textColor="#9d9d9d"
                     android:textSize="@dimen/s14" />
             </LinearLayout>
