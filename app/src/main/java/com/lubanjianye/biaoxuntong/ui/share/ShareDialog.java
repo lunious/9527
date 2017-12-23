@@ -203,17 +203,7 @@ public class ShareDialog extends BottomDialog implements OpenBuilder.Callback,
             AppOperator.runOnThread(new Runnable() {
                 @Override
                 public void run() {
-                    try {
-                        Bitmap thumbBitmap = Glide.with(getContext())
-                                .load(imageUrl)
-                                .asBitmap().into(100, 100).get();
-                        //为微博和微信加入分享的详情icon
-                        mShare.setThumbBitmap(thumbBitmap);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        e.printStackTrace();
-                    }
+                    mShare.setImageUrl(imageUrl);
                 }
             });
         }
