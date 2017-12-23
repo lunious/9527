@@ -157,7 +157,6 @@ public abstract class BiaoXunTongApi {
      * 获得根据筛选条件查询到公司详情
      */
     public static final String URL_SUITRESULTDETAIl = "http://119.23.161.79/app/info/";
-
     /**
      * 获得根据筛选条件查询到公司企业资质
      */

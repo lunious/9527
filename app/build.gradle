@@ -65,7 +65,6 @@ dependencies {
     compile "com.github.bumptech.glide:glide:3.7.0"
     //FlycoTabLayout依赖
     compile 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
-    compile 'pub.devrel:easypermissions:0.3.0'
     //MultipleStatusView空白页
     compile 'com.classic.common:multiple-status-view:1.3'
     //AVLoadingIndicatorView依赖(加载动画)
@@ -79,5 +78,7 @@ dependencies {
     //推送依赖
     compile 'com.github.joyrun.MixPush:client-core:1.2.0' //必填
     compile 'com.github.joyrun.MixPush:client-getui:1.2.0' // 个推
+    //easypermissions依赖
+    implementation 'pub.devrel:easypermissions:1.1.1'
 
 }
