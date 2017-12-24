@@ -354,113 +354,29 @@
 
         </LinearLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/d0"
-            android:layout_weight="1.2"
+            android:layout_marginLeft="@dimen/d8"
+            android:layout_marginRight="@dimen/d8"
+            android:layout_marginTop="@dimen/d4"
+            android:layout_marginBottom="@dimen/d8"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
 
             <Button
                 android:id="@+id/btn_start_search"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/d16"
-                android:layout_marginLeft="@dimen/d20"
-                android:layout_marginRight="@dimen/d20"
-                android:layout_weight="2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d38"
+                android:layout_alignParentTop="true"
                 android:background="@drawable/button_selected"
                 android:text="开始查询"
                 android:textColor="@color/white"
                 android:textSize="@dimen/s16" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/d0"
-            android:layout_weight="1.5"
-            android:background="#FFF6F6F6"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="@dimen/d0"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="@dimen/d0"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="0.7"
-                    android:src="@mipmap/searchsuccess" />
-
-                <LinearLayout
-                    android:layout_width="@dimen/d0"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="3"
-                    android:orientation="vertical">
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/d0"
-                        android:layout_weight="1"
-                        android:text="查询结果"
-                        android:textColor="@color/blue"
-                        android:textSize="@dimen/s16" />
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="@dimen/d0"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="共为你查到"
-                            android:textSize="@dimen/s15" />
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/tv_check_result"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/d1"
-                            android:layout_marginRight="@dimen/d1"
-                            android:text="0"
-                            android:textColor="@color/blue"
-                            android:textSize="@dimen/s15" />
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="家企业！"
-                            android:textSize="@dimen/s15" />
-
-                    </LinearLayout>
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/btn_check_result"
-                android:layout_width="@dimen/d0"
-                android:layout_height="@dimen/d25"
-                android:layout_gravity="center"
-                android:layout_weight="1.5"
-                android:gravity="center"
-                android:paddingEnd="@dimen/d6"
-                android:paddingStart="@dimen/d6"
-                android:text="查看详情>>"
-                android:textColor="@color/blue"
-                android:textSize="@dimen/s15"
-                android:visibility="invisible" />
-
-        </LinearLayout>
 
     </LinearLayout>
 

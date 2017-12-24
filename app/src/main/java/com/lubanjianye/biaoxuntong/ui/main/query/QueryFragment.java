@@ -1,6 +1,7 @@
 package com.lubanjianye.biaoxuntong.ui.main.query;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -27,6 +28,7 @@ import com.gongwen.marqueen.SimpleMF;
 import com.gongwen.marqueen.SimpleMarqueeView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.bean.JsonString;
 import com.lubanjianye.biaoxuntong.bean.QueryBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
@@ -45,6 +47,8 @@ import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Headers;
 
@@ -71,8 +75,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     private Button btnAdd = null;
     private View view = null;
     private LinearLayout ll = null;
-    private TextView btnCheckResult = null;
-    private TextView tvCheckResult = null;
     private Button btnStartSearch = null;
     private SimpleMarqueeView scrollView = null;
     private AppCompatTextView vipDetail = null;
@@ -122,7 +124,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     String qyIds = "";
 
     List<Object> allids = new ArrayList<Object>();
-    List<Object> ids = new ArrayList<Object>();
 
     int i = 0;
 
@@ -190,8 +191,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
         btnAdd = getView().findViewById(R.id.btn_add);
         view = getView().findViewById(R.id.view);
         ll = getView().findViewById(R.id.ll);
-        btnCheckResult = getView().findViewById(R.id.btn_check_result);
-        tvCheckResult = getView().findViewById(R.id.tv_check_result);
         btnStartSearch = getView().findViewById(R.id.btn_start_search);
         scrollView = getView().findViewById(R.id.scroll_view);
         vipDetail = getView().findViewById(R.id.vip_detail);
@@ -286,9 +285,9 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
         rlv_query.addOnItemTouchListener(new OnItemClickListener() {
             @Override
             public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                Toasty.info(getContext(), position + "", Toast.LENGTH_SHORT, true).show();
                 mDataList.remove(position);
                 mAdapter.notifyDataSetChanged();
+                getSuitCompany();
             }
         });
     }
@@ -358,13 +357,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             promptDialog.dismissImmediately();
         }
 
-        AppSharePreferenceMgr.remove(getContext(), "tianjian1");
-        AppSharePreferenceMgr.remove(getContext(), "tianjian2");
-        AppSharePreferenceMgr.remove(getContext(), "tianjian3");
-        AppSharePreferenceMgr.remove(getContext(), "hasIds");
-        AppSharePreferenceMgr.remove(getContext(), "hasIds1");
-        AppSharePreferenceMgr.remove(getContext(), "hasIds2");
-
     }
 
     @Override
@@ -378,48 +370,82 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                 startActivity(intent);
                 break;
             case R.id.btn_add:
+                if (TextUtils.isEmpty(one)) {
+                    Toasty.info(getContext(), "请选择资质类型", Toast.LENGTH_SHORT, true).show();
 
-                if (mDataList.size() > 2) {
-                    Toasty.info(getContext(), "最多叠加三个条件!", Toast.LENGTH_SHORT, true).show();
                 } else {
-                    QueryBean bean = new QueryBean();
-                    bean.setZzlx(one);
-                    bean.setDl(two);
-                    bean.setXl(three);
-                    bean.setZy(four);
-                    bean.setDj(five);
-                    bean.setDq(six);
-                    mDataList.add(bean);
-
-                    mAdapter.notifyDataSetChanged();
+                    if (mDataList.size() > 2) {
+                        Toasty.info(getContext(), "最多叠加三个条件!", Toast.LENGTH_SHORT, true).show();
+                    } else {
+                        QueryBean bean = new QueryBean();
+                        bean.setZzlx(one);
+                        bean.setDl(two);
+                        bean.setXl(three);
+                        bean.setZy(four);
+                        bean.setDj(five);
+                        bean.setDq(six);
+                        mDataList.add(bean);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                    //得到符合条件的id
+                    getSuitIds();
+                    getSuitCompany();
                 }
 
-//                if (TextUtils.isEmpty(one)) {
-//                    Toasty.info(getContext(), "请选择资质类型", Toast.LENGTH_SHORT, true).show();
-//
-//                } else {
-//                    if (mDataList.size() > 2) {
-//                        Toasty.info(getContext(), "最多叠加三个条件!", Toast.LENGTH_SHORT, true).show();
-//                    } else {
-//                        QueryBean bean = new QueryBean();
-//                        bean.setZzlx(one);
-//                        bean.setDl(two);
-//                        bean.setXl(three);
-//                        bean.setZy(four);
-//                        bean.setDj(five);
-//                        bean.setDq(six);
-//                        mDataList.add(bean);
-//
-//                        mAdapter.notifyDataSetChanged();
-//                    }
-//                }
-
-
-                //得到符合条件的id
-//                getSuitIds();
                 break;
             case R.id.btn_start_search:
-                Toasty.success(getContext(), "开始查询", Toast.LENGTH_SHORT, true).show();
+                if (mDataList.size() > 0) {
+                    if (i != 0) {
+                        final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
+                            @Override
+                            public void onClick(PromptButton button) {
+                            }
+                        });
+                        cancel.setTextColor(Color.parseColor("#cccc33"));
+                        cancel.setTextSize(16);
+
+                        final PromptButton toLogin = new PromptButton("查看详情", new PromptButtonListener() {
+                            @Override
+                            public void onClick(PromptButton button) {
+                                if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
+                                    List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+                                    for (int i = 0; i < users.size(); i++) {
+                                        id = users.get(0).getId();
+                                        nickName = users.get(0).getNickName();
+                                        token = users.get(0).getToken();
+                                        comid = users.get(0).getComid();
+                                        imageUrl = users.get(0).getImageUrl();
+                                        mobile = users.get(0).getMobile();
+                                    }
+
+                                    if (!TextUtils.isEmpty(mobile)) {
+                                        //根据返回的id去查询公司名称
+                                        Intent intent = new Intent(getActivity(), CompanySearchResultActivity.class);
+                                        intent.putExtra("provinceCode", provinceCode);
+                                        intent.putExtra("qyIds", qyIds);
+                                        startActivity(intent);
+                                    } else {
+                                        Toasty.error(getContext(), "请先绑定手机号", Toast.LENGTH_SHORT, true).show();
+                                        Intent intent = new Intent(getActivity(), AvaterActivity.class);
+                                        startActivity(intent);
+                                    }
+
+                                } else {
+                                    //未登录去登陆
+                                    startActivity(new Intent(getActivity(), SignInActivity.class));
+                                }
+
+                            }
+                        });
+                        toLogin.setTextColor(Color.parseColor("#00bfdc"));
+                        toLogin.setTextSize(16);
+                        promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false);
+
+                        promptDialog.showWarnAlert("共为你查询到" + i + "家企业!", cancel, toLogin, false);
+                    }
+                } else {
+                    Toasty.info(getContext(), "请添加条件", Toast.LENGTH_SHORT, true).show();
+                }
 
                 break;
             case R.id.tv_query:
@@ -482,6 +508,44 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             default:
                 break;
         }
+    }
+
+
+    public void getSuitCompany() {
+        JsonString jsonString = new JsonString();
+        jsonString.setZyIds(zyIds);
+        jsonString.setLxId(lxId);
+        jsonString.setZcd(zcd);
+        jsonString.setDjId(djId);
+        jsonString.setProvinceCode(provinceCode);
+        jsonString.setEntrySign(entrySign);
+        String userJson = JSON.toJSONString(jsonString);
+
+        RestClient.builder()
+                .url(BiaoXunTongApi.URL_GETSUITIDS)
+                .params("JSONString", userJson)
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(Headers headers, String response) {
+                        final JSONObject jsonObject = JSONObject.parseObject(response);
+                        String status = jsonObject.getString("status");
+
+                        if ("200".equals(status)) {
+
+                            final JSONArray dataArray = jsonObject.getJSONArray("data");
+
+                            if (dataArray != null) {
+                                allids = dataArray;
+                                i = allids.size();
+                                qyIds = allids.toString();
+                            }
+                        } else {
+                            Toasty.error(getContext(), "服务器错误", Toast.LENGTH_SHORT, true).show();
+                        }
+                    }
+                })
+                .build()
+                .post();
     }
 
     /**
