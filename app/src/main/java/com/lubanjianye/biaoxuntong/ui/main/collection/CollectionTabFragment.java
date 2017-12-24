@@ -301,7 +301,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                 final int count = data.getInteger("count");
                                 final boolean nextPage = data.getBoolean("nextpage");
 
-                                if (array.size() > 0) {
+                                if (array != null) {
                                     setData(isRefresh, array, nextPage);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 } else {

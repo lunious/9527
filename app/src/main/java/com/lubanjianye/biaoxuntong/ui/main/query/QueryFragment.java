@@ -27,7 +27,6 @@ import com.gongwen.marqueen.SimpleMF;
 import com.gongwen.marqueen.SimpleMarqueeView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
-import com.lubanjianye.biaoxuntong.bean.MyCompanyQyzzAllListBean;
 import com.lubanjianye.biaoxuntong.bean.QueryBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
@@ -40,7 +39,6 @@ import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
-import com.lubanjianye.biaoxuntong.ui.main.user.company.MyCompanyQyzzAllListAdapter;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
 
