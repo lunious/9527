@@ -13,9 +13,9 @@ import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.bean.Version;
 import com.lubanjianye.biaoxuntong.event.TabSelectedEvent;
 import com.lubanjianye.biaoxuntong.ui.main.index.IndexTabFragment;
+import com.lubanjianye.biaoxuntong.ui.main.query.QueryFragment;
 import com.lubanjianye.biaoxuntong.ui.main.user.UserTabFragment;
 import com.lubanjianye.biaoxuntong.ui.main.result.ResultTabFragment;
-import com.lubanjianye.biaoxuntong.ui.main.query.QueryTabFragment;
 import com.lubanjianye.biaoxuntong.ui.main.collection.CollectionTabFragment;
 import com.lubanjianye.biaoxuntong.ui.update.CheckUpdateManager;
 import com.lubanjianye.biaoxuntong.ui.update.DownloadService;
@@ -64,7 +64,7 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
         BaseFragment firstFragment = findChildFragment(IndexTabFragment.class);
         if (firstFragment == null) {
             mFragments[FIRST] = new IndexTabFragment();
-            mFragments[SECOND] = new QueryTabFragment();
+            mFragments[SECOND] = new QueryFragment();
             mFragments[THIRD] = new CollectionTabFragment();
             mFragments[FOUR] = new ResultTabFragment();
             mFragments[FIVE] = new UserTabFragment();
@@ -80,7 +80,7 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
 
             // 这里我们需要拿到mFragments的引用
             mFragments[FIRST] = firstFragment;
-            mFragments[SECOND] = findChildFragment(QueryTabFragment.class);
+            mFragments[SECOND] = findChildFragment(QueryFragment.class);
             mFragments[THIRD] = findChildFragment(CollectionTabFragment.class);
             mFragments[FOUR] = findChildFragment(ResultTabFragment.class);
             mFragments[FIVE] = findChildFragment(UserTabFragment.class);
