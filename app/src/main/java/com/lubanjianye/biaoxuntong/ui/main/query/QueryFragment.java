@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -297,9 +298,17 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     private void initRecyclerView() {
         rlv_query.setLayoutManager(new LinearLayoutManager(getContext()));
 
+
     }
 
     private void initAdapter() {
+
+
+        final Paint paint = new Paint();
+        paint.setAntiAlias(true);
+        paint.setTextSize(40);
+        paint.setColor(Color.WHITE);
+
 
         OnItemSwipeListener onItemSwipeListener = new OnItemSwipeListener() {
             @Override
@@ -342,7 +351,8 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
             @Override
             public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
-                canvas.drawColor(ContextCompat.getColor(getContext(), R.color.bg_red));
+                canvas.drawColor(ContextCompat.getColor(getContext(), R.color.blue));
+                canvas.drawText("继续滑动即可删除",90, 90, paint);
             }
         };
         mAdapter = new QueryAdapter(R.layout.query_item, mDataList);
@@ -354,7 +364,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
         mItemDragAndSwipeCallback.setSwipeMoveFlags(ItemTouchHelper.END | ItemTouchHelper.START);
         mAdapter.enableSwipeItem();
         mAdapter.setOnItemSwipeListener(onItemSwipeListener);
-        mAdapter.enableDragItem(mItemTouchHelper);
         rlv_query.setAdapter(mAdapter);
     }
 
@@ -847,7 +856,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                         return;
                                     }
                                     mSpinerZzlx.setWidth(ll.getWidth());
-                                    mSpinerZzlx.setHeight(ll.getHeight());
+                                    mSpinerZzlx.setHeight(ll.getHeight() / 2);
                                     mSpinerZzlx.showAsDropDown(view);
                                     setTextImage(R.id.tv_zzlx, R.mipmap.up);
                                 }
@@ -1020,7 +1029,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                         return;
                                     }
                                     mSpinerDl.setWidth(ll.getWidth());
-                                    mSpinerDl.setHeight(ll.getHeight());
+                                    mSpinerDl.setHeight(ll.getHeight() / 2);
                                     mSpinerDl.showAsDropDown(view);
                                     setTextImage(R.id.tv_dl, R.mipmap.up);
                                 }
@@ -1173,7 +1182,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                         return;
                                     }
                                     mSpinerXl.setWidth(ll.getWidth());
-                                    mSpinerXl.setHeight(ll.getHeight());
+                                    mSpinerXl.setHeight(ll.getHeight() / 2);
                                     mSpinerXl.showAsDropDown(view);
                                     setTextImage(R.id.tv_xl, R.mipmap.up);
                                 }
@@ -1347,7 +1356,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                         return;
                                     }
                                     mSpinerZy.setWidth(ll.getWidth());
-                                    mSpinerZy.setHeight(ll.getHeight());
+                                    mSpinerZy.setHeight(ll.getHeight() / 2);
                                     mSpinerZy.showAsDropDown(view);
                                     setTextImage(R.id.tv_zy, R.mipmap.up);
                                 }
@@ -1394,7 +1403,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                     return;
                 }
                 mSpinerDj.setWidth(ll.getWidth());
-                mSpinerDj.setHeight(ll.getHeight());
+                mSpinerDj.setHeight(ll.getHeight() / 2);
                 mSpinerDj.showAsDropDown(view);
                 setTextImage(R.id.tv_dj, R.mipmap.up);
             }
@@ -1432,7 +1441,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                     return;
                 }
                 mSpinerQy.setWidth(ll.getWidth());
-                mSpinerQy.setHeight(ll.getHeight());
+                mSpinerQy.setHeight(ll.getHeight() / 2);
                 mSpinerQy.showAsDropDown(view);
                 setTextImage(R.id.tv_qy, R.mipmap.up);
             }
