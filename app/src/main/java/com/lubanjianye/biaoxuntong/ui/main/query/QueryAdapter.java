@@ -3,6 +3,7 @@ package com.lubanjianye.biaoxuntong.ui.main.query;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
+import com.chad.library.adapter.base.BaseItemDraggableAdapter;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.lubanjianye.biaoxuntong.R;
@@ -19,7 +20,7 @@ import java.util.List;
  * 描述:     TODO
  */
 
-public class QueryAdapter extends BaseQuickAdapter<QueryBean, BaseViewHolder> {
+public class QueryAdapter extends BaseItemDraggableAdapter<QueryBean, BaseViewHolder> {
 
     public QueryAdapter(int layoutResId, @Nullable List<QueryBean> data) {
         super(layoutResId, data);

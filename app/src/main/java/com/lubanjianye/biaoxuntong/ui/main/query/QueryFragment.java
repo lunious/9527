@@ -1,14 +1,19 @@
 package com.lubanjianye.biaoxuntong.ui.main.query;
 
 import android.content.Intent;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -22,7 +27,10 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.gongwen.marqueen.MarqueeFactory;
 import com.gongwen.marqueen.SimpleMF;
 import com.gongwen.marqueen.SimpleMarqueeView;
@@ -81,6 +89,8 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     private LinearLayout llSearch = null;
     private RecyclerView rlv_query = null;
 
+    private ItemDragAndSwipeCallback mItemDragAndSwipeCallback;
+    private ItemTouchHelper mItemTouchHelper;
 
     private PromptDialog promptDialog;
     String provinceCode = "510000";
@@ -282,19 +292,38 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     private void initRecyclerView() {
         rlv_query.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        rlv_query.addOnItemTouchListener(new OnItemClickListener() {
-            @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                mDataList.remove(position);
-                mAdapter.notifyDataSetChanged();
-                getSuitCompany();
-            }
-        });
     }
 
     private void initAdapter() {
+
+        OnItemSwipeListener onItemSwipeListener = new OnItemSwipeListener() {
+            @Override
+            public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
+            }
+
+            @Override
+            public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
+            }
+
+            @Override
+            public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
+            }
+
+            @Override
+            public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
+                canvas.drawColor(ContextCompat.getColor(getContext(), R.color.blue));
+            }
+        };
         mAdapter = new QueryAdapter(R.layout.query_item, mDataList);
-        mAdapter.setLoadMoreView(new CustomLoadMoreView());
+
+        mItemDragAndSwipeCallback = new ItemDragAndSwipeCallback(mAdapter);
+        mItemTouchHelper = new ItemTouchHelper(mItemDragAndSwipeCallback);
+        mItemTouchHelper.attachToRecyclerView(rlv_query);
+
+        mItemDragAndSwipeCallback.setSwipeMoveFlags(ItemTouchHelper.END | ItemTouchHelper.START);
+        mAdapter.enableSwipeItem();
+        mAdapter.setOnItemSwipeListener(onItemSwipeListener);
+        mAdapter.enableDragItem(mItemTouchHelper);
         rlv_query.setAdapter(mAdapter);
     }
 
