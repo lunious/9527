@@ -24,6 +24,7 @@ public class UserProfile {
     private String comid = null;
     private String ImageUrl = null;
     private String companyName = null;
+
     @Generated(hash = 1554870577)
     public UserProfile(long id, String mobile, String nickName, String token,
                        String comid, String ImageUrl, String companyName) {

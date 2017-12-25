@@ -237,7 +237,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
 
                                             Log.d("IUGASUIDGUISADUIGYS", id + "");
 
-                                            if (comid != null) {
+                                            if (!"0".equals(comid)) {
                                                 RestClient.builder()
                                                         .url(BiaoXunTongApi.URL_GETCOMPANYNAME)
                                                         .params("userId", id)
@@ -311,7 +311,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                             comid = userInfo.getString("comid");
                                             companyName = null;
 
-                                            if (comid != null) {
+                                            if (!"0".equals(comid)) {
                                                 RestClient.builder()
                                                         .url(BiaoXunTongApi.URL_GETCOMPANYNAME)
                                                         .params("userId", id)
@@ -388,7 +388,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                             mobile = userInfo.getString("mobile");
                                             companyName = null;
 
-                                            if (comid != null) {
+                                            if (!"0".equals(comid)) {
                                                 RestClient.builder()
                                                         .url(BiaoXunTongApi.URL_GETCOMPANYNAME)
                                                         .params("userId", id)
@@ -542,7 +542,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
 
                                 Log.d("IUGASUIDGUISADUIGYS", id + "");
 
-                                if (comid != null) {
+                                if (!"0".equals(comid)) {
                                     RestClient.builder()
                                             .url(BiaoXunTongApi.URL_GETCOMPANYNAME)
                                             .params("userId", id)

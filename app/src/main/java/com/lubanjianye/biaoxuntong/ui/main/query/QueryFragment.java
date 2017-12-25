@@ -134,6 +134,10 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     String qyIds = "";
 
     List<Object> allids = new ArrayList<Object>();
+    List<Object> ids = new ArrayList<Object>();
+    List<Object> ids_1 = new ArrayList<Object>();
+    List<Object> ids_2 = new ArrayList<Object>();
+
 
     int i = 0;
 
@@ -307,6 +311,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
             @Override
             public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
+
             }
 
             @Override
@@ -431,7 +436,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                             }
                         });
                         cancel.setTextColor(Color.parseColor("#cccc33"));
-                        cancel.setTextSize(16);
+                        cancel.setTextSize(15);
 
                         final PromptButton toLogin = new PromptButton("查看详情", new PromptButtonListener() {
                             @Override
@@ -467,10 +472,12 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                             }
                         });
                         toLogin.setTextColor(Color.parseColor("#00bfdc"));
-                        toLogin.setTextSize(16);
+                        toLogin.setTextSize(15);
                         promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false);
 
                         promptDialog.showWarnAlert("共为你查询到" + i + "家企业!", cancel, toLogin, false);
+                    } else {
+
                     }
                 } else {
                     Toasty.info(getContext(), "请添加条件", Toast.LENGTH_SHORT, true).show();
@@ -539,7 +546,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
         }
     }
 
-
     public void getSuitCompany() {
         JsonString jsonString = new JsonString();
         jsonString.setZyIds(zyIds);
@@ -563,11 +569,15 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
                             final JSONArray dataArray = jsonObject.getJSONArray("data");
 
-                            if (dataArray != null) {
+
+                            Log.d("BIJAHSBDBHSADA", dataArray.toString());
+
+                            if (dataArray.size() > 0) {
                                 allids = dataArray;
                                 i = allids.size();
                                 qyIds = allids.toString();
                             }
+
                         } else {
                             Toasty.error(getContext(), "服务器错误", Toast.LENGTH_SHORT, true).show();
                         }
@@ -576,6 +586,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                 .build()
                 .post();
     }
+
 
     /**
      * 给TextView右边设置图片

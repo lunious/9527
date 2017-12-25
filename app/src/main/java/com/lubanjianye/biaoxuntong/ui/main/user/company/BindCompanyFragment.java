@@ -247,7 +247,7 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                 final PromptButton cancel = new PromptButton("确定", new PromptButtonListener() {
                     @Override
                     public void onClick(PromptButton button) {
-                        promptDialog.showLoading("绑定中...");
+                        promptDialog.showLoading("数据迁移中，请稍后...");
                         RestClient.builder()
                                 .url(BiaoXunTongApi.URL_USERBINDCOMPANY)
                                 .params("userId", userId)
@@ -260,13 +260,12 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                                         String status = object.getString("status");
                                         String message = object.getString("message");
 
-
                                         if ("200".equals(status)) {
                                             promptDialog.dismissImmediately();
-                                            Toasty.success(getContext(), message, Toast.LENGTH_SHORT, true).show();
                                             final UserProfile profile = new UserProfile(userId, mobile, nickName, token, comid, imageUrl, companyName);
                                             DatabaseManager.getInstance().getDao().update(profile);
                                             EventBus.getDefault().post(new EventMessage(EventMessage.BIND_COMPANY_SUCCESS));
+                                            Toasty.success(getContext(), message, Toast.LENGTH_SHORT, true).show();
                                             getActivity().onBackPressed();
                                         } else if ("500".equals(status)) {
                                             promptDialog.dismissImmediately();
@@ -278,10 +277,10 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
 
                                     }
 
-
                                 })
                                 .build()
                                 .post();
+
 
                     }
                 });
