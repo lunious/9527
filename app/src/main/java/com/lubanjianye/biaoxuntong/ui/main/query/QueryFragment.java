@@ -137,6 +137,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     List<Object> ids = new ArrayList<Object>();
     List<Object> ids_1 = new ArrayList<Object>();
     List<Object> ids_2 = new ArrayList<Object>();
+    List<Object> ids_3 = new ArrayList<Object>();
 
 
     int i = 0;
@@ -313,17 +314,30 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
                 switch (pos) {
                     case 0:
-                        Toasty.success(getContext(), "第1个被删除了", Toast.LENGTH_SHORT, true).show();
+                        if (ids_1.size() > 0) {
+                            ids_1.clear();
+                        } else {
+                            if (ids_2.size() > 0) {
+                                ids_2.clear();
+                            } else {
+                                ids_3.clear();
+                            }
+                        }
                         break;
                     case 1:
-                        Toasty.success(getContext(), "第2个被删除了", Toast.LENGTH_SHORT, true).show();
+                        if (ids_2.size() > 0) {
+                            ids_2.clear();
+                        } else {
+                            ids_3.clear();
+                        }
                         break;
                     case 2:
-                        Toasty.success(getContext(), "第3个被删除了", Toast.LENGTH_SHORT, true).show();
+                        ids_3.clear();
                         break;
                     default:
                         break;
                 }
+
             }
 
             @Override
@@ -409,8 +423,21 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     public void onDestroyView() {
         super.onDestroyView();
 
+        if (mDataList.size() > 0) {
+            mDataList.clear();
+        }
+
         if (allids.size() > 0) {
             allids.clear();
+        }
+        if (ids_1.size() > 0) {
+            ids_1.clear();
+        }
+        if (ids_2.size() > 0) {
+            ids_2.clear();
+        }
+        if (ids_3.size() > 0) {
+            ids_3.clear();
         }
     }
 
@@ -429,9 +456,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                     Toasty.info(getContext(), "请选择资质类型", Toast.LENGTH_SHORT, true).show();
 
                 } else {
-                    if (mDataList.size() > 2) {
-                        Toasty.info(getContext(), "最多叠加三个条件!", Toast.LENGTH_SHORT, true).show();
-                    } else {
+                    if (mDataList.size() <= 2) {
                         QueryBean bean = new QueryBean();
                         bean.setZzlx(one);
                         bean.setDl(two);
@@ -445,38 +470,84 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                         //得到符合条件的id
                         getSuitIds();
                         getSuitCompany();
+
+                    } else {
+                        Toasty.info(getContext(), "最多叠加三个条件!", Toast.LENGTH_SHORT, true).show();
                     }
 
                 }
 
                 break;
             case R.id.btn_start_search:
+                Log.d("OAISDHOISAHIDHIASDSA", "ids_1==" + ids_1.size());
+                Log.d("OAISDHOISAHIDHIASDSA", "ids_2==" + ids_2.size());
+                Log.d("OAISDHOISAHIDHIASDSA", "ids_3==" + ids_3.size());
 
                 if (mDataList.size() > 0) {
 
-                    if (ids.size() > 0 && ids_1.size() <= 0 && ids_2.size() <= 0) {
+                    if (ids_1.size() > 0 && ids_2.size() == 0 && ids_3.size() == 0) {
+                        if (ids.size() > 0) {
+                            ids.clear();
+                        }
+                        ids.addAll(ids_1);
                         allids = ids;
-                    } else if (ids.size() > 0 && ids_1.size() > 0 && ids_2.size() <= 0) {
-                        ids.retainAll(ids_1);
-                        allids = ids;
-                    } else if (ids.size() > 0 && ids_1.size() <= 0 && ids_2.size() > 0) {
+                        i = allids.size();
+                        qyIds = allids.toString();
+                    } else if (ids_1.size() > 0 && ids_2.size() > 0 && ids_3.size() == 0) {
+                        if (ids.size() > 0) {
+                            ids.clear();
+                        }
+                        ids.addAll(ids_1);
                         ids.retainAll(ids_2);
                         allids = ids;
-                    } else if (ids.size() <= 0 && ids_1.size() > 0 && ids_2.size() <= 0) {
-                        allids = ids_1;
-                    } else if (ids.size() <= 0 && ids_1.size() > 0 && ids_2.size() > 0) {
-                        ids_1.retainAll(ids_2);
-                        allids = ids_1;
-                    } else if (ids.size() <= 0 && ids_1.size() <= 0 && ids_2.size() > 0) {
-                        allids = ids_2;
-                    } else if (ids.size() > 0 && ids_1.size() > 0 && ids_2.size() > 0) {
+                        i = allids.size();
+                        qyIds = allids.toString();
+                    } else if (ids_1.size() > 0 && ids_2.size() == 0 && ids_3.size() > 0) {
+                        if (ids.size() > 0) {
+                            ids.clear();
+                        }
+                        ids.addAll(ids_1);
+                        ids.retainAll(ids_3);
+                        allids = ids;
+                        i = allids.size();
+                        qyIds = allids.toString();
+                    } else if (ids_1.size() == 0 && ids_2.size() > 0 && ids_3.size() == 0) {
+                        if (ids.size() > 0) {
+                            ids.clear();
+                        }
+                        ids.addAll(ids_2);
+                        allids = ids;
+                        i = allids.size();
+                        qyIds = allids.toString();
+                    } else if (ids_1.size() == 0 && ids_2.size() > 0 && ids_3.size() > 0) {
+                        if (ids.size() > 0) {
+                            ids.clear();
+                        }
+                        ids.addAll(ids_2);
+                        ids.retainAll(ids_3);
+                        allids = ids;
+                        i = allids.size();
+                        qyIds = allids.toString();
+                    } else if (ids_1.size() == 0 && ids_2.size() == 0 && ids_3.size() > 0) {
+                        if (ids.size() > 0) {
+                            ids.clear();
+                        }
+                        ids.addAll(ids_3);
+                        allids = ids;
+                        i = allids.size();
+                        qyIds = allids.toString();
+                    } else if (ids_1.size() > 0 && ids_2.size() > 0 && ids_3.size() > 0) {
+                        if (ids.size() > 0) {
+                            ids.clear();
+                        }
+                        ids.addAll(ids_3);
                         ids.retainAll(ids_1);
-                        ids_2.retainAll(ids);
-                        allids = ids_2;
+                        ids.retainAll(ids_2);
+                        allids = ids;
+                        i = allids.size();
+                        qyIds = allids.toString();
                     }
 
-                    i = allids.size();
-                    qyIds = allids.toString();
 
                     if (i != 0) {
                         final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
@@ -628,23 +699,19 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
                             final JSONArray dataArray = jsonObject.getJSONArray("data");
 
-
-                            if (dataArray.size() > 0) {
-                                if (ids.size() > 0) {
-                                    if (ids_1.size() > 0) {
-                                        ids_2 = dataArray;
-                                    } else {
-                                        ids_1 = dataArray;
-                                    }
+                            if (ids_1.size() > 0) {
+                                if (ids_2.size() > 0) {
+                                    ids_3 = dataArray;
                                 } else {
-                                    ids = dataArray;
+                                    ids_2 = dataArray;
                                 }
-
+                            } else {
+                                ids_1 = dataArray;
                             }
 
-                            Log.d("BAUSBDBASUBASDA", "ids==" + ids.size());
                             Log.d("BAUSBDBASUBASDA", "ids_1==" + ids_1.size());
                             Log.d("BAUSBDBASUBASDA", "ids_2==" + ids_2.size());
+                            Log.d("BAUSBDBASUBASDA", "ids_3==" + ids_3.size());
 
                         } else {
                             Toasty.error(getContext(), "服务器错误", Toast.LENGTH_SHORT, true).show();
