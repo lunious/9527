@@ -42,8 +42,8 @@ public class SpinerPopWindow<T> extends PopupWindow {
 
         View view = inflater.inflate(R.layout.spiner_window_layout, null);
         setContentView(view);
-        setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         setFocusable(true);
         ColorDrawable dw = new ColorDrawable(0x00);
         setBackgroundDrawable(dw);

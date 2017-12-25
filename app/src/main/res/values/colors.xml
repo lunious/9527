@@ -15,7 +15,7 @@
     <color name="main_text_color">#3c3c3c</color>
     <color name="toast_background">#66000000</color>
     <color name="colorRed">#B62222</color>
-
+    <color name="bg_red">#FF6666</color>
     <color name="bg_press">#ebebeb</color>
     <color name="transparent">#00000000</color>
     <color name="search_hint">#9d9d9d</color>
