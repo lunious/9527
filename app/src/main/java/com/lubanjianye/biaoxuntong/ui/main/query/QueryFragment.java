@@ -441,17 +441,44 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                         bean.setDq(six);
                         mDataList.add(bean);
                         mAdapter.notifyDataSetChanged();
+
+                        //得到符合条件的id
+                        getSuitIds();
+                        getSuitCompany();
                     }
-                    //得到符合条件的id
-                    getSuitIds();
-                    getSuitCompany();
+
                 }
 
                 break;
             case R.id.btn_start_search:
-                if (mDataList.size() > 0) {
-                    if (i != 0) {
 
+                if (mDataList.size() > 0) {
+
+                    if (ids.size() > 0 && ids_1.size() <= 0 && ids_2.size() <= 0) {
+                        allids = ids;
+                    } else if (ids.size() > 0 && ids_1.size() > 0 && ids_2.size() <= 0) {
+                        ids.retainAll(ids_1);
+                        allids = ids;
+                    } else if (ids.size() > 0 && ids_1.size() <= 0 && ids_2.size() > 0) {
+                        ids.retainAll(ids_2);
+                        allids = ids;
+                    } else if (ids.size() <= 0 && ids_1.size() > 0 && ids_2.size() <= 0) {
+                        allids = ids_1;
+                    } else if (ids.size() <= 0 && ids_1.size() > 0 && ids_2.size() > 0) {
+                        ids_1.retainAll(ids_2);
+                        allids = ids_1;
+                    } else if (ids.size() <= 0 && ids_1.size() <= 0 && ids_2.size() > 0) {
+                        allids = ids_2;
+                    } else if (ids.size() > 0 && ids_1.size() > 0 && ids_2.size() > 0) {
+                        ids.retainAll(ids_1);
+                        ids_2.retainAll(ids);
+                        allids = ids_2;
+                    }
+
+                    i = allids.size();
+                    qyIds = allids.toString();
+
+                    if (i != 0) {
                         final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
                             @Override
                             public void onClick(PromptButton button) {
@@ -603,24 +630,21 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
 
                             if (dataArray.size() > 0) {
-                                if (allids.size() > 0) {
+                                if (ids.size() > 0) {
                                     if (ids_1.size() > 0) {
                                         ids_2 = dataArray;
                                     } else {
                                         ids_1 = dataArray;
                                     }
-                                    allids.retainAll(dataArray);
                                 } else {
                                     ids = dataArray;
-                                    allids = dataArray;
                                 }
-                                i = allids.size();
-                                qyIds = allids.toString();
+
                             }
 
-                            Log.d("BAUSBDBASUBASDA", "ids==" + ids);
-                            Log.d("BAUSBDBASUBASDA", "ids_1==" + ids_1);
-                            Log.d("BAUSBDBASUBASDA", "ids_2==" + ids_2);
+                            Log.d("BAUSBDBASUBASDA", "ids==" + ids.size());
+                            Log.d("BAUSBDBASUBASDA", "ids_1==" + ids_1.size());
+                            Log.d("BAUSBDBASUBASDA", "ids_2==" + ids_2.size());
 
                         } else {
                             Toasty.error(getContext(), "服务器错误", Toast.LENGTH_SHORT, true).show();
