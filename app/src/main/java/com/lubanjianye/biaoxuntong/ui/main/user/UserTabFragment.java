@@ -152,10 +152,10 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
             tvUserCompany.setVisibility(View.VISIBLE);
             rlLogin.setVisibility(View.VISIBLE);
 
-            if (!TextUtils.isEmpty(mobile)) {
-                tvUserName.setText(mobile);
-            } else {
+            if (!TextUtils.isEmpty(nickName)) {
                 tvUserName.setText(nickName);
+            } else {
+                tvUserName.setText(mobile);
             }
 
             if (!TextUtils.isEmpty(companyName)) {
@@ -176,24 +176,8 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
             //绑定企业成功后更新UI
             List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
             for (int i = 0; i < users.size(); i++) {
-                id = users.get(0).getId();
-                mobile = users.get(0).getMobile();
-                nickName = users.get(0).getNickName();
-                comid = users.get(0).getComid();
-                imageUrl = users.get(0).getImageUrl();
                 companyName = users.get(0).getCompanyName();
-
             }
-
-            if (TextUtils.isEmpty(imageUrl)) {
-                imgUserAvatar.setImageResource(R.mipmap.moren_touxiang);
-            } else {
-                Glide.with(getActivity()).load(imageUrl).into(imgUserAvatar);
-            }
-
-            rlNoLogin.setVisibility(View.GONE);
-            tvUserCompany.setVisibility(View.VISIBLE);
-            rlLogin.setVisibility(View.VISIBLE);
 
             if (!TextUtils.isEmpty(companyName)) {
                 tvUserCompany.setText(companyName);
@@ -235,10 +219,10 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
             tvUserCompany.setVisibility(View.VISIBLE);
             rlLogin.setVisibility(View.VISIBLE);
 
-            if (!TextUtils.isEmpty(mobile)) {
-                tvUserName.setText(mobile);
-            } else {
+            if (!TextUtils.isEmpty(nickName)) {
                 tvUserName.setText(nickName);
+            } else {
+                tvUserName.setText(mobile);
             }
 
             if (!TextUtils.isEmpty(companyName)) {

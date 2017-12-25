@@ -1,6 +1,7 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.avater;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;

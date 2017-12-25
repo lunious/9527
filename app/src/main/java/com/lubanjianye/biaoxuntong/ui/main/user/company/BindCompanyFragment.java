@@ -1,5 +1,6 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.company;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
@@ -28,6 +29,7 @@ import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
 
@@ -242,7 +244,6 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                 }
                 companyName = companyList.get(position);
 
-
                 final PromptButton cancel = new PromptButton("确定", new PromptButtonListener() {
                     @Override
                     public void onClick(PromptButton button) {
@@ -255,7 +256,6 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                                     @Override
                                     public void onSuccess(Headers headers, String response) {
 
-
                                         final JSONObject object = JSON.parseObject(response);
                                         String status = object.getString("status");
                                         String message = object.getString("message");
@@ -263,13 +263,11 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
 
                                         if ("200".equals(status)) {
                                             promptDialog.dismissImmediately();
+                                            Toasty.success(getContext(), message, Toast.LENGTH_SHORT, true).show();
                                             final UserProfile profile = new UserProfile(userId, mobile, nickName, token, comid, imageUrl, companyName);
                                             DatabaseManager.getInstance().getDao().update(profile);
-                                            Log.d("IUDAHSUIDBUIASDU", companyName);
                                             EventBus.getDefault().post(new EventMessage(EventMessage.BIND_COMPANY_SUCCESS));
                                             getActivity().onBackPressed();
-                                            Toasty.success(getContext(), "绑定成功", Toast.LENGTH_SHORT, true).show();
-
                                         } else if ("500".equals(status)) {
                                             promptDialog.dismissImmediately();
                                             Toasty.success(getContext(), message, Toast.LENGTH_SHORT, true).show();
@@ -278,21 +276,12 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                                             Toasty.success(getContext(), message, Toast.LENGTH_SHORT, true).show();
                                         }
 
-                                        promptDialog.dismissImmediately();
-
                                     }
 
 
                                 })
                                 .build()
                                 .post();
-
-                        final UserProfile profile = new UserProfile(userId, mobile, nickName, token, comid, imageUrl, companyName);
-                        DatabaseManager.getInstance().getDao().update(profile);
-
-
-                        getActivity().onBackPressed();
-
 
                     }
                 });

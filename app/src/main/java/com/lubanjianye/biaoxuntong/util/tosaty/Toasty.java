@@ -44,7 +44,7 @@ public class Toasty {
 
     private static final Typeface LOADED_TOAST_TYPEFACE = Typeface.create("sans-serif-condensed", Typeface.NORMAL);
     private static Typeface currentTypeface = LOADED_TOAST_TYPEFACE;
-    private static int textSize = 16; // in SP
+    private static int textSize = 15; // in SP
 
     private static boolean tintIcon = true;
 
@@ -230,7 +230,7 @@ public class Toasty {
             Toasty.SUCCESS_COLOR = Color.parseColor("#388E3C");
             Toasty.WARNING_COLOR = Color.parseColor("#FFA900");
             Toasty.currentTypeface = LOADED_TOAST_TYPEFACE;
-            Toasty.textSize = 16;
+            Toasty.textSize = 15;
             Toasty.tintIcon = true;
         }
 

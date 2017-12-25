@@ -83,10 +83,29 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
 
         if (EventMessage.BIND_MOBILE_SUCCESS.equals(message.getMessage())) {
             //绑定手机号成功后更新UI
-            requestData();
-        } else if (EventMessage.BIND_COMPANY_SUCCESS.equals(message.getMessage())) {
+            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+            for (int i = 0; i < users.size(); i++) {
+                mobile = users.get(0).getMobile();
+            }
+            if (!TextUtils.isEmpty(mobile)) {
+                tvUserMobile.setText(mobile);
+            } else {
+                tvUserMobile.setText("点击绑定手机号");
+            }
+
+        }
+        if (EventMessage.BIND_COMPANY_SUCCESS.equals(message.getMessage())) {
             //绑定企业成功后更新UI
-            requestData();
+            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+            for (int i = 0; i < users.size(); i++) {
+                companyName = users.get(0).getCompanyName();
+            }
+
+            if (!TextUtils.isEmpty(companyName)) {
+                tvUserCompany.setText(companyName);
+            } else {
+                tvUserCompany.setText("未绑定企业");
+            }
         }
     }
 

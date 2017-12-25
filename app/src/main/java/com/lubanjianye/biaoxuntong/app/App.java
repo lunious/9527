@@ -76,7 +76,7 @@ public class App extends Application {
                 .setWarningColor(getResources().getColor(R.color.toast_background))
                 .setTextColor(Color.WHITE)
                 .tintIcon(true)
-                .setTextSize(16)
+                .setTextSize(15)
                 .setToastTypeface(Typeface.DEFAULT)
                 .apply();
     }
@@ -119,7 +119,7 @@ public class App extends Application {
         return "007";
     }
 
-    private void initShareUtil(){
+    private void initShareUtil() {
         ShareConfig config = ShareConfig.instance()
                 .qqId("1106195613")
                 .wxId("wxd7123ee6007bc26a")
