@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -62,7 +63,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
     private AppCompatTextView mainBarName = null;
     private AppCompatButton btnToLogin = null;
     private LinearLayout llShow = null;
-    private LinearLayout llEmpty = null;
     private RecyclerView collectRecycler = null;
     private SwipeRefreshLayout collectRefresh = null;
     private MultipleStatusView loadingStatus = null;
@@ -93,7 +93,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 initAdapter();
                 initRefreshLayout();
                 requestData(1);
-                llEmpty.setVisibility(View.GONE);
                 mAdapter.setEnableLoadMore(false);
             } else {
                 if (llShow != null) {
@@ -127,7 +126,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         mainBarName = getView().findViewById(R.id.main_bar_name);
         btnToLogin = getView().findViewById(R.id.btn_to_login);
         llShow = getView().findViewById(R.id.ll_show);
-        llEmpty = getView().findViewById(R.id.ll_empty);
         collectRecycler = getView().findViewById(R.id.collect_recycler);
         collectRefresh = getView().findViewById(R.id.collect_refresh);
         loadingStatus = getView().findViewById(R.id.collection_list_status_view);
@@ -301,11 +299,15 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                 final int count = data.getInteger("count");
                                 final boolean nextPage = data.getBoolean("nextpage");
 
-                                if (array != null) {
+                                Log.d("BDASUJHBDJHBSA", response);
+
+                                if (array.size() > 0) {
                                     setData(isRefresh, array, nextPage);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 } else {
-                                    llEmpty.setVisibility(View.VISIBLE);
+                                    //TODO 内容为空的处理
+                                    loadingStatus.showEmpty();
+                                    collectRefresh.setEnabled(false);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 }
 
@@ -315,7 +317,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                         .post();
             } else {
                 llShow.setVisibility(View.VISIBLE);
-                llEmpty.setVisibility(View.GONE);
             }
         }
 
@@ -343,6 +344,13 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
             mAdapter.setEnableLoadMore(true);
             mAdapter.notifyDataSetChanged();
 
+            if (!nextPage) {
+                //第一页如果不够一页就不显示没有更多数据布局
+                mAdapter.loadMoreEnd();
+            } else {
+                mAdapter.loadMoreComplete();
+            }
+
 
         } else {
             loadingStatus.showContent();
@@ -360,7 +368,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 }
                 mAdapter.notifyDataSetChanged();
             }
-
             if (!nextPage) {
                 //第一页如果不够一页就不显示没有更多数据布局
                 mAdapter.loadMoreEnd();
