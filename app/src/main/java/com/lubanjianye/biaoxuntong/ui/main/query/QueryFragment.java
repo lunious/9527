@@ -311,7 +311,19 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
             @Override
             public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
-
+                switch (pos) {
+                    case 0:
+                        Toasty.success(getContext(), "第1个被删除了", Toast.LENGTH_SHORT, true).show();
+                        break;
+                    case 1:
+                        Toasty.success(getContext(), "第2个被删除了", Toast.LENGTH_SHORT, true).show();
+                        break;
+                    case 2:
+                        Toasty.success(getContext(), "第3个被删除了", Toast.LENGTH_SHORT, true).show();
+                        break;
+                    default:
+                        break;
+                }
             }
 
             @Override
@@ -394,6 +406,15 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+
+        if (allids.size() > 0) {
+            allids.clear();
+        }
+    }
+
+    @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.vip_detail:
@@ -430,6 +451,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             case R.id.btn_start_search:
                 if (mDataList.size() > 0) {
                     if (i != 0) {
+
                         final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
                             @Override
                             public void onClick(PromptButton button) {
@@ -477,7 +499,17 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
                         promptDialog.showWarnAlert("共为你查询到" + i + "家企业!", cancel, toLogin, false);
                     } else {
+                        final PromptButton cancel = new PromptButton("重新筛选", new PromptButtonListener() {
+                            @Override
+                            public void onClick(PromptButton button) {
+                            }
+                        });
+                        cancel.setTextColor(Color.parseColor("#21a9ff"));
+                        cancel.setTextSize(15);
 
+                        promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false);
+
+                        promptDialog.showWarnAlert("共为你查询到" + i + "家企业!", cancel, false);
                     }
                 } else {
                     Toasty.info(getContext(), "请添加条件", Toast.LENGTH_SHORT, true).show();
@@ -570,13 +602,25 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                             final JSONArray dataArray = jsonObject.getJSONArray("data");
 
 
-                            Log.d("BIJAHSBDBHSADA", dataArray.toString());
-
                             if (dataArray.size() > 0) {
-                                allids = dataArray;
+                                if (allids.size() > 0) {
+                                    if (ids_1.size() > 0) {
+                                        ids_2 = dataArray;
+                                    } else {
+                                        ids_1 = dataArray;
+                                    }
+                                    allids.retainAll(dataArray);
+                                } else {
+                                    ids = dataArray;
+                                    allids = dataArray;
+                                }
                                 i = allids.size();
                                 qyIds = allids.toString();
                             }
+
+                            Log.d("BAUSBDBASUBASDA", "ids==" + ids);
+                            Log.d("BAUSBDBASUBASDA", "ids_1==" + ids_1);
+                            Log.d("BAUSBDBASUBASDA", "ids_2==" + ids_2);
 
                         } else {
                             Toasty.error(getContext(), "服务器错误", Toast.LENGTH_SHORT, true).show();
