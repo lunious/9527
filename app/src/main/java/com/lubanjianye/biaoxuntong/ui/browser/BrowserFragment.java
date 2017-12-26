@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 /**
  * 项目名:   AppLunious
@@ -151,7 +151,7 @@ public class BrowserFragment extends BaseFragment implements View.OnClickListene
                     Intent it = new Intent(Intent.ACTION_VIEW, uri);
                     aty.startActivity(it);
                 } catch (Exception e) {
-                    Toasty.warning(getContext(), "网页地址错误", Toast.LENGTH_SHORT, true).show();
+                    ToastUtil.shortToast(getContext(), "网页地址错误");
                 }
                 break;
             default:

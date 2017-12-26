@@ -28,7 +28,7 @@ import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -469,10 +469,10 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
                                         if ("200".equals(status)) {
                                             myFav = 0;
                                             ivFav.setImageResource(R.mipmap.ic_fav_pressed);
-                                            Toasty.success(getContext(), "取消收藏", Toast.LENGTH_SHORT, true).show();
+                                            ToastUtil.shortToast(getContext(), "取消收藏");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
-                                            Toasty.error(getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                                            ToastUtil.shortToast(getContext(), "服务器异常");
                                         }
                                     }
                                 })
@@ -493,10 +493,10 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
                                         if ("200".equals(status)) {
                                             myFav = 1;
                                             ivFav.setImageResource(R.mipmap.ic_faved_pressed);
-                                            Toasty.success(getContext(), "收藏成功", Toast.LENGTH_SHORT, true).show();
+                                            ToastUtil.shortToast(getContext(), "收藏成功");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
-                                            Toasty.error(getContext(), "服务器异常", Toast.LENGTH_SHORT, true).show();
+                                            ToastUtil.shortToast(getContext(), "服务器异常");
                                         }
                                     }
                                 })

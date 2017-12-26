@@ -1,7 +1,6 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.avater;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
@@ -25,7 +24,7 @@ import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.IFailure;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.util.parser.RichTextParser;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -267,13 +266,14 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
                             final String message = profileJson.getString("message");
 
                             if ("200".equals(status)) {
-                                Toasty.success(getContext(), "验证码发送成功", Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(), "验证码发送成功");
                             } else {
                                 if (mTimer != null) {
                                     mTimer.onFinish();
                                     mTimer.cancel();
                                 }
-                                Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(), message);
+
                             }
                         }
                     })
@@ -291,7 +291,7 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
                     .post();
 
         } else {
-            Toasty.info(getContext(), "别激动，休息一下吧...", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "别激动，休息一下吧...");
         }
 
     }
@@ -340,14 +340,14 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
                                 DatabaseManager.getInstance().getDao().update(profile);
                                 EventBus.getDefault().post(new EventMessage(EventMessage.BIND_MOBILE_SUCCESS));
                                 getActivity().onBackPressed();
-                                Toasty.success(getContext(), "绑定成功", Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(), "绑定成功");
                             } else {
                                 promptDialog.dismissImmediately();
                                 if (mTimer != null) {
                                     mTimer.onFinish();
                                     mTimer.cancel();
                                 }
-                                Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(), message);
                             }
                         }
                     })
@@ -355,7 +355,7 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
                     .post();
 
         } else {
-            Toasty.error(getContext(), "请输入正确的手机号!", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "请输入正确的手机号!");
         }
 
 

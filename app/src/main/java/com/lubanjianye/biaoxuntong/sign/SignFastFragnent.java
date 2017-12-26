@@ -25,7 +25,7 @@ import com.lubanjianye.biaoxuntong.net.callback.IFailure;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.util.parser.RichTextParser;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -254,13 +254,13 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
                             final String status = profileJson.getString("status");
                             final String message = profileJson.getString("message");
                             if ("200".equals(status)) {
-                                Toasty.success(getContext(), "验证码发送成功", Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(), "验证码发送成功");
                             } else {
                                 if (mTimer != null) {
                                     mTimer.onFinish();
                                     mTimer.cancel();
                                 }
-                                Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(), message);
                             }
                         }
                     })
@@ -278,7 +278,7 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
                     .post();
 
         } else {
-            Toasty.info(getContext(), "别激动，休息一下吧...", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "别激动，休息一下吧...");
         }
     }
 
@@ -345,7 +345,7 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
                                 promptDialog.dismissImmediately();
                                 getActivity().onBackPressed();
                             } else {
-                                Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(), message);
 
                             }
                         }
@@ -360,7 +360,7 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
                     .post();
 
         } else {
-            Toasty.info(getContext(), "请输入正确的手机号!", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "请输入正确的手机号!");
         }
 
     }

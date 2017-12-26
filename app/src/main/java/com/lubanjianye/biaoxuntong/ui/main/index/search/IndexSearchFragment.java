@@ -44,7 +44,7 @@ import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexXcgggDetailActivity
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -142,7 +142,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
             public boolean onQueryTextSubmit(String query) {
 
                 if (TextUtils.isEmpty(query.trim())) {
-                    Toasty.info(getContext(), "请输入要查询的内容！", Toast.LENGTH_SHORT, true).show();
+                    ToastUtil.shortToast(getContext(), "请输入要查询的内容！");
                     return false;
                 } else {
                     mKeyWord = query.trim();
@@ -281,7 +281,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
         }
 
         if (!AppNetworkMgr.isNetworkConnected(getActivity())) {
-            Toasty.info(getContext(), "请检查网络设置", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "请检查网络设置");
         } else {
 
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
@@ -331,7 +331,8 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                                         }
                                     }
                                 } else {
-                                    Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                    ToastUtil.shortToast(getContext(), message);
+
                                 }
 
                             }
@@ -374,7 +375,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                                         }
                                     }
                                 } else {
-                                    Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                    ToastUtil.shortToast(getContext(), message);
                                 }
 
 

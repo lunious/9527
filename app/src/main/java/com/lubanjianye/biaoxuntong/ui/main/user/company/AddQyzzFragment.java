@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -23,7 +22,7 @@ import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -164,7 +163,7 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
                     ll1.setVisibility(View.VISIBLE);
                     hasTJ = true;
                 } else {
-                    Toasty.error(getContext(),"请选择条件！", Toast.LENGTH_SHORT,true).show();
+                    ToastUtil.shortToast(getContext(),"请选择条件！");
                 }
                 break;
             case R.id.iv1:
@@ -173,7 +172,7 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.btn_update:
                 if (!hasTJ) {
-                    Toasty.error(getContext(),"请添加条件！", Toast.LENGTH_SHORT,true).show();
+                    ToastUtil.shortToast(getContext(),"请添加条件！");
                 } else {
                     promptDialog.showLoading("正在提交...");
 
@@ -231,7 +230,6 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
                 break;
         }
     }
-
 
 
     /**

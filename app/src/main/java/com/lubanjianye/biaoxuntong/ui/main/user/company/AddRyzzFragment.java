@@ -7,13 +7,9 @@ import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -27,7 +23,7 @@ import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.util.datapicker.CustomDatePicker;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -181,7 +177,7 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
             case R.id.btn_add:
                 //添加条件
                 if (one == null) {
-                    Toasty.error(getContext(), "请添加完整条件！", Toast.LENGTH_SHORT, true).show();
+                    ToastUtil.shortToast(getContext(),"请添加完整条件！");
                 }
                 if (one != null) {
                     text01.setText(one + (two == null ? "" : ("+" + two)) + (three == null ? "" : ("+" + three)) + (four == null ? "" : ("+" + four)));
@@ -201,7 +197,7 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
 
 
                 if (!hasTJ) {
-                    Toasty.error(getContext(), "请添加人员资质条件！", Toast.LENGTH_SHORT, true).show();
+                    ToastUtil.shortToast(getContext(),"请添加人员资质条件！");
                 } else {
 
                     List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
@@ -216,7 +212,7 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
 
 
                     if (TextUtils.isEmpty(ryname)) {
-                        Toasty.error(getContext(), "请输入人员姓名!", Toast.LENGTH_SHORT, true).show();
+                        ToastUtil.shortToast(getContext(),"请输入人员姓名!");
                     } else {
                         promptDialog.showLoading("提交中");
 

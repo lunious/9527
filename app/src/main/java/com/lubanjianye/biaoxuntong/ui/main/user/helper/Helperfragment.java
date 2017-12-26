@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 /**
  * 项目名:   AppLunious
@@ -86,7 +86,7 @@ public class Helperfragment extends BaseFragment implements View.OnClickListener
                 if (checkApkExist(getActivity(), "com.tencent.mobileqq")) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=wpa&uin=" + qqNum + "&version=1")));
                 } else {
-                    Toasty.error(getContext(), "本机未安装QQ应用", Toast.LENGTH_SHORT, true).show();
+                    ToastUtil.shortToast(getContext(), "本机未安装QQ应用");
                 }
                 break;
             case R.id.tel_qq_two:
@@ -94,7 +94,7 @@ public class Helperfragment extends BaseFragment implements View.OnClickListener
                 if (checkApkExist(getActivity(), "com.tencent.mobileqq")) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("mqqwpa://im/chat?chat_type=wpa&uin=" + qqNum2 + "&version=1")));
                 } else {
-                    Toasty.error(getContext(), "本机未安装QQ应用", Toast.LENGTH_SHORT, true).show();
+                    ToastUtil.shortToast(getContext(), "本机未安装QQ应用");
                 }
                 break;
 

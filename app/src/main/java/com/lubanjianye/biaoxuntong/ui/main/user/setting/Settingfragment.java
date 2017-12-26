@@ -26,7 +26,7 @@ import com.lubanjianye.biaoxuntong.ui.update.DownloadService;
 import com.lubanjianye.biaoxuntong.util.cache.AppCleanMgr;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -120,7 +120,7 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                     public void onClick(DialogInterface dialogInterface, int i) {
                         AppCleanMgr.cleanInternalCache(getContext());
                         tvCacheSize.setText("");
-                        Toasty.success(getContext(), "缓存清理成功！", Toast.LENGTH_SHORT, true).show();
+                        ToastUtil.shortToast(getContext(),"缓存清理成功！");
                     }
                 }).show();
                 break;
@@ -149,7 +149,7 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                                         DatabaseManager.getInstance().getDao().deleteAll();
                                         AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
                                         EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
-                                        Toasty.success(getContext(), "退出成功！", Toast.LENGTH_SHORT, true).show();
+                                        ToastUtil.shortToast(getContext(),"退出成功！");
                                     }
                                 })
                                 .build()

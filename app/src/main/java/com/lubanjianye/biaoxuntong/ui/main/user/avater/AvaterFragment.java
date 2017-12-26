@@ -5,7 +5,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
@@ -13,7 +12,7 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.ui.main.user.company.BindCompanyActivity;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -134,7 +133,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                         //进入绑定企业界面
                         startActivity(new Intent(getActivity(), BindCompanyActivity.class));
                     } else {
-                        Toasty.error(getContext(), "请先绑定手机号！", Toast.LENGTH_SHORT, true).show();
+                        ToastUtil.shortToast(getContext(), "请先绑定手机号！");
                     }
 
                 } else {

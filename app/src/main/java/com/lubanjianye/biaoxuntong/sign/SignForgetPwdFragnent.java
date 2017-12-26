@@ -22,7 +22,7 @@ import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.IFailure;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.util.parser.RichTextParser;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import okhttp3.Headers;
 
@@ -118,7 +118,7 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
                                     tvNewSmsCall.setAlpha(0.4f);
                                 }
                             } else {
-                                Toasty.info(getContext(), "请输入正确的手机号码", Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(), "请输入正确的手机号码");
                                 tvNewSmsCall.setAlpha(0.4f);
                             }
                         } else if (length > 11) {
@@ -179,10 +179,10 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
                 String username = etNewUsername.getText().toString().trim();
                 String smsCode = etNewCode.getText().toString().trim();
                 if (TextUtils.isEmpty(username)) {
-                    Toasty.info(getContext(), "用户名未填写！", Toast.LENGTH_SHORT, true).show();
+                    ToastUtil.shortToast(getContext(), "用户名未填写！");
                 }
                 if (TextUtils.isEmpty(smsCode)) {
-                    Toasty.info(getContext(), "验证码未填写！", Toast.LENGTH_SHORT, true).show();
+                    ToastUtil.shortToast(getContext(), "验证码未填写！");
                 }
                 String pwd = etNewPwd.getText().toString().trim();
                 if (!TextUtils.isEmpty(pwd)) {
@@ -264,13 +264,13 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
                             final String status = profileJson.getString("status");
                             final String message = profileJson.getString("message");
                             if ("200".equals(status)) {
-                                Toasty.success(getContext(), "验证码发送成功", Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(), "验证码发送成功");
                             } else {
                                 if (mTimer != null) {
                                     mTimer.onFinish();
                                     mTimer.cancel();
                                 }
-                                Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(), message);
                             }
                         }
                     })
@@ -288,7 +288,7 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
                     .post();
 
         } else {
-            Toasty.info(getContext(), "别激动，休息一下吧...", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "别激动，休息一下吧...");
         }
     }
 
@@ -298,15 +298,15 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
         final String code = etNewCode.getText().toString().trim();
         final String pass = etNewPwd.getText().toString().trim();
         if (TextUtils.isEmpty(mobile)) {
-            Toasty.info(getContext(), "请输入手机号", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "请输入手机号");
             return;
         }
         if (!mMachPhoneNum || TextUtils.isEmpty(code)) {
-            Toasty.info(getContext(), "验证码不正确", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "验证码不正确");
             return;
         }
         if (TextUtils.isEmpty(pass)) {
-            Toasty.info(getContext(), "密码格式不对", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "密码格式不对");
             return;
         }
 
@@ -325,12 +325,12 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
-                            Toasty.success(getContext(), "重置密码成功，请登录！", Toast.LENGTH_SHORT, true).show();
+                            ToastUtil.shortToast(getContext(), "重置密码成功，请登录！");
                             //跳到登陆页面
                             startActivity(new Intent(getActivity(), SignInActivity.class));
                             getActivity().onBackPressed();
                         } else {
-                            Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                            ToastUtil.shortToast(getContext(), message);
                         }
 
                     }
@@ -342,7 +342,7 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
                             mTimer.onFinish();
                             mTimer.cancel();
                         }
-                        Toasty.error(getContext(), "注册失败！", Toast.LENGTH_SHORT, true).show();
+                        ToastUtil.shortToast(getContext(), "注册失败！");
                     }
 
                 })

@@ -21,14 +21,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.bumptech.glide.Glide;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.util.AppConfig;
 import com.lubanjianye.biaoxuntong.util.StreamUtil;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
 
@@ -36,7 +34,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 
 /**
@@ -272,7 +269,7 @@ public class ShareDialog extends BottomDialog implements OpenBuilder.Callback,
                             @Override
                             public void onError(UiError uiError) {
                                 hideWaitDialog();
-                                Toasty.error(getContext(), "抱歉,您未安装该应用,不能分享", Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(),"抱歉,您未安装该应用,不能分享");
                             }
 
                             @Override
@@ -331,7 +328,7 @@ public class ShareDialog extends BottomDialog implements OpenBuilder.Callback,
             if (!TextUtils.isEmpty(url)) {
                 Uri uri = Uri.fromFile(new File(url));
                 activity.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-                Toasty.success(BiaoXunTong.getApplicationContext(), "保存成功", Toast.LENGTH_SHORT, true).show();
+                ToastUtil.shortToast(BiaoXunTong.getApplicationContext(),"保存成功");
             }
         }
     }

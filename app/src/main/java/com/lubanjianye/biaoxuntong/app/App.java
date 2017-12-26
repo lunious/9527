@@ -7,7 +7,6 @@ import android.graphics.Typeface;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.ui.push.PushService;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
 import com.mixpush.client.core.MixPushClient;
 import com.mixpush.client.core.MixPushManager;
 import com.mixpush.client.getui.GeTuiManager;
@@ -36,8 +35,6 @@ public class App extends Application {
 
         //初始化Fragmentation
         initFragment();
-        //初始化Toasty
-        initToasty();
         //初始化网络配置
         initNet();
         //初始化greenDao
@@ -68,18 +65,6 @@ public class App extends Application {
                 .install();
     }
 
-    private void initToasty() {
-        Toasty.Config.getInstance()
-                .setErrorColor(getResources().getColor(R.color.toast_background))
-                .setInfoColor(getResources().getColor(R.color.toast_background))
-                .setSuccessColor(getResources().getColor(R.color.toast_background))
-                .setWarningColor(getResources().getColor(R.color.toast_background))
-                .setTextColor(Color.WHITE)
-                .tintIcon(true)
-                .setTextSize(15)
-                .setToastTypeface(Typeface.DEFAULT)
-                .apply();
-    }
 
     private void initNet() {
         //配置初始化

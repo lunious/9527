@@ -1,6 +1,5 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.company;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatTextView;
@@ -8,12 +7,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -29,9 +26,8 @@ import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
-import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -191,9 +187,9 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                                 }
 
                             } else if ("500".equals(status)) {
-                                Toasty.info(getContext(), "请输入关键字！", Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(),"请输入关键字！");
                             } else {
-                                Toasty.info(getContext(), "服务器错误！", Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(),"服务器错误！");
                             }
 
                         }
@@ -265,14 +261,14 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                                             final UserProfile profile = new UserProfile(userId, mobile, nickName, token, comid, imageUrl, companyName);
                                             DatabaseManager.getInstance().getDao().update(profile);
                                             EventBus.getDefault().post(new EventMessage(EventMessage.BIND_COMPANY_SUCCESS));
-                                            Toasty.success(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                            ToastUtil.shortToast(getContext(),message);
                                             getActivity().onBackPressed();
                                         } else if ("500".equals(status)) {
                                             promptDialog.dismissImmediately();
-                                            Toasty.success(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                            ToastUtil.shortToast(getContext(),message);
                                         } else {
                                             promptDialog.dismissImmediately();
-                                            Toasty.success(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                            ToastUtil.shortToast(getContext(),message);
                                         }
 
                                     }

@@ -28,7 +28,7 @@ import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -157,14 +157,14 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
 
                                             EventBus.getDefault().post(new EventMessage(EventMessage.TAB_CHANGE));
                                         } else {
-                                            Toasty.info(getContext(), "删除失败！", Toast.LENGTH_SHORT, true).show();
+                                            ToastUtil.shortToast(getContext(), "删除失败！");
                                         }
                                     }
                                 })
                                 .build()
                                 .post();
                     } else {
-                        Toasty.info(getContext(), "官方推荐栏目，请保留!", Toast.LENGTH_SHORT, true).show();
+                        ToastUtil.shortToast(getContext(), "官方推荐栏目，请保留!");
                     }
                 } else {
                     startActivity(new Intent(getActivity(), SignInActivity.class));
@@ -197,7 +197,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                                         requestData();
                                         EventBus.getDefault().post(new EventMessage(EventMessage.TAB_CHANGE));
                                     } else {
-                                        Toasty.info(getContext(), "添加失败！", Toast.LENGTH_SHORT, true).show();
+                                        ToastUtil.shortToast(getContext(), "添加失败！");
                                     }
                                 }
                             })
@@ -234,7 +234,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                                         requestData();
                                         EventBus.getDefault().post(new EventMessage(EventMessage.TAB_CHANGE));
                                     } else {
-                                        Toasty.info(getContext(), "添加失败！", Toast.LENGTH_SHORT, true).show();
+                                        ToastUtil.shortToast(getContext(), "添加失败！");
                                     }
                                 }
                             })
@@ -294,14 +294,14 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                                         requestData();
                                         EventBus.getDefault().post(new EventMessage(EventMessage.TAB_CHANGE));
                                     } else {
-                                        Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                        ToastUtil.shortToast(getContext(), message);
                                     }
                                 }
                             })
                             .build()
                             .post();
                 } else {
-                    Toasty.info(getContext(), "未登录!", Toast.LENGTH_SHORT, true).show();
+                    ToastUtil.shortToast(getContext(), "未登录!");
                 }
 
             }
@@ -335,7 +335,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
     public void requestData() {
 
         if (!AppNetworkMgr.isNetworkConnected(getContext())) {
-            Toasty.info(getContext(), "网络出错，请检查网络设置！", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "网络出错，请检查网络设置！");
         } else {
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                 //得到用个户userId
@@ -387,7 +387,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                                         }
                                     }
                                 } else {
-                                    Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                    ToastUtil.shortToast(getContext(), message);
                                 }
                             }
                         })
@@ -436,7 +436,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                                         }
                                     }
                                 } else {
-                                    Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                    ToastUtil.shortToast(getContext(), message);
                                 }
 
                             }

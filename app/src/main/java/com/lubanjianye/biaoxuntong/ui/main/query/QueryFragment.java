@@ -13,7 +13,6 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -46,8 +45,7 @@ import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.toast.TUtil;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -458,7 +456,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.btn_add:
                 if (TextUtils.isEmpty(one)) {
-                    Toasty.info(getContext(), "请选择资质类型", Toast.LENGTH_SHORT, true).show();
+                    ToastUtil.shortToast(getContext(), "请选择资质类型");
 
                 } else {
                     if (mDataList.size() <= 2) {
@@ -477,7 +475,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                         getSuitCompany();
 
                     } else {
-                        Toasty.info(getContext(), "最多叠加三个条件!", Toast.LENGTH_SHORT, true).show();
+                        ToastUtil.shortToast(getContext(), "最多叠加三个条件!");
                     }
 
                 }
@@ -581,7 +579,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                         intent.putExtra("qyIds", qyIds);
                                         startActivity(intent);
                                     } else {
-                                        Toasty.error(getContext(), "请先绑定手机号", Toast.LENGTH_SHORT, true).show();
+                                        ToastUtil.shortToast(getContext(), "请先绑定手机号");
                                         Intent intent = new Intent(getActivity(), AvaterActivity.class);
                                         startActivity(intent);
                                     }
@@ -612,13 +610,13 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                         promptDialog.showWarnAlert("共为你查询到" + i + "家企业!", cancel, false);
                     }
                 } else {
-                    TUtil.shortToast(getContext(),"请添加条件");
+                    ToastUtil.shortToast(getContext(), "请添加条件");
                 }
 
                 break;
             case R.id.tv_query:
                 if (TextUtils.isEmpty(etQuery.getText().toString().trim())) {
-                    Toasty.error(getContext(), "请输入关键字！", Toast.LENGTH_SHORT, true).show();
+                    ToastUtil.shortToast(getContext(),"请输入关键字！");
                 } else {
 
                     if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
@@ -656,7 +654,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                 startActivity(intent);
                                             } else {
                                                 promptDialog.dismissImmediately();
-                                                Toasty.info(getContext(), "查询结果为0", Toast.LENGTH_SHORT, true).show();
+                                                ToastUtil.shortToast(getContext(),"查询结果为0");
                                             }
                                         }
                                     })
@@ -664,7 +662,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                     .post();
 
                         } else {
-                            Toasty.info(getContext(), "请先绑定手机号", Toast.LENGTH_SHORT, true).show();
+                            ToastUtil.shortToast(getContext(),"请先绑定手机号");
                             startActivity(new Intent(getActivity(), AvaterActivity.class));
                         }
                     } else {
@@ -712,7 +710,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                             }
 
                         } else {
-                            Toasty.error(getContext(), "服务器错误", Toast.LENGTH_SHORT, true).show();
+                            ToastUtil.shortToast(getContext(),"服务器错误");
                         }
                     }
                 })

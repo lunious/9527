@@ -30,7 +30,7 @@ import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.main.query.detail.CompanyDetailActivity;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -253,15 +253,13 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
                                     mAdapter.notifyDataSetChanged();
                                 }
                                 //TODO 内容为空的处理
-
-                                Toasty.info(getContext(), "暂无内容", Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(),"暂无内容");
                             }
                         } else {
                             if ("LIMIT_REACHED".equals(message)) {
-                                Toasty.info(getContext(), "你今天已达到最大查询次数，请明天再试！", Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(),"你今天已达到最大查询次数，请明天再试！");
                             } else if ("INVALID_TOKEN".equals(message)) {
-
-                                Toasty.info(getContext(), "Token失效，请重新登录!", Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(),"Token失效，请重新登录!");
 
                                 List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
                                 long id = 0;

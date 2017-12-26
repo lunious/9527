@@ -36,7 +36,7 @@ import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivi
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -179,7 +179,7 @@ public class ResultSearchFragment extends BaseFragment {
             public void SearchAciton(String string) {
                 mKeyword = string;
                 if (TextUtils.isEmpty(string)) {
-                    Toasty.info(getContext(), "请输入关键字", Toast.LENGTH_SHORT, true).show();
+                    ToastUtil.shortToast(getContext(),"请输入关键字");
                 } else {
                     resultRefresh.setVisibility(View.VISIBLE);
                     requestData(0, string);
@@ -202,7 +202,7 @@ public class ResultSearchFragment extends BaseFragment {
             @Override
             public void StartSearch(String string) {
                 if (TextUtils.isEmpty(string)) {
-                    Toasty.info(getContext(), "请输入关键字", Toast.LENGTH_SHORT, true).show();
+                    ToastUtil.shortToast(getContext(),"请输入关键字");
                 } else {
                     resultRefresh.setVisibility(View.VISIBLE);
                     requestData(0, string);

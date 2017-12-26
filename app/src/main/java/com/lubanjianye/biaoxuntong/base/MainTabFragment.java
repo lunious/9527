@@ -2,7 +2,7 @@ package com.lubanjianye.biaoxuntong.base;
 
 import android.widget.Toast;
 
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 
 /**
@@ -53,7 +53,7 @@ public class MainTabFragment extends BaseFragment {
             _mActivity.finish();
         } else {
             TOUCH_TIME = System.currentTimeMillis();
-            Toasty.warning(getProxyActivity(), "再按一次退出程序", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "再按一次退出鲁班标讯通");
         }
         return true;
     }

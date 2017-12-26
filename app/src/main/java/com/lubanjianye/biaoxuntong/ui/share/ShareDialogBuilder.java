@@ -27,7 +27,7 @@ import android.widget.Toast;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.util.AppConfig;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
 
@@ -269,7 +269,7 @@ public class ShareDialogBuilder extends AlertDialog.Builder implements
     @Override
     public void onFailed() {
         hideWaitDialog();
-        Toasty.error(getContext(), "抱歉,您未安装该应用,不能分享", Toast.LENGTH_SHORT, true).show();
+        ToastUtil.shortToast(getContext(),"抱歉,您未安装该应用,不能分享");
     }
 
     @Override

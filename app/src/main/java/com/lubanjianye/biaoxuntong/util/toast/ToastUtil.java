@@ -13,13 +13,13 @@ import com.lubanjianye.biaoxuntong.R;
 /**
  * 项目名:   9527
  * 包名:     com.lubanjianye.biaoxuntong.util.toast
- * 文件名:   TUtil
+ * 文件名:   ToastUtil
  * 创建者:   lunious
  * 创建时间: 2017/12/26  11:02
  * 描述:     TODO
  */
 
-public class TUtil {
+public class ToastUtil {
 
 
     //对话框时长号(毫秒)

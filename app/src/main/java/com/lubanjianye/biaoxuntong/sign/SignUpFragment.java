@@ -24,7 +24,7 @@ import com.lubanjianye.biaoxuntong.net.callback.IFailure;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.util.parser.RichTextParser;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Headers;
@@ -136,7 +136,7 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                                     tvRegisterSmsCall.setAlpha(0.4f);
                                 }
                             } else {
-                                Toasty.info(getContext(), "请输入正确的手机号码", Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(), "请输入正确的手机号码");
                                 tvRegisterSmsCall.setAlpha(0.4f);
                             }
                         } else if (length > 11) {
@@ -198,10 +198,10 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                 String username = etRegisterUsername.getText().toString().trim();
                 String smsCode = etRegisterCode.getText().toString().trim();
                 if (TextUtils.isEmpty(username)) {
-                    Toasty.info(getContext(), "用户名未填写", Toast.LENGTH_SHORT, true).show();
+                    ToastUtil.shortToast(getContext(), "用户名未填写");
                 }
                 if (TextUtils.isEmpty(smsCode)) {
-                    Toasty.info(getContext(), "验证码未填写", Toast.LENGTH_SHORT, true).show();
+                    ToastUtil.shortToast(getContext(), "验证码未填写");
                 }
                 String pwd = etRegisterPwd.getText().toString().trim();
                 if (!TextUtils.isEmpty(pwd)) {
@@ -256,14 +256,14 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                             final String status = profileJson.getString("status");
                             final String message = profileJson.getString("message");
                             if ("200".equals(status)) {
-                                Toasty.success(getContext(), "验证码发送成功", Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(), "验证码发送成功");
 
                             } else {
                                 if (mTimer != null) {
                                     mTimer.onFinish();
                                     mTimer.cancel();
                                 }
-                                Toasty.error(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                ToastUtil.shortToast(getContext(), message);
                             }
                         }
                     })
@@ -281,7 +281,7 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                     .post();
 
         } else {
-            Toasty.info(getContext(), "别激动，休息一下吧...", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "别激动，休息一下吧...");
         }
     }
 
@@ -293,15 +293,17 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         final String code = etRegisterCode.getText().toString().trim();
         final String pass = etRegisterPwd.getText().toString().trim();
         if (TextUtils.isEmpty(mobile)) {
-            Toasty.info(getContext(), "请输入手机号", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "请输入手机号");
+
             return;
         }
         if (!mMachPhoneNum || TextUtils.isEmpty(code)) {
-            Toasty.info(getContext(), "验证码不正确", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "验证码不正确");
+
             return;
         }
         if (TextUtils.isEmpty(pass)) {
-            Toasty.info(getContext(), "密码格式不对", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "密码格式不对");
             return;
         }
 
@@ -322,14 +324,14 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                                 mTimer.cancel();
                             }
                             promptDialog.dismissImmediately();
-                            Toasty.success(getContext(), "注册成功，请登录！", Toast.LENGTH_SHORT, true).show();
+                            ToastUtil.shortToast(getContext(), "注册成功，请登录！");
                             //跳到登陆页面
                             startActivity(new Intent(getActivity(), SignInActivity.class));
                             getActivity().onBackPressed();
                             holdAccount();
                         } else {
                             promptDialog.dismissImmediately();
-                            Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                            ToastUtil.shortToast(getContext(), message);
                         }
 
                     }
@@ -341,7 +343,7 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                             mTimer.onFinish();
                             mTimer.cancel();
                         }
-                        Toasty.error(getContext(), "注册失败！", Toast.LENGTH_SHORT, true).show();
+                        ToastUtil.shortToast(getContext(), "注册失败！");
                     }
 
                 })

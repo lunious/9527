@@ -35,7 +35,7 @@ import com.lubanjianye.biaoxuntong.util.loader.GlideImageLoader;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -276,7 +276,7 @@ public class IndexListFragment extends BaseFragment {
                             detail_3 = data.getString("imgThreeUrl");
 
                         } else {
-                            Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                            ToastUtil.shortToast(getContext(),message);
                         }
                         initBanner();
 
@@ -338,7 +338,7 @@ public class IndexListFragment extends BaseFragment {
                                         indexRefresh.setEnabled(false);
                                     }
                                 } else {
-                                    Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                    ToastUtil.shortToast(getContext(),message);
                                 }
 
                             }
@@ -379,7 +379,7 @@ public class IndexListFragment extends BaseFragment {
                                         indexRefresh.setEnabled(false);
                                     }
                                 } else {
-                                    Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                    ToastUtil.shortToast(getContext(),message);
                                 }
 
                             }

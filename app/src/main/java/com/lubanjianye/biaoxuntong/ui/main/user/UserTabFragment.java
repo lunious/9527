@@ -28,7 +28,7 @@ import com.lubanjianye.biaoxuntong.ui.main.user.question.QuestionsActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.setting.SettingActivity;
 import com.lubanjianye.biaoxuntong.util.loader.GlideImageLoader;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -329,7 +329,7 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
 
                     } else {
                         //进入个人中心界面
-                        Toasty.info(getContext(), "请先绑定企业", Toast.LENGTH_SHORT, true).show();
+                        ToastUtil.shortToast(getContext(), "请先绑定企业");
                         Intent intent = new Intent(getActivity(), AvaterActivity.class);
                         startActivity(intent);
 

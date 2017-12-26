@@ -6,10 +6,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.text.TextUtils;
-import android.widget.Toast;
 
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -106,8 +105,9 @@ public class AppConfig {
 
     public void remove(String... key) {
         Properties props = get();
-        for (String k : key)
+        for (String k : key) {
             props.remove(k);
+        }
         setProps(props);
     }
 
@@ -119,7 +119,7 @@ public class AppConfig {
         ClipboardManager clip = (ClipboardManager) BiaoXunTong.getApplicationContext()
                 .getSystemService(Context.CLIPBOARD_SERVICE);
         clip.setText(string);
-        Toasty.success(BiaoXunTong.getApplicationContext(), "复制成功", Toast.LENGTH_SHORT, true).show();
+        ToastUtil.shortToast(BiaoXunTong.getApplicationContext(), "复制成功");
     }
 
     /**

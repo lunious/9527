@@ -31,7 +31,7 @@ import com.lubanjianye.biaoxuntong.ui.main.index.search.IndexSearchActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.sortcolumn.SortColumnActivity;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -170,7 +170,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
         mLocationClient.start();
 
         if (!AppNetworkMgr.isNetworkConnected(getContext())) {
-            Toasty.info(getContext(), "网络出错，请检查网络设置！", Toast.LENGTH_SHORT, true).show();
+            ToastUtil.shortToast(getContext(), "网络出错，请检查网络设置！");
 
             if (mList.size() > 0) {
                 mList.clear();
@@ -240,7 +240,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                         indexStlTab.setViewPager(indexVp);
 
                                                     } else {
-                                                        Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                                        ToastUtil.shortToast(getContext(), message);
                                                     }
 
                                                 }
@@ -302,7 +302,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                         indexStlTab.setViewPager(indexVp);
 
                                                     } else {
-                                                        Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                                        ToastUtil.shortToast(getContext(), message);
                                                     }
 
                                                 }
@@ -344,7 +344,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                                 indexStlTab.setViewPager(indexVp);
 
                                                             } else {
-                                                                Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                                                ToastUtil.shortToast(getContext(), message);
                                                             }
 
                                                         }
@@ -403,7 +403,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                     indexVp.setAdapter(mAdapter);
                                     indexStlTab.setViewPager(indexVp);
                                 } else {
-                                    Toasty.info(getContext(), message, Toast.LENGTH_SHORT, true).show();
+                                    ToastUtil.shortToast(getContext(),message);
                                 }
 
                             }
