@@ -308,10 +308,10 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                                 int favorite = object.getInteger("favorite");
                                 if (favorite == 1) {
                                     myFav = 1;
-                                    ivFav.setImageResource(R.drawable.ic_faved);
+                                    ivFav.setImageResource(R.mipmap.ic_faved_pressed);
                                 } else if (favorite == 0) {
                                     myFav = 0;
-                                    ivFav.setImageResource(R.drawable.ic_fav);
+                                    ivFav.setImageResource(R.mipmap.ic_fav_pressed);
                                 }
 
                                 if ("200".equals(status)) {
@@ -769,7 +769,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                                         String status = object.getString("status");
                                         if ("200".equals(status)) {
                                             myFav = 0;
-                                            ivFav.setImageResource(R.drawable.ic_fav);
+                                            ivFav.setImageResource(R.mipmap.ic_fav_pressed);
                                             Toasty.success(getContext(), "取消收藏", Toast.LENGTH_SHORT, true).show();
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
@@ -793,7 +793,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                                         String status = object.getString("status");
                                         if ("200".equals(status)) {
                                             myFav = 1;
-                                            ivFav.setImageResource(R.drawable.ic_faved);
+                                            ivFav.setImageResource(R.mipmap.ic_faved_pressed);
                                             Toasty.success(getContext(), "收藏成功", Toast.LENGTH_SHORT, true).show();
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {

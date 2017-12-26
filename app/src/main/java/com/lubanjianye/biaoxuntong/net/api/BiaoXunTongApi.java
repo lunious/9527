@@ -186,14 +186,6 @@ public abstract class BiaoXunTongApi {
      */
     public static final String URL_DELEITEMLABEL = BASEURL + "bxtajax/key/deleteLabel";
     /**
-     * 同步企业资质（企业资质维护）
-     */
-    public static final String URL_UPDATEQYZZ = BASEURL + "bxtajax/TQyzzQueryBxt/synQualifications";
-    /**
-     * 同步人员资质（企业资质维护）
-     */
-    public static final String URL_UPDATERYZZ = BASEURL + "bxtajax/TRyzzQueryBxt/synQualifications";
-    /**
      * 手动添加企业资质信息（企业资质维护）
      */
     public static final String URL_ADDQYZZ = BASEURL + "bxtajax/TQyzzQueryBxt/add";

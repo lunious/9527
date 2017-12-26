@@ -565,7 +565,7 @@
                         android:layout_width="@dimen/d20"
                         android:layout_height="@dimen/d20"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_fav" />
+                        android:src="@mipmap/ic_fav_pressed" />
 
                     <TextView
                         android:id="@+id/tv_fav_count"
@@ -608,7 +608,7 @@
                         android:layout_width="@dimen/d20"
                         android:layout_height="@dimen/d20"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_share_black" />
+                        android:src="@mipmap/ic_share_black_pressed" />
 
                     <TextView
                         android:layout_width="wrap_content"

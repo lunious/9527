@@ -29,7 +29,7 @@ public class MyCompanyRyzzAllListAdapter extends BaseQuickAdapter<MyCompanyRyzzA
         String zgmc = item.getZg_mcdj();
         String zgzy = item.getZgzy();
         helper.setText(R.id.tv_ryzz_name, ry_name);
-        helper.setText(R.id.tv_ryzz, zgmc + "__" + zgzy);
+        helper.setText(R.id.tv_ryzz, zgmc + ("0".equals(zgzy) ? "" : "__" + zgzy));
     }
 }
 

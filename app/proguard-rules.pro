@@ -20,6 +20,11 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+# 百度定位
+-keep class com.baidu.** {*;}
+-keep class vi.com.** {*;}
+-dontwarn com.baidu.**
+
 # eventbus 的混淆代码
 -keepattributes *Annotation*
 -keepclassmembers class ** {

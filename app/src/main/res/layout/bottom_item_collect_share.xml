@@ -36,7 +36,7 @@
                     android:layout_width="@dimen/d18"
                     android:layout_height="@dimen/d18"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_fav" />
+                    android:src="@mipmap/ic_fav_pressed" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tv_fav_count"
@@ -44,8 +44,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/d8"
                     android:text="收藏"
-                    android:textColor="#9d9d9d"
-                    android:textSize="@dimen/s14"
+                    android:textColor="#6d6d6d"
+                    android:textSize="@dimen/s15"
                     tools:ignore="HardcodedText,RtlHardcoded" />
             </LinearLayout>
 
@@ -78,15 +78,15 @@
                     android:layout_width="@dimen/d18"
                     android:layout_height="@dimen/d18"
                     android:contentDescription="@string/app_name"
-                    android:src="@drawable/ic_share_black" />
+                    android:src="@mipmap/ic_share_black_pressed" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/d8"
                     android:text="分享"
-                    android:textColor="#9d9d9d"
-                    android:textSize="@dimen/s14"
+                    android:textColor="#6d6d6d"
+                    android:textSize="@dimen/s15"
                     tools:ignore="HardcodedText,RtlHardcoded" />
             </LinearLayout>
 

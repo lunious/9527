@@ -162,89 +162,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                 PromptButton cancle = new PromptButton("取消", null);
                 cancle.setTextColor(Color.parseColor("#00bfdc"));
                 cancle.setTextSize(16);
-                PromptButton tbryzz = new PromptButton("同步人员资质", new PromptButtonListener() {
-                    @Override
-                    public void onClick(PromptButton promptButton) {
-//                promptButton.setTextColor(Color.RED);
-                        promptDialog.showLoadingWithDelay("同步中...", 500);
-                        RestClient.builder()
-                                .url(BiaoXunTongApi.URL_UPDATERYZZ)
-                                .params("userId", id)
-                                .success(new ISuccess() {
-                                    @Override
-                                    public void onSuccess(Headers headers, String response) {
-                                        final JSONObject object = JSON.parseObject(response);
-                                        final String status = object.getString("status");
-                                        final String message = object.getString("message");
 
-                                        if ("200".equals(status)) {
-                                            promptDialog.dismiss();
-                                            promptDialog.showSuccessDelay(message, 1000);
-                                            if (mRyzzDataList != null) {
-                                                mRyzzDataList.clear();
-                                            }
-
-                                            BiaoXunTong.getHandler().postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    requestRyzzData();
-                                                }
-                                            }, 1500);
-                                        } else {
-                                            promptDialog.dismissImmediately();
-                                            promptDialog.showError(message);
-                                        }
-                                    }
-                                })
-                                .build()
-                                .post();
-                    }
-                });
-                tbryzz.setTextColor(Color.parseColor("#6d6d6d"));
-                tbryzz.setTextSize(16);
-                PromptButton tbqyzz = new PromptButton("同步企业资质", new PromptButtonListener() {
-                    @Override
-                    public void onClick(PromptButton promptButton) {
-//                promptButton.setTextColor(Color.RED);
-                        promptDialog.showLoadingWithDelay("同步中...", 500);
-                        RestClient.builder()
-                                .url(BiaoXunTongApi.URL_UPDATEQYZZ)
-                                .params("userId", id)
-                                .success(new ISuccess() {
-                                    @Override
-                                    public void onSuccess(Headers headers, String response) {
-                                        final JSONObject object = JSON.parseObject(response);
-                                        final String status = object.getString("status");
-                                        final String message = object.getString("message");
-
-                                        if ("200".equals(status)) {
-                                            promptDialog.dismiss();
-                                            promptDialog.showSuccessDelay(message, 1000);
-
-                                            if (mQyzzDataList != null) {
-                                                mQyzzDataList.clear();
-                                            }
-
-                                            BiaoXunTong.getHandler().postDelayed(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    requestQyzzData();
-                                                }
-                                            }, 1500);
-
-                                        } else {
-                                            promptDialog.dismiss();
-                                            promptDialog.showError(message);
-                                        }
-                                    }
-                                })
-                                .build()
-                                .post();
-
-                    }
-                });
-                tbqyzz.setTextColor(Color.parseColor("#6d6d6d"));
-                tbqyzz.setTextSize(16);
                 PromptButton xzryzz = new PromptButton("新增人员资质", new PromptButtonListener() {
                     @Override
                     public void onClick(PromptButton promptButton) {
@@ -266,7 +184,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                 xzqyzz.setTextColor(Color.parseColor("#6d6d6d"));
                 xzqyzz.setTextSize(16);
                 //跳转到选择页面
-                promptDialog.showAlertSheet("", true, cancle, tbryzz, tbqyzz, xzryzz, xzqyzz);
+                promptDialog.showAlertSheet("", true, cancle, xzryzz, xzqyzz);
                 break;
             case R.id.ll_more_qyzz:
                 startActivity(new Intent(getActivity(), MyCompanyQyzzAllListActivity.class));
