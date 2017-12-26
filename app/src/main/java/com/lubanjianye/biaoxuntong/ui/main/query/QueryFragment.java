@@ -14,7 +14,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -27,10 +26,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chad.library.adapter.base.BaseViewHolder;
 import com.chad.library.adapter.base.callback.ItemDragAndSwipeCallback;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.chad.library.adapter.base.listener.OnItemSwipeListener;
 import com.gongwen.marqueen.MarqueeFactory;
 import com.gongwen.marqueen.SimpleMF;
@@ -42,7 +38,6 @@ import com.lubanjianye.biaoxuntong.bean.QueryBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
@@ -51,6 +46,7 @@ import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
+import com.lubanjianye.biaoxuntong.util.toast.TUtil;
 import com.lubanjianye.biaoxuntong.util.tosaty.Toasty;
 
 import java.util.ArrayList;
@@ -352,7 +348,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
             @Override
             public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
                 canvas.drawColor(ContextCompat.getColor(getContext(), R.color.blue));
-                canvas.drawText("继续滑动即可删除",90, 90, paint);
+                canvas.drawText("继续滑动即可删除", 90, 90, paint);
             }
         };
         mAdapter = new QueryAdapter(R.layout.query_item, mDataList);
@@ -488,9 +484,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
                 break;
             case R.id.btn_start_search:
-                Log.d("OAISDHOISAHIDHIASDSA", "ids_1==" + ids_1.size());
-                Log.d("OAISDHOISAHIDHIASDSA", "ids_2==" + ids_2.size());
-                Log.d("OAISDHOISAHIDHIASDSA", "ids_3==" + ids_3.size());
 
                 if (mDataList.size() > 0) {
 
@@ -619,7 +612,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                         promptDialog.showWarnAlert("共为你查询到" + i + "家企业!", cancel, false);
                     }
                 } else {
-                    Toasty.info(getContext(), "请添加条件", Toast.LENGTH_SHORT, true).show();
+                    TUtil.shortToast(getContext(),"请添加条件");
                 }
 
                 break;
@@ -717,10 +710,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                             } else {
                                 ids_1 = dataArray;
                             }
-
-                            Log.d("BAUSBDBASUBASDA", "ids_1==" + ids_1.size());
-                            Log.d("BAUSBDBASUBASDA", "ids_2==" + ids_2.size());
-                            Log.d("BAUSBDBASUBASDA", "ids_3==" + ids_3.size());
 
                         } else {
                             Toasty.error(getContext(), "服务器错误", Toast.LENGTH_SHORT, true).show();
