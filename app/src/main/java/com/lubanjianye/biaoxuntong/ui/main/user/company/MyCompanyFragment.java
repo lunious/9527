@@ -159,9 +159,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
 
     @Override
     public void initEvent() {
-        initQyzzRecyclerView();
-        initRyzzRecyclerView();
-        initQyyjRecyclerView();
+        initRecyclerView();
         initAdapter();
         getCompanyName();
 
@@ -228,6 +226,8 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
         }
 
         requestQyzzData();
+        requestRyzzData();
+        requestQyyjData();
 
     }
 
@@ -244,22 +244,10 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
     }
 
 
-    private void initQyzzRecyclerView() {
+    private void initRecyclerView() {
 
         rlvQyzz.setLayoutManager(new GridLayoutManager(getContext(), 1));
-
-
-    }
-
-    private void initRyzzRecyclerView() {
-
         rlvRyzz.setLayoutManager(new GridLayoutManager(getContext(), 1));
-
-
-    }
-
-    private void initQyyjRecyclerView() {
-
         rlvQyyj.setLayoutManager(new LinearLayoutManager(getContext()));
 
 
@@ -336,8 +324,6 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                         } else {
                         }
 
-                        requestRyzzData();
-
 
                     }
                 })
@@ -399,7 +385,6 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
 
                             if (array.size() > 0) {
 
-
                                 if (tvRyzzTip != null) {
                                     tvRyzzTip.setVisibility(View.GONE);
                                 }
@@ -425,7 +410,6 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                         } else {
                         }
 
-                        requestQyyjData();
 
                     }
                 })
