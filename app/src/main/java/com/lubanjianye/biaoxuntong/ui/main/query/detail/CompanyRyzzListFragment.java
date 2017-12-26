@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -94,7 +95,7 @@ public class CompanyRyzzListFragment extends BaseFragment implements View.OnClic
     @Override
     public void initData() {
         llIvBack.setVisibility(View.VISIBLE);
-        mainBarName.setText("人员资质");
+        mainBarName.setText("全部人员资质");
     }
 
     @Override
@@ -159,8 +160,6 @@ public class CompanyRyzzListFragment extends BaseFragment implements View.OnClic
 
     }
 
-    private long id = 0;
-    private String token = "";
 
     public void requestData() {
 
@@ -180,8 +179,9 @@ public class CompanyRyzzListFragment extends BaseFragment implements View.OnClic
                     @Override
                     public void onSuccess(Headers headers, String response) {
 
+                        Log.d("ASDASDASDAS", response);
+
                         final JSONObject object = JSON.parseObject(response);
-                        String status = object.getString("status");
                         final JSONArray array = object.getJSONArray("data");
 
                         if (array.size() > 0) {

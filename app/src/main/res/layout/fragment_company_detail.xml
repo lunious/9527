@@ -8,11 +8,6 @@
 
     <include layout="@layout/fragment_main_bar" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/d10"
-        android:background="@color/view" />
-
 
     <com.classic.common.MultipleStatusView
         android:id="@+id/company_detail_status_view"
@@ -324,40 +319,24 @@
 
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/p1"
-                            android:layout_marginTop="@dimen/d8"
-                            android:background="#9e9e9e" />
-
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                            android:layout_height="@dimen/d36"
                             android:layout_marginTop="@dimen/d8"
+                            android:background="@mipmap/myqyzz"
                             android:gravity="center"
                             android:orientation="horizontal">
 
-                            <ImageView
-                                android:layout_width="@dimen/d18"
-                                android:layout_height="@dimen/d18"
-                                android:src="@mipmap/ryzz" />
-
                             <android.support.v7.widget.AppCompatTextView
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/d6"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
                                 android:text="企业资质"
-                                android:textColor="@color/blue"
+                                android:textColor="#ff434343"
                                 android:textSize="@dimen/s16" />
 
                         </LinearLayout>
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/p1"
-                            android:layout_marginTop="@dimen/d8"
-                            android:background="#9e9e9e" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -370,6 +349,44 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
 
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_more_qyzz"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:paddingBottom="@dimen/d6"
+                            android:paddingTop="@dimen/d8"
+                            android:visibility="gone">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="查看全部"
+                                android:textColor="@color/blue"
+                                android:textSize="@dimen/s12"
+                                android:visibility="visible" />
+
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/qyzz_count"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="@color/blue"
+                                android:textSize="@dimen/s12"
+                                android:visibility="visible" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="个企业资质 >"
+                                android:textColor="@color/blue"
+                                android:textSize="@dimen/s12"
+                                android:visibility="visible" />
 
                         </LinearLayout>
 

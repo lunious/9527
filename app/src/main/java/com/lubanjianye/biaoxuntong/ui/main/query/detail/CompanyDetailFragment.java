@@ -25,6 +25,7 @@ import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.ui.main.user.company.MyCompanyQyzzAllListActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +55,9 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
     private RelativeLayout llRyzz = null;
     private RelativeLayout llSgyj = null;
     private RecyclerView companyQyzzRecycler = null;
+
+    private LinearLayout llMoreQyzz = null;
+    private AppCompatTextView qyzzCount = null;
 
 
     private CompanyQyzzListAdapter mAdapter;
@@ -99,6 +103,10 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
         llRyzz = getView().findViewById(R.id.ll_ryzz);
         llSgyj = getView().findViewById(R.id.ll_sgyj);
         companyQyzzRecycler = getView().findViewById(R.id.company_qyzz_recycler);
+
+        llMoreQyzz = getView().findViewById(R.id.ll_more_qyzz);
+        qyzzCount = getView().findViewById(R.id.qyzz_count);
+        llMoreQyzz.setOnClickListener(this);
         llIvBack.setOnClickListener(this);
         llRyzz.setOnClickListener(this);
         llSgyj.setOnClickListener(this);
@@ -223,6 +231,11 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                 intent.putExtra("sfId", sfId);
                 startActivity(intent);
                 break;
+            case R.id.ll_more_qyzz:
+                intent = new Intent(getActivity(), CompanyQyzzListActivity.class);
+                intent.putExtra("sfId", sfId);
+                startActivity(intent);
+                break;
             default:
                 break;
         }
@@ -246,7 +259,6 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                     public void onSuccess(Headers headers, String response) {
 
                         final JSONObject object = JSON.parseObject(response);
-                        String status = object.getString("status");
                         final JSONArray array = object.getJSONArray("data");
 
                         if (array.size() > 0) {
@@ -272,16 +284,38 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
 
     private void setData(JSONArray data) {
         mDataList.clear();
-        for (int i = 0; i < data.size(); i++) {
-            CompanyQyzzListBean bean = new CompanyQyzzListBean();
-            JSONObject list = data.getJSONObject(i);
-            bean.setLx(i + 1 + "、" + list.getString("lx"));
-            bean.setZzmc(list.getString("zzmc"));
-            mDataList.add(bean);
+
+        if (data.size() >= 5) {
+            qyzzCount.setText(data.size() + "");
+            if (llMoreQyzz != null) {
+                llMoreQyzz.setVisibility(View.VISIBLE);
+            }
+            for (int i = 0; i < 5; i++) {
+                CompanyQyzzListBean bean = new CompanyQyzzListBean();
+                JSONObject list = data.getJSONObject(i);
+                bean.setLx(list.getString("lx"));
+                bean.setZzmc(list.getString("zzmc"));
+                mDataList.add(bean);
+            }
+
+            mAdapter.notifyDataSetChanged();
+            mAdapter.loadMoreEnd();
+        } else {
+            if (llMoreQyzz != null) {
+                llMoreQyzz.setVisibility(View.GONE);
+            }
+            for (int i = 0; i < data.size(); i++) {
+                CompanyQyzzListBean bean = new CompanyQyzzListBean();
+                JSONObject list = data.getJSONObject(i);
+                bean.setLx(list.getString("lx"));
+                bean.setZzmc(list.getString("zzmc"));
+                mDataList.add(bean);
+            }
+
+            mAdapter.notifyDataSetChanged();
+            mAdapter.loadMoreEnd();
         }
 
-        mAdapter.notifyDataSetChanged();
-        mAdapter.loadMoreEnd();
 
     }
 

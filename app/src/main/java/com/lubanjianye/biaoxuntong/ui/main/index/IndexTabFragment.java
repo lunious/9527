@@ -249,25 +249,10 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                 } else {
 
 
-                                    //后台退出登陆
-                                    List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
-                                    long id = 0;
-                                    for (int j = 0; j < users.size(); j++) {
-                                        id = users.get(0).getId();
-                                    }
-                                    RestClient.builder()
-                                            .url(BiaoXunTongApi.URL_LOGOUT)
-                                            .params("id", id)
-                                            .success(new ISuccess() {
-                                                @Override
-                                                public void onSuccess(Headers headers, String response) {
-                                                    DatabaseManager.getInstance().getDao().deleteAll();
-                                                    AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
-                                                    EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
-                                                }
-                                            })
-                                            .build()
-                                            .post();
+                                    //后台清楚登陆信息
+                                    DatabaseManager.getInstance().getDao().deleteAll();
+                                    AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
+                                    EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
 
 
                                     RestClient.builder()

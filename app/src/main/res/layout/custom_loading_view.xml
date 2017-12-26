@@ -16,16 +16,16 @@
             android:id="@+id/av"
             android:layout_width="@dimen/d44"
             android:layout_height="@dimen/d44"
-            app:indicatorColor="#9e9e9e"
+            app:indicatorColor="#cccccc"
             app:indicatorName="LineSpinFadeLoaderIndicator" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/d10"
-            android:text="努力加载中..."
-            android:textColor="#6c6c6c"
-            android:textSize="@dimen/s16" />
+            android:text="加载中..."
+            android:textColor="#9c9c9c"
+            android:textSize="@dimen/s15" />
     </LinearLayout>
 
 </LinearLayout>

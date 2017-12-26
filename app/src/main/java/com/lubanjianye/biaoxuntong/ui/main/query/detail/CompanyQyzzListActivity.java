@@ -6,17 +6,17 @@ import com.lubanjianye.biaoxuntong.base.BaseActivity;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 
 /**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.query.detail
- * 文件名:   CompanyRyzzListActivity
+ * 项目名:   9527
+ * 包名:     com.lubanjianye.biaoxuntong.ui.main.query.detail
+ * 文件名:   CompanyQyzzListActivity
  * 创建者:   lunious
- * 创建时间: 2017/12/16  0:10
+ * 创建时间: 2017/12/26  23:03
  * 描述:     TODO
  */
 
-public class CompanyRyzzListActivity extends BaseActivity {
-
+public class CompanyQyzzListActivity extends BaseActivity {
     private String sfId = "";
+
     @Override
     public BaseFragment setRootFragment() {
         Intent intent = getIntent();
@@ -24,7 +24,7 @@ public class CompanyRyzzListActivity extends BaseActivity {
             sfId = intent.getStringExtra("sfId");
         }
 
-        final CompanyRyzzListFragment fragment = CompanyRyzzListFragment.create(sfId);
+        final CompanyQyzzListFragment fragment = CompanyQyzzListFragment.create(sfId);
         return fragment;
     }
 }
