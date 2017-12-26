@@ -288,6 +288,112 @@
                 </LinearLayout>
 
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d6"
+                    android:layout_marginBottom="@dimen/d14"
+                    android:layout_marginTop="@dimen/d14"
+                    android:background="#eeeeee" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d40"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/d4"
+                        android:layout_weight="1"
+                        android:background="@color/blue" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="@dimen/d0"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:gravity="center"
+                        android:text="企业业绩"
+                        android:textColor="#ff434343"
+                        android:textSize="@dimen/s16" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/d4"
+                        android:layout_weight="1"
+                        android:background="@color/blue" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5" />
+
+
+                </LinearLayout>
+
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rlv_qyyj"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/d10"
+                    android:paddingEnd="@dimen/d6"
+                    android:paddingStart="@dimen/d6" />
+
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_qyyj_tip"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="暂无内容"
+                    android:visibility="visible" />
+
+
+                <LinearLayout
+                    android:id="@+id/ll_more_qyyj"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingBottom="@dimen/d12"
+                    android:paddingTop="@dimen/d8">
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="查看全部"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/s12"
+                        android:visibility="visible" />
+
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/qyyj_count"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/s12"
+                        android:visibility="visible" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="个企业业绩 >"
+                        android:textColor="@color/blue"
+                        android:textSize="@dimen/s12"
+                        android:visibility="visible" />
+
+                </LinearLayout>
+
+
             </LinearLayout>
 
 

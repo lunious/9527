@@ -169,6 +169,7 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
             id = users.get(0).getId();
             token = users.get(0).getToken();
         }
+
         RestClient.builder()
                 .url(BiaoXunTongApi.URL_COMPANYSGYJ + sfId)
                 .params("userId", id)
