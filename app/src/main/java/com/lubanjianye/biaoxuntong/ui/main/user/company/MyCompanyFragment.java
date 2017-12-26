@@ -535,6 +535,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
         mQyyjDataList.clear();
 
         if (data.size() > 5){
+            qyyjCount.setText(data.size() + "");
             for (int i = 0; i < 5; i++) {
                 CompanySgyjListBean bean = new CompanySgyjListBean();
                 JSONObject list = data.getJSONObject(i);
