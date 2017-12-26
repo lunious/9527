@@ -53,7 +53,6 @@ public class ToastUtil {
         }
     }
 
-
     /**
      * 自定义长Toast调用
      *

@@ -333,7 +333,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                                                 AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
                                                                 EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                                                                 getActivity().onBackPressed();
-                                                                ToastUtil.shortToast(getContext(), "登陆成功");
+                                                                ToastUtil.shortToast(getContext(),"登陆成功");
                                                             }
                                                         })
                                                         .build()
@@ -345,7 +345,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                                 AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
                                                 EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                                                 getActivity().onBackPressed();
-                                                ToastUtil.shortToast(getContext(), "登陆成功");
+                                                ToastUtil.shortToast(getContext(),"登陆成功");
 
                                             }
 
@@ -410,7 +410,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                                                 AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
                                                                 EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                                                                 getActivity().onBackPressed();
-                                                                ToastUtil.shortToast(getContext(), "登陆成功");
+                                                                ToastUtil.shortToast(getContext(),"登陆成功");
                                                             }
                                                         })
                                                         .build()
@@ -422,7 +422,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                                 AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
                                                 EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                                                 getActivity().onBackPressed();
-                                                ToastUtil.shortToast(getContext(), "登陆成功");
+                                                ToastUtil.shortToast(getContext(),"登陆成功");
 
                                             }
 
@@ -568,7 +568,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                                     AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
                                                     EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                                                     getActivity().onBackPressed();
-                                                    ToastUtil.shortToast(getContext(), "登陆成功");
+                                                    ToastUtil.shortToast(getContext(),"登陆成功");
 
 
                                                 }
@@ -585,7 +585,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                     AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
                                     EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                                     getActivity().onBackPressed();
-                                    ToastUtil.shortToast(getContext(), "登陆成功");
+                                    ToastUtil.shortToast(getContext(),"登陆成功");
                                 }
 
 

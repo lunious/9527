@@ -64,9 +64,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:gravity="center"
+                        android:paddingRight="@dimen/d10"
                         android:text="未来科技有限公司"
                         android:textColor="#9c9c9c"
-                        android:paddingRight="@dimen/d10"
                         android:textSize="@dimen/s15" />
 
                 </RelativeLayout>
@@ -98,11 +98,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="5" />
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/d4"
-                        android:layout_weight="1"
-                        android:background="@color/blue" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="@dimen/d0"
@@ -112,12 +107,6 @@
                         android:text="企业资质"
                         android:textColor="#ff434343"
                         android:textSize="@dimen/s16" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/d4"
-                        android:layout_weight="1"
-                        android:background="@color/blue" />
 
                     <View
                         android:layout_width="0dp"
@@ -140,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="(点击右上角的+号可以添加企业资质！)"
+                    android:text="暂无内容"
                     android:visibility="gone" />
 
 
@@ -151,7 +140,8 @@
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/d6"
-                    android:paddingTop="@dimen/d8">
+                    android:paddingTop="@dimen/d8"
+                    android:visibility="gone">
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -202,11 +192,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="5" />
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/d4"
-                        android:layout_weight="1"
-                        android:background="@color/blue" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="@dimen/d0"
@@ -217,11 +202,6 @@
                         android:textColor="#ff434343"
                         android:textSize="@dimen/s16" />
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/d4"
-                        android:layout_weight="1"
-                        android:background="@color/blue" />
 
                     <View
                         android:layout_width="0dp"
@@ -246,7 +226,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="(点击右上角的+号可以添加人员资质！)"
+                    android:text="暂无内容"
                     android:visibility="visible" />
 
 
@@ -257,7 +237,8 @@
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/d12"
-                    android:paddingTop="@dimen/d8">
+                    android:paddingTop="@dimen/d8"
+                    android:visibility="gone">
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
@@ -308,11 +289,6 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="5" />
 
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/d4"
-                        android:layout_weight="1"
-                        android:background="@color/blue" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="@dimen/d0"
@@ -322,12 +298,7 @@
                         android:text="企业业绩"
                         android:textColor="#ff434343"
                         android:textSize="@dimen/s16" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="@dimen/d4"
-                        android:layout_weight="1"
-                        android:background="@color/blue" />
+                    
 
                     <View
                         android:layout_width="0dp"
@@ -363,7 +334,8 @@
                     android:gravity="center"
                     android:orientation="horizontal"
                     android:paddingBottom="@dimen/d12"
-                    android:paddingTop="@dimen/d8">
+                    android:paddingTop="@dimen/d8"
+                    android:visibility="gone">
 
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"

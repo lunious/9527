@@ -1,21 +1,21 @@
-package com.lubanjianye.biaoxuntong.ui.main.query.detail;
+package com.lubanjianye.biaoxuntong.ui.main.user.company;
 
 import android.content.Intent;
 
 import com.lubanjianye.biaoxuntong.base.BaseActivity;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 
+
 /**
- * 项目名:   LBBXT
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.query.detail
- * 文件名:   CompanySgyjListActivity
+ * 项目名:   9527
+ * 包名:     com.lubanjianye.biaoxuntong.ui.main.user.company
+ * 文件名:   MyCompanyQyyjAllListActivity
  * 创建者:   lunious
- * 创建时间: 2017/12/16  0:10
+ * 创建时间: 2017/12/26  20:52
  * 描述:     TODO
  */
 
-public class CompanySgyjListActivity extends BaseActivity {
-
+public class MyCompanyQyyjAllListActivity extends BaseActivity {
     private String sfId = "";
     @Override
     public BaseFragment setRootFragment() {
@@ -24,7 +24,8 @@ public class CompanySgyjListActivity extends BaseActivity {
             sfId = intent.getStringExtra("sfId");
         }
 
-        final CompanySgyjListFragment fragment = CompanySgyjListFragment.create(sfId);
+        final MyCompanyQyyjAllListFragment fragment = MyCompanyQyyjAllListFragment.create(sfId);
         return fragment;
+
     }
 }

@@ -247,6 +247,13 @@
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".ui.main.user.company.MyCompanyQyyjAllListActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.Main"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".ui.main.user.company.AddQyzzActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"

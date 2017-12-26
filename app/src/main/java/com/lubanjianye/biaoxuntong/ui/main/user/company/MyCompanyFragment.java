@@ -21,17 +21,11 @@ import com.lubanjianye.biaoxuntong.bean.MyCompanyQyzzAllListBean;
 import com.lubanjianye.biaoxuntong.bean.MyCompanyRyzzAllListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
-import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
-import com.lubanjianye.biaoxuntong.sign.SignInActivity;
-import com.lubanjianye.biaoxuntong.ui.main.query.CompanySearchResultActivity;
+import com.lubanjianye.biaoxuntong.ui.main.query.detail.CompanySgyjListActivity;
 import com.lubanjianye.biaoxuntong.ui.main.query.detail.CompanySgyjListAdapter;
-import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -134,6 +128,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
         llIvBack.setOnClickListener(this);
         llMoreQyzz.setOnClickListener(this);
         llMoreRyzz.setOnClickListener(this);
+        llMoreQyyj.setOnClickListener(this);
         llIbAdd.setOnClickListener(this);
 
     }
@@ -213,6 +208,11 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
             case R.id.ll_more_ryzz:
                 startActivity(new Intent(getActivity(), MyCompanyRyzzAllListActivity.class));
                 break;
+            case R.id.ll_more_qyyj:
+                Intent intent = new Intent(getActivity(), MyCompanyQyyjAllListActivity.class);
+                intent.putExtra("sfId", sfId);
+                startActivity(intent);
+                break;
             default:
                 break;
 
@@ -227,10 +227,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
             tvMyCompany.setText("");
         }
 
-
         requestQyzzData();
-        requestRyzzData();
-        requestQyyjData();
 
     }
 
@@ -339,6 +336,9 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                         } else {
                         }
 
+                        requestRyzzData();
+
+
                     }
                 })
                 .build()
@@ -367,8 +367,6 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                     @Override
                     public void onSuccess(Headers headers, String response) {
 
-                        Log.d("DASUDGUAISBDASD", response);
-
                         final JSONObject object = JSON.parseObject(response);
                         String status = object.getString("status");
 
@@ -376,13 +374,13 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
 
                             final JSONArray array = object.getJSONObject("data").getJSONArray("list");
                             final int count = object.getJSONObject("data").getInteger("count");
+
                             for (int i = 0; i < array.size(); i++) {
                                 final JSONObject data = array.getJSONObject(i);
                                 zzbm.add(data.getString("zzbm"));
                                 zgzy_code.add(data.getString("zgzy_code"));
                                 ryname.add(data.getString("ryname"));
                             }
-
 
                             if (array.size() >= 5) {
                                 if (llMoreRyzz != null) {
@@ -426,6 +424,8 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                             }
                         } else {
                         }
+
+                        requestQyyjData();
 
                     }
                 })
@@ -485,26 +485,73 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                                                                 @Override
                                                                 public void onSuccess(Headers headers, String response) {
 
-                                                                    Log.d("NBAKJSBDJASDASD", response);
-
                                                                     final JSONObject object = JSON.parseObject(response);
                                                                     String status = object.getString("status");
-                                                                    final JSONArray array = object.getJSONArray("data");
 
+                                                                    if ("200".equals(status)) {
+                                                                        final JSONArray array = object.getJSONArray("data");
 
-                                                                    if (array.size() > 0) {
-                                                                        if (tvQyyjTip != null) {
-                                                                            tvQyyjTip.setVisibility(View.GONE);
-                                                                        }
-                                                                        setData(array);
-                                                                    } else {
-                                                                        if (mQyyjDataList != null) {
+                                                                        if (array.size() > 0) {
+                                                                            if (tvQyyjTip != null) {
+                                                                                tvQyyjTip.setVisibility(View.GONE);
+                                                                            }
+
                                                                             mQyyjDataList.clear();
-                                                                            mQyyjAdapter.notifyDataSetChanged();
-                                                                        }
-                                                                        //TODO 内容为空的处理
-                                                                    }
+                                                                            if (array.size() >= 5) {
+                                                                                qyyjCount.setText(array.size() + "");
+                                                                                if (llMoreQyyj != null) {
+                                                                                    llMoreQyyj.setVisibility(View.VISIBLE);
+                                                                                }
+                                                                                for (int i = 0; i < 5; i++) {
+                                                                                    CompanySgyjListBean bean = new CompanySgyjListBean();
+                                                                                    JSONObject list = array.getJSONObject(i);
+                                                                                    bean.setXmmc(list.getString("xmmc"));
+                                                                                    bean.setZbsj(list.getString("zbsj"));
+                                                                                    bean.setXmfzr(list.getString("xmfzr"));
 
+                                                                                    String zbje = list.getString("zbje");
+                                                                                    if ("0.0".equals(zbje)) {
+                                                                                        bean.setZbje("暂无");
+                                                                                    } else {
+                                                                                        bean.setZbje(list.getString("zbje"));
+                                                                                    }
+                                                                                    mQyyjDataList.add(bean);
+                                                                                    mQyyjAdapter.notifyDataSetChanged();
+                                                                                }
+                                                                            } else {
+                                                                                if (llMoreQyyj != null) {
+                                                                                    llMoreQyyj.setVisibility(View.GONE);
+                                                                                }
+
+                                                                                for (int i = 0; i < array.size(); i++) {
+                                                                                    CompanySgyjListBean bean = new CompanySgyjListBean();
+                                                                                    JSONObject list = array.getJSONObject(i);
+                                                                                    bean.setXmmc(list.getString("xmmc"));
+                                                                                    bean.setZbsj(list.getString("zbsj"));
+                                                                                    bean.setXmfzr(list.getString("xmfzr"));
+
+                                                                                    String zbje = list.getString("zbje");
+                                                                                    if ("0.0".equals(zbje)) {
+                                                                                        bean.setZbje("暂无");
+                                                                                    } else {
+                                                                                        bean.setZbje(list.getString("zbje"));
+                                                                                    }
+                                                                                    mQyyjDataList.add(bean);
+                                                                                    mQyyjAdapter.notifyDataSetChanged();
+                                                                                }
+                                                                            }
+
+
+                                                                        } else {
+                                                                            //TODO 内容为空的处理
+                                                                            if (tvQyyjTip != null) {
+                                                                                tvQyyjTip.setVisibility(View.VISIBLE);
+                                                                            }
+                                                                            if (llMoreQyyj != null) {
+                                                                                llMoreQyyj.setVisibility(View.GONE);
+                                                                            }
+                                                                        }
+                                                                    }
 
                                                                 }
                                                             })
@@ -530,50 +577,6 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                 .post();
     }
 
-    private void setData(JSONArray data) {
-        final int size = data == null ? 0 : data.size();
-        mQyyjDataList.clear();
-
-        if (data.size() > 5){
-            qyyjCount.setText(data.size() + "");
-            for (int i = 0; i < 5; i++) {
-                CompanySgyjListBean bean = new CompanySgyjListBean();
-                JSONObject list = data.getJSONObject(i);
-                bean.setXmmc(list.getString("xmmc"));
-                bean.setZbsj(list.getString("zbsj"));
-                bean.setXmfzr(list.getString("xmfzr"));
-
-                String zbje = list.getString("zbje");
-                if ("0.0".equals(zbje)) {
-                    bean.setZbje("暂无");
-                } else {
-                    bean.setZbje(list.getString("zbje"));
-                }
-                mQyyjDataList.add(bean);
-                mQyyjAdapter.notifyDataSetChanged();
-            }
-        }else {
-            for (int i = 0; i < data.size(); i++) {
-                CompanySgyjListBean bean = new CompanySgyjListBean();
-                JSONObject list = data.getJSONObject(i);
-                bean.setXmmc(list.getString("xmmc"));
-                bean.setZbsj(list.getString("zbsj"));
-                bean.setXmfzr(list.getString("xmfzr"));
-
-                String zbje = list.getString("zbje");
-                if ("0.0".equals(zbje)) {
-                    bean.setZbje("暂无");
-                } else {
-                    bean.setZbje(list.getString("zbje"));
-                }
-                mQyyjDataList.add(bean);
-                mQyyjAdapter.notifyDataSetChanged();
-            }
-        }
-
-
-
-    }
 
     @Override
     public void onSupportInvisible() {
