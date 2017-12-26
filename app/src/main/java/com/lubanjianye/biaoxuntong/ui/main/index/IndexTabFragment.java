@@ -3,6 +3,7 @@ package com.lubanjianye.biaoxuntong.ui.main.index;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -11,10 +12,13 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.flyco.tablayout.SlidingTabLayout;
 import com.igexin.sdk.PushManager;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
@@ -41,6 +45,8 @@ import me.leefeng.promptlibrary.PromptButtonListener;
 import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Headers;
 
+import static com.lubanjianye.biaoxuntong.app.BiaoXunTong.getApplicationContext;
+
 /**
  * 项目名:   AppLunious
  * 包名:     com.lubanjianye.biaoxuntong.ui.fragment
@@ -50,17 +56,28 @@ import okhttp3.Headers;
  * 描述:     TODO
  */
 
-public class IndexTabFragment extends BaseFragment implements View.OnClickListener {
+public class IndexTabFragment extends BaseFragment implements View.OnClickListener, BDLocationListener {
 
     private SlidingTabLayout indexStlTab = null;
     private ViewPager indexVp = null;
     private LinearLayout llSearch = null;
     private ImageView ivAdd = null;
 
+
     private PromptDialog promptDialog;
 
+    public LocationClient mLocationClient = null;
 
-    private String clientID = PushManager.getInstance().getClientid(BiaoXunTong.getApplicationContext());
+    @Override
+    public void onReceiveLocation(BDLocation bdLocation) {
+        String city = bdLocation.getCity();
+
+        Log.d("CITY", "city==" + city);
+
+    }
+
+
+    private String clientID = PushManager.getInstance().getClientid(getApplicationContext());
 
     private IndexFragmentAdapter mAdapter = null;
 
@@ -92,6 +109,19 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void initView() {
+
+        mLocationClient = new LocationClient(getApplicationContext());
+        //声明LocationClient类
+        mLocationClient.registerLocationListener(IndexTabFragment.this);
+        //注册监听函数
+        LocationClientOption option = new LocationClientOption();
+
+        option.setIsNeedAddress(true);
+        //可选，是否需要地址信息，默认为不需要，即参数为false
+        //如果开发者需要获得当前点的地址信息，此处必须为true
+
+        mLocationClient.setLocOption(option);
+
 
         //注册EventBus
         EventBus.getDefault().register(this);
@@ -137,6 +167,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
     public void requestData() {
 
+        mLocationClient.start();
 
         if (!AppNetworkMgr.isNetworkConnected(getContext())) {
             Toasty.info(getContext(), "网络出错，请检查网络设置！", Toast.LENGTH_SHORT, true).show();
@@ -144,6 +175,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
             if (mList.size() > 0) {
                 mList.clear();
             }
+
             mList.add("最新标讯");
             mList.add("施工");
             mList.add("监理");
@@ -167,7 +199,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                     userId = users.get(0).getId();
                     token = users.get(0).getToken();
                 }
-
 
                 RestClient.builder().url(BiaoXunTongApi.URL_CHECKTOKEN)
                         .params("userId", userId)
@@ -196,12 +227,12 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                             mList.clear();
                                                         }
 
+
                                                         for (int i = 0; i < ownerList.size(); i++) {
                                                             final JSONObject list = ownerList.getJSONObject(i);
                                                             String name = list.getString("name");
                                                             mList.add(name);
                                                         }
-
 
                                                         mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
                                                         mAdapter.notifyDataSetChanged();
