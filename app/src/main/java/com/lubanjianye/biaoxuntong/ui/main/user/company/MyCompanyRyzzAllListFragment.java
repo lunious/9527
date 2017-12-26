@@ -23,7 +23,7 @@ import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
-import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -209,7 +209,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
 
     public void requestData(final int isRefresh) {
 
-        if (!AppNetworkMgr.isNetworkConnected(getActivity())){
+        if (!NetUtil.isNetworkConnected(getActivity())){
             loadingStatus.showNoNetwork();
             companyRyzzRefresh.setEnabled(false);
         }else {

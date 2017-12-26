@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
@@ -120,7 +119,7 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                     public void onClick(DialogInterface dialogInterface, int i) {
                         AppCleanMgr.cleanInternalCache(getContext());
                         tvCacheSize.setText("");
-                        ToastUtil.shortToast(getContext(),"缓存清理成功！");
+                        ToastUtil.shortToast(getContext(),"缓存清理成功");
                     }
                 }).show();
                 break;
@@ -149,7 +148,7 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                                         DatabaseManager.getInstance().getDao().deleteAll();
                                         AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
                                         EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
-                                        ToastUtil.shortToast(getContext(),"退出成功！");
+                                        ToastUtil.shortToast(getContext(),"退出成功");
                                     }
                                 })
                                 .build()

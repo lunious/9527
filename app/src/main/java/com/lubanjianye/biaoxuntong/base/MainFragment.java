@@ -22,7 +22,7 @@ import com.lubanjianye.biaoxuntong.ui.update.DownloadService;
 import com.lubanjianye.biaoxuntong.ui.view.botton.BottomBar;
 import com.lubanjianye.biaoxuntong.ui.view.botton.BottomBarTab;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
-import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 
 import java.util.List;
 
@@ -117,7 +117,7 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
             }
         });
 
-        if (AppNetworkMgr.isNetworkConnected(getActivity())) {
+        if (NetUtil.isNetworkConnected(getActivity())) {
 
             onClickUpdate();
         }

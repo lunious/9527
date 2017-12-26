@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -34,7 +33,7 @@ import com.lubanjianye.biaoxuntong.ui.main.result.ResultListAdapter;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
-import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
@@ -218,7 +217,7 @@ public class ResultSearchFragment extends BaseFragment {
 
     public void requestData(final int isRefresh, final String keyword) {
 
-        if (!AppNetworkMgr.isNetworkConnected(getActivity())) {
+        if (!NetUtil.isNetworkConnected(getActivity())) {
             loadingStatus.showNoNetwork();
             resultRefresh.setEnabled(false);
         } else {

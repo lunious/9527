@@ -24,7 +24,7 @@ import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
-import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
@@ -210,7 +210,7 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
 
     private void requestData() {
 
-        if (!AppNetworkMgr.isNetworkConnected(getActivity())) {
+        if (!NetUtil.isNetworkConnected(getActivity())) {
             sggjycgtableDetailStatusView.showNoNetwork();
         } else {
 

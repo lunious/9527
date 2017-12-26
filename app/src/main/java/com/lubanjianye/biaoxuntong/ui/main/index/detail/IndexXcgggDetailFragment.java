@@ -27,7 +27,7 @@ import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.util.AppConfig;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
-import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
@@ -274,7 +274,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
 
     private void requestData() {
 
-        if (!AppNetworkMgr.isNetworkConnected(getActivity())) {
+        if (!NetUtil.isNetworkConnected(getActivity())) {
             xcgggDetailStatusView.showNoNetwork();
         } else {
             xcgggDetailStatusView.showLoading();

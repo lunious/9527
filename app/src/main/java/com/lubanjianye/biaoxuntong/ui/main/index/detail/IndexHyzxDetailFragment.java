@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
-import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 
 /**
  * 项目名:   LBBXT
@@ -134,7 +134,7 @@ public class IndexHyzxDetailFragment extends BaseFragment implements View.OnClic
 
     private void requestData() {
 
-        if (!AppNetworkMgr.isNetworkConnected(getActivity())) {
+        if (!NetUtil.isNetworkConnected(getActivity())) {
             hyzxDetailStatusView.showNoNetwork();
         } else {
 

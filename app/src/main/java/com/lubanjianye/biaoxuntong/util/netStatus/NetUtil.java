@@ -25,13 +25,13 @@ import java.util.List;
 /**
  * 项目名:   LBBXT
  * 包名:     com.lubanjianye.biaoxuntong.util.netStatus
- * 文件名:   AppNetworkMgr
+ * 文件名:   NetUtil
  * 创建者:   lunious
  * 创建时间: 2017/12/16  9:44
  * 描述:     TODO
  */
 
-public class AppNetworkMgr {
+public class NetUtil {
     //未找到合适匹配网络类型
     public static final int TYPE_NO = 0;
 

@@ -23,7 +23,7 @@ import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexHyzxDetailActivity;
-import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 
 import java.util.ArrayList;
@@ -143,7 +143,7 @@ public class IndexHyzxListFragment extends BaseFragment {
 
     public void requestData(final int isRefresh) {
 
-        if (!AppNetworkMgr.isNetworkConnected(getActivity())) {
+        if (!NetUtil.isNetworkConnected(getActivity())) {
             loadingStatus.showNoNetwork();
             indexHyzxRefresh.setEnabled(false);
         } else {

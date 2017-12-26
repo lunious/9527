@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -29,7 +28,7 @@ import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.search.IndexSearchActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.sortcolumn.SortColumnActivity;
-import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
@@ -169,7 +168,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
         mLocationClient.start();
 
-        if (!AppNetworkMgr.isNetworkConnected(getContext())) {
+        if (!NetUtil.isNetworkConnected(getContext())) {
             ToastUtil.shortToast(getContext(), "网络出错，请检查网络设置！");
 
             if (mList.size() > 0) {
@@ -226,7 +225,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                         if (mList.size() > 0) {
                                                             mList.clear();
                                                         }
-
 
                                                         for (int i = 0; i < ownerList.size(); i++) {
                                                             final JSONObject list = ownerList.getJSONObject(i);
@@ -403,7 +401,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                     indexVp.setAdapter(mAdapter);
                                     indexStlTab.setViewPager(indexVp);
                                 } else {
-                                    ToastUtil.shortToast(getContext(),message);
+                                    ToastUtil.shortToast(getContext(), message);
                                 }
 
                             }

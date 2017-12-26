@@ -36,7 +36,7 @@ import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgtableDetailA
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexXcgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
-import com.lubanjianye.biaoxuntong.util.netStatus.AppNetworkMgr;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 
 import org.greenrobot.eventbus.EventBus;
@@ -265,7 +265,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
     public void requestData(final int isRefresh) {
 
-        if (!AppNetworkMgr.isNetworkConnected(getActivity())) {
+        if (!NetUtil.isNetworkConnected(getActivity())) {
             loadingStatus.showNoNetwork();
             collectRefresh.setEnabled(false);
         } else {

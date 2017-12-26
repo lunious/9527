@@ -26,6 +26,7 @@ import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.util.AppConfig;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
@@ -197,347 +198,355 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
 
     private void requestData() {
 
-        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
-            long id = 0;
-            //已登录时的数据请求
-            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
-            for (int i = 0; i < users.size(); i++) {
-                id = users.get(0).getId();
-            }
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_GETRESULTLISTDETAIL)
-                    .params("entityId", mEntityId)
-                    .params("entity", mEntity)
-                    .params("userid", id)
-                    .params("deviceId", deviceId)
-//                        .params("token", id + "_" + token)
-                    .success(new ISuccess() {
-                        @Override
-                        public void onSuccess(Headers headers, String response) {
-                            String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
-                            //判断是否收藏过
-                            final JSONObject object = JSON.parseObject(jiemi);
-                            String status = object.getString("status");
-                            int favorite = object.getInteger("favorite");
-                            if (favorite == 1) {
-                                myFav = 1;
-                                ivFav.setImageResource(R.mipmap.ic_faved_pressed);
-                            } else if (favorite == 0) {
-                                myFav = 0;
-                                ivFav.setImageResource(R.mipmap.ic_fav_pressed);
-                            }
-
-                            if ("200".equals(status)) {
-                                final JSONObject data = object.getJSONObject("data");
-                                String reportTitle = data.getString("reportTitle");
-                                shareTitle = reportTitle;
-                                if (!TextUtils.isEmpty(reportTitle)) {
-                                    tvMainTitle.setText(reportTitle);
-//                                            mainBarName.setText(reportTitle);
-                                } else {
-                                    tvMainTitle.setText("/");
-                                    mainBarName.setText("政府采购结果公告详情");
-                                }
-                                String area = data.getString("administrativeDivision");
-                                if (!TextUtils.isEmpty(area)) {
-                                    tvMainArea.setVisibility(View.VISIBLE);
-                                    tvMainArea.setText(area);
-                                } else {
-                                    tvMainArea.setText("/");
-                                }
-                                String resource = data.getString("resource");
-                                if (!TextUtils.isEmpty(resource)) {
-                                    tvMainPubType.setText(resource);
-                                } else {
-                                    tvMainPubType.setText("/");
-                                }
-                                String purchasingType = data.getString("purchasingType");
-                                if (!TextUtils.isEmpty(purchasingType)) {
-                                    tvMainPubMethod.setText(purchasingType);
-                                } else {
-                                    tvMainPubMethod.setText("/");
-                                }
-                                String calibrationTime = data.getString("calibrationTime");
-                                if (!TextUtils.isEmpty(calibrationTime)) {
-                                    tvMainPubData.setText(calibrationTime.substring(0, 10));
-                                } else {
-                                    tvMainPubData.setText("/");
-                                }
-                                String noticeTime = data.getString("noticeTime");
-                                if (!TextUtils.isEmpty(noticeTime)) {
-                                    tvMainPubTime.setText(noticeTime.substring(0, 10));
-                                } else {
-                                    tvMainPubTime.setText("/");
-                                }
-                                String entryNum = data.getString("entryNum");
-                                if (!TextUtils.isEmpty(entryNum)) {
-                                    tvPuNum.setText(entryNum);
-                                } else {
-                                    tvPuNum.setText("/");
-                                }
-                                String entryName = data.getString("entryName");
-                                shareContent = entryName;
-                                if (!TextUtils.isEmpty(entryName)) {
-                                    tvOwerCainame.setText(entryName);
-                                } else {
-                                    tvOwerCainame.setText("/");
-                                }
-                                String purchaser = data.getString("purchaser");
-                                if (!TextUtils.isEmpty(purchaser)) {
-                                    tvOwerName.setText(purchaser);
-                                } else {
-                                    tvOwerName.setText("/");
-                                }
-                                String purchasingAgent = data.getString("purchasingAgent");
-                                if (!TextUtils.isEmpty(purchasingAgent)) {
-                                    tvOwerDaili.setText(purchasingAgent);
-                                } else {
-                                    tvOwerDaili.setText("/");
-                                }
-                                String noticeCount = data.getString("noticeCount");
-                                if (!TextUtils.isEmpty(noticeCount)) {
-                                    tvOwerBaoshu.setText(noticeCount);
-                                } else {
-                                    tvOwerBaoshu.setText("/");
-                                }
-                                String allTotal = data.getString("allTotal");
-                                if (!TextUtils.isEmpty(allTotal)) {
-                                    tvOwerJine.setText(allTotal);
-                                } else {
-                                    tvOwerJine.setText("/");
-                                }
-                                String eachPackage = data.getString("eachPackage");
-                                if (!TextUtils.isEmpty(eachPackage)) {
-                                    tvOwerBaojia.setText(eachPackage);
-                                } else {
-                                    tvOwerBaojia.setText("/");
-                                }
-                                String memberList = data.getString("memberList");
-                                if (!TextUtils.isEmpty(memberList)) {
-                                    tvOwerMingdan.setText(memberList);
-                                } else {
-                                    tvOwerMingdan.setText("/");
-                                }
-                                String purchaserContact = data.getString("purchaserContact");
-                                if (!TextUtils.isEmpty(purchaserContact)) {
-                                    tvOwerLianxi.setText(purchaserContact);
-                                } else {
-                                    tvOwerLianxi.setText("/");
-                                }
-                                String purchasingAgentContact = data.getString("purchasingAgentContact");
-                                if (!TextUtils.isEmpty(purchasingAgentContact)) {
-                                    tvOwerLianxi2.setText(purchasingAgentContact);
-                                } else {
-                                    tvOwerLianxi2.setText("/");
-                                }
-                                String nameAndphone = data.getString("nameAndphone");
-                                if (!TextUtils.isEmpty(nameAndphone)) {
-                                    tvOwerLianxiNumber.setText(nameAndphone);
-                                } else {
-                                    tvOwerLianxiNumber.setText("/");
-                                }
-                                final String link = data.getString("link");
-
-                                shareUrl = link;
-                                if (!TextUtils.isEmpty(link)) {
-                                    tvOwerLianxiLink.setText("点击查看详情");
-                                    tvOwerLianxiLink.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            Intent intent = new Intent(getActivity(), BrowserActivity.class);
-                                            intent.putExtra("url", link);
-                                            intent.putExtra("title", shareTitle);
-                                            startActivity(intent);
-                                        }
-                                    });
-                                } else {
-                                    tvOwerLianxiLink.setText("/");
-                                }
-                                final String reviewSituation = data.getString("reviewSituation");
-
-                                if (!TextUtils.isEmpty(reviewSituation)) {
-                                    tvOwerPinshen.setText("点击查看或下载附件");
-                                    tvOwerPinshen.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            AppConfig.openExternalBrowser(getContext(), reviewSituation);
-                                        }
-                                    });
-
-                                } else {
-                                    tvOwerPinshen.setText("/");
-                                }
-                                xjgggDetailStatusView.showContent();
-                            } else {
-                                xjgggDetailStatusView.showError();
-                            }
-                        }
-                    })
-                    .build()
-                    .post();
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            xjgggDetailStatusView.showNoNetwork();
         } else {
-            //未登录时的数据请求
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_GETRESULTLISTDETAIL)
-                    .params("entityId", mEntityId)
-                    .params("entity", mEntity)
-                    .params("deviceId", deviceId)
-                    .success(new ISuccess() {
-                        @Override
-                        public void onSuccess(Headers headers, String response) {
-                            String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+            xjgggDetailStatusView.showLoading();
 
-                            final JSONObject object = JSON.parseObject(jiemi);
-                            String status = object.getString("status");
-                            final JSONObject data = object.getJSONObject("data");
-                            if ("200".equals(status)) {
-                                xjgggDetailStatusView.showContent();
-                                String reportTitle = data.getString("reportTitle");
-                                shareTitle = reportTitle;
-                                if (!TextUtils.isEmpty(reportTitle)) {
-                                    tvMainTitle.setText(reportTitle);
+            if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
+                long id = 0;
+                //已登录时的数据请求
+                List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+                for (int i = 0; i < users.size(); i++) {
+                    id = users.get(0).getId();
+                }
+                RestClient.builder()
+                        .url(BiaoXunTongApi.URL_GETRESULTLISTDETAIL)
+                        .params("entityId", mEntityId)
+                        .params("entity", mEntity)
+                        .params("userid", id)
+                        .params("deviceId", deviceId)
+//                        .params("token", id + "_" + token)
+                        .success(new ISuccess() {
+                            @Override
+                            public void onSuccess(Headers headers, String response) {
+                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+                                //判断是否收藏过
+                                final JSONObject object = JSON.parseObject(jiemi);
+                                String status = object.getString("status");
+                                int favorite = object.getInteger("favorite");
+                                if (favorite == 1) {
+                                    myFav = 1;
+                                    ivFav.setImageResource(R.mipmap.ic_faved_pressed);
+                                } else if (favorite == 0) {
+                                    myFav = 0;
+                                    ivFav.setImageResource(R.mipmap.ic_fav_pressed);
+                                }
+
+                                if ("200".equals(status)) {
+                                    xjgggDetailStatusView.showContent();
+                                    final JSONObject data = object.getJSONObject("data");
+                                    String reportTitle = data.getString("reportTitle");
+                                    shareTitle = reportTitle;
+                                    if (!TextUtils.isEmpty(reportTitle)) {
+                                        tvMainTitle.setText(reportTitle);
 //                                            mainBarName.setText(reportTitle);
-                                } else {
-                                    tvMainTitle.setText("/");
-                                    mainBarName.setText("政府采购结果公告详情");
-                                }
-                                String area = data.getString("administrativeDivision");
-                                if (!TextUtils.isEmpty(area)) {
-                                    tvMainArea.setVisibility(View.VISIBLE);
-                                    tvMainArea.setText(area);
-                                } else {
-                                    tvMainArea.setText("/");
-                                }
-                                String resource = data.getString("resource");
-                                if (!TextUtils.isEmpty(resource)) {
-                                    tvMainPubType.setText(resource);
-                                } else {
-                                    tvMainPubType.setText("/");
-                                }
-                                String purchasingType = data.getString("purchasingType");
-                                if (!TextUtils.isEmpty(purchasingType)) {
-                                    tvMainPubMethod.setText(purchasingType);
-                                } else {
-                                    tvMainPubMethod.setText("/");
-                                }
-                                String calibrationTime = data.getString("calibrationTime");
-                                if (!TextUtils.isEmpty(calibrationTime)) {
-                                    tvMainPubData.setText(calibrationTime.substring(0, 10));
-                                } else {
-                                    tvMainPubData.setText("/");
-                                }
-                                String noticeTime = data.getString("noticeTime");
-                                if (!TextUtils.isEmpty(noticeTime)) {
-                                    tvMainPubTime.setText(noticeTime.substring(0, 10));
-                                } else {
-                                    tvMainPubTime.setText("/");
-                                }
-                                String entryNum = data.getString("entryNum");
-                                if (!TextUtils.isEmpty(entryNum)) {
-                                    tvPuNum.setText(entryNum);
-                                } else {
-                                    tvPuNum.setText("/");
-                                }
-                                String entryName = data.getString("entryName");
-                                shareContent = entryName;
-                                if (!TextUtils.isEmpty(entryName)) {
-                                    tvOwerCainame.setText(entryName);
-                                } else {
-                                    tvOwerCainame.setText("/");
-                                }
-                                String purchaser = data.getString("purchaser");
-                                if (!TextUtils.isEmpty(purchaser)) {
-                                    tvOwerName.setText(purchaser);
-                                } else {
-                                    tvOwerName.setText("/");
-                                }
-                                String purchasingAgent = data.getString("purchasingAgent");
-                                if (!TextUtils.isEmpty(purchasingAgent)) {
-                                    tvOwerDaili.setText(purchasingAgent);
-                                } else {
-                                    tvOwerDaili.setText("/");
-                                }
-                                String noticeCount = data.getString("noticeCount");
-                                if (!TextUtils.isEmpty(noticeCount)) {
-                                    tvOwerBaoshu.setText(noticeCount);
-                                } else {
-                                    tvOwerBaoshu.setText("/");
-                                }
-                                String allTotal = data.getString("allTotal");
-                                if (!TextUtils.isEmpty(allTotal)) {
-                                    tvOwerJine.setText(allTotal);
-                                } else {
-                                    tvOwerJine.setText("/");
-                                }
-                                String eachPackage = data.getString("eachPackage");
-                                if (!TextUtils.isEmpty(eachPackage)) {
-                                    tvOwerBaojia.setText(eachPackage);
-                                } else {
-                                    tvOwerBaojia.setText("/");
-                                }
-                                String memberList = data.getString("memberList");
-                                if (!TextUtils.isEmpty(memberList)) {
-                                    tvOwerMingdan.setText(memberList);
-                                } else {
-                                    tvOwerMingdan.setText("/");
-                                }
-                                String purchaserContact = data.getString("purchaserContact");
-                                if (!TextUtils.isEmpty(purchaserContact)) {
-                                    tvOwerLianxi.setText(purchaserContact);
-                                } else {
-                                    tvOwerLianxi.setText("/");
-                                }
-                                String purchasingAgentContact = data.getString("purchasingAgentContact");
-                                if (!TextUtils.isEmpty(purchasingAgentContact)) {
-                                    tvOwerLianxi2.setText(purchasingAgentContact);
-                                } else {
-                                    tvOwerLianxi2.setText("/");
-                                }
-                                String nameAndphone = data.getString("nameAndphone");
-                                if (!TextUtils.isEmpty(nameAndphone)) {
-                                    tvOwerLianxiNumber.setText(nameAndphone);
-                                } else {
-                                    tvOwerLianxiNumber.setText("/");
-                                }
-                                final String link = data.getString("link");
-
-                                tvOwerLianxiLink.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(getActivity(), BrowserActivity.class);
-                                        intent.putExtra("url", link);
-                                        intent.putExtra("title", shareTitle);
-                                        startActivity(intent);
+                                    } else {
+                                        tvMainTitle.setText("/");
+                                        mainBarName.setText("政府采购结果公告详情");
                                     }
-                                });
-                                shareUrl = link;
-                                if (!TextUtils.isEmpty(link)) {
-                                    tvOwerLianxiLink.setText(link);
-                                } else {
-                                    tvOwerLianxiLink.setText("/");
-                                }
-                                final String reviewSituation = data.getString("reviewSituation");
-
-                                tvOwerPinshen.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        AppConfig.openExternalBrowser(getContext(), reviewSituation);
+                                    String area = data.getString("administrativeDivision");
+                                    if (!TextUtils.isEmpty(area)) {
+                                        tvMainArea.setVisibility(View.VISIBLE);
+                                        tvMainArea.setText(area);
+                                    } else {
+                                        tvMainArea.setText("/");
                                     }
-                                });
+                                    String resource = data.getString("resource");
+                                    if (!TextUtils.isEmpty(resource)) {
+                                        tvMainPubType.setText(resource);
+                                    } else {
+                                        tvMainPubType.setText("/");
+                                    }
+                                    String purchasingType = data.getString("purchasingType");
+                                    if (!TextUtils.isEmpty(purchasingType)) {
+                                        tvMainPubMethod.setText(purchasingType);
+                                    } else {
+                                        tvMainPubMethod.setText("/");
+                                    }
+                                    String calibrationTime = data.getString("calibrationTime");
+                                    if (!TextUtils.isEmpty(calibrationTime)) {
+                                        tvMainPubData.setText(calibrationTime.substring(0, 10));
+                                    } else {
+                                        tvMainPubData.setText("/");
+                                    }
+                                    String noticeTime = data.getString("noticeTime");
+                                    if (!TextUtils.isEmpty(noticeTime)) {
+                                        tvMainPubTime.setText(noticeTime.substring(0, 10));
+                                    } else {
+                                        tvMainPubTime.setText("/");
+                                    }
+                                    String entryNum = data.getString("entryNum");
+                                    if (!TextUtils.isEmpty(entryNum)) {
+                                        tvPuNum.setText(entryNum);
+                                    } else {
+                                        tvPuNum.setText("/");
+                                    }
+                                    String entryName = data.getString("entryName");
+                                    shareContent = entryName;
+                                    if (!TextUtils.isEmpty(entryName)) {
+                                        tvOwerCainame.setText(entryName);
+                                    } else {
+                                        tvOwerCainame.setText("/");
+                                    }
+                                    String purchaser = data.getString("purchaser");
+                                    if (!TextUtils.isEmpty(purchaser)) {
+                                        tvOwerName.setText(purchaser);
+                                    } else {
+                                        tvOwerName.setText("/");
+                                    }
+                                    String purchasingAgent = data.getString("purchasingAgent");
+                                    if (!TextUtils.isEmpty(purchasingAgent)) {
+                                        tvOwerDaili.setText(purchasingAgent);
+                                    } else {
+                                        tvOwerDaili.setText("/");
+                                    }
+                                    String noticeCount = data.getString("noticeCount");
+                                    if (!TextUtils.isEmpty(noticeCount)) {
+                                        tvOwerBaoshu.setText(noticeCount);
+                                    } else {
+                                        tvOwerBaoshu.setText("/");
+                                    }
+                                    String allTotal = data.getString("allTotal");
+                                    if (!TextUtils.isEmpty(allTotal)) {
+                                        tvOwerJine.setText(allTotal);
+                                    } else {
+                                        tvOwerJine.setText("/");
+                                    }
+                                    String eachPackage = data.getString("eachPackage");
+                                    if (!TextUtils.isEmpty(eachPackage)) {
+                                        tvOwerBaojia.setText(eachPackage);
+                                    } else {
+                                        tvOwerBaojia.setText("/");
+                                    }
+                                    String memberList = data.getString("memberList");
+                                    if (!TextUtils.isEmpty(memberList)) {
+                                        tvOwerMingdan.setText(memberList);
+                                    } else {
+                                        tvOwerMingdan.setText("/");
+                                    }
+                                    String purchaserContact = data.getString("purchaserContact");
+                                    if (!TextUtils.isEmpty(purchaserContact)) {
+                                        tvOwerLianxi.setText(purchaserContact);
+                                    } else {
+                                        tvOwerLianxi.setText("/");
+                                    }
+                                    String purchasingAgentContact = data.getString("purchasingAgentContact");
+                                    if (!TextUtils.isEmpty(purchasingAgentContact)) {
+                                        tvOwerLianxi2.setText(purchasingAgentContact);
+                                    } else {
+                                        tvOwerLianxi2.setText("/");
+                                    }
+                                    String nameAndphone = data.getString("nameAndphone");
+                                    if (!TextUtils.isEmpty(nameAndphone)) {
+                                        tvOwerLianxiNumber.setText(nameAndphone);
+                                    } else {
+                                        tvOwerLianxiNumber.setText("/");
+                                    }
+                                    final String link = data.getString("link");
 
-                                if (!TextUtils.isEmpty(reviewSituation)) {
-                                    tvOwerPinshen.setText(reviewSituation);
+                                    shareUrl = link;
+                                    if (!TextUtils.isEmpty(link) && !"/".equals(link)) {
+                                        tvOwerLianxiLink.setText("点击查看详情");
+                                        tvOwerLianxiLink.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                                                intent.putExtra("url", link);
+                                                intent.putExtra("title", shareTitle);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                    } else {
+                                        tvOwerLianxiLink.setText("暂无");
+                                    }
+                                    final String reviewSituation = data.getString("reviewSituation");
+
+                                    if (!TextUtils.isEmpty(reviewSituation) && !"/".equals(reviewSituation)) {
+                                        tvOwerPinshen.setText("点击查看或下载附件");
+                                        tvOwerPinshen.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                AppConfig.openExternalBrowser(getContext(), reviewSituation);
+                                            }
+                                        });
+
+                                    } else {
+                                        tvOwerPinshen.setText("暂无");
+                                    }
                                 } else {
-                                    tvOwerPinshen.setText("/");
+                                    xjgggDetailStatusView.showError();
                                 }
-                            } else {
-                                xjgggDetailStatusView.showError();
                             }
+                        })
+                        .build()
+                        .post();
+            } else {
+                //未登录时的数据请求
+                RestClient.builder()
+                        .url(BiaoXunTongApi.URL_GETRESULTLISTDETAIL)
+                        .params("entityId", mEntityId)
+                        .params("entity", mEntity)
+                        .params("deviceId", deviceId)
+                        .success(new ISuccess() {
+                            @Override
+                            public void onSuccess(Headers headers, String response) {
+                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
 
-                        }
-                    })
-                    .build()
-                    .post();
+                                final JSONObject object = JSON.parseObject(jiemi);
+                                String status = object.getString("status");
+
+                                if ("200".equals(status)) {
+                                    xjgggDetailStatusView.showContent();
+                                    final JSONObject data = object.getJSONObject("data");
+                                    String reportTitle = data.getString("reportTitle");
+                                    shareTitle = reportTitle;
+                                    if (!TextUtils.isEmpty(reportTitle)) {
+                                        tvMainTitle.setText(reportTitle);
+//                                            mainBarName.setText(reportTitle);
+                                    } else {
+                                        tvMainTitle.setText("/");
+                                        mainBarName.setText("政府采购结果公告详情");
+                                    }
+                                    String area = data.getString("administrativeDivision");
+                                    if (!TextUtils.isEmpty(area)) {
+                                        tvMainArea.setVisibility(View.VISIBLE);
+                                        tvMainArea.setText(area);
+                                    } else {
+                                        tvMainArea.setText("/");
+                                    }
+                                    String resource = data.getString("resource");
+                                    if (!TextUtils.isEmpty(resource)) {
+                                        tvMainPubType.setText(resource);
+                                    } else {
+                                        tvMainPubType.setText("/");
+                                    }
+                                    String purchasingType = data.getString("purchasingType");
+                                    if (!TextUtils.isEmpty(purchasingType)) {
+                                        tvMainPubMethod.setText(purchasingType);
+                                    } else {
+                                        tvMainPubMethod.setText("/");
+                                    }
+                                    String calibrationTime = data.getString("calibrationTime");
+                                    if (!TextUtils.isEmpty(calibrationTime)) {
+                                        tvMainPubData.setText(calibrationTime.substring(0, 10));
+                                    } else {
+                                        tvMainPubData.setText("/");
+                                    }
+                                    String noticeTime = data.getString("noticeTime");
+                                    if (!TextUtils.isEmpty(noticeTime)) {
+                                        tvMainPubTime.setText(noticeTime.substring(0, 10));
+                                    } else {
+                                        tvMainPubTime.setText("/");
+                                    }
+                                    String entryNum = data.getString("entryNum");
+                                    if (!TextUtils.isEmpty(entryNum)) {
+                                        tvPuNum.setText(entryNum);
+                                    } else {
+                                        tvPuNum.setText("/");
+                                    }
+                                    String entryName = data.getString("entryName");
+                                    shareContent = entryName;
+                                    if (!TextUtils.isEmpty(entryName)) {
+                                        tvOwerCainame.setText(entryName);
+                                    } else {
+                                        tvOwerCainame.setText("/");
+                                    }
+                                    String purchaser = data.getString("purchaser");
+                                    if (!TextUtils.isEmpty(purchaser)) {
+                                        tvOwerName.setText(purchaser);
+                                    } else {
+                                        tvOwerName.setText("/");
+                                    }
+                                    String purchasingAgent = data.getString("purchasingAgent");
+                                    if (!TextUtils.isEmpty(purchasingAgent)) {
+                                        tvOwerDaili.setText(purchasingAgent);
+                                    } else {
+                                        tvOwerDaili.setText("/");
+                                    }
+                                    String noticeCount = data.getString("noticeCount");
+                                    if (!TextUtils.isEmpty(noticeCount)) {
+                                        tvOwerBaoshu.setText(noticeCount);
+                                    } else {
+                                        tvOwerBaoshu.setText("/");
+                                    }
+                                    String allTotal = data.getString("allTotal");
+                                    if (!TextUtils.isEmpty(allTotal)) {
+                                        tvOwerJine.setText(allTotal);
+                                    } else {
+                                        tvOwerJine.setText("/");
+                                    }
+                                    String eachPackage = data.getString("eachPackage");
+                                    if (!TextUtils.isEmpty(eachPackage)) {
+                                        tvOwerBaojia.setText(eachPackage);
+                                    } else {
+                                        tvOwerBaojia.setText("/");
+                                    }
+                                    String memberList = data.getString("memberList");
+                                    if (!TextUtils.isEmpty(memberList)) {
+                                        tvOwerMingdan.setText(memberList);
+                                    } else {
+                                        tvOwerMingdan.setText("/");
+                                    }
+                                    String purchaserContact = data.getString("purchaserContact");
+                                    if (!TextUtils.isEmpty(purchaserContact)) {
+                                        tvOwerLianxi.setText(purchaserContact);
+                                    } else {
+                                        tvOwerLianxi.setText("/");
+                                    }
+                                    String purchasingAgentContact = data.getString("purchasingAgentContact");
+                                    if (!TextUtils.isEmpty(purchasingAgentContact)) {
+                                        tvOwerLianxi2.setText(purchasingAgentContact);
+                                    } else {
+                                        tvOwerLianxi2.setText("/");
+                                    }
+                                    String nameAndphone = data.getString("nameAndphone");
+                                    if (!TextUtils.isEmpty(nameAndphone)) {
+                                        tvOwerLianxiNumber.setText(nameAndphone);
+                                    } else {
+                                        tvOwerLianxiNumber.setText("/");
+                                    }
+                                    final String link = data.getString("link");
+
+                                    shareUrl = link;
+                                    if (!TextUtils.isEmpty(link) && !"/".equals(link)) {
+                                        tvOwerLianxiLink.setText("点击查看详情");
+                                        tvOwerLianxiLink.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                                                intent.putExtra("url", link);
+                                                intent.putExtra("title", shareTitle);
+                                                startActivity(intent);
+                                            }
+                                        });
+                                    } else {
+                                        tvOwerLianxiLink.setText("暂无");
+                                    }
+                                    final String reviewSituation = data.getString("reviewSituation");
+
+                                    if (!TextUtils.isEmpty(reviewSituation) && !"/".equals(reviewSituation)) {
+                                        tvOwerPinshen.setText("点击查看或下载附件");
+                                        tvOwerPinshen.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                AppConfig.openExternalBrowser(getContext(), reviewSituation);
+                                            }
+                                        });
+
+                                    } else {
+                                        tvOwerPinshen.setText("暂无");
+                                    }
+                                } else {
+                                    xjgggDetailStatusView.showError();
+                                }
+
+                            }
+                        })
+                        .build()
+                        .post();
+            }
+
         }
 
 

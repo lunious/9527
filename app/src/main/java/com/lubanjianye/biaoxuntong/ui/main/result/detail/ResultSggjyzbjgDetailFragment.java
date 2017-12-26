@@ -25,6 +25,7 @@ import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
@@ -208,347 +209,352 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
     private void requestData() {
 
 
-        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
-            //已登陆时的数据请求
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            sggjyDetailStatusView.showNoNetwork();
+        } else {
+            sggjyDetailStatusView.showLoading();
+            if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
+                //已登陆时的数据请求
 
-            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+                List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
 
-            for (int i = 0; i < users.size(); i++) {
-                id = users.get(0).getId();
-            }
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_GETRESULTLISTDETAIL)
-                    .params("entityId", mEntityId)
-                    .params("entity", mEntity)
-                    .params("userid", id)
-                    .params("deviceId", deviceId)
-                    .success(new ISuccess() {
-                        @Override
-                        public void onSuccess(Headers headers, String response) {
-                            String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+                for (int i = 0; i < users.size(); i++) {
+                    id = users.get(0).getId();
+                }
+                RestClient.builder()
+                        .url(BiaoXunTongApi.URL_GETRESULTLISTDETAIL)
+                        .params("entityId", mEntityId)
+                        .params("entity", mEntity)
+                        .params("userid", id)
+                        .params("deviceId", deviceId)
+                        .success(new ISuccess() {
+                            @Override
+                            public void onSuccess(Headers headers, String response) {
+                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
 
-                            //判断是否收藏过
-                            final JSONObject object = JSON.parseObject(jiemi);
-                            String status = object.getString("status");
-                            int favorite = object.getInteger("favorite");
-                            if (favorite == 1) {
-                                myFav = 1;
-                                ivFav.setImageResource(R.mipmap.ic_faved_pressed);
-                            } else if (favorite == 0) {
-                                myFav = 0;
-                                ivFav.setImageResource(R.mipmap.ic_fav_pressed);
+                                //判断是否收藏过
+                                final JSONObject object = JSON.parseObject(jiemi);
+                                String status = object.getString("status");
+                                int favorite = object.getInteger("favorite");
+                                if (favorite == 1) {
+                                    myFav = 1;
+                                    ivFav.setImageResource(R.mipmap.ic_faved_pressed);
+                                } else if (favorite == 0) {
+                                    myFav = 0;
+                                    ivFav.setImageResource(R.mipmap.ic_fav_pressed);
+                                }
+                                if ("200".equals(status)) {
+                                    final JSONObject data = object.getJSONObject("data");
+
+                                    final String url = data.getString("url");
+                                    shareUrl = url;
+
+                                    tvDataDetail.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                                            intent.putExtra("url", url);
+                                            intent.putExtra("title", shareTitle);
+                                            startActivity(intent);
+                                        }
+                                    });
+
+
+                                    String reportTitle = data.getString("reportTitle");
+                                    shareTitle = reportTitle;
+                                    if (!TextUtils.isEmpty(reportTitle)) {
+                                        tvMainTitle.setText(reportTitle);
+                                    } else {
+                                        tvMainTitle.setText("/");
+                                    }
+                                    String sysTime = data.getString("sysTime");
+                                    if (!TextUtils.isEmpty(sysTime)) {
+                                        tvDataTime.setText(sysTime.substring(0, 10));
+                                    } else {
+                                        tvDataTime.setText("/");
+                                    }
+                                    String entryName = data.getString("entryName");
+                                    shareContent = entryName;
+                                    if (!TextUtils.isEmpty(entryName)) {
+                                        tvOwerBiaoduanname.setText(entryName);
+                                    } else {
+                                        tvOwerBiaoduanname.setText("/");
+                                    }
+                                    String entryOwner = data.getString("entryOwner");
+                                    if (!TextUtils.isEmpty(entryOwner)) {
+                                        tvOwerXiangmuyezhu.setText(entryOwner);
+                                    } else {
+                                        tvOwerXiangmuyezhu.setText("/");
+                                    }
+                                    String ownerTel = data.getString("ownerTel");
+                                    if (!TextUtils.isEmpty(ownerTel)) {
+                                        tvOwerXiangmuyezhuNumb.setText(ownerTel);
+                                    } else {
+                                        tvOwerXiangmuyezhuNumb.setText("/");
+                                    }
+                                    String tenderee = data.getString("tenderee");
+                                    if (!TextUtils.isEmpty(tenderee)) {
+                                        tvOwerZhaobiaoren.setText(tenderee);
+                                    } else {
+                                        tvOwerZhaobiaoren.setText("/");
+                                    }
+                                    String tendereeTel = data.getString("tendereeTel");
+                                    if (!TextUtils.isEmpty(tendereeTel)) {
+                                        tvOwerZhaobiaorenNumb.setText(tendereeTel);
+                                    } else {
+                                        tvOwerZhaobiaorenNumb.setText("/");
+                                    }
+                                    String biddingAgency = data.getString("biddingAgency");
+                                    if (!TextUtils.isEmpty(biddingAgency)) {
+                                        tvOwerZhaobiaodaili.setText(biddingAgency);
+                                    } else {
+                                        tvOwerZhaobiaodaili.setText("/");
+                                    }
+                                    String biddingAgencTel = data.getString("biddingAgencTel");
+                                    if (!TextUtils.isEmpty(biddingAgencTel)) {
+                                        tvOwerZhaobiaodailiNumb.setText(biddingAgencTel);
+                                    } else {
+                                        tvOwerZhaobiaodailiNumb.setText("/");
+                                    }
+                                    String placeAddress = data.getString("placeAddress");
+                                    if (!TextUtils.isEmpty(placeAddress)) {
+                                        tvOwerKaibiaodidian.setText(placeAddress);
+                                    } else {
+                                        tvOwerKaibiaodidian.setText("/");
+                                    }
+                                    String placeTime = data.getString("placeTime");
+                                    if (!TextUtils.isEmpty(placeTime)) {
+                                        tvOwerKaibiaoshijian.setText(placeTime);
+                                    } else {
+                                        tvOwerKaibiaoshijian.setText("/");
+                                    }
+                                    String publicityPeriod = data.getString("publicityPeriod");
+                                    if (!TextUtils.isEmpty(publicityPeriod)) {
+                                        tvOwerGongshiqi.setText(publicityPeriod);
+                                    } else {
+                                        tvOwerGongshiqi.setText("/");
+                                    }
+                                    String bigPrice = data.getString("bigPrice");
+                                    if (!TextUtils.isEmpty(bigPrice)) {
+                                        tvOwerToubiaoxianjia.setText(bigPrice);
+                                    } else {
+                                        tvOwerToubiaoxianjia.setText("/");
+                                    }
+                                    String oneTree = data.getString("oneTree");
+                                    if (!TextUtils.isEmpty(oneTree)) {
+                                        tvOwerDiyi.setText(oneTree.substring(0, oneTree.indexOf("_")));
+                                    } else {
+                                        tvOwerDiyi.setText("/");
+                                    }
+                                    String twoTree = data.getString("twoTree");
+                                    if (!TextUtils.isEmpty(twoTree)) {
+                                        tvOwerDier.setText(twoTree.substring(0, twoTree.indexOf("_")));
+                                    } else {
+                                        tvOwerDier.setText("/");
+                                    }
+                                    String threeTree = data.getString("threeTree");
+                                    if (!TextUtils.isEmpty(threeTree)) {
+                                        tvOwerDisan.setText(threeTree.substring(0, threeTree.indexOf("_")));
+                                    } else {
+                                        tvOwerDisan.setText("/");
+                                    }
+                                    String oneCompany = data.getString("oneCompany");
+                                    if (!TextUtils.isEmpty(oneCompany)) {
+                                        tvOwerCompanyName.setText(oneCompany);
+                                    } else {
+                                        tvOwerCompanyName.setText("/");
+                                    }
+                                    String onePrice = data.getString("onePrice");
+                                    if (!TextUtils.isEmpty(onePrice)) {
+                                        tvOwerCompanyBaojia.setText(onePrice);
+                                    } else {
+                                        tvOwerCompanyBaojia.setText("/");
+                                    }
+                                    String oneReviewPrice = data.getString("oneReviewPrice");
+                                    if (!TextUtils.isEmpty(oneReviewPrice)) {
+                                        tvOwerCompanyToubiaojia.setText(oneReviewPrice);
+                                    } else {
+                                        tvOwerCompanyToubiaojia.setText("/");
+                                    }
+                                    String oneScore = data.getString("oneScore");
+                                    if (!TextUtils.isEmpty(oneScore)) {
+                                        tvOwerCompanyPinjia.setText(oneScore);
+                                    } else {
+                                        tvOwerCompanyPinjia.setText("/");
+                                    }
+                                    sggjyDetailStatusView.showContent();
+                                } else {
+                                    sggjyDetailStatusView.showError();
+                                }
+
                             }
-                            if ("200".equals(status)) {
+                        })
+                        .build()
+                        .post();
+            } else {
+                //未登陆时的数据请求
+                RestClient.builder()
+                        .url(BiaoXunTongApi.URL_GETRESULTLISTDETAIL)
+                        .params("entityId", mEntityId)
+                        .params("entity", mEntity)
+                        .params("deviceId", deviceId)
+                        .success(new ISuccess() {
+                            @Override
+                            public void onSuccess(Headers headers, String response) {
+                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+
+                                final JSONObject object = JSON.parseObject(jiemi);
+                                String status = object.getString("status");
                                 final JSONObject data = object.getJSONObject("data");
 
-                                final String url = data.getString("url");
-                                shareUrl = url;
+                                if ("200".equals(status)) {
+                                    final String url = data.getString("url");
+                                    shareUrl = url;
 
-                                tvDataDetail.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(getActivity(), BrowserActivity.class);
-                                        intent.putExtra("url", url);
-                                        intent.putExtra("title", shareTitle);
-                                        startActivity(intent);
+                                    tvDataDetail.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                                            intent.putExtra("url", url);
+                                            intent.putExtra("title", shareTitle);
+                                            startActivity(intent);
+
+                                        }
+                                    });
+                                    String reportTitle = data.getString("reportTitle");
+                                    shareTitle = reportTitle;
+                                    if (!TextUtils.isEmpty(reportTitle)) {
+                                        tvMainTitle.setText(reportTitle);
+                                    } else {
+                                        tvMainTitle.setText("/");
                                     }
-                                });
-
-
-                                String reportTitle = data.getString("reportTitle");
-                                shareTitle = reportTitle;
-                                if (!TextUtils.isEmpty(reportTitle)) {
-                                    tvMainTitle.setText(reportTitle);
-                                } else {
-                                    tvMainTitle.setText("/");
-                                }
-                                String sysTime = data.getString("sysTime");
-                                if (!TextUtils.isEmpty(sysTime)) {
-                                    tvDataTime.setText(sysTime.substring(0, 10));
-                                } else {
-                                    tvDataTime.setText("/");
-                                }
-                                String entryName = data.getString("entryName");
-                                shareContent = entryName;
-                                if (!TextUtils.isEmpty(entryName)) {
-                                    tvOwerBiaoduanname.setText(entryName);
-                                } else {
-                                    tvOwerBiaoduanname.setText("/");
-                                }
-                                String entryOwner = data.getString("entryOwner");
-                                if (!TextUtils.isEmpty(entryOwner)) {
-                                    tvOwerXiangmuyezhu.setText(entryOwner);
-                                } else {
-                                    tvOwerXiangmuyezhu.setText("/");
-                                }
-                                String ownerTel = data.getString("ownerTel");
-                                if (!TextUtils.isEmpty(ownerTel)) {
-                                    tvOwerXiangmuyezhuNumb.setText(ownerTel);
-                                } else {
-                                    tvOwerXiangmuyezhuNumb.setText("/");
-                                }
-                                String tenderee = data.getString("tenderee");
-                                if (!TextUtils.isEmpty(tenderee)) {
-                                    tvOwerZhaobiaoren.setText(tenderee);
-                                } else {
-                                    tvOwerZhaobiaoren.setText("/");
-                                }
-                                String tendereeTel = data.getString("tendereeTel");
-                                if (!TextUtils.isEmpty(tendereeTel)) {
-                                    tvOwerZhaobiaorenNumb.setText(tendereeTel);
-                                } else {
-                                    tvOwerZhaobiaorenNumb.setText("/");
-                                }
-                                String biddingAgency = data.getString("biddingAgency");
-                                if (!TextUtils.isEmpty(biddingAgency)) {
-                                    tvOwerZhaobiaodaili.setText(biddingAgency);
-                                } else {
-                                    tvOwerZhaobiaodaili.setText("/");
-                                }
-                                String biddingAgencTel = data.getString("biddingAgencTel");
-                                if (!TextUtils.isEmpty(biddingAgencTel)) {
-                                    tvOwerZhaobiaodailiNumb.setText(biddingAgencTel);
-                                } else {
-                                    tvOwerZhaobiaodailiNumb.setText("/");
-                                }
-                                String placeAddress = data.getString("placeAddress");
-                                if (!TextUtils.isEmpty(placeAddress)) {
-                                    tvOwerKaibiaodidian.setText(placeAddress);
-                                } else {
-                                    tvOwerKaibiaodidian.setText("/");
-                                }
-                                String placeTime = data.getString("placeTime");
-                                if (!TextUtils.isEmpty(placeTime)) {
-                                    tvOwerKaibiaoshijian.setText(placeTime);
-                                } else {
-                                    tvOwerKaibiaoshijian.setText("/");
-                                }
-                                String publicityPeriod = data.getString("publicityPeriod");
-                                if (!TextUtils.isEmpty(publicityPeriod)) {
-                                    tvOwerGongshiqi.setText(publicityPeriod);
-                                } else {
-                                    tvOwerGongshiqi.setText("/");
-                                }
-                                String bigPrice = data.getString("bigPrice");
-                                if (!TextUtils.isEmpty(bigPrice)) {
-                                    tvOwerToubiaoxianjia.setText(bigPrice);
-                                } else {
-                                    tvOwerToubiaoxianjia.setText("/");
-                                }
-                                String oneTree = data.getString("oneTree");
-                                if (!TextUtils.isEmpty(oneTree)) {
-                                    tvOwerDiyi.setText(oneTree.substring(0, oneTree.indexOf("_")));
-                                } else {
-                                    tvOwerDiyi.setText("/");
-                                }
-                                String twoTree = data.getString("twoTree");
-                                if (!TextUtils.isEmpty(twoTree)) {
-                                    tvOwerDier.setText(twoTree.substring(0, twoTree.indexOf("_")));
-                                } else {
-                                    tvOwerDier.setText("/");
-                                }
-                                String threeTree = data.getString("threeTree");
-                                if (!TextUtils.isEmpty(threeTree)) {
-                                    tvOwerDisan.setText(threeTree.substring(0, threeTree.indexOf("_")));
-                                } else {
-                                    tvOwerDisan.setText("/");
-                                }
-                                String oneCompany = data.getString("oneCompany");
-                                if (!TextUtils.isEmpty(oneCompany)) {
-                                    tvOwerCompanyName.setText(oneCompany);
-                                } else {
-                                    tvOwerCompanyName.setText("/");
-                                }
-                                String onePrice = data.getString("onePrice");
-                                if (!TextUtils.isEmpty(onePrice)) {
-                                    tvOwerCompanyBaojia.setText(onePrice);
-                                } else {
-                                    tvOwerCompanyBaojia.setText("/");
-                                }
-                                String oneReviewPrice = data.getString("oneReviewPrice");
-                                if (!TextUtils.isEmpty(oneReviewPrice)) {
-                                    tvOwerCompanyToubiaojia.setText(oneReviewPrice);
-                                } else {
-                                    tvOwerCompanyToubiaojia.setText("/");
-                                }
-                                String oneScore = data.getString("oneScore");
-                                if (!TextUtils.isEmpty(oneScore)) {
-                                    tvOwerCompanyPinjia.setText(oneScore);
-                                } else {
-                                    tvOwerCompanyPinjia.setText("/");
-                                }
-                                sggjyDetailStatusView.showContent();
-                            } else {
-                                sggjyDetailStatusView.showError();
-                            }
-
-                        }
-                    })
-                    .build()
-                    .post();
-        } else {
-            //未登陆时的数据请求
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_GETRESULTLISTDETAIL)
-                    .params("entityId", mEntityId)
-                    .params("entity", mEntity)
-                    .params("deviceId", deviceId)
-                    .success(new ISuccess() {
-                        @Override
-                        public void onSuccess(Headers headers, String response) {
-                            String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
-
-                            final JSONObject object = JSON.parseObject(jiemi);
-                            String status = object.getString("status");
-                            final JSONObject data = object.getJSONObject("data");
-
-                            if ("200".equals(status)) {
-                                final String url = data.getString("url");
-                                shareUrl = url;
-
-                                tvDataDetail.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(getActivity(), BrowserActivity.class);
-                                        intent.putExtra("url", url);
-                                        intent.putExtra("title", shareTitle);
-                                        startActivity(intent);
-
+                                    String sysTime = data.getString("sysTime");
+                                    if (!TextUtils.isEmpty(sysTime)) {
+                                        tvDataTime.setText(sysTime.substring(0, 10));
+                                    } else {
+                                        tvDataTime.setText("/");
                                     }
-                                });
-                                String reportTitle = data.getString("reportTitle");
-                                shareTitle = reportTitle;
-                                if (!TextUtils.isEmpty(reportTitle)) {
-                                    tvMainTitle.setText(reportTitle);
-                                } else {
-                                    tvMainTitle.setText("/");
-                                }
-                                String sysTime = data.getString("sysTime");
-                                if (!TextUtils.isEmpty(sysTime)) {
-                                    tvDataTime.setText(sysTime.substring(0, 10));
-                                } else {
-                                    tvDataTime.setText("/");
-                                }
-                                String entryName = data.getString("entryName");
-                                shareContent = entryName;
-                                if (!TextUtils.isEmpty(entryName)) {
-                                    tvOwerBiaoduanname.setText(entryName);
-                                } else {
-                                    tvOwerBiaoduanname.setText("/");
-                                }
-                                String entryOwner = data.getString("entryOwner");
-                                if (!TextUtils.isEmpty(entryOwner)) {
-                                    tvOwerXiangmuyezhu.setText(entryOwner);
-                                } else {
-                                    tvOwerXiangmuyezhu.setText("/");
-                                }
-                                String ownerTel = data.getString("ownerTel");
-                                if (!TextUtils.isEmpty(ownerTel)) {
-                                    tvOwerXiangmuyezhuNumb.setText(ownerTel);
-                                } else {
-                                    tvOwerXiangmuyezhuNumb.setText("/");
-                                }
-                                String tenderee = data.getString("tenderee");
-                                if (!TextUtils.isEmpty(tenderee)) {
-                                    tvOwerZhaobiaoren.setText(tenderee);
-                                } else {
-                                    tvOwerZhaobiaoren.setText("/");
-                                }
-                                String tendereeTel = data.getString("tendereeTel");
-                                if (!TextUtils.isEmpty(tendereeTel)) {
-                                    tvOwerZhaobiaorenNumb.setText(tendereeTel);
-                                } else {
-                                    tvOwerZhaobiaorenNumb.setText("/");
-                                }
-                                String biddingAgency = data.getString("biddingAgency");
-                                if (!TextUtils.isEmpty(biddingAgency)) {
-                                    tvOwerZhaobiaodaili.setText(biddingAgency);
-                                } else {
-                                    tvOwerZhaobiaodaili.setText("/");
-                                }
-                                String biddingAgencTel = data.getString("biddingAgencTel");
-                                if (!TextUtils.isEmpty(biddingAgencTel)) {
-                                    tvOwerZhaobiaodailiNumb.setText(biddingAgencTel);
-                                } else {
-                                    tvOwerZhaobiaodailiNumb.setText("/");
-                                }
-                                String placeAddress = data.getString("placeAddress");
-                                if (!TextUtils.isEmpty(placeAddress)) {
-                                    tvOwerKaibiaodidian.setText(placeAddress);
-                                } else {
-                                    tvOwerKaibiaodidian.setText("/");
-                                }
-                                String placeTime = data.getString("placeTime");
-                                if (!TextUtils.isEmpty(placeTime)) {
-                                    tvOwerKaibiaoshijian.setText(placeTime);
-                                } else {
-                                    tvOwerKaibiaoshijian.setText("/");
-                                }
-                                String publicityPeriod = data.getString("publicityPeriod");
-                                if (!TextUtils.isEmpty(publicityPeriod)) {
-                                    tvOwerGongshiqi.setText(publicityPeriod);
-                                } else {
-                                    tvOwerGongshiqi.setText("/");
-                                }
-                                String bigPrice = data.getString("bigPrice");
-                                if (!TextUtils.isEmpty(bigPrice)) {
-                                    tvOwerToubiaoxianjia.setText(bigPrice);
-                                } else {
-                                    tvOwerToubiaoxianjia.setText("/");
-                                }
-                                String oneTree = data.getString("oneTree");
-                                if (!TextUtils.isEmpty(oneTree)) {
-                                    tvOwerDiyi.setText(oneTree.substring(0, oneTree.indexOf("_")));
-                                } else {
-                                    tvOwerDiyi.setText("/");
-                                }
-                                String twoTree = data.getString("twoTree");
-                                if (!TextUtils.isEmpty(twoTree)) {
-                                    tvOwerDier.setText(twoTree.substring(0, twoTree.indexOf("_")));
-                                } else {
-                                    tvOwerDier.setText("/");
-                                }
-                                String threeTree = data.getString("threeTree");
-                                if (!TextUtils.isEmpty(threeTree)) {
-                                    tvOwerDisan.setText(threeTree.substring(0, threeTree.indexOf("_")));
-                                } else {
-                                    tvOwerDisan.setText("/");
-                                }
-                                String oneCompany = data.getString("oneCompany");
-                                if (!TextUtils.isEmpty(oneCompany)) {
-                                    tvOwerCompanyName.setText(oneCompany);
-                                } else {
-                                    tvOwerCompanyName.setText("/");
-                                }
-                                String onePrice = data.getString("onePrice");
-                                if (!TextUtils.isEmpty(onePrice)) {
-                                    tvOwerCompanyBaojia.setText(onePrice);
-                                } else {
-                                    tvOwerCompanyBaojia.setText("/");
-                                }
-                                String oneReviewPrice = data.getString("oneReviewPrice");
-                                if (!TextUtils.isEmpty(oneReviewPrice)) {
-                                    tvOwerCompanyToubiaojia.setText(oneReviewPrice);
-                                } else {
-                                    tvOwerCompanyToubiaojia.setText("/");
-                                }
-                                String oneScore = data.getString("oneScore");
-                                if (!TextUtils.isEmpty(oneScore)) {
-                                    tvOwerCompanyPinjia.setText(oneScore);
-                                } else {
-                                    tvOwerCompanyPinjia.setText("/");
-                                }
-                                if (sggjyDetailStatusView != null) {
-                                    sggjyDetailStatusView.showContent();
-                                }
+                                    String entryName = data.getString("entryName");
+                                    shareContent = entryName;
+                                    if (!TextUtils.isEmpty(entryName)) {
+                                        tvOwerBiaoduanname.setText(entryName);
+                                    } else {
+                                        tvOwerBiaoduanname.setText("/");
+                                    }
+                                    String entryOwner = data.getString("entryOwner");
+                                    if (!TextUtils.isEmpty(entryOwner)) {
+                                        tvOwerXiangmuyezhu.setText(entryOwner);
+                                    } else {
+                                        tvOwerXiangmuyezhu.setText("/");
+                                    }
+                                    String ownerTel = data.getString("ownerTel");
+                                    if (!TextUtils.isEmpty(ownerTel)) {
+                                        tvOwerXiangmuyezhuNumb.setText(ownerTel);
+                                    } else {
+                                        tvOwerXiangmuyezhuNumb.setText("/");
+                                    }
+                                    String tenderee = data.getString("tenderee");
+                                    if (!TextUtils.isEmpty(tenderee)) {
+                                        tvOwerZhaobiaoren.setText(tenderee);
+                                    } else {
+                                        tvOwerZhaobiaoren.setText("/");
+                                    }
+                                    String tendereeTel = data.getString("tendereeTel");
+                                    if (!TextUtils.isEmpty(tendereeTel)) {
+                                        tvOwerZhaobiaorenNumb.setText(tendereeTel);
+                                    } else {
+                                        tvOwerZhaobiaorenNumb.setText("/");
+                                    }
+                                    String biddingAgency = data.getString("biddingAgency");
+                                    if (!TextUtils.isEmpty(biddingAgency)) {
+                                        tvOwerZhaobiaodaili.setText(biddingAgency);
+                                    } else {
+                                        tvOwerZhaobiaodaili.setText("/");
+                                    }
+                                    String biddingAgencTel = data.getString("biddingAgencTel");
+                                    if (!TextUtils.isEmpty(biddingAgencTel)) {
+                                        tvOwerZhaobiaodailiNumb.setText(biddingAgencTel);
+                                    } else {
+                                        tvOwerZhaobiaodailiNumb.setText("/");
+                                    }
+                                    String placeAddress = data.getString("placeAddress");
+                                    if (!TextUtils.isEmpty(placeAddress)) {
+                                        tvOwerKaibiaodidian.setText(placeAddress);
+                                    } else {
+                                        tvOwerKaibiaodidian.setText("/");
+                                    }
+                                    String placeTime = data.getString("placeTime");
+                                    if (!TextUtils.isEmpty(placeTime)) {
+                                        tvOwerKaibiaoshijian.setText(placeTime);
+                                    } else {
+                                        tvOwerKaibiaoshijian.setText("/");
+                                    }
+                                    String publicityPeriod = data.getString("publicityPeriod");
+                                    if (!TextUtils.isEmpty(publicityPeriod)) {
+                                        tvOwerGongshiqi.setText(publicityPeriod);
+                                    } else {
+                                        tvOwerGongshiqi.setText("/");
+                                    }
+                                    String bigPrice = data.getString("bigPrice");
+                                    if (!TextUtils.isEmpty(bigPrice)) {
+                                        tvOwerToubiaoxianjia.setText(bigPrice);
+                                    } else {
+                                        tvOwerToubiaoxianjia.setText("/");
+                                    }
+                                    String oneTree = data.getString("oneTree");
+                                    if (!TextUtils.isEmpty(oneTree)) {
+                                        tvOwerDiyi.setText(oneTree.substring(0, oneTree.indexOf("_")));
+                                    } else {
+                                        tvOwerDiyi.setText("/");
+                                    }
+                                    String twoTree = data.getString("twoTree");
+                                    if (!TextUtils.isEmpty(twoTree)) {
+                                        tvOwerDier.setText(twoTree.substring(0, twoTree.indexOf("_")));
+                                    } else {
+                                        tvOwerDier.setText("/");
+                                    }
+                                    String threeTree = data.getString("threeTree");
+                                    if (!TextUtils.isEmpty(threeTree)) {
+                                        tvOwerDisan.setText(threeTree.substring(0, threeTree.indexOf("_")));
+                                    } else {
+                                        tvOwerDisan.setText("/");
+                                    }
+                                    String oneCompany = data.getString("oneCompany");
+                                    if (!TextUtils.isEmpty(oneCompany)) {
+                                        tvOwerCompanyName.setText(oneCompany);
+                                    } else {
+                                        tvOwerCompanyName.setText("/");
+                                    }
+                                    String onePrice = data.getString("onePrice");
+                                    if (!TextUtils.isEmpty(onePrice)) {
+                                        tvOwerCompanyBaojia.setText(onePrice);
+                                    } else {
+                                        tvOwerCompanyBaojia.setText("/");
+                                    }
+                                    String oneReviewPrice = data.getString("oneReviewPrice");
+                                    if (!TextUtils.isEmpty(oneReviewPrice)) {
+                                        tvOwerCompanyToubiaojia.setText(oneReviewPrice);
+                                    } else {
+                                        tvOwerCompanyToubiaojia.setText("/");
+                                    }
+                                    String oneScore = data.getString("oneScore");
+                                    if (!TextUtils.isEmpty(oneScore)) {
+                                        tvOwerCompanyPinjia.setText(oneScore);
+                                    } else {
+                                        tvOwerCompanyPinjia.setText("/");
+                                    }
+                                    if (sggjyDetailStatusView != null) {
+                                        sggjyDetailStatusView.showContent();
+                                    }
 
-                            } else {
-                                sggjyDetailStatusView.showError();
+                                } else {
+                                    sggjyDetailStatusView.showError();
+                                }
                             }
-                        }
-                    })
-                    .build()
-                    .post();
+                        })
+                        .build()
+                        .post();
+            }
         }
 
 
