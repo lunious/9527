@@ -10,7 +10,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -576,10 +575,10 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                         if ("200".equals(status)) {
                                             myFav = 0;
                                             ivFav.setImageResource(R.mipmap.ic_fav_pressed);
-                                            ToastUtil.shortToast(getContext(),"取消收藏");
+                                            ToastUtil.shortToast(getContext(), "取消收藏");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
-                                            ToastUtil.shortToast(getContext(),"服务器异常");
+                                            ToastUtil.shortToast(getContext(), "服务器异常");
                                         }
                                     }
                                 })
@@ -599,10 +598,10 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                         if ("200".equals(status)) {
                                             myFav = 1;
                                             ivFav.setImageResource(R.mipmap.ic_faved_pressed);
-                                            ToastUtil.shortToast(getContext(),"收藏成功");
+                                            ToastUtil.shortToast(getContext(), "收藏成功");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
-                                            ToastUtil.shortToast(getContext(),"服务器异常");
+                                            ToastUtil.shortToast(getContext(), "服务器异常");
                                         }
                                     }
                                 })
