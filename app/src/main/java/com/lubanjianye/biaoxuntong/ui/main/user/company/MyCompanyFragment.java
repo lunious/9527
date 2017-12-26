@@ -533,22 +533,44 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
     private void setData(JSONArray data) {
         final int size = data == null ? 0 : data.size();
         mQyyjDataList.clear();
-        for (int i = 0; i < data.size(); i++) {
-            CompanySgyjListBean bean = new CompanySgyjListBean();
-            JSONObject list = data.getJSONObject(i);
-            bean.setXmmc(list.getString("xmmc"));
-            bean.setZbsj(list.getString("zbsj"));
-            bean.setXmfzr(list.getString("xmfzr"));
 
-            String zbje = list.getString("zbje");
-            if ("0.0".equals(zbje)) {
-                bean.setZbje("暂无");
-            } else {
-                bean.setZbje(list.getString("zbje"));
+        if (data.size() > 5){
+            for (int i = 0; i < 5; i++) {
+                CompanySgyjListBean bean = new CompanySgyjListBean();
+                JSONObject list = data.getJSONObject(i);
+                bean.setXmmc(list.getString("xmmc"));
+                bean.setZbsj(list.getString("zbsj"));
+                bean.setXmfzr(list.getString("xmfzr"));
+
+                String zbje = list.getString("zbje");
+                if ("0.0".equals(zbje)) {
+                    bean.setZbje("暂无");
+                } else {
+                    bean.setZbje(list.getString("zbje"));
+                }
+                mQyyjDataList.add(bean);
+                mQyyjAdapter.notifyDataSetChanged();
             }
-            mQyyjDataList.add(bean);
-            mQyyjAdapter.notifyDataSetChanged();
+        }else {
+            for (int i = 0; i < data.size(); i++) {
+                CompanySgyjListBean bean = new CompanySgyjListBean();
+                JSONObject list = data.getJSONObject(i);
+                bean.setXmmc(list.getString("xmmc"));
+                bean.setZbsj(list.getString("zbsj"));
+                bean.setXmfzr(list.getString("xmfzr"));
+
+                String zbje = list.getString("zbje");
+                if ("0.0".equals(zbje)) {
+                    bean.setZbje("暂无");
+                } else {
+                    bean.setZbje(list.getString("zbje"));
+                }
+                mQyyjDataList.add(bean);
+                mQyyjAdapter.notifyDataSetChanged();
+            }
         }
+
+
 
     }
 
