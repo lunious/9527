@@ -54,7 +54,7 @@ public class LauncherFragment extends BaseFragment implements View.OnClickListen
 
     private void initTimer() {
 
-        mTimer = new CountDownTimer(5 * 1000, 1000) {
+        mTimer = new CountDownTimer(2 * 1000, 1000) {
 
             @SuppressLint("DefaultLocale")
             @Override
