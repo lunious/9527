@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -616,7 +615,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.tv_query:
                 if (TextUtils.isEmpty(etQuery.getText().toString().trim())) {
-                    ToastUtil.shortToast(getContext(),"请输入关键字！");
+                    ToastUtil.shortToast(getContext(), "请输入关键字！");
                 } else {
 
                     if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
@@ -654,7 +653,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                 startActivity(intent);
                                             } else {
                                                 promptDialog.dismissImmediately();
-                                                ToastUtil.shortToast(getContext(),"查询结果为0");
+                                                ToastUtil.shortToast(getContext(), "查询结果为0");
                                             }
                                         }
                                     })
@@ -662,7 +661,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                     .post();
 
                         } else {
-                            ToastUtil.shortToast(getContext(),"请先绑定手机号");
+                            ToastUtil.shortToast(getContext(), "请先绑定手机号");
                             startActivity(new Intent(getActivity(), AvaterActivity.class));
                         }
                     } else {
@@ -710,7 +709,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                             }
 
                         } else {
-                            ToastUtil.shortToast(getContext(),"服务器错误");
+                            ToastUtil.shortToast(getContext(), "服务器错误");
                         }
                     }
                 })

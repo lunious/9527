@@ -59,21 +59,6 @@
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".test.TestActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Main"
-            android:windowSoftInputMode="adjustPan">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
-        </activity>
-
-
         <!--百度定位开始-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

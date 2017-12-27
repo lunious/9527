@@ -53,7 +53,7 @@ public class MainTabFragment extends BaseFragment {
             _mActivity.finish();
         } else {
             TOUCH_TIME = System.currentTimeMillis();
-            ToastUtil.shortToast(getContext(), "再按一次退出鲁班标讯通");
+            ToastUtil.shortBottonToast(getContext(), "再按一次退出鲁班标讯通");
         }
         return true;
     }

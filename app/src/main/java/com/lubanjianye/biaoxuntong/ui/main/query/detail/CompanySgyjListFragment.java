@@ -92,7 +92,7 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
     @Override
     public void initData() {
         llIvBack.setVisibility(View.VISIBLE);
-        mainBarName.setText("企业业绩");
+        mainBarName.setText("全部企业业绩");
     }
 
     @Override

@@ -39,11 +39,11 @@ public class IndexListAdapter extends BaseQuickAdapter<IndexListBean, BaseViewHo
         if (signstauts != null) {
             helper.setText(R.id.tv_index_status, signstauts);
             if ("正在报名".equals(signstauts)) {
-                helper.setTextColor(R.id.tv_index_status, android.graphics.Color.parseColor("#00bfdc"));
+                helper.setTextColor(R.id.tv_index_status, android.graphics.Color.parseColor("#21a9ff"));
             } else if ("报名结束".equals(signstauts)) {
                 helper.setTextColor(R.id.tv_index_status, android.graphics.Color.parseColor("#ff6666"));
             } else if ("待报名".equals(signstauts)) {
-                helper.setTextColor(R.id.tv_index_status, android.graphics.Color.parseColor("#33cc33"));
+                helper.setTextColor(R.id.tv_index_status, android.graphics.Color.parseColor("#00bfdc"));
             }
 
         }

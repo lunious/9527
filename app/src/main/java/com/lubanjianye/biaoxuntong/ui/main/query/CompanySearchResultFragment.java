@@ -9,8 +9,8 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -59,7 +59,7 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
 
     private static final String ARG_PROVINCECODE = "ARG_PROVINCECODE";
     private static final String ARG_QYID = "ARG_QYID";
-
+    private View noDataView;
 
     private String mProvinceCode = "";
     private String mqyIds = "";
@@ -182,6 +182,8 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
             }
         });
 
+        noDataView = getActivity().getLayoutInflater().inflate(R.layout.custom_empty_view, (ViewGroup) companySearchResultRecycler.getParent(), false);
+
 
     }
 
@@ -244,45 +246,35 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
                         final String message = object.getString("message");
                         final JSONArray array = object.getJSONArray("data");
 
-                        if ("200".equals(status)) {
-                            if (array.size() > 0) {
-                                setData(isRefresh, array);
-                            } else {
-                                if (mDataList != null) {
-                                    mDataList.clear();
-                                    mAdapter.notifyDataSetChanged();
-                                }
-                                //TODO 内容为空的处理
-                                ToastUtil.shortToast(getContext(),"暂无内容");
-                            }
+
+                        if ("LIMIT_REACHED".equals(message)) {
+                            ToastUtil.shortBottonToast(getContext(), "你今天已达到最大查询次数，请明天再试！");
+                            mAdapter.setEmptyView(noDataView);
+                            companySearchResultRefresh.setRefreshing(false);
+                            companySearchResultRefresh.setEnabled(false);
+                        } else if ("INVALID_TOKEN".equals(message)) {
+                            ToastUtil.shortToast(getContext(), "Token失效，请重新登录!");
+
+                            DatabaseManager.getInstance().getDao().deleteAll();
+                            AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
+                            EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
+                            startActivity(new Intent(getActivity(), SignInActivity.class));
                         } else {
-                            if ("LIMIT_REACHED".equals(message)) {
-                                ToastUtil.shortToast(getContext(),"你今天已达到最大查询次数，请明天再试！");
-                            } else if ("INVALID_TOKEN".equals(message)) {
-                                ToastUtil.shortToast(getContext(),"Token失效，请重新登录!");
-
-                                List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
-                                long id = 0;
-                                for (int j = 0; j < users.size(); j++) {
-                                    id = users.get(0).getId();
+                            if ("200".equals(status)) {
+                                if (array.size() > 0) {
+                                    setData(isRefresh, array);
+                                } else {
+                                    if (mDataList != null) {
+                                        mDataList.clear();
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                    //TODO 内容为空的处理
+                                    mAdapter.setEmptyView(noDataView);
                                 }
-                                RestClient.builder()
-                                        .url(BiaoXunTongApi.URL_LOGOUT)
-                                        .params("id", id)
-                                        .success(new ISuccess() {
-                                            @Override
-                                            public void onSuccess(Headers headers, String response) {
-
-                                                DatabaseManager.getInstance().getDao().deleteAll();
-                                                AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
-                                                EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
-                                                startActivity(new Intent(getActivity(), SignInActivity.class));
-
-                                            }
-                                        })
-                                        .build()
-                                        .post();
+                            } else {
+                                ToastUtil.shortToast(getContext(), message);
                             }
+
                         }
 
 

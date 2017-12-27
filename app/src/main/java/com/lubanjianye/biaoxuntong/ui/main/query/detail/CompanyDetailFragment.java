@@ -5,12 +5,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -19,6 +20,9 @@ import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.bean.CompanyQyzzListBean;
+import com.lubanjianye.biaoxuntong.bean.CompanyRyzzListBean;
+import com.lubanjianye.biaoxuntong.bean.CompanySgyjListBean;
+import com.lubanjianye.biaoxuntong.bean.MyCompanyRyzzAllListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
@@ -51,16 +55,33 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
     private AppCompatTextView tvJyArea = null;
     private AppCompatTextView tvPuNum = null;
     private MultipleStatusView companyDetailStatusView = null;
-    private RelativeLayout llRyzz = null;
-    private RelativeLayout llSgyj = null;
-    private RecyclerView companyQyzzRecycler = null;
+
+    private RecyclerView rlvQyzz = null;
+    private RecyclerView rlvRyzz = null;
+    private RecyclerView rlvQyyj = null;
+
+    private AppCompatTextView tvQyzzTip = null;
+    private AppCompatTextView tvRyzzTip = null;
+    private AppCompatTextView tvQyyjTip = null;
 
     private LinearLayout llMoreQyzz = null;
+    private LinearLayout llMoreRyzz = null;
+    private LinearLayout llMoreQyyj = null;
+
     private AppCompatTextView qyzzCount = null;
+    private AppCompatTextView ryzzCount = null;
+    private AppCompatTextView qyyjCount = null;
 
 
     private CompanyQyzzListAdapter mAdapter;
     private ArrayList<CompanyQyzzListBean> mDataList = new ArrayList<>();
+
+    private CompanyRyzzListAdapter mRyzzAdapter = null;
+    private ArrayList<CompanyRyzzListBean> mRyzzDataList = new ArrayList<>();
+
+
+    private CompanySgyjListAdapter mQyyjAdapter = null;
+    private ArrayList<CompanySgyjListBean> mQyyjDataList = new ArrayList<>();
 
     private static final String ARG_SFID = "ARG_SFID";
     private String sfId = "";
@@ -78,6 +99,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
         return fragment;
     }
 
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +109,33 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
         }
     }
 
+
+    private void initAdapter() {
+
+        mAdapter = new CompanyQyzzListAdapter(R.layout.fragment_company_qyzz_list, mDataList);
+        mAdapter.setLoadMoreView(new CustomLoadMoreView());
+        rlvQyzz.setAdapter(mAdapter);
+
+        mRyzzAdapter = new CompanyRyzzListAdapter(R.layout.fragment_company_ryzz_list, mRyzzDataList);
+        mRyzzAdapter.setLoadMoreView(new CustomLoadMoreView());
+        rlvRyzz.setAdapter(mRyzzAdapter);
+
+        mQyyjAdapter = new CompanySgyjListAdapter(R.layout.fragment_company_sgyj_list_item, mQyyjDataList);
+        mAdapter.setLoadMoreView(new CustomLoadMoreView());
+        rlvQyyj.setAdapter(mQyyjAdapter);
+
+
+    }
+
+
+    private void initRecyclerView() {
+
+        rlvQyzz.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        rlvRyzz.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        rlvQyyj.setLayoutManager(new LinearLayoutManager(getContext()));
+
+
+    }
 
     @Override
     public void initView() {
@@ -99,24 +148,27 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
         tvJyArea = getView().findViewById(R.id.tv_jy_area);
         tvPuNum = getView().findViewById(R.id.tv_pu_num);
         companyDetailStatusView = getView().findViewById(R.id.company_detail_status_view);
-        llRyzz = getView().findViewById(R.id.ll_ryzz);
-        llSgyj = getView().findViewById(R.id.ll_sgyj);
-        companyQyzzRecycler = getView().findViewById(R.id.company_qyzz_recycler);
+
+        rlvQyzz = getView().findViewById(R.id.rlv_qyzz);
+        rlvRyzz = getView().findViewById(R.id.rlv_ryzz);
+        rlvQyyj = getView().findViewById(R.id.rlv_qyyj);
+
+        tvQyzzTip = getView().findViewById(R.id.tv_qyzz_tip);
+        tvRyzzTip = getView().findViewById(R.id.tv_ryzz_tip);
+        tvQyyjTip = getView().findViewById(R.id.tv_qyyj_tip);
 
         llMoreQyzz = getView().findViewById(R.id.ll_more_qyzz);
+        llMoreRyzz = getView().findViewById(R.id.ll_more_ryzz);
+        llMoreQyyj = getView().findViewById(R.id.ll_more_qyyj);
+
         qyzzCount = getView().findViewById(R.id.qyzz_count);
-        llMoreQyzz.setOnClickListener(this);
+        ryzzCount = getView().findViewById(R.id.ryzz_count);
+        qyyjCount = getView().findViewById(R.id.qyyj_count);
+
         llIvBack.setOnClickListener(this);
-        llRyzz.setOnClickListener(this);
-        llSgyj.setOnClickListener(this);
-
-        companyQyzzRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        mAdapter = new CompanyQyzzListAdapter(R.layout.fragment_company_qyzz_list, mDataList);
-        //设置列表动画
-//        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
-        mAdapter.setLoadMoreView(new CustomLoadMoreView());
-        companyQyzzRecycler.setAdapter(mAdapter);
-
+        llMoreQyzz.setOnClickListener(this);
+        llMoreRyzz.setOnClickListener(this);
+        llMoreQyyj.setOnClickListener(this);
 
     }
 
@@ -129,6 +181,8 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
 
     @Override
     public void initEvent() {
+        initRecyclerView();
+        initAdapter();
         requestData();
     }
 
@@ -203,6 +257,8 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                             }
 
                             requestQyzzData();
+                            requestRyzzData();
+                            requestQyyjData();
                         }
 
                     }
@@ -220,18 +276,18 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
             case R.id.ll_iv_back:
                 getActivity().onBackPressed();
                 break;
-            case R.id.ll_ryzz:
+            case R.id.ll_more_qyzz:
+                intent = new Intent(getActivity(), CompanyQyzzListActivity.class);
+                intent.putExtra("sfId", sfId);
+                startActivity(intent);
+                break;
+            case R.id.ll_more_ryzz:
                 intent = new Intent(getActivity(), CompanyRyzzListActivity.class);
                 intent.putExtra("sfId", sfId);
                 startActivity(intent);
                 break;
-            case R.id.ll_sgyj:
+            case R.id.ll_more_qyyj:
                 intent = new Intent(getActivity(), CompanySgyjListActivity.class);
-                intent.putExtra("sfId", sfId);
-                startActivity(intent);
-                break;
-            case R.id.ll_more_qyzz:
-                intent = new Intent(getActivity(), CompanyQyzzListActivity.class);
                 intent.putExtra("sfId", sfId);
                 startActivity(intent);
                 break;
@@ -261,14 +317,19 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                         final JSONArray array = object.getJSONArray("data");
 
                         if (array.size() > 0) {
-                            setData(array);
+                            if (tvQyzzTip != null) {
+                                tvQyzzTip.setVisibility(View.GONE);
+                            }
+                            setQyzzData(array);
                         } else {
                             if (mDataList != null) {
                                 mDataList.clear();
                                 mAdapter.notifyDataSetChanged();
                             }
                             //TODO 内容为空的处理
-
+                            if (tvQyzzTip != null) {
+                                tvQyzzTip.setVisibility(View.VISIBLE);
+                            }
                         }
 
 
@@ -280,8 +341,98 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
 
     }
 
+    public void requestRyzzData() {
+        List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+        long id = 0;
+        String token = "";
+        for (int i = 0; i < users.size(); i++) {
+            id = users.get(0).getId();
+            token = users.get(0).getToken();
+        }
 
-    private void setData(JSONArray data) {
+        RestClient.builder()
+                .url(BiaoXunTongApi.URL_COMPANYRYZZ + sfId)
+                .params("userId", id)
+                .params("token", token)
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(Headers headers, String response) {
+
+                        final JSONObject object = JSON.parseObject(response);
+                        final JSONArray array = object.getJSONArray("data");
+
+                        if (array.size() > 0) {
+                            if (tvRyzzTip != null) {
+                                tvRyzzTip.setVisibility(View.GONE);
+                            }
+                            setRyzzData(array);
+                        } else {
+                            if (mRyzzDataList != null) {
+                                mRyzzDataList.clear();
+                                mRyzzAdapter.notifyDataSetChanged();
+                            }
+                            //TODO 内容为空的处理
+                            if (tvRyzzTip != null) {
+                                tvRyzzTip.setVisibility(View.VISIBLE);
+                            }
+                        }
+
+
+                    }
+                })
+                .build()
+                .post();
+    }
+
+    public void requestQyyjData() {
+
+
+        List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+        long id = 0;
+        for (int i = 0; i < users.size(); i++) {
+            id = users.get(0).getId();
+            token = users.get(0).getToken();
+        }
+
+        RestClient.builder()
+                .url(BiaoXunTongApi.URL_COMPANYSGYJ + sfId)
+                .params("userId", id)
+                .params("token", token)
+                .success(new ISuccess() {
+                    @Override
+                    public void onSuccess(Headers headers, String response) {
+
+                        final JSONObject object = JSON.parseObject(response);
+                        String status = object.getString("status");
+                        final JSONArray array = object.getJSONArray("data");
+
+
+                        if (array.size() > 0) {
+                            if (tvQyyjTip != null) {
+                                tvQyyjTip.setVisibility(View.GONE);
+                            }
+                            setQyyjData(array);
+                        } else {
+                            if (mQyyjDataList != null) {
+                                mQyyjDataList.clear();
+                                mRyzzAdapter.notifyDataSetChanged();
+                            }
+                            //TODO 内容为空的处理
+                            if (tvQyyjTip != null) {
+                                tvQyyjTip.setVisibility(View.VISIBLE);
+                            }
+
+                        }
+
+
+                    }
+                })
+                .build()
+                .post();
+    }
+
+
+    private void setQyzzData(JSONArray data) {
         mDataList.clear();
 
         if (data.size() >= 5) {
@@ -313,6 +464,101 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
 
             mAdapter.notifyDataSetChanged();
             mAdapter.loadMoreEnd();
+        }
+
+
+    }
+
+    private void setRyzzData(JSONArray data) {
+        mRyzzDataList.clear();
+
+        if (data.size() >= 5) {
+
+            ryzzCount.setText(data.size() + "");
+
+            if (llMoreRyzz != null) {
+                llMoreRyzz.setVisibility(View.VISIBLE);
+            }
+            for (int i = 0; i < 5; i++) {
+                CompanyRyzzListBean bean = new CompanyRyzzListBean();
+                JSONObject list = data.getJSONObject(i);
+                bean.setRy(list.getString("ry"));
+                bean.setZgMcdj(list.getString("zgMcdj"));
+                bean.setZgZy(list.getString("zgZy"));
+                mRyzzDataList.add(bean);
+            }
+
+            mRyzzAdapter.notifyDataSetChanged();
+            mRyzzAdapter.loadMoreEnd();
+        } else {
+            if (llMoreRyzz != null) {
+                llMoreRyzz.setVisibility(View.GONE);
+            }
+            for (int i = 0; i < data.size(); i++) {
+                CompanyRyzzListBean bean = new CompanyRyzzListBean();
+                JSONObject list = data.getJSONObject(i);
+                bean.setRy(list.getString("ry"));
+                bean.setZgMcdj(list.getString("zgMcdj"));
+                bean.setZgZy(list.getString("zgZy"));
+                mRyzzDataList.add(bean);
+            }
+
+            mRyzzAdapter.notifyDataSetChanged();
+            mRyzzAdapter.loadMoreEnd();
+        }
+
+
+    }
+
+    private void setQyyjData(JSONArray data) {
+        mQyyjDataList.clear();
+
+        if (data.size() >= 5) {
+            qyyjCount.setText(data.size() + "");
+
+            if (llMoreQyyj != null) {
+                llMoreQyyj.setVisibility(View.VISIBLE);
+            }
+            for (int i = 0; i < 5; i++) {
+                CompanySgyjListBean bean = new CompanySgyjListBean();
+                JSONObject list = data.getJSONObject(i);
+                bean.setXmmc(list.getString("xmmc"));
+                bean.setZbsj(list.getString("zbsj"));
+                bean.setXmfzr(list.getString("xmfzr"));
+
+                String zbje = list.getString("zbje");
+                if ("0.0".equals(zbje)) {
+                    bean.setZbje("暂无");
+                } else {
+                    bean.setZbje(list.getString("zbje"));
+                }
+                mQyyjDataList.add(bean);
+            }
+
+            mQyyjAdapter.notifyDataSetChanged();
+            mQyyjAdapter.loadMoreEnd();
+        } else {
+            if (llMoreQyyj != null) {
+                llMoreQyyj.setVisibility(View.GONE);
+            }
+            for (int i = 0; i < data.size(); i++) {
+                CompanySgyjListBean bean = new CompanySgyjListBean();
+                JSONObject list = data.getJSONObject(i);
+                bean.setXmmc(list.getString("xmmc"));
+                bean.setZbsj(list.getString("zbsj"));
+                bean.setXmfzr(list.getString("xmfzr"));
+
+                String zbje = list.getString("zbje");
+                if ("0.0".equals(zbje)) {
+                    bean.setZbje("暂无");
+                } else {
+                    bean.setZbje(list.getString("zbje"));
+                }
+                mQyyjDataList.add(bean);
+            }
+
+            mQyyjAdapter.notifyDataSetChanged();
+            mQyyjAdapter.loadMoreEnd();
         }
 
 

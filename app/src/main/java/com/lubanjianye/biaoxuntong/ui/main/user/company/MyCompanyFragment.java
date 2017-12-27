@@ -53,8 +53,8 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
     private RecyclerView rlvQyzz = null;
     private RecyclerView rlvRyzz = null;
     private RecyclerView rlvQyyj = null;
-    private AppCompatTextView tvRyzzTip = null;
     private AppCompatTextView tvQyzzTip = null;
+    private AppCompatTextView tvRyzzTip = null;
     private AppCompatTextView tvQyyjTip = null;
     private LinearLayout llMoreQyzz = null;
     private LinearLayout llMoreRyzz = null;

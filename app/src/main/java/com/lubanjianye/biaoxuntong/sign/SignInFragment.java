@@ -183,7 +183,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
 
                 String username = etLoginUsername.getText().toString().trim();
                 if (TextUtils.isEmpty(username)) {
-                    Toast.makeText(getContext(), "用户名未填写!", Toast.LENGTH_SHORT).show();
+                    ToastUtil.shortBottonToast(getContext(), "用户名未填写!");
                 }
                 String pwd = etLoginPwd.getText().toString().trim();
                 if (!TextUtils.isEmpty(pwd)) {
@@ -258,7 +258,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                                                 AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
                                                                 EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                                                                 getActivity().onBackPressed();
-                                                                ToastUtil.shortToast(getContext(),"登陆成功");
+                                                                ToastUtil.shortBottonToast(getContext(), "登陆成功");
 
                                                             }
                                                         })
@@ -271,13 +271,13 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                                 AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
                                                 EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                                                 getActivity().onBackPressed();
-                                                ToastUtil.shortToast(getContext(),"登陆成功");
+                                                ToastUtil.shortBottonToast(getContext(), "登陆成功");
                                             }
 
 
                                         } else {
                                             promptDialog.dismissImmediately();
-                                            ToastUtil.shortToast(getContext(),message);
+                                            ToastUtil.shortToast(getContext(), message);
                                         }
                                     }
                                 })
@@ -333,7 +333,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                                                 AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
                                                                 EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                                                                 getActivity().onBackPressed();
-                                                                ToastUtil.shortToast(getContext(),"登陆成功");
+                                                                ToastUtil.shortBottonToast(getContext(), "登陆成功");
                                                             }
                                                         })
                                                         .build()
@@ -345,7 +345,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                                 AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
                                                 EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                                                 getActivity().onBackPressed();
-                                                ToastUtil.shortToast(getContext(),"登陆成功");
+                                                ToastUtil.shortBottonToast(getContext(), "登陆成功");
 
                                             }
 
@@ -410,7 +410,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                                                 AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
                                                                 EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                                                                 getActivity().onBackPressed();
-                                                                ToastUtil.shortToast(getContext(),"登陆成功");
+                                                                ToastUtil.shortBottonToast(getContext(), "登陆成功");
                                                             }
                                                         })
                                                         .build()
@@ -422,7 +422,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                                 AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
                                                 EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                                                 getActivity().onBackPressed();
-                                                ToastUtil.shortToast(getContext(),"登陆成功");
+                                                ToastUtil.shortBottonToast(getContext(), "登陆成功");
 
                                             }
 
@@ -445,14 +445,14 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
             @Override
             public void loginFailure(Exception e) {
                 promptDialog.dismissImmediately();
-                ToastUtil.shortToast(getContext(), "登录失败");
+                ToastUtil.shortBottonToast(getContext(), "登录失败");
 
             }
 
             @Override
             public void loginCancel() {
                 promptDialog.dismissImmediately();
-                ToastUtil.shortToast(getContext(), "登录取消");
+                ToastUtil.shortBottonToast(getContext(), "登录取消");
             }
         };
     }
@@ -568,7 +568,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                                     AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
                                                     EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                                                     getActivity().onBackPressed();
-                                                    ToastUtil.shortToast(getContext(),"登陆成功");
+                                                    ToastUtil.shortBottonToast(getContext(), "登陆成功");
 
 
                                                 }
@@ -585,7 +585,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                     AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
                                     EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                                     getActivity().onBackPressed();
-                                    ToastUtil.shortToast(getContext(),"登陆成功");
+                                    ToastUtil.shortBottonToast(getContext(), "登陆成功");
                                 }
 
 
@@ -600,7 +600,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                     .post();
 
         } else {
-            ToastUtil.shortToast(getContext(), "请输入正确的手机号!");
+            ToastUtil.shortBottonToast(getContext(), "请输入正确的手机号!");
         }
 
     }

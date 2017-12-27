@@ -26,11 +26,10 @@ public class CompanyRyzzListAdapter extends BaseQuickAdapter<CompanyRyzzListBean
     @Override
     protected void convert(BaseViewHolder helper, CompanyRyzzListBean item) {
 
-
         String ry_name = item.getRy();
         String zgmc = item.getZgMcdj();
         String zgzy = item.getZgZy();
         helper.setText(R.id.tv_ryzz_name, ry_name);
-        helper.setText(R.id.tv_ryzz, zgmc + "__" + zgzy);
+        helper.setText(R.id.tv_ryzz, zgmc + ("0".equals(zgzy) ? "" : "__" + zgzy));
     }
 }
