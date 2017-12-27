@@ -25,7 +25,6 @@ import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
-import com.lubanjianye.biaoxuntong.ui.main.user.company.MyCompanyQyzzAllListActivity;
 
 import java.util.ArrayList;
 import java.util.List;

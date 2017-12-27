@@ -1,6 +1,5 @@
 package com.lubanjianye.biaoxuntong.ui.main.query.detail;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -16,10 +15,9 @@ import android.widget.LinearLayout;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
+import com.lubanjianye.biaoxuntong.bean.CompanyQyzzListBean;
 import com.lubanjianye.biaoxuntong.bean.MyCompanyQyzzAllListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
@@ -28,7 +26,6 @@ import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.ui.main.user.company.MyCompanyQyzzAllListAdapter;
-import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,8 +50,8 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
     private SwipeRefreshLayout companyQyzzRefresh = null;
 
 
-    private MyCompanyQyzzAllListAdapter mAdapter;
-    private ArrayList<MyCompanyQyzzAllListBean> mDataList = new ArrayList<>();
+    private CompanyQyzzListAdapter mAdapter;
+    private ArrayList<CompanyQyzzListBean> mDataList = new ArrayList<>();
 
 
     private View noDataView;
@@ -158,7 +155,7 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
     }
 
     private void initAdapter() {
-        mAdapter = new MyCompanyQyzzAllListAdapter(R.layout.fragment_company_qyzz, mDataList);
+        mAdapter = new CompanyQyzzListAdapter(R.layout.fragment_company_qyzz_list, mDataList);
 
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
@@ -186,6 +183,8 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
                 .success(new ISuccess() {
                     @Override
                     public void onSuccess(Headers headers, String response) {
+
+                        Log.d("VUYASVDSADASDAS",response);
 
                         final JSONObject object = JSON.parseObject(response);
                         final JSONArray array = object.getJSONArray("data");
@@ -218,14 +217,10 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
         final int size = data == null ? 0 : data.size();
         mDataList.clear();
         for (int i = 0; i < data.size(); i++) {
-            MyCompanyQyzzAllListBean bean = new MyCompanyQyzzAllListBean();
+            CompanyQyzzListBean bean = new CompanyQyzzListBean();
             JSONObject list = data.getJSONObject(i);
-            bean.setLx_name(list.getString("lx_name"));
-            bean.setDl_name(list.getString("dl_name"));
-            bean.setXl_name(list.getString("xl_name"));
-            bean.setZy_name(list.getString("zy_name"));
-            bean.setDj(list.getString("dj"));
-            bean.setDq(list.getString("dq"));
+            bean.setLx(list.getString("lx"));
+            bean.setZzmc(list.getString("zzmc"));
             mDataList.add(bean);
         }
         companyQyzzRefresh.setRefreshing(false);

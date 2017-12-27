@@ -118,7 +118,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/d45"
                     android:gravity="center"
-                    android:text="暂无内容"
+                    android:text="暂无资质"
                     android:textSize="@dimen/s14"
                     android:visibility="gone" />
 
@@ -204,7 +204,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/d45"
                     android:gravity="center"
-                    android:text="暂无内容"
+                    android:text="暂无资格"
                     android:textSize="@dimen/s14"
                     android:visibility="gone" />
 
@@ -290,7 +290,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/d45"
                     android:gravity="center"
-                    android:text="暂无内容"
+                    android:text="暂无业绩"
                     android:textSize="@dimen/s14"
                     android:visibility="gone" />
 

@@ -32,6 +32,11 @@ android {
             jni.srcDirs = []
         }
     }
+
+    aaptOptions{
+        cruncherEnabled = false
+        useNewCruncher = false
+    }
 }
 
 dependencies {

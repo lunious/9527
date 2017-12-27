@@ -12,10 +12,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/bg_toast"
-        android:paddingBottom="@dimen/d10"
-        android:paddingLeft="@dimen/d16"
-        android:paddingRight="@dimen/d16"
-        android:paddingTop="@dimen/d10"
+        android:paddingBottom="@dimen/d8"
+        android:paddingLeft="@dimen/d14"
+        android:paddingRight="@dimen/d14"
+        android:paddingTop="@dimen/d8"
         android:textColor="@color/white"
         android:textSize="@dimen/s16" />
 </LinearLayout>
