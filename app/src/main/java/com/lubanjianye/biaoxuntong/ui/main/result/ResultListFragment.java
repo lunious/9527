@@ -95,7 +95,7 @@ public class ResultListFragment extends BaseFragment {
 
                 Intent intent = null;
 
-                if ("xjggg".equals(entity) || "sjggg".equals(entity)) {
+                if ("xjggg".equals(entity) || "sjggg".equals(entity) || "sggjy".equals(entity)) {
                     intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
@@ -224,7 +224,7 @@ public class ResultListFragment extends BaseFragment {
                                 final boolean nextPage = data.getBoolean("nextpage");
 
                                 if (array.size() > 0) {
-                                    setData(isRefresh, array,nextPage);
+                                    setData(isRefresh, array, nextPage);
                                 } else {
                                     if (mDataList != null) {
                                         mDataList.clear();
@@ -260,7 +260,7 @@ public class ResultListFragment extends BaseFragment {
                                 final boolean nextPage = data.getBoolean("nextpage");
 
                                 if (array.size() > 0) {
-                                    setData(isRefresh, array,nextPage);
+                                    setData(isRefresh, array, nextPage);
                                 } else {
                                     if (mDataList != null) {
                                         mDataList.clear();
@@ -283,7 +283,7 @@ public class ResultListFragment extends BaseFragment {
 
     }
 
-    private void setData(int isRefresh, JSONArray data,boolean nextPage) {
+    private void setData(int isRefresh, JSONArray data, boolean nextPage) {
         page++;
         final int size = data == null ? 0 : data.size();
         if (isRefresh == 0 || isRefresh == 1) {

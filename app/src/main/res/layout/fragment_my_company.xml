@@ -89,7 +89,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/d36"
+                    android:layout_height="@dimen/d32"
                     android:background="@mipmap/myqyzz"
                     android:gravity="center"
                     android:orientation="horizontal">
@@ -172,7 +172,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/d36"
+                    android:layout_height="@dimen/d32"
                     android:background="@mipmap/myqyzz"
                     android:gravity="center"
                     android:orientation="horizontal">
@@ -258,7 +258,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/d36"
+                    android:layout_height="@dimen/d32"
                     android:background="@mipmap/myqyzz"
                     android:gravity="center"
                     android:orientation="horizontal">

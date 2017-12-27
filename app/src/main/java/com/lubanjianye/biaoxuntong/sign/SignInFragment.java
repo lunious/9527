@@ -567,6 +567,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                                     holdAccount();
                                                     AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
                                                     EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
+
                                                     getActivity().onBackPressed();
                                                     ToastUtil.shortBottonToast(getContext(), "登陆成功");
 

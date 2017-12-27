@@ -15,6 +15,7 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
  */
 
 public class CompanyQyzzListActivity extends BaseActivity {
+
     private String sfId = "";
 
     @Override

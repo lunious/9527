@@ -15,8 +15,14 @@ import android.widget.RelativeLayout;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.base.MainActivity;
+import com.lubanjianye.biaoxuntong.database.DatabaseManager;
+import com.lubanjianye.biaoxuntong.database.UserProfile;
+import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.util.dimen.DensityUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,8 +73,33 @@ public class LauncherScrollFragment extends BaseFragment {
         btnGuideStartexp = getView().findViewById(R.id.btn_guide_startexp);
     }
 
+
+    private long id = 0;
+    private String mobile = "";
+    private String nickName = "";
+    private String token = "";
+    private String comid = "";
+    private String imageUrl = "";
+    private String companyName = "";
+
+
     @Override
     public void initData() {
+
+        List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+        for (int i = 0; i < users.size(); i++) {
+            id = users.get(0).getId();
+            mobile = users.get(0).getNickName();
+            nickName = users.get(0).getNickName();
+            token = users.get(0).getToken();
+            comid = users.get(0).getComid();
+            imageUrl = users.get(0).getImageUrl();
+            companyName = users.get(0).getCompanyName();
+        }
+        if (id > 0) {
+            AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
+            EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
+        }
 
     }
 

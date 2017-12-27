@@ -13,9 +13,9 @@ android {
         multiDexEnabled true
         manifestPlaceholders = [
                 qq_id           : "1106195613",
-                GETUI_APP_ID    : "fmsVWIBZnq6ZPVR3leiVi9",
-                GETUI_APP_KEY   : "YuavB9WTb07nU77uv8VW68",
-                GETUI_APP_SECRET: "zoOffuHX6yA7lOJU7VNxVA",
+                GETUI_APP_ID    : "xDFIE5aoNL6ADZ2vLwRhf",
+                GETUI_APP_KEY   : "vhht61APrg8nXk3kMLiGp8",
+                GETUI_APP_SECRET: "RHeEO6kolJ9jMgtk21mWTA",
                 PACKAGE_NAME    : "com.lubanjianye.biaoxuntong"
         ]
     }

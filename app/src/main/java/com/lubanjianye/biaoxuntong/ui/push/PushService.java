@@ -9,6 +9,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexBxtgdjDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjyDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgrowDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgtableDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexXcgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.util.notify.NotifyUtil;
@@ -79,6 +84,28 @@ public class PushService extends MixPushIntentService {
                 intent = new Intent(BiaoXunTong.getApplicationContext(), ResultSggjyzbjgDetailActivity.class);
                 intent.putExtra("entityId", mEntityId);
                 intent.putExtra("entity", mEntity);
+            } else if ("sggjy".equals(mEntity)) {
+                intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
+                intent.putExtra("entityId", mEntityId);
+                intent.putExtra("entity", mEntity);
+            } else if ("xcggg".equals(mEntity)) {
+                intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
+                intent.putExtra("entityId", mEntityId);
+                intent.putExtra("entity", mEntity);
+            } else if ("bxtgdj".equals(mEntity)) {
+                intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
+                intent.putExtra("entityId", mEntityId);
+                intent.putExtra("entity", mEntity);
+            } else if ("sggjycgtable".equals(mEntity)) {
+                intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
+                intent.putExtra("entityId", mEntityId);
+                intent.putExtra("entity", mEntity);
+            } else if ("sggjycgrow".equals(mEntity)) {
+                intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgrowDetailActivity.class);
+                intent.putExtra("entityId", mEntityId);
+                intent.putExtra("entity", mEntity);
+            } else if ("scggg".equals(mEntity)) {
+
             }
         } else if ("2".equals(mType)) {
 

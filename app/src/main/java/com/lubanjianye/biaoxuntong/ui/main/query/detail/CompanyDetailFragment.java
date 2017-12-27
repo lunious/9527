@@ -184,6 +184,9 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
         initRecyclerView();
         initAdapter();
         requestData();
+        requestQyzzData();
+        requestRyzzData();
+        requestQyyjData();
     }
 
     //点击重试
@@ -256,9 +259,6 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                                 tvPuNum.setText("/");
                             }
 
-                            requestQyzzData();
-                            requestRyzzData();
-                            requestQyyjData();
                         }
 
                     }
