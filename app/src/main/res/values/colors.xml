@@ -11,6 +11,7 @@
     <color name="light_blue">#66bfdc</color>
     <color name="line">#eeeeee</color>
     <color name="view">#eeeeee</color>
+    <color name="dark_view">#dddddd</color>
     <color name="main_background">#eeeeee</color>
     <color name="main_text_color">#3c3c3c</color>
     <color name="toast_background">#66000000</color>

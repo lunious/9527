@@ -119,7 +119,7 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                     public void onClick(DialogInterface dialogInterface, int i) {
                         AppCleanMgr.cleanInternalCache(getContext());
                         tvCacheSize.setText("");
-                        ToastUtil.shortBottonToast(getContext(),"缓存清理成功");
+                        ToastUtil.shortBottonToast(getContext(), "缓存清理成功");
                     }
                 }).show();
                 break;
@@ -148,7 +148,7 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                                         DatabaseManager.getInstance().getDao().deleteAll();
                                         AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
                                         EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
-                                        ToastUtil.shortBottonToast(getContext(),"退出成功");
+                                        ToastUtil.shortBottonToast(getContext(), "退出成功");
                                     }
                                 })
                                 .build()

@@ -10,7 +10,7 @@
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/resultt_stl_tab"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d34"
+        android:layout_height="@dimen/d36"
         android:background="@color/white"
         tl:tl_indicator_color="@color/blue"
         tl:tl_indicator_height="@dimen/d2"
