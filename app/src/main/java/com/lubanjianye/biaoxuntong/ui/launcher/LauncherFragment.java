@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -13,6 +14,7 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.base.MainActivity;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
@@ -131,7 +133,7 @@ public class LauncherFragment extends BaseFragment implements View.OnClickListen
                     mTimer.cancel();
                     mTimer = null;
                 }
-                getActivity().finish();
+                getActivity().onBackPressed();
             }
         } else {
             //进入主页
@@ -142,7 +144,7 @@ public class LauncherFragment extends BaseFragment implements View.OnClickListen
                     mTimer.cancel();
                     mTimer = null;
                 }
-                getActivity().finish();
+                getActivity().onBackPressed();
             }
 
         }
@@ -155,9 +157,7 @@ public class LauncherFragment extends BaseFragment implements View.OnClickListen
     public void onReceiveLocation(BDLocation bdLocation) {
         String city = bdLocation.getCity();
 
-        Log.d("CITY", "city==" + city);
-
-        AppSharePreferenceMgr.put(getContext(), "Location", city);
+        AppSharePreferenceMgr.put(getApplicationContext(), "Location", city);
 
     }
 

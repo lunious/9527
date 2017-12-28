@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.ImageView;
@@ -239,6 +240,9 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
 
                 }
                 companyName = companyList.get(position);
+
+                Log.d("BAIJSBDIUBASBDJA","companyName=="+companyName);
+                Log.d("BAIJSBDIUBASBDJA","sfId=="+sfId);
 
                 final PromptButton cancel = new PromptButton("确定", new PromptButtonListener() {
                     @Override
