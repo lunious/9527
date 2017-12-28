@@ -1,10 +1,6 @@
 package com.lubanjianye.biaoxuntong.app;
 
 import android.app.Application;
-import android.graphics.Color;
-import android.graphics.Typeface;
-
-import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.ui.push.PushService;
 import com.mixpush.client.core.MixPushClient;

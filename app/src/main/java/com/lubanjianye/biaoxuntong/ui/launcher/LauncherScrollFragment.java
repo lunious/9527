@@ -20,7 +20,6 @@ import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.util.dimen.DensityUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -49,20 +48,12 @@ public class LauncherScrollFragment extends BaseFragment {
     private MyViewPageAdapter viewPageAdapter;
     private int disPoints;//点与点之间的距离
 
-    private ILauncherListener mILauncherListener = null;
 
     @Override
     public Object setLayout() {
         return R.layout.fragment_launcher_scroll;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof ILauncherListener) {
-            mILauncherListener = (ILauncherListener) activity;
-        }
-    }
 
 
     @Override

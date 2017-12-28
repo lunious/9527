@@ -37,7 +37,6 @@ public class LauncherFragment extends BaseFragment implements View.OnClickListen
 
     private CountDownTimer mTimer = null;
 
-    private ILauncherListener mILauncherListener = null;
 
     public LocationClient mLocationClient = null;
 
@@ -100,13 +99,6 @@ public class LauncherFragment extends BaseFragment implements View.OnClickListen
 
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (activity instanceof ILauncherListener) {
-            mILauncherListener = (ILauncherListener) activity;
-        }
-    }
 
     @Override
     public void onClick(View view) {
