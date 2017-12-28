@@ -43,11 +43,20 @@
         android:layout_height="@dimen/d10"
         android:background="#eeeeee" />
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/bind_company_recycler"
+    <com.classic.common.MultipleStatusView
+        android:id="@+id/bind_company_status_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:emptyView="@layout/custom_empty_view"
+        app:errorView="@layout/custom_error_view"
+        app:loadingView="@layout/custom_loading_view"
+        app:noNetworkView="@layout/custom_no_network_view">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/bind_company_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </com.classic.common.MultipleStatusView>
 
 
 </LinearLayout>

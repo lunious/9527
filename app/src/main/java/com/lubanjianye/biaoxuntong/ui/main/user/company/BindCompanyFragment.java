@@ -18,6 +18,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.bean.BindCompanyBean;
@@ -55,7 +56,7 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
     private AppCompatTextView mainBarName = null;
     private SearchView viewSearcher = null;
     RecyclerView bindCompanyRecycler = null;
-
+    private MultipleStatusView bindCimpanyStatusView = null;
 
     private String mProvinceCode = "510000";
     private String mqyIds = "";
@@ -88,7 +89,7 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
         mainBarName = getView().findViewById(R.id.main_bar_name);
         viewSearcher = getView().findViewById(R.id.view_bind);
         bindCompanyRecycler = getView().findViewById(R.id.bind_company_recycler);
-
+        bindCimpanyStatusView = getView().findViewById(R.id.bind_company_status_view);
         llIvBack.setOnClickListener(this);
 
     }
@@ -134,6 +135,7 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                 } else {
                     mKeyWord = query.trim();
                     requestCompanyData(true);
+                    hideSoftInput();
 
                 }
                 return true;
@@ -241,9 +243,6 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                 }
                 companyName = companyList.get(position);
 
-                Log.d("BAIJSBDIUBASBDJA","companyName=="+companyName);
-                Log.d("BAIJSBDIUBASBDJA","sfId=="+sfId);
-
                 final PromptButton cancel = new PromptButton("确定", new PromptButtonListener() {
                     @Override
                     public void onClick(PromptButton button) {
@@ -297,8 +296,9 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
     public void requestData(final boolean isRefresh) {
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
-
+            bindCimpanyStatusView.showNoNetwork();
         } else {
+            bindCimpanyStatusView.showLoading();
             List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
             long id = 0;
             String token = "";
@@ -326,6 +326,10 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
 
                                 String cpn = "";
 
+                                if (companyList.size() > 0) {
+                                    companyList.clear();
+                                }
+
                                 for (int i = 0; i < array.size(); i++) {
                                     final JSONObject data = array.getJSONObject(i);
                                     cpn = data.getString("qy");
@@ -333,6 +337,7 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                                 }
 
                                 if (array.size() > 0) {
+                                    bindCimpanyStatusView.showContent();
                                     setData(isRefresh, array);
                                 } else {
                                     if (mDataList != null) {
@@ -340,10 +345,11 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                                         mAdapter.notifyDataSetChanged();
                                     }
                                     //TODO 内容为空的处理
+                                    bindCimpanyStatusView.showEmpty();
                                 }
 
                             } else {
-
+                                bindCimpanyStatusView.showError();
                             }
 
                         }
