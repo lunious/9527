@@ -147,6 +147,7 @@
             android:layout_height="@dimen/p1"
             android:layout_below="@+id/tv_item_time"
             android:layout_marginTop="@dimen/d8"
+            android:layout_marginLeft="@dimen/d6"
             android:background="@color/dark_view" />
 
     </LinearLayout>

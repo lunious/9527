@@ -18,6 +18,7 @@ import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.sign.AboutActivity;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
@@ -343,8 +344,8 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
                 startActivity(new Intent(getActivity(), HelperActivity.class));
                 break;
             case R.id.ll_questions:
-                //常见问题界面
-                startActivity(new Intent(getActivity(), QuestionsActivity.class));
+                //关于我们界面
+                startActivity(new Intent(getActivity(), AboutActivity.class));
                 break;
             case R.id.ll_setting:
                 //设置界面

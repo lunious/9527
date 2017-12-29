@@ -208,7 +208,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/p1"
-                    android:layout_marginStart="@dimen/d50"
+                    android:layout_marginStart="@dimen/d12"
                     android:background="@color/view" />
             </LinearLayout>
 
@@ -237,9 +237,14 @@
                         android:layout_width="@dimen/d0"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="官方客服"
+                        android:text="客服"
                         android:textColor="@color/main_text_color"
                         android:textSize="@dimen/s14" />
+
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="400-028-9997"/>
 
                     <ImageView
                         android:layout_width="@dimen/d16"
@@ -268,6 +273,57 @@
                 android:background="@android:color/white"
                 android:orientation="vertical">
 
+
+                <LinearLayout
+                    android:id="@+id/ll_setting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/d12">
+
+                        <ImageView
+                            android:layout_width="@dimen/d16"
+                            android:layout_height="@dimen/d16"
+                            android:layout_marginEnd="@dimen/d8"
+                            android:gravity="center"
+                            android:src="@mipmap/system_setting" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="@dimen/d0"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="设置"
+                            android:textColor="@color/main_text_color"
+                            android:textSize="@dimen/s14" />
+
+                        <ImageView
+                            android:id="@+id/tv_all_account_arrow"
+                            android:layout_width="@dimen/d16"
+                            android:layout_height="@dimen/d16"
+                            android:gravity="center"
+                            android:src="@mipmap/nomal_forward" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/p1"
+                        android:layout_marginStart="@dimen/d50"
+                        android:background="@color/view" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/p1"
+                    android:layout_marginStart="@dimen/d12"
+                    android:background="@color/view" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -286,7 +342,7 @@
                         android:layout_width="@dimen/d0"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="常见问题"
+                        android:text="关于我们"
                         android:textColor="@color/main_text_color"
                         android:textSize="@dimen/s14" />
 
@@ -296,56 +352,6 @@
                         android:gravity="center"
                         android:src="@mipmap/nomal_forward" />
                 </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/p1"
-                    android:layout_marginStart="@dimen/d50"
-                    android:background="@color/view" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/ll_setting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/d12">
-
-                    <ImageView
-                        android:layout_width="@dimen/d16"
-                        android:layout_height="@dimen/d16"
-                        android:layout_marginEnd="@dimen/d8"
-                        android:gravity="center"
-                        android:src="@mipmap/system_setting" />
-
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="@dimen/d0"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="系统设置"
-                        android:textColor="@color/main_text_color"
-                        android:textSize="@dimen/s14" />
-
-                    <ImageView
-                        android:id="@+id/tv_all_account_arrow"
-                        android:layout_width="@dimen/d16"
-                        android:layout_height="@dimen/d16"
-                        android:gravity="center"
-                        android:src="@mipmap/nomal_forward" />
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/p1"
-                    android:layout_marginStart="@dimen/d50"
-                    android:background="@color/view" />
             </LinearLayout>
 
 

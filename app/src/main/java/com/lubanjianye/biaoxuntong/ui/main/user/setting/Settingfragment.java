@@ -20,6 +20,7 @@ import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.sign.AboutActivity;
+import com.lubanjianye.biaoxuntong.ui.main.user.question.QuestionsActivity;
 import com.lubanjianye.biaoxuntong.ui.update.CheckUpdateManager;
 import com.lubanjianye.biaoxuntong.ui.update.DownloadService;
 import com.lubanjianye.biaoxuntong.util.cache.AppCleanMgr;
@@ -158,8 +159,8 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
 
                 break;
             case R.id.ll_about:
-                //关于我们界面
-                startActivity(new Intent(getActivity(), AboutActivity.class));
+                //常见问题界面
+                startActivity(new Intent(getActivity(), QuestionsActivity.class));
                 break;
             case R.id.ll_update:
                 //更新界面
