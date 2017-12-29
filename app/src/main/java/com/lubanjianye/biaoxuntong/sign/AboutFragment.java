@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
-import com.lubanjianye.biaoxuntong.ui.main.user.setting.GZHActivity;
 import com.lubanjianye.biaoxuntong.util.appinfo.AppApplicationMgr;
 
 /**
@@ -25,7 +24,6 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
     private AppCompatTextView tvVersionName = null;
-    private AppCompatTextView tvGongzhonghao = null;
     private AppCompatTextView tvLuban = null;
 
     @Override
@@ -38,10 +36,8 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
         llIvBack = getView().findViewById(R.id.ll_iv_back);
         mainBarName = getView().findViewById(R.id.main_bar_name);
         tvVersionName = getView().findViewById(R.id.tv_version_name);
-        tvGongzhonghao = getView().findViewById(R.id.tv_gongzhonghao);
         tvLuban = getView().findViewById(R.id.tv_luban);
         llIvBack.setOnClickListener(this);
-        tvGongzhonghao.setOnClickListener(this);
         tvLuban.setOnClickListener(this);
 
 
@@ -66,13 +62,10 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
             case R.id.ll_iv_back:
                 getActivity().onBackPressed();
                 break;
-            case R.id.tv_gongzhonghao:
-                startActivity(new Intent(getActivity(), GZHActivity.class));
-                break;
             case R.id.tv_luban:
                 Intent intent = new Intent(getActivity(), BrowserActivity.class);
                 intent.putExtra("url", "http://www.lubanjianye.com/");
-                intent.putExtra("title", "");
+                intent.putExtra("title", "鲁班建业通-招投标神器");
                 startActivity(intent);
                 break;
             default:

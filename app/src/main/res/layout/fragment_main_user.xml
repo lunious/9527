@@ -207,8 +207,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/p1"
-                    android:layout_marginStart="@dimen/d12"
+                    android:layout_height="@dimen/d10"
                     android:background="@color/view" />
             </LinearLayout>
 
@@ -262,7 +261,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/d20"
+                android:layout_height="@dimen/d10"
                 android:background="@color/view" />
 
 
@@ -320,8 +319,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/p1"
-                    android:layout_marginStart="@dimen/d12"
+                    android:layout_height="@dimen/d10"
                     android:background="@color/view" />
 
                 <LinearLayout

@@ -170,13 +170,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
-        <activity
-            android:name=".ui.main.user.setting.GZHActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Main"
-            android:windowSoftInputMode="adjustPan" />
 
         <activity
             android:name=".ui.update.UpdateActivity"
