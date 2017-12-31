@@ -41,7 +41,7 @@
                     android:paddingTop="@dimen/d4"
                     android:text="鲁班标讯通"
                     android:textColor="#ff434343"
-                    android:textSize="@dimen/s15" />
+                    android:textSize="@dimen/s16" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -61,8 +61,8 @@
                         android:id="@+id/tv_version_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:paddingLeft="@dimen/d4"
-                        android:text="V1.0.0"
+                        android:paddingLeft="@dimen/d2"
+                        android:text="1.0.0"
                         android:textColor="#6e6e6e"
                         android:textSize="@dimen/s12" />
                 </LinearLayout>
