@@ -3,6 +3,7 @@ apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 27
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.lubanjianye.biaoxuntong"
         minSdkVersion 19
@@ -33,7 +34,7 @@ android {
         }
     }
 
-    aaptOptions{
+    aaptOptions {
         cruncherEnabled = false
         useNewCruncher = false
     }

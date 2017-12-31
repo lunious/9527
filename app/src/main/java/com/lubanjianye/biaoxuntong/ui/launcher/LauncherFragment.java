@@ -1,11 +1,9 @@
 package com.lubanjianye.biaoxuntong.ui.launcher;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.widget.AppCompatTextView;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
@@ -14,12 +12,10 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.lubanjianye.biaoxuntong.R;
-import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.base.MainActivity;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 
-import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.lubanjianye.biaoxuntong.app.BiaoXunTong.getApplicationContext;
 
@@ -156,8 +152,7 @@ public class LauncherFragment extends BaseFragment implements View.OnClickListen
     @Override
     public void onReceiveLocation(BDLocation bdLocation) {
         String city = bdLocation.getCity();
-
-        AppSharePreferenceMgr.put(getApplicationContext(), "Location", city);
+        Log.d("BDASBDASDA", city);
 
     }
 

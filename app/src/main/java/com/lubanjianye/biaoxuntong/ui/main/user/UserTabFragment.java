@@ -24,7 +24,6 @@ import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.company.MyCompanyActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.helper.HelperActivity;
-import com.lubanjianye.biaoxuntong.ui.main.user.question.QuestionsActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.setting.SettingActivity;
 import com.lubanjianye.biaoxuntong.util.loader.GlideImageLoader;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;

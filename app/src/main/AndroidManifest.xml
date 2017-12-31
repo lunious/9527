@@ -97,12 +97,6 @@
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.main.user.question.QuestionsActivity"
-            android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.Main"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".ui.main.user.helper.HelperActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"

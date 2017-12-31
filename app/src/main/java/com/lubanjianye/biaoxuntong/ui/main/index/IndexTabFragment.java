@@ -139,17 +139,8 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
         requestData();
     }
 
-    private String city = "";
 
     public void requestData() {
-
-
-        if (AppSharePreferenceMgr.contains(getContext(), "Location")) {
-            String cityName = (String) AppSharePreferenceMgr.get(getContext(), "Location", "");
-            city = cityName;
-            Log.d("BIJDASBIJDBIJABSDAS", "cityName==" + city);
-        }
-
 
         if (!NetUtil.isNetworkConnected(getContext())) {
             ToastUtil.shortToast(getContext(), "网络出错，请检查网络设置！");
@@ -165,10 +156,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
             mList.add("设计");
             mList.add("政府采购");
             mList.add("行业资讯");
-
-            if (!TextUtils.isEmpty(city)) {
-                mList.add(city);
-            }
 
             mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
             mAdapter.notifyDataSetChanged();
@@ -213,26 +200,10 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                             mList.clear();
                                                         }
 
-
-                                                        if (!TextUtils.isEmpty(city)) {
-                                                            for (int i = 0; i < 7; i++) {
-                                                                final JSONObject list = ownerList.getJSONObject(i);
-                                                                String name = list.getString("name");
-                                                                mList.add(name);
-                                                            }
-                                                            mList.add(city);
-                                                            for (int i = 7; i < ownerList.size(); i++) {
-                                                                final JSONObject list = ownerList.getJSONObject(i);
-                                                                String name = list.getString("name");
-                                                                mList.add(name);
-                                                            }
-                                                        } else {
-
-                                                            for (int i = 0; i < ownerList.size(); i++) {
-                                                                final JSONObject list = ownerList.getJSONObject(i);
-                                                                String name = list.getString("name");
-                                                                mList.add(name);
-                                                            }
+                                                        for (int i = 0; i < ownerList.size(); i++) {
+                                                            final JSONObject list = ownerList.getJSONObject(i);
+                                                            String name = list.getString("name");
+                                                            mList.add(name);
                                                         }
 
                                                         mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
@@ -276,19 +247,10 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                             mList.clear();
                                                         }
 
-                                                        if (!TextUtils.isEmpty(city)) {
-                                                            for (int i = 0; i < ownerList.size(); i++) {
-                                                                final JSONObject list = ownerList.getJSONObject(i);
-                                                                String name = list.getString("name");
-                                                                mList.add(name);
-                                                            }
-                                                            mList.add(city);
-                                                        } else {
-                                                            for (int i = 0; i < ownerList.size(); i++) {
-                                                                final JSONObject list = ownerList.getJSONObject(i);
-                                                                String name = list.getString("name");
-                                                                mList.add(name);
-                                                            }
+                                                        for (int i = 0; i < ownerList.size(); i++) {
+                                                            final JSONObject list = ownerList.getJSONObject(i);
+                                                            String name = list.getString("name");
+                                                            mList.add(name);
                                                         }
 
                                                         mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
@@ -326,21 +288,11 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                                     mList.clear();
                                                                 }
 
-                                                                if (!TextUtils.isEmpty(city)) {
-                                                                    for (int i = 0; i < ownerList.size(); i++) {
-                                                                        final JSONObject list = ownerList.getJSONObject(i);
-                                                                        String name = list.getString("name");
-                                                                        mList.add(name);
-                                                                    }
-                                                                    mList.add(city);
-                                                                } else {
-                                                                    for (int i = 0; i < ownerList.size(); i++) {
-                                                                        final JSONObject list = ownerList.getJSONObject(i);
-                                                                        String name = list.getString("name");
-                                                                        mList.add(name);
-                                                                    }
+                                                                for (int i = 0; i < ownerList.size(); i++) {
+                                                                    final JSONObject list = ownerList.getJSONObject(i);
+                                                                    String name = list.getString("name");
+                                                                    mList.add(name);
                                                                 }
-
 
                                                                 mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
                                                                 indexVp.setAdapter(mAdapter);
@@ -396,19 +348,10 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                         mList.clear();
                                     }
 
-                                    if (!TextUtils.isEmpty(city)) {
-                                        for (int i = 0; i < ownerList.size(); i++) {
-                                            final JSONObject list = ownerList.getJSONObject(i);
-                                            String name = list.getString("name");
-                                            mList.add(name);
-                                        }
-                                        mList.add(city);
-                                    } else {
-                                        for (int i = 0; i < ownerList.size(); i++) {
-                                            final JSONObject list = ownerList.getJSONObject(i);
-                                            String name = list.getString("name");
-                                            mList.add(name);
-                                        }
+                                    for (int i = 0; i < ownerList.size(); i++) {
+                                        final JSONObject list = ownerList.getJSONObject(i);
+                                        String name = list.getString("name");
+                                        mList.add(name);
                                     }
 
                                     mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);

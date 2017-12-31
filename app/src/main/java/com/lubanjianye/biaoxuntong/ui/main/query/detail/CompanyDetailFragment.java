@@ -9,7 +9,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -22,7 +21,6 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.bean.CompanyQyzzListBean;
 import com.lubanjianye.biaoxuntong.bean.CompanyRyzzListBean;
 import com.lubanjianye.biaoxuntong.bean.CompanySgyjListBean;
-import com.lubanjianye.biaoxuntong.bean.MyCompanyRyzzAllListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;

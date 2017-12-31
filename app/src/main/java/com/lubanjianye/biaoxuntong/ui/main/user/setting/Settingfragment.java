@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
@@ -19,8 +20,6 @@ import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
-import com.lubanjianye.biaoxuntong.sign.AboutActivity;
-import com.lubanjianye.biaoxuntong.ui.main.user.question.QuestionsActivity;
 import com.lubanjianye.biaoxuntong.ui.update.CheckUpdateManager;
 import com.lubanjianye.biaoxuntong.ui.update.DownloadService;
 import com.lubanjianye.biaoxuntong.util.cache.AppCleanMgr;
@@ -49,8 +48,7 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
 
     private LinearLayout llBack = null;
     private AppCompatTextView mainBarName = null;
-    private LinearLayout llCancel = null;
-    private LinearLayout llAbout = null;
+    private AppCompatTextView llCancel = null;
     private AppCompatTextView tvCacheSize = null;
     private LinearLayout llUpdate = null;
     private LinearLayout llCacheSize = null;
@@ -58,8 +56,8 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
 
     private Version mVersion;
 
-
-    private static final int RC_EXTERNAL_STORAGE = 0x04;//存储权限
+    //存储权限
+    private static final int RC_EXTERNAL_STORAGE = 0x04;
 
     @Override
     public Object setLayout() {
@@ -71,7 +69,6 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
         llBack = getView().findViewById(R.id.ll_iv_back);
         mainBarName = getView().findViewById(R.id.main_bar_name);
         llCancel = getView().findViewById(R.id.ll_cancel);
-        llAbout = getView().findViewById(R.id.ll_about);
         tvCacheSize = getView().findViewById(R.id.tv_cache_size);
         llUpdate = getView().findViewById(R.id.ll_update);
         llCacheSize = getView().findViewById(R.id.ll_cache_size);
@@ -79,7 +76,6 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
 
         llBack.setOnClickListener(this);
         llCancel.setOnClickListener(this);
-        llAbout.setOnClickListener(this);
         llUpdate.setOnClickListener(this);
         llCacheSize.setOnClickListener(this);
 
@@ -157,10 +153,6 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                     }
                 }).show();
 
-                break;
-            case R.id.ll_about:
-                //常见问题界面
-                startActivity(new Intent(getActivity(), QuestionsActivity.class));
                 break;
             case R.id.ll_update:
                 //更新界面

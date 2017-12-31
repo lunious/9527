@@ -85,14 +85,14 @@
             android:layout_width="@dimen/d0"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center"
             android:background="@color/white">
 
             <ImageView
                 android:id="@+id/iv_add"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="@dimen/d36"
+                android:layout_height="@dimen/d36"
                 android:contentDescription="@null"
-                android:gravity="center"
                 android:paddingBottom="@dimen/d10"
                 android:paddingLeft="@dimen/d10"
                 android:paddingRight="@dimen/d6"

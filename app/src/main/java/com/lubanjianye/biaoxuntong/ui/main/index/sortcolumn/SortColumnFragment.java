@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -121,14 +120,8 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
     }
 
 
-    private String city = "";
-
     @Override
     public void initEvent() {
-        if (AppSharePreferenceMgr.contains(getContext(), "Location")) {
-            String cityName = (String) AppSharePreferenceMgr.get(getContext(), "Location", "");
-            city = cityName;
-        }
 
     }
 
@@ -230,30 +223,26 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                 if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                     //添加栏目
 
-                    if (name.equals(city)) {
-                        ToastUtil.shortToast(getContext(), "该地区属于推荐地区，不用重复添加");
-                    } else {
-                        RestClient.builder()
-                                .url(BiaoXunTongApi.URL_ADDITEMLABEL)
-                                .params("userId", userId)
-                                .params("labelId", id)
-                                .success(new ISuccess() {
-                                    @Override
-                                    public void onSuccess(Headers headers, String response) {
-                                        final JSONObject object = JSON.parseObject(response);
-                                        String status = object.getString("status");
-                                        if ("200".equals(status)) {
+                    RestClient.builder()
+                            .url(BiaoXunTongApi.URL_ADDITEMLABEL)
+                            .params("userId", userId)
+                            .params("labelId", id)
+                            .success(new ISuccess() {
+                                @Override
+                                public void onSuccess(Headers headers, String response) {
+                                    final JSONObject object = JSON.parseObject(response);
+                                    String status = object.getString("status");
+                                    if ("200".equals(status)) {
 
-                                            requestData();
-                                            EventBus.getDefault().post(new EventMessage(EventMessage.TAB_CHANGE));
-                                        } else {
-                                            ToastUtil.shortToast(getContext(), "添加失败！");
-                                        }
+                                        requestData();
+                                        EventBus.getDefault().post(new EventMessage(EventMessage.TAB_CHANGE));
+                                    } else {
+                                        ToastUtil.shortToast(getContext(), "添加失败！");
                                     }
-                                })
-                                .build()
-                                .post();
-                    }
+                                }
+                            })
+                            .build()
+                            .post();
 
 
                 } else {
