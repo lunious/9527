@@ -8,9 +8,11 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
@@ -69,6 +71,7 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
 
     private static final String ARG_ENTITYID = "ARG_ENTITYID";
     private static final String ARG_ENTITY = "ARG_ENTITY";
+    private static final String ARG_AJAXTYPE = "ARG_AJAXTYPE";
 
 
     private int myFav = -1;
@@ -80,12 +83,14 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
     private String shareUrl = "";
 
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
+    private String ajaxType = "0";
 
 
-    public static IndexBxtgdjDetailFragment create(@NonNull int entityId, String entity) {
+    public static IndexBxtgdjDetailFragment create(@NonNull int entityId, String entity, String ajaxlogtype) {
         final Bundle args = new Bundle();
         args.putInt(ARG_ENTITYID, entityId);
         args.putString(ARG_ENTITY, entity);
+        args.putString(ARG_AJAXTYPE, ajaxlogtype);
         final IndexBxtgdjDetailFragment fragment = new IndexBxtgdjDetailFragment();
         fragment.setArguments(args);
 
@@ -99,6 +104,7 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
         if (args != null) {
             mEntityId = args.getInt(ARG_ENTITYID);
             mEntity = args.getString(ARG_ENTITY);
+            ajaxType = args.getString(ARG_AJAXTYPE);
         }
     }
 
@@ -220,9 +226,12 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
                         .params("entity", mEntity)
                         .params("userid", id)
                         .params("deviceId", deviceId)
+                        .params("ajaxlogtype", ajaxType)
                         .success(new ISuccess() {
                             @Override
                             public void onSuccess(Headers headers, String response) {
+
+                                Log.d("BAJHSBDASDADA", response);
                                 String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
 
                                 //判断是否收藏过
@@ -360,6 +369,7 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
                         .params("entityId", mEntityId)
                         .params("entity", mEntity)
                         .params("deviceId", deviceId)
+                        .params("ajaxlogtype", ajaxType)
                         .success(new ISuccess() {
                             @Override
                             public void onSuccess(Headers headers, String response) {

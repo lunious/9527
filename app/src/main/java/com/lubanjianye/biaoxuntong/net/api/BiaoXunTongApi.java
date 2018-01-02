@@ -19,7 +19,7 @@ public abstract class BiaoXunTongApi {
     /**
      * 分享模板
      */
-    public static final String SHARE_URL = BASEURL+"bxtajax/Entryajax/share?url=";
+    public static final String SHARE_URL = BASEURL + "bxtajax/Entryajax/share?url=";
     /**
      * 得到首页Tab数据
      */
@@ -209,6 +209,10 @@ public abstract class BiaoXunTongApi {
      * 验证token是否有效
      */
     public static final String URL_CHECKTOKEN = BASEURL + "bxtajax/tokens/checkToken";
+    /**
+     * 用户行为
+     */
+    public static final String URL_GETUITASK = BASEURL + "bxtajax/GetuiTask/onclick";
 
 
 }

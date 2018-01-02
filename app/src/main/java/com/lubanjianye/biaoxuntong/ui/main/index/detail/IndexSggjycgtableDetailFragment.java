@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
@@ -77,6 +78,7 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
 
     private static final String ARG_ENTITYID = "ARG_ENTITYID";
     private static final String ARG_ENTITY = "ARG_ENTITY";
+    private static final String ARG_AJAXTYPE = "ARG_AJAXTYPE";
 
     private int myFav = -1;
     private int mEntityId = -1;
@@ -87,12 +89,14 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
     private String shareUrl = "";
 
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
+    private String ajaxlogtype = "";
 
 
-    public static IndexSggjycgtableDetailFragment create(@NonNull int entityId, String entity) {
+    public static IndexSggjycgtableDetailFragment create(@NonNull int entityId, String entity, String ajaxlogtype) {
         final Bundle args = new Bundle();
         args.putInt(ARG_ENTITYID, entityId);
         args.putString(ARG_ENTITY, entity);
+        args.putString(ARG_AJAXTYPE, ajaxlogtype);
         final IndexSggjycgtableDetailFragment fragment = new IndexSggjycgtableDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -107,6 +111,7 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
         if (args != null) {
             mEntityId = args.getInt(ARG_ENTITYID);
             mEntity = args.getString(ARG_ENTITY);
+            ajaxlogtype = args.getString(ARG_AJAXTYPE);
         }
     }
 
@@ -230,6 +235,7 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
                         .params("entity", mEntity)
                         .params("userid", id)
                         .params("deviceId", deviceId)
+                        .params("ajaxlogtype", ajaxlogtype)
 //                        .params("token", id + "_" + token)
                         .success(new ISuccess() {
                             @Override
@@ -394,6 +400,7 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
                         .params("entityId", mEntityId)
                         .params("entity", mEntity)
                         .params("deviceId", deviceId)
+                        .params("ajaxlogtype", ajaxlogtype)
                         .success(new ISuccess() {
                             @Override
                             public void onSuccess(Headers headers, String response) {
@@ -583,10 +590,10 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
                                         if ("200".equals(status)) {
                                             myFav = 0;
                                             ivFav.setImageResource(R.mipmap.ic_fav_pressed);
-                                            ToastUtil.shortToast(getContext(),"取消收藏");
+                                            ToastUtil.shortToast(getContext(), "取消收藏");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
-                                            ToastUtil.shortToast(getContext(),"服务器异常");
+                                            ToastUtil.shortToast(getContext(), "服务器异常");
                                         }
                                     }
                                 })
@@ -607,10 +614,10 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
                                         if ("200".equals(status)) {
                                             myFav = 1;
                                             ivFav.setImageResource(R.mipmap.ic_faved_pressed);
-                                            ToastUtil.shortToast(getContext(),"收藏成功");
+                                            ToastUtil.shortToast(getContext(), "收藏成功");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
-                                            ToastUtil.shortToast(getContext(),"服务器异常");
+                                            ToastUtil.shortToast(getContext(), "服务器异常");
                                         }
                                     }
                                 })

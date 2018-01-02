@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -146,32 +147,39 @@ public class IndexListFragment extends BaseFragment {
                 final int entityId = data.getEntityId();
                 final String entity = data.getEntity();
 
+                Log.d("BASJHDHJSADASDA", entity);
+
                 Intent intent = null;
                 if ("sggjy".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
 
                 } else if ("xcggg".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
                 } else if ("bxtgdj".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
                 } else if ("sggjycgtable".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
                 } else if ("sggjycgrow".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgrowDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
                 } else if ("scggg".equals(entity)) {
 

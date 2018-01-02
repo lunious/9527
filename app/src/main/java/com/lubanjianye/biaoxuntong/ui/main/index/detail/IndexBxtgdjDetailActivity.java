@@ -17,6 +17,7 @@ public class IndexBxtgdjDetailActivity extends BaseActivity {
 
     private int mEntityId = -1;
     private String mEntity = "";
+    private String ajaxType = "";
 
     @Override
     public BaseFragment setRootFragment() {
@@ -25,9 +26,10 @@ public class IndexBxtgdjDetailActivity extends BaseActivity {
         if (intent != null) {
             mEntityId = intent.getIntExtra("entityId", -1);
             mEntity = intent.getStringExtra("entity");
+            ajaxType = intent.getStringExtra("ajaxlogtype");
         }
 
-        final IndexBxtgdjDetailFragment fragment = IndexBxtgdjDetailFragment.create(mEntityId, mEntity);
+        final IndexBxtgdjDetailFragment fragment = IndexBxtgdjDetailFragment.create(mEntityId, mEntity,ajaxType);
         return fragment;
     }
 }

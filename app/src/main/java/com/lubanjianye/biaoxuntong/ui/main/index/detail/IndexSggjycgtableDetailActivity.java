@@ -17,6 +17,7 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
 public class IndexSggjycgtableDetailActivity extends BaseActivity {
     private int mEntityId = -1;
     private String mEntity = "";
+    private String ajaxType = "";
 
     @Override
     public BaseFragment setRootFragment() {
@@ -25,9 +26,10 @@ public class IndexSggjycgtableDetailActivity extends BaseActivity {
         if (intent != null) {
             mEntityId = intent.getIntExtra("entityId", -1);
             mEntity = intent.getStringExtra("entity");
+            ajaxType = intent.getStringExtra("ajaxlogtype");
         }
 
-        final IndexSggjycgtableDetailFragment fragment = IndexSggjycgtableDetailFragment.create(mEntityId, mEntity);
+        final IndexSggjycgtableDetailFragment fragment = IndexSggjycgtableDetailFragment.create(mEntityId, mEntity,ajaxType);
         return fragment;
     }
 }

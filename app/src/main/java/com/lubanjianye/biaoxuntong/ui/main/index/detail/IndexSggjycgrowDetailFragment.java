@@ -67,6 +67,7 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
 
     private static final String ARG_ENTITYID = "ARG_ENTITYID";
     private static final String ARG_ENTITY = "ARG_ENTITY";
+    private static final String ARG_AJAXTYPE = "ARG_AJAXTYPE";
 
 
     private int myFav = -1;
@@ -78,12 +79,14 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
     private String shareUrl = "";
 
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
+    private String ajaxlogtype = "";
 
 
-    public static IndexSggjycgrowDetailFragment create(@NonNull int entityId, String entity) {
+    public static IndexSggjycgrowDetailFragment create(@NonNull int entityId, String entity,String ajaxlogtype) {
         final Bundle args = new Bundle();
         args.putInt(ARG_ENTITYID, entityId);
         args.putString(ARG_ENTITY, entity);
+        args.putString(ARG_AJAXTYPE, ajaxlogtype);
         final IndexSggjycgrowDetailFragment fragment = new IndexSggjycgrowDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -97,6 +100,7 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
         if (args != null) {
             mEntityId = args.getInt(ARG_ENTITYID);
             mEntity = args.getString(ARG_ENTITY);
+            ajaxlogtype = args.getString(ARG_AJAXTYPE);
         }
     }
 
@@ -212,6 +216,7 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
                         .params("entity", mEntity)
                         .params("userid", id)
                         .params("deviceId", deviceId)
+                        .params("ajaxlogtype", ajaxlogtype)
 //                        .params("token", id + "_" + token)
                         .success(new ISuccess() {
                             @Override
@@ -327,6 +332,7 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
                         .params("entityId", mEntityId)
                         .params("entity", mEntity)
                         .params("deviceId", deviceId)
+                        .params("ajaxlogtype", ajaxlogtype)
                         .success(new ISuccess() {
                             @Override
                             public void onSuccess(Headers headers, String response) {
