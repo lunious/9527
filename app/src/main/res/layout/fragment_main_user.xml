@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/d180"
             android:background="@mipmap/avatar_bg"
-            android:visibility="visible">
+            android:visibility="gone">
 
 
             <LinearLayout
@@ -95,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/d180"
             android:background="@mipmap/avatar_bg"
-            android:visibility="gone">
+            android:visibility="visible">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/atv_me"
@@ -156,10 +156,15 @@
 
     </LinearLayout>
 
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/d10"
+        android:background="@color/view" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/d10"
         android:background="@color/view"
         android:scrollbars="none">
 
@@ -242,7 +247,7 @@
                     <android.support.v7.widget.AppCompatTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="400-028-9997"/>
+                        android:text="400-028-9997" />
 
                     <ImageView
                         android:layout_width="@dimen/d16"

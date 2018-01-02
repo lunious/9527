@@ -89,7 +89,6 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     private PromptDialog promptDialog;
 
 
-
     @Override
     public Object setLayout() {
         return R.layout.fragment_main_user;
@@ -370,7 +369,7 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
                 sure.setTextColor(Color.parseColor("#00bfdc"));
                 sure.setTextSize(16);
                 promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false);
-                promptDialog.showWarnAlert("是否拨打:400-028-9997？",  cancel,sure,false);
+                promptDialog.showWarnAlert("是否拨打:400-028-9997？", cancel, sure, false);
 
 
                 break;

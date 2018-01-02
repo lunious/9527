@@ -85,13 +85,13 @@
             android:layout_width="@dimen/d0"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
-            android:background="@color/white">
+            android:background="@color/white"
+            android:gravity="center">
 
             <ImageView
                 android:id="@+id/iv_add"
-                android:layout_width="@dimen/d36"
-                android:layout_height="@dimen/d36"
+                android:layout_width="@dimen/d34"
+                android:layout_height="@dimen/d34"
                 android:contentDescription="@null"
                 android:paddingBottom="@dimen/d10"
                 android:paddingLeft="@dimen/d10"
@@ -107,7 +107,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/p1"
-        android:background="#dddddd"/>
+        android:background="#dddddd" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/index_vp"

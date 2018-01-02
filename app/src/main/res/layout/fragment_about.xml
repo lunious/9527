@@ -14,10 +14,11 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/d0"
             android:layout_marginLeft="@dimen/d8"
             android:layout_marginRight="@dimen/d8"
             android:layout_marginTop="@dimen/d20"
+            android:layout_weight="1"
             android:orientation="horizontal">
 
             <ImageView
@@ -83,8 +84,9 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/d0"
             android:layout_marginTop="@dimen/d8"
+            android:layout_weight="2"
             android:orientation="vertical">
 
             <android.support.v7.widget.AppCompatTextView
@@ -125,16 +127,15 @@
             android:layout_height="@dimen/d1"
             android:layout_marginLeft="@dimen/d8"
             android:layout_marginRight="@dimen/d8"
-            android:layout_marginTop="@dimen/d8"
             android:background="@color/view" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/d0"
+            android:layout_weight="2"
             android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="@dimen/d0">
+            android:orientation="vertical">
 
             <ImageView
                 android:layout_width="@dimen/d120"
@@ -156,78 +157,99 @@
             android:layout_height="@dimen/d1"
             android:layout_marginLeft="@dimen/d8"
             android:layout_marginRight="@dimen/d8"
-            android:layout_marginTop="@dimen/d8"
             android:background="@color/view" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/d8"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingLeft="@dimen/d6"
-            android:paddingRight="@dimen/d6">
+            android:layout_height="@dimen/d0"
+            android:layout_weight="1.5"
+            android:orientation="vertical">
 
-
-            <ImageView
-                android:layout_width="@dimen/d32"
-                android:layout_height="@dimen/d32"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d0"
+                android:layout_weight="2"
                 android:gravity="center"
-                android:src="@mipmap/ic_share" />
+                android:orientation="horizontal">
 
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:lineSpacingMultiplier="1.2"
-                android:text="成都鲁班建业科技股份有限公司"
-                android:textColor="#434343"
-                android:textSize="@dimen/s15" />
+                <ImageView
+                    android:layout_width="@dimen/d28"
+                    android:layout_height="@dimen/d28"
+                    android:gravity="center"
+                    android:src="@mipmap/ic_share" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="成都鲁班建业科技股份有限公司"
+                    android:textColor="#434343"
+                    android:textSize="@dimen/s15" />
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d0"
+                android:layout_marginLeft="@dimen/d8"
+                android:layout_marginRight="@dimen/d8"
+                android:layout_marginTop="@dimen/d12"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="服务热线"
+                    android:textColor="@color/main_text_color" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/d10"
+                    android:text="400-028-9997"
+                    android:textColor="@color/main_text_color" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d1"
+                android:layout_marginLeft="@dimen/d8"
+                android:layout_marginRight="@dimen/d8"
+                android:background="@color/view" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d0"
+                android:layout_marginLeft="@dimen/d8"
+                android:layout_marginRight="@dimen/d8"
+                android:layout_marginTop="@dimen/d8"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="公司官网"
+                    android:textColor="@color/main_text_color" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/tv_luban"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/d10"
+                    android:text="http://www.lubanjianye.com"
+                    android:textColor="@color/blue" />
+
+
+            </RelativeLayout>
+
+
         </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/d1"
-            android:layout_marginLeft="@dimen/d8"
-            android:layout_marginRight="@dimen/d8"
-            android:layout_marginTop="@dimen/d8"
-            android:background="@color/view" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:layout_marginTop="@dimen/d24">
-
-            <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tv_luban"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/d15"
-                android:text="公司官网"
-                android:textColor="@color/blue" />
-
-        </RelativeLayout>
-
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/d10">
-
-
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:text="© 2017 lubanjianye.com All rights reserved."
-                android:textColor="#6e6e6e" />
-
-        </RelativeLayout>
 
 
     </LinearLayout>
