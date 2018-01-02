@@ -213,7 +213,7 @@ public class MyCompanyQyyjAllListFragment extends BaseFragment implements View.O
         for (int i = 0; i < data.size(); i++) {
             CompanySgyjListBean bean = new CompanySgyjListBean();
             JSONObject list = data.getJSONObject(i);
-            bean.setXmmc(list.getString("xmmc"));
+            bean.setXmmc(i + 1 + "、" + list.getString("xmmc"));
             bean.setZbsj(list.getString("zbsj"));
             bean.setXmfzr(list.getString("xmfzr"));
 
