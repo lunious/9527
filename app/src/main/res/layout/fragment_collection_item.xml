@@ -8,6 +8,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/d4"
+        android:layout_marginLeft="@dimen/d2"
         android:background="#ffffff">
 
         <android.support.v7.widget.AppCompatTextView
