@@ -94,13 +94,36 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/d4"
+                        android:layout_weight="1"
+                        android:background="@color/blue" />
+
                     <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="@dimen/d0"
                         android:layout_height="match_parent"
+                        android:layout_weight="4"
                         android:gravity="center"
                         android:text="企业资质"
                         android:textColor="#ff434343"
                         android:textSize="@dimen/s16" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/d4"
+                        android:layout_weight="1"
+                        android:background="@color/blue" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5" />
 
 
                 </LinearLayout>
@@ -109,9 +132,7 @@
                     android:id="@+id/rlv_qyzz"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/d10"
-                    android:paddingEnd="@dimen/d6"
-                    android:paddingStart="@dimen/d6" />
+                    android:paddingBottom="@dimen/d10"/>
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tv_qyzz_tip"
@@ -177,14 +198,36 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/d4"
+                        android:layout_weight="1"
+                        android:background="@color/blue" />
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="@dimen/d0"
                         android:layout_height="match_parent"
+                        android:layout_weight="4"
                         android:gravity="center"
                         android:text="人员资格"
                         android:textColor="#ff434343"
                         android:textSize="@dimen/s16" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/d4"
+                        android:layout_weight="1"
+                        android:background="@color/blue" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5" />
 
 
                 </LinearLayout>
@@ -194,9 +237,7 @@
                     android:id="@+id/rlv_ryzz"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/d10"
-                    android:paddingEnd="@dimen/d6"
-                    android:paddingStart="@dimen/d6" />
+                    android:paddingBottom="@dimen/d10" />
 
 
                 <android.support.v7.widget.AppCompatTextView
@@ -263,14 +304,36 @@
                     android:gravity="center"
                     android:orientation="horizontal">
 
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/d4"
+                        android:layout_weight="1"
+                        android:background="@color/blue" />
 
                     <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="match_parent"
+                        android:layout_width="@dimen/d0"
                         android:layout_height="match_parent"
+                        android:layout_weight="4"
                         android:gravity="center"
                         android:text="企业业绩"
                         android:textColor="#ff434343"
                         android:textSize="@dimen/s16" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/d4"
+                        android:layout_weight="1"
+                        android:background="@color/blue" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5" />
 
 
                 </LinearLayout>

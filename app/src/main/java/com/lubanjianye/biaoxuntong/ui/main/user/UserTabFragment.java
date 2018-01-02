@@ -1,6 +1,8 @@
 package com.lubanjianye.biaoxuntong.ui.main.user;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
@@ -23,7 +25,6 @@ import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.company.MyCompanyActivity;
-import com.lubanjianye.biaoxuntong.ui.main.user.helper.HelperActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.setting.SettingActivity;
 import com.lubanjianye.biaoxuntong.util.loader.GlideImageLoader;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
@@ -39,6 +40,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import me.leefeng.promptlibrary.PromptButton;
+import me.leefeng.promptlibrary.PromptButtonListener;
+import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Headers;
 
 /**
@@ -81,6 +85,9 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     private String detail_1 = "";
     private String detail_2 = "";
     private String detail_3 = "";
+
+    private PromptDialog promptDialog;
+
 
 
     @Override
@@ -189,6 +196,9 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
 
     @Override
     public void initData() {
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
+
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             long id = 0;
             String mobile = "";
@@ -340,7 +350,29 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.ll_helper:
                 //客服界面
-                startActivity(new Intent(getActivity(), HelperActivity.class));
+                final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+
+                    }
+                });
+                cancel.setTextColor(Color.parseColor("#cccc33"));
+                cancel.setTextSize(16);
+
+                final PromptButton sure = new PromptButton("拨      打", new PromptButtonListener() {
+                    @Override
+                    public void onClick(PromptButton button) {
+                        Intent intent = new Intent(Intent.ACTION_DIAL);
+                        intent.setData(Uri.parse("tel:400-028-9997"));
+                        startActivity(intent);
+                    }
+                });
+                sure.setTextColor(Color.parseColor("#00bfdc"));
+                sure.setTextSize(16);
+                promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false);
+                promptDialog.showWarnAlert("是否拨打:400-028-9997？",  cancel,sure,false);
+
+
                 break;
             case R.id.ll_questions:
                 //关于我们界面

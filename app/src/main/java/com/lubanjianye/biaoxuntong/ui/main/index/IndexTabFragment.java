@@ -3,8 +3,6 @@ package com.lubanjianye.biaoxuntong.ui.main.index;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -224,7 +222,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                 } else {
 
 
-                                    //后台清楚登陆信息
+                                    //后台清除登陆信息
                                     DatabaseManager.getInstance().getDao().deleteAll();
                                     AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
                                     EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));

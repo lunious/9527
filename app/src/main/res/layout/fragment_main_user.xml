@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/d180"
             android:background="@mipmap/avatar_bg"
-            android:visibility="gone">
+            android:visibility="visible">
 
 
             <LinearLayout
@@ -73,14 +73,13 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/d14"
-                            android:background="@drawable/bg_default_news"
                             android:paddingBottom="@dimen/d2"
                             android:paddingRight="@dimen/d8"
                             android:paddingStart="@dimen/d8"
                             android:paddingTop="@dimen/d2"
                             android:text="未绑定企业"
-                            android:textColor="@color/blue"
-                            android:textSize="@dimen/s14" />
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/s15" />
                     </LinearLayout>
 
 
@@ -96,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/d180"
             android:background="@mipmap/avatar_bg"
-            android:visibility="visible">
+            android:visibility="gone">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/atv_me"
