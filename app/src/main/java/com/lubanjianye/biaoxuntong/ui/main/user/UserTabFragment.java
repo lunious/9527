@@ -26,6 +26,9 @@ import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.company.MyCompanyActivity;
 import com.lubanjianye.biaoxuntong.ui.main.user.setting.SettingActivity;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.loader.GlideImageLoader;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
@@ -40,9 +43,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import me.leefeng.promptlibrary.PromptButton;
-import me.leefeng.promptlibrary.PromptButtonListener;
-import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Headers;
 
 /**
@@ -86,7 +86,7 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     private String detail_2 = "";
     private String detail_3 = "";
 
-    private PromptDialog promptDialog;
+    private PromptDialog promptDialog = null;
 
 
     @Override
@@ -197,7 +197,6 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     public void initData() {
         //创建对象
         promptDialog = new PromptDialog(getActivity());
-
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             long id = 0;
             String mobile = "";
@@ -368,9 +367,9 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
                 });
                 sure.setTextColor(Color.parseColor("#00bfdc"));
                 sure.setTextSize(16);
-                promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false);
-                promptDialog.showWarnAlert("是否拨打:400-028-9997？", cancel, sure, false);
-
+                promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
+                        .round(8).loadingDuration(200);
+                promptDialog.showWarnAlert("是否拨打:400-028-9997？", cancel, sure, true);
 
                 break;
             case R.id.ll_questions:

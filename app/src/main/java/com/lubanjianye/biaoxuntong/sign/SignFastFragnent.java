@@ -23,13 +23,12 @@ import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.IFailure;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.parser.RichTextParser;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
-
-import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Headers;
 
 /**

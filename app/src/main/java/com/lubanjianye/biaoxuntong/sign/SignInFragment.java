@@ -25,12 +25,12 @@ import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
-import me.leefeng.promptlibrary.PromptDialog;
 import me.shaohui.shareutil.LoginUtil;
 import me.shaohui.shareutil.login.LoginListener;
 import me.shaohui.shareutil.login.LoginPlatform;

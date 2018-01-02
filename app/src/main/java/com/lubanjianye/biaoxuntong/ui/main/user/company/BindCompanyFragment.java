@@ -28,6 +28,9 @@ import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
@@ -36,9 +39,6 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-import me.leefeng.promptlibrary.PromptButton;
-import me.leefeng.promptlibrary.PromptButtonListener;
-import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Headers;
 
 /**

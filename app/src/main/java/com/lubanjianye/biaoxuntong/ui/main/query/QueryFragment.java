@@ -43,15 +43,14 @@ import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import me.leefeng.promptlibrary.PromptButton;
-import me.leefeng.promptlibrary.PromptButtonListener;
-import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Headers;
 
 /**

@@ -24,12 +24,11 @@ import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import me.leefeng.promptlibrary.PromptDialog;
 import okhttp3.Headers;
 
 /**

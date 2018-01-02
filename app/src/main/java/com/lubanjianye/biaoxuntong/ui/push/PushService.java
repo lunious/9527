@@ -78,35 +78,23 @@ public class PushService extends MixPushIntentService {
         if ("1".equals(mType)) {
             if ("xjggg".equals(mEntity) || "sjggg".equals(mEntity)) {
                 intent = new Intent(BiaoXunTong.getApplicationContext(), ResultXjgggDetailActivity.class);
-                intent.putExtra("entityId", mEntityId);
-                intent.putExtra("entity", mEntity);
             } else if ("sggjyzbjg".equals(mEntity) || "sggjycgjgrow".equals(mEntity) || "sggjyjgcgtable".equals(mEntity)) {
                 intent = new Intent(BiaoXunTong.getApplicationContext(), ResultSggjyzbjgDetailActivity.class);
-                intent.putExtra("entityId", mEntityId);
-                intent.putExtra("entity", mEntity);
             } else if ("sggjy".equals(mEntity)) {
                 intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
-                intent.putExtra("entityId", mEntityId);
-                intent.putExtra("entity", mEntity);
             } else if ("xcggg".equals(mEntity)) {
                 intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
-                intent.putExtra("entityId", mEntityId);
-                intent.putExtra("entity", mEntity);
             } else if ("bxtgdj".equals(mEntity)) {
                 intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
-                intent.putExtra("entityId", mEntityId);
-                intent.putExtra("entity", mEntity);
             } else if ("sggjycgtable".equals(mEntity)) {
                 intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
-                intent.putExtra("entityId", mEntityId);
-                intent.putExtra("entity", mEntity);
             } else if ("sggjycgrow".equals(mEntity)) {
                 intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgrowDetailActivity.class);
-                intent.putExtra("entityId", mEntityId);
-                intent.putExtra("entity", mEntity);
             } else if ("scggg".equals(mEntity)) {
 
             }
+            intent.putExtra("entityId", mEntityId);
+            intent.putExtra("entity", mEntity);
         } else if ("2".equals(mType)) {
 
         } else if ("3".equals(mType)) {
