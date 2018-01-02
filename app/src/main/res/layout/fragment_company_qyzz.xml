@@ -24,7 +24,7 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
-                android:maxLines="2"
+                android:maxLines="3"
                 android:text="This is main title."
                 android:textColor="#ff6c6c6c"
                 android:textSize="@dimen/s15" />

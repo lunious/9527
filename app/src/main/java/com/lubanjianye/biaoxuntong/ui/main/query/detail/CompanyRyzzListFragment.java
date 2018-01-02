@@ -151,7 +151,7 @@ public class CompanyRyzzListFragment extends BaseFragment implements View.OnClic
     }
 
     private void initAdapter() {
-        mAdapter = new CompanyRyzzListAdapter(R.layout.fragment_company_ryzz_list, mDataList);
+        mAdapter = new CompanyRyzzListAdapter(R.layout.fragment_company_ryzz, mDataList);
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
         mAdapter.setLoadMoreView(new CustomLoadMoreView());

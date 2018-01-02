@@ -110,11 +110,11 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
 
     private void initAdapter() {
 
-        mAdapter = new CompanyQyzzListAdapter(R.layout.fragment_company_qyzz_list, mDataList);
+        mAdapter = new CompanyQyzzListAdapter(R.layout.fragment_company_qyzz, mDataList);
         mAdapter.setLoadMoreView(new CustomLoadMoreView());
         rlvQyzz.setAdapter(mAdapter);
 
-        mRyzzAdapter = new CompanyRyzzListAdapter(R.layout.fragment_company_ryzz_list, mRyzzDataList);
+        mRyzzAdapter = new CompanyRyzzListAdapter(R.layout.fragment_company_ryzz, mRyzzDataList);
         mRyzzAdapter.setLoadMoreView(new CustomLoadMoreView());
         rlvRyzz.setAdapter(mRyzzAdapter);
 

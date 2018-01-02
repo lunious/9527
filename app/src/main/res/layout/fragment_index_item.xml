@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/d6"
             android:layout_marginRight="@dimen/d4"
-            android:layout_marginTop="@dimen/d4"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="夹江县英才小学新建项目招标公告"

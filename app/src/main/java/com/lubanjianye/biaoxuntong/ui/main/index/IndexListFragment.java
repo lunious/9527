@@ -275,7 +275,7 @@ public class IndexListFragment extends BaseFragment {
                             detail_3 = data.getString("imgThreeUrl");
 
                         } else {
-                            ToastUtil.shortToast(getContext(),message);
+                            ToastUtil.shortToast(getContext(), message);
                         }
                         initBanner();
 
@@ -337,7 +337,7 @@ public class IndexListFragment extends BaseFragment {
                                         indexRefresh.setEnabled(false);
                                     }
                                 } else {
-                                    ToastUtil.shortToast(getContext(),message);
+                                    ToastUtil.shortToast(getContext(), message);
                                 }
 
                             }
@@ -378,7 +378,7 @@ public class IndexListFragment extends BaseFragment {
                                         indexRefresh.setEnabled(false);
                                     }
                                 } else {
-                                    ToastUtil.shortToast(getContext(),message);
+                                    ToastUtil.shortToast(getContext(), message);
                                 }
 
                             }

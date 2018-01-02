@@ -26,6 +26,6 @@ public class CompanyQyzzListAdapter extends BaseQuickAdapter<CompanyQyzzListBean
 
     @Override
     protected void convert(BaseViewHolder helper, CompanyQyzzListBean item) {
-        helper.setText(R.id.tv_company_qyzz_list, item.getLx() + "_" + item.getZzmc());
+        helper.setText(R.id.tv_company_qyzz, item.getLx() + "_" + item.getZzmc());
     }
 }

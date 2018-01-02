@@ -18,14 +18,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.bean.CompanyQyzzListBean;
-import com.lubanjianye.biaoxuntong.bean.MyCompanyQyzzAllListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
-import com.lubanjianye.biaoxuntong.ui.main.user.company.MyCompanyQyzzAllListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,7 +153,7 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
     }
 
     private void initAdapter() {
-        mAdapter = new CompanyQyzzListAdapter(R.layout.fragment_company_qyzz_list, mDataList);
+        mAdapter = new CompanyQyzzListAdapter(R.layout.fragment_company_qyzz, mDataList);
 
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
@@ -184,7 +182,7 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
                     @Override
                     public void onSuccess(Headers headers, String response) {
 
-                        Log.d("VUYASVDSADASDAS",response);
+                        Log.d("VUYASVDSADASDAS", response);
 
                         final JSONObject object = JSON.parseObject(response);
                         final JSONArray array = object.getJSONArray("data");

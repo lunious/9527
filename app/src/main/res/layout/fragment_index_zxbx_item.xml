@@ -17,7 +17,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/d6"
             android:layout_marginRight="@dimen/d4"
-            android:layout_marginTop="@dimen/d4"
             android:ellipsize="end"
             android:maxLines="2"
             android:text="大英县隆盛镇五龙寨村农田水利项目"

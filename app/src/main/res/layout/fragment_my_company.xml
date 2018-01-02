@@ -343,9 +343,7 @@
                     android:id="@+id/rlv_qyyj"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="@dimen/d10"
-                    android:paddingEnd="@dimen/d6"
-                    android:paddingStart="@dimen/d6" />
+                    android:paddingBottom="@dimen/d10" />
 
 
                 <android.support.v7.widget.AppCompatTextView
