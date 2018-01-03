@@ -209,22 +209,26 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
 
                 } else if ("xcggg".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
                 } else if ("bxtgdj".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
                 } else if ("sggjycgtable".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
 
                 }

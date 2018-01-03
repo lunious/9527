@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -28,11 +29,14 @@ import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import okhttp3.Headers;
 
 import static com.lubanjianye.biaoxuntong.app.BiaoXunTong.getApplicationContext;
@@ -125,12 +129,13 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
     public void initData() {
         //创建对象
         promptDialog = new PromptDialog(getActivity());
+        requestData();
 
     }
 
     @Override
     public void initEvent() {
-        requestData();
+
     }
 
 
