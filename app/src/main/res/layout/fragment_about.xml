@@ -17,15 +17,13 @@
             android:layout_height="@dimen/d0"
             android:layout_marginLeft="@dimen/d8"
             android:layout_marginRight="@dimen/d8"
-            android:layout_marginTop="@dimen/d10"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <ImageView
                 android:layout_width="@dimen/d60"
                 android:layout_height="@dimen/d60"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/d20"
                 android:contentDescription="@null"
                 android:src="@mipmap/log" />
 
@@ -38,8 +36,6 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:paddingTop="@dimen/d4"
                     android:text="鲁班标讯通"
                     android:textColor="#ff434343"
                     android:textSize="@dimen/s16" />
@@ -85,8 +81,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/d0"
-            android:layout_marginTop="@dimen/d8"
-            android:layout_weight="2"
+            android:layout_marginTop="@dimen/d6"
+            android:layout_weight="1.5"
             android:orientation="vertical">
 
             <android.support.v7.widget.AppCompatTextView
@@ -102,7 +98,7 @@
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/d8"
+                android:layout_marginTop="@dimen/d6"
                 android:lineSpacingMultiplier="1.2"
                 android:paddingLeft="@dimen/d6"
                 android:paddingRight="@dimen/d6"
@@ -112,7 +108,7 @@
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/d8"
+                android:layout_marginTop="@dimen/d6"
                 android:lineSpacingMultiplier="1.2"
                 android:paddingLeft="@dimen/d6"
                 android:paddingRight="@dimen/d6"
@@ -134,13 +130,12 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/d0"
             android:layout_weight="2"
-            android:gravity="center_vertical"
             android:orientation="vertical">
 
             <ImageView
                 android:layout_width="@dimen/d120"
                 android:layout_height="@dimen/d120"
-                android:layout_gravity="center"
+                android:layout_gravity="center_horizontal"
                 android:src="@mipmap/erweima" />
 
             <android.support.v7.widget.AppCompatTextView
