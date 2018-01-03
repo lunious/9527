@@ -7,6 +7,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -209,10 +210,10 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
 
     public void requestData(final int isRefresh) {
 
-        if (!NetUtil.isNetworkConnected(getActivity())){
+        if (!NetUtil.isNetworkConnected(getActivity())) {
             loadingStatus.showNoNetwork();
             companyRyzzRefresh.setEnabled(false);
-        }else {
+        } else {
             if (isRefresh == 0) {
                 loadingStatus.showLoading();
             }
@@ -231,7 +232,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                     .url(BiaoXunTongApi.URL_GETALLCOMPANYRYZZ)
                     .params("userId", id)
                     .params("type", 0)
-                    .params("size", 10)
+                    .params("size", 20)
                     .params("page", page)
                     .success(new ISuccess() {
                         @Override
@@ -256,7 +257,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                                 }
 
                                 if (array.size() > 0) {
-                                    setData(isRefresh, array,nextPage);
+                                    setData(isRefresh, array, nextPage);
                                 } else {
                                     if (mDataList != null) {
                                         mDataList.clear();
@@ -277,12 +278,12 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
         }
 
 
-
     }
 
-    private void setData(int isRefresh, JSONArray data,boolean nextPage) {
+    private void setData(int isRefresh, JSONArray data, boolean nextPage) {
         page++;
         final int size = data == null ? 0 : data.size();
+        int d = 1;
         if (isRefresh == 0 || isRefresh == 1) {
             mDataList.clear();
             loadingStatus.showContent();
@@ -293,8 +294,9 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                 bean.setZgzy(list.getString("zgzy"));
                 bean.setZg_name(list.getString("zg_name"));
                 bean.setZg_mcdj(list.getString("zg_mcdj"));
-                bean.setRyname(list.getString("ryname"));
+                bean.setRyname(d + "、" + list.getString("ryname"));
                 mDataList.add(bean);
+                d++;
             }
             companyRyzzRefresh.setRefreshing(false);
             mAdapter.setEnableLoadMore(true);
@@ -309,8 +311,9 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                     bean.setZgzy(list.getString("zgzy"));
                     bean.setZg_name(list.getString("zg_name"));
                     bean.setZg_mcdj(list.getString("zg_mcdj"));
-                    bean.setRyname(list.getString("ryname"));
+                    bean.setRyname(d + 20 * (page - 2) + "、" + list.getString("ryname"));
                     mDataList.add(bean);
+                    d++;
                 }
                 mAdapter.notifyDataSetChanged();
             }

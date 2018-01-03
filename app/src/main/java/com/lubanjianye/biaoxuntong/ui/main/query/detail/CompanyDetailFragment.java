@@ -433,6 +433,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
     private void setQyzzData(JSONArray data) {
         mDataList.clear();
 
+        int d = 1;
         if (data.size() >= 5) {
             qyzzCount.setText(data.size() + "");
             if (llMoreQyzz != null) {
@@ -441,9 +442,10 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
             for (int i = 0; i < 5; i++) {
                 CompanyQyzzListBean bean = new CompanyQyzzListBean();
                 JSONObject list = data.getJSONObject(i);
-                bean.setLx(list.getString("lx"));
+                bean.setLx(d + "、" + list.getString("lx"));
                 bean.setZzmc(list.getString("zzmc"));
                 mDataList.add(bean);
+                d++;
             }
 
             mAdapter.notifyDataSetChanged();
@@ -455,21 +457,22 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
             for (int i = 0; i < data.size(); i++) {
                 CompanyQyzzListBean bean = new CompanyQyzzListBean();
                 JSONObject list = data.getJSONObject(i);
-                bean.setLx(list.getString("lx"));
+                bean.setLx(d + "、" + list.getString("lx"));
                 bean.setZzmc(list.getString("zzmc"));
                 mDataList.add(bean);
+                d++;
             }
 
             mAdapter.notifyDataSetChanged();
             mAdapter.loadMoreEnd();
         }
 
-
     }
 
     private void setRyzzData(JSONArray data) {
         mRyzzDataList.clear();
 
+        int d = 1;
         if (data.size() >= 5) {
 
             ryzzCount.setText(data.size() + "");
@@ -480,10 +483,11 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
             for (int i = 0; i < 5; i++) {
                 CompanyRyzzListBean bean = new CompanyRyzzListBean();
                 JSONObject list = data.getJSONObject(i);
-                bean.setRy(list.getString("ry"));
+                bean.setRy(d + "、" + list.getString("ry"));
                 bean.setZgMcdj(list.getString("zgMcdj"));
                 bean.setZgZy(list.getString("zgZy"));
                 mRyzzDataList.add(bean);
+                d++;
             }
 
             mRyzzAdapter.notifyDataSetChanged();
@@ -495,10 +499,11 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
             for (int i = 0; i < data.size(); i++) {
                 CompanyRyzzListBean bean = new CompanyRyzzListBean();
                 JSONObject list = data.getJSONObject(i);
-                bean.setRy(list.getString("ry"));
+                bean.setRy(d + "、" + list.getString("ry"));
                 bean.setZgMcdj(list.getString("zgMcdj"));
                 bean.setZgZy(list.getString("zgZy"));
                 mRyzzDataList.add(bean);
+                d++;
             }
 
             mRyzzAdapter.notifyDataSetChanged();
@@ -511,6 +516,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
     private void setQyyjData(JSONArray data) {
         mQyyjDataList.clear();
 
+        int d = 1;
         if (data.size() >= 5) {
             qyyjCount.setText(data.size() + "");
 
@@ -520,7 +526,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
             for (int i = 0; i < 5; i++) {
                 CompanySgyjListBean bean = new CompanySgyjListBean();
                 JSONObject list = data.getJSONObject(i);
-                bean.setXmmc(list.getString("xmmc"));
+                bean.setXmmc(d + "、" + list.getString("xmmc"));
                 bean.setZbsj(list.getString("zbsj"));
                 bean.setXmfzr(list.getString("xmfzr"));
 
@@ -531,6 +537,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                     bean.setZbje(list.getString("zbje"));
                 }
                 mQyyjDataList.add(bean);
+                d++;
             }
 
             mQyyjAdapter.notifyDataSetChanged();
@@ -542,7 +549,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
             for (int i = 0; i < data.size(); i++) {
                 CompanySgyjListBean bean = new CompanySgyjListBean();
                 JSONObject list = data.getJSONObject(i);
-                bean.setXmmc(list.getString("xmmc"));
+                bean.setXmmc(d + "、" + list.getString("xmmc"));
                 bean.setZbsj(list.getString("zbsj"));
                 bean.setXmfzr(list.getString("xmfzr"));
 
@@ -553,6 +560,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                     bean.setZbje(list.getString("zbje"));
                 }
                 mQyyjDataList.add(bean);
+                d++;
             }
 
             mQyyjAdapter.notifyDataSetChanged();

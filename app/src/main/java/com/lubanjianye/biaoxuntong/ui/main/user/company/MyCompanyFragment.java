@@ -30,6 +30,7 @@ import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import okhttp3.Headers;
 
 /**
@@ -297,16 +298,18 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                                     tvQyzzTip.setVisibility(View.GONE);
                                 }
 
+                                int d = 1;
                                 for (int i = 0; i < array.size(); i++) {
                                     MyCompanyQyzzAllListBean bean = new MyCompanyQyzzAllListBean();
                                     JSONObject list = array.getJSONObject(i);
-                                    bean.setLx_name(list.getString("lx_name"));
+                                    bean.setLx_name(d + "、" + list.getString("lx_name"));
                                     bean.setDl_name(list.getString("dl_name"));
                                     bean.setXl_name(list.getString("xl_name"));
                                     bean.setZy_name(list.getString("zy_name"));
                                     bean.setDj(list.getString("dj"));
                                     bean.setDq(list.getString("dq"));
                                     mQyzzDataList.add(bean);
+                                    d++;
                                 }
 
                                 mQyzzAdapter.notifyDataSetChanged();
@@ -385,16 +388,17 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                                 if (tvRyzzTip != null) {
                                     tvRyzzTip.setVisibility(View.GONE);
                                 }
-
+                                int d = 1;
                                 for (int i = 0; i < array.size(); i++) {
                                     MyCompanyRyzzAllListBean bean = new MyCompanyRyzzAllListBean();
                                     JSONObject list = array.getJSONObject(i);
                                     bean.setLx_name(list.getString("lx_name"));
-                                    bean.setRyname(list.getString("ryname"));
+                                    bean.setRyname(d + "、" + list.getString("ryname"));
                                     bean.setZg_mcdj(list.getString("zg_mcdj"));
                                     bean.setZg_name(list.getString("zg_name"));
                                     bean.setZgzy(list.getString("zgzy"));
                                     mRyzzDataList.add(bean);
+                                    d++;
                                 }
 
                                 mRyzzAdapter.notifyDataSetChanged();
@@ -478,6 +482,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                                                                             }
 
                                                                             mQyyjDataList.clear();
+                                                                            int d = 1;
                                                                             if (array.size() >= 5) {
                                                                                 qyyjCount.setText(array.size() + "");
                                                                                 if (llMoreQyyj != null) {
@@ -486,7 +491,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                                                                                 for (int i = 0; i < 5; i++) {
                                                                                     CompanySgyjListBean bean = new CompanySgyjListBean();
                                                                                     JSONObject list = array.getJSONObject(i);
-                                                                                    bean.setXmmc(list.getString("xmmc"));
+                                                                                    bean.setXmmc(d + "、" + list.getString("xmmc"));
                                                                                     bean.setZbsj(list.getString("zbsj"));
                                                                                     bean.setXmfzr(list.getString("xmfzr"));
 
@@ -498,16 +503,16 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                                                                                     }
                                                                                     mQyyjDataList.add(bean);
                                                                                     mQyyjAdapter.notifyDataSetChanged();
+                                                                                    d++;
                                                                                 }
                                                                             } else {
                                                                                 if (llMoreQyyj != null) {
                                                                                     llMoreQyyj.setVisibility(View.GONE);
                                                                                 }
-
                                                                                 for (int i = 0; i < array.size(); i++) {
                                                                                     CompanySgyjListBean bean = new CompanySgyjListBean();
                                                                                     JSONObject list = array.getJSONObject(i);
-                                                                                    bean.setXmmc(list.getString("xmmc"));
+                                                                                    bean.setXmmc(d + "、" + list.getString("xmmc"));
                                                                                     bean.setZbsj(list.getString("zbsj"));
                                                                                     bean.setXmfzr(list.getString("xmfzr"));
 
@@ -519,6 +524,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                                                                                     }
                                                                                     mQyyjDataList.add(bean);
                                                                                     mQyyjAdapter.notifyDataSetChanged();
+                                                                                    d++;
                                                                                 }
                                                                             }
 

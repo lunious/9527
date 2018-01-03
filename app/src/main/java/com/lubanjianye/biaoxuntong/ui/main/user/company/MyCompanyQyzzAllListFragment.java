@@ -29,6 +29,7 @@ import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import okhttp3.Headers;
 
 /**
@@ -235,7 +236,7 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
                     .params("userId", id)
                     .params("type", 0)
                     .params("page", page)
-                    .params("size", 10)
+                    .params("size", 20)
                     .success(new ISuccess() {
                         @Override
                         public void onSuccess(Headers headers, String response) {
@@ -286,19 +287,21 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
     private void setData(int isRefresh, JSONArray data, boolean nextPage) {
         page++;
         final int size = data == null ? 0 : data.size();
+        int d = 1;
         if (isRefresh == 0 || isRefresh == 1) {
             loadingStatus.showContent();
             mDataList.clear();
             for (int i = 0; i < data.size(); i++) {
                 MyCompanyQyzzAllListBean bean = new MyCompanyQyzzAllListBean();
                 JSONObject list = data.getJSONObject(i);
-                bean.setLx_name(list.getString("lx_name"));
+                bean.setLx_name(d + "、" + list.getString("lx_name"));
                 bean.setDl_name(list.getString("dl_name"));
                 bean.setXl_name(list.getString("xl_name"));
                 bean.setZy_name(list.getString("zy_name"));
                 bean.setDj(list.getString("dj"));
                 bean.setDq(list.getString("dq"));
                 mDataList.add(bean);
+                d++;
             }
             companyQyzzRefresh.setRefreshing(false);
             mAdapter.setEnableLoadMore(true);
@@ -311,13 +314,14 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
                 for (int i = 0; i < data.size(); i++) {
                     MyCompanyQyzzAllListBean bean = new MyCompanyQyzzAllListBean();
                     JSONObject list = data.getJSONObject(i);
-                    bean.setLx_name(list.getString("lx_name"));
+                    bean.setLx_name(d + 20 * (page - 2) + "、" + list.getString("lx_name"));
                     bean.setDl_name(list.getString("dl_name"));
                     bean.setXl_name(list.getString("xl_name"));
                     bean.setZy_name(list.getString("zy_name"));
                     bean.setDj(list.getString("dj"));
                     bean.setDq(list.getString("dq"));
                     mDataList.add(bean);
+                    d++;
                 }
                 mAdapter.notifyDataSetChanged();
             }
