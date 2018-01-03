@@ -343,7 +343,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
             @Override
             public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
-                canvas.drawColor(ContextCompat.getColor(getContext(), R.color.blue));
+                canvas.drawColor(ContextCompat.getColor(getContext(), R.color.dark_view));
                 canvas.drawText("继续滑动即可删除", 90, 90, paint);
             }
         };

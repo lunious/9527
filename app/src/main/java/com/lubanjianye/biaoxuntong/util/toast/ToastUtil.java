@@ -1,6 +1,5 @@
 package com.lubanjianye.biaoxuntong.util.toast;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;

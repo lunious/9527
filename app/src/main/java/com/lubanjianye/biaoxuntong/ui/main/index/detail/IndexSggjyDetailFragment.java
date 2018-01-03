@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
@@ -24,11 +25,17 @@ import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
+import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
+import com.lubanjianye.biaoxuntong.ui.share.Share;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.UiError;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -45,27 +52,32 @@ import okhttp3.Headers;
  * 描述:     TODO
  */
 
-public class IndexSggjyDetailFragment extends BaseFragment implements View.OnClickListener {
+public class IndexSggjyDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
 
 
-    LinearLayout llIvBack = null;
-    AppCompatTextView mainBarName = null;
-    MultipleStatusView indexSggjyDetailStatusView = null;
-    TextView tvMainTitle = null;
-    TextView tvMainArea = null;
-    TextView tvPubTime = null;
-    TextView tvDeadTime = null;
-    TextView tv1 = null;
-    TextView tv2 = null;
-    TextView tv3 = null;
-    TextView tv4 = null;
-    TextView tv5 = null;
-    TextView tv6 = null;
-    TextView tv7 = null;
-    ImageView ivFav = null;
-    LinearLayout llFav = null;
-    LinearLayout llShare = null;
-    NestedScrollView detailNsv = null;
+    private LinearLayout llIvBack = null;
+    private AppCompatTextView mainBarName = null;
+    private MultipleStatusView indexSggjyDetailStatusView = null;
+    private TextView tvMainTitle = null;
+    private TextView tvMainArea = null;
+    private TextView tvPubTime = null;
+    private TextView tvDeadTime = null;
+    private TextView tv1 = null;
+    private TextView tv2 = null;
+    private TextView tv3 = null;
+    private TextView tv4 = null;
+    private TextView tv5 = null;
+    private TextView tv6 = null;
+    private TextView tv7 = null;
+    private ImageView ivFav = null;
+    private LinearLayout llFav = null;
+    private LinearLayout llShare = null;
+    private NestedScrollView detailNsv = null;
+
+    private LinearLayout llWeiBoShare = null;
+    private LinearLayout llQQBoShare = null;
+    private LinearLayout llWeixinBoShare = null;
+    private LinearLayout llPyqShare = null;
 
     private static final String ARG_ENTITYID = "ARG_ENTITYID";
     private static final String ARG_ENTITY = "ARG_ENTITY";
@@ -113,6 +125,12 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
 
     @Override
     public void initView() {
+
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
+        //设置自定义属性
+        promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+
         llIvBack = getView().findViewById(R.id.ll_iv_back);
         mainBarName = getView().findViewById(R.id.main_bar_name);
         indexSggjyDetailStatusView = getView().findViewById(R.id.index_sggjy_detail_status_view);
@@ -132,9 +150,18 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
         llShare = getView().findViewById(R.id.ll_share);
         detailNsv = getView().findViewById(R.id.detail_nsv);
 
+        llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
+        llQQBoShare = getView().findViewById(R.id.ll_qq_share);
+        llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
+        llPyqShare = getView().findViewById(R.id.ll_pyq_share);
+
         llIvBack.setOnClickListener(this);
         llShare.setOnClickListener(this);
         llFav.setOnClickListener(this);
+        llWeiBoShare.setOnClickListener(this);
+        llQQBoShare.setOnClickListener(this);
+        llWeixinBoShare.setOnClickListener(this);
+        llPyqShare.setOnClickListener(this);
     }
 
     @Override
@@ -438,9 +465,88 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
     }
 
 
+    private Share mShare = new Share();
+    private PromptDialog promptDialog = null;
+
     @Override
     public void onClick(View view) {
+        mShare.setAppName("鲁班标讯通");
+        mShare.setAppShareIcon(R.mipmap.ic_share);
+        if (mShare.getBitmapResID() == 0) {
+            mShare.setBitmapResID(R.mipmap.ic_share);
+        }
+        mShare.setTitle(shareTitle);
+        mShare.setContent(tv1.getText().toString());
+        mShare.setSummary(tv1.getText().toString());
+        mShare.setDescription(tv1.getText().toString());
+        mShare.setImageUrl(null);
+        mShare.setUrl(BiaoXunTongApi.SHARE_URL + shareUrl);
         switch (view.getId()) {
+            case R.id.ll_weibo_share:
+                OpenBuilder.with(getActivity())
+                        .useWeibo(OpenConstant.WB_APP_KEY)
+                        .share(mShare, new OpenBuilder.Callback() {
+                            @Override
+                            public void onFailed() {
+
+                            }
+
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                break;
+            case R.id.ll_qq_share:
+                OpenBuilder.with(getActivity())
+                        .useTencent(OpenConstant.QQ_APP_ID)
+                        .share(mShare, new IUiListener() {
+                            @Override
+                            public void onComplete(Object o) {
+                                ToastUtil.shortToast(getContext(), "分享成功");
+                            }
+
+                            @Override
+                            public void onError(UiError uiError) {
+                                ToastUtil.shortToast(getContext(), "分享失败");
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                ToastUtil.shortToast(getContext(), "分享取消");
+                            }
+                        },this);
+                break;
+            case R.id.ll_chat_share:
+                OpenBuilder.with(getActivity())
+                        .useWechat(OpenConstant.WECHAT_APP_ID)
+                        .shareSession(mShare, new OpenBuilder.Callback() {
+                            @Override
+                            public void onFailed() {
+
+                            }
+
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                break;
+            case R.id.ll_pyq_share:
+                OpenBuilder.with(getActivity())
+                        .useWechat(OpenConstant.WECHAT_APP_ID)
+                        .shareTimeLine(mShare, new OpenBuilder.Callback() {
+                            @Override
+                            public void onFailed() {
+
+                            }
+
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                break;
             case R.id.ll_iv_back:
                 getActivity().onBackPressed();
                 break;
@@ -472,10 +578,10 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                                         if ("200".equals(status)) {
                                             myFav = 0;
                                             ivFav.setImageResource(R.mipmap.ic_fav_pressed);
-                                            ToastUtil.shortToast(getContext(),"取消收藏");
+                                            ToastUtil.shortToast(getContext(), "取消收藏");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
-                                            ToastUtil.shortToast(getContext(),"服务器异常");
+                                            ToastUtil.shortToast(getContext(), "服务器异常");
                                         }
                                     }
                                 })
@@ -496,10 +602,10 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                                         if ("200".equals(status)) {
                                             myFav = 1;
                                             ivFav.setImageResource(R.mipmap.ic_faved_pressed);
-                                            ToastUtil.shortToast(getContext(),"收藏成功");
+                                            ToastUtil.shortToast(getContext(), "收藏成功");
                                             EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
                                         } else if ("500".equals(status)) {
-                                            ToastUtil.shortToast(getContext(),"服务器异常");
+                                            ToastUtil.shortToast(getContext(), "服务器异常");
                                         }
                                     }
                                 })
@@ -514,5 +620,15 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onFailed() {
+
+    }
+
+    @Override
+    public void onSuccess() {
+
     }
 }

@@ -24,12 +24,18 @@ import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
+import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
+import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
+import com.lubanjianye.biaoxuntong.ui.share.Share;
 import com.lubanjianye.biaoxuntong.util.AppConfig;
 import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.tencent.tauth.IUiListener;
+import com.tencent.tauth.UiError;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -46,7 +52,7 @@ import okhttp3.Headers;
  * 描述:     TODO
  */
 
-public class ResultXjgggDetailFragment extends BaseFragment implements View.OnClickListener {
+public class ResultXjgggDetailFragment extends BaseFragment implements View.OnClickListener, OpenBuilder.Callback {
 
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
@@ -75,9 +81,15 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
     private LinearLayout llShare = null;
     private NestedScrollView detailNsv = null;
 
+    private LinearLayout llWeiBoShare = null;
+    private LinearLayout llQQBoShare = null;
+    private LinearLayout llWeixinBoShare = null;
+    private LinearLayout llPyqShare = null;
+
 
     private static final String ARG_ENTITYID = "ARG_ENTITYID";
     private static final String ARG_ENTITY = "ARG_ENTITY";
+    private static final String ARG_AJAXTYPE = "ARG_AJAXTYPE";
 
 
     private int myFav = -1;
@@ -87,6 +99,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
     private String shareContent = "";
     private String shareUrl = "";
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
+    private String ajaxType = "0";
 
 
     @Override
@@ -95,10 +108,11 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
     }
 
 
-    public static ResultXjgggDetailFragment create(@NonNull int entityId, String entity) {
+    public static ResultXjgggDetailFragment create(@NonNull int entityId, String entity, String ajaxlogtype) {
         final Bundle args = new Bundle();
         args.putInt(ARG_ENTITYID, entityId);
         args.putString(ARG_ENTITY, entity);
+        args.putString(ARG_AJAXTYPE, ajaxlogtype);
         final ResultXjgggDetailFragment fragment = new ResultXjgggDetailFragment();
         fragment.setArguments(args);
         return fragment;
@@ -111,6 +125,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
         if (args != null) {
             mEntityId = args.getInt(ARG_ENTITYID);
             mEntity = args.getString(ARG_ENTITY);
+            ajaxType = args.getString(ARG_AJAXTYPE);
         }
     }
 
@@ -143,9 +158,19 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
         llShare = getView().findViewById(R.id.ll_share);
         detailNsv = getView().findViewById(R.id.detail_nsv);
 
+        llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
+        llQQBoShare = getView().findViewById(R.id.ll_qq_share);
+        llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
+        llPyqShare = getView().findViewById(R.id.ll_pyq_share);
+
         llIvBack.setOnClickListener(this);
         llShare.setOnClickListener(this);
         llFav.setOnClickListener(this);
+
+        llWeiBoShare.setOnClickListener(this);
+        llQQBoShare.setOnClickListener(this);
+        llWeixinBoShare.setOnClickListener(this);
+        llPyqShare.setOnClickListener(this);
 
     }
 
@@ -216,6 +241,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                         .params("entity", mEntity)
                         .params("userid", id)
                         .params("deviceId", deviceId)
+                        .params("ajaxlogtype", ajaxType)
 //                        .params("token", id + "_" + token)
                         .success(new ISuccess() {
                             @Override
@@ -388,6 +414,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                         .params("entityId", mEntityId)
                         .params("entity", mEntity)
                         .params("deviceId", deviceId)
+                        .params("ajaxlogtype", ajaxType)
                         .success(new ISuccess() {
                             @Override
                             public void onSuccess(Headers headers, String response) {
@@ -552,9 +579,88 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
 
     }
 
+    private Share mShare = new Share();
+    private PromptDialog promptDialog = null;
+
     @Override
     public void onClick(View view) {
+        mShare.setAppName("鲁班标讯通");
+        mShare.setAppShareIcon(R.mipmap.ic_share);
+        if (mShare.getBitmapResID() == 0) {
+            mShare.setBitmapResID(R.mipmap.ic_share);
+        }
+        mShare.setTitle(shareTitle);
+        mShare.setContent(shareContent);
+        mShare.setSummary(shareContent);
+        mShare.setDescription(shareContent);
+        mShare.setImageUrl(null);
+        mShare.setUrl(BiaoXunTongApi.SHARE_URL + shareUrl);
         switch (view.getId()) {
+            case R.id.ll_weibo_share:
+                OpenBuilder.with(getActivity())
+                        .useWeibo(OpenConstant.WB_APP_KEY)
+                        .share(mShare, new OpenBuilder.Callback() {
+                            @Override
+                            public void onFailed() {
+
+                            }
+
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                break;
+            case R.id.ll_qq_share:
+                OpenBuilder.with(getActivity())
+                        .useTencent(OpenConstant.QQ_APP_ID)
+                        .share(mShare, new IUiListener() {
+                            @Override
+                            public void onComplete(Object o) {
+                                ToastUtil.shortToast(getContext(), "分享成功");
+                            }
+
+                            @Override
+                            public void onError(UiError uiError) {
+                                ToastUtil.shortToast(getContext(), "分享失败");
+                            }
+
+                            @Override
+                            public void onCancel() {
+                                ToastUtil.shortToast(getContext(), "分享取消");
+                            }
+                        }, this);
+                break;
+            case R.id.ll_chat_share:
+                OpenBuilder.with(getActivity())
+                        .useWechat(OpenConstant.WECHAT_APP_ID)
+                        .shareSession(mShare, new OpenBuilder.Callback() {
+                            @Override
+                            public void onFailed() {
+
+                            }
+
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                break;
+            case R.id.ll_pyq_share:
+                OpenBuilder.with(getActivity())
+                        .useWechat(OpenConstant.WECHAT_APP_ID)
+                        .shareTimeLine(mShare, new OpenBuilder.Callback() {
+                            @Override
+                            public void onFailed() {
+
+                            }
+
+                            @Override
+                            public void onSuccess() {
+
+                            }
+                        });
+                break;
             case R.id.ll_iv_back:
                 getActivity().finish();
                 break;
@@ -625,5 +731,15 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onFailed() {
+
+    }
+
+    @Override
+    public void onSuccess() {
+
     }
 }

@@ -18,6 +18,7 @@ public class ResultSggjyzbjgDetailActivity extends BaseActivity {
 
     private int mEntityId = -1;
     private String mEntity = "";
+    private String ajaxType = "";
 
 
     @Override
@@ -26,9 +27,10 @@ public class ResultSggjyzbjgDetailActivity extends BaseActivity {
         if (intent != null) {
             mEntityId = intent.getIntExtra("entityId", -1);
             mEntity = intent.getStringExtra("entity");
+            ajaxType = intent.getStringExtra("ajaxlogtype");
         }
 
-        final ResultSggjyzbjgDetailFragment fragment = ResultSggjyzbjgDetailFragment.create(mEntityId, mEntity);
+        final ResultSggjyzbjgDetailFragment fragment = ResultSggjyzbjgDetailFragment.create(mEntityId, mEntity,ajaxType);
         return fragment;
     }
 

@@ -99,12 +99,14 @@ public class ResultListFragment extends BaseFragment {
                     intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
 
                 } else if ("sggjyzbjg".equals(entity) || "sggjycgjgrow".equals(entity) || "sggjyjgcgtable".equals(entity)) {
                     intent = new Intent(getActivity(), ResultSggjyzbjgDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
                 }
 

@@ -202,34 +202,40 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
                 } else if ("xcggg".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
                 } else if ("bxtgdj".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
                 } else if ("sggjycgtable".equals(entity)) {
 
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
 
                 } else if ("xjggg".equals(entity) || "sjggg".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), ResultXjgggDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
 
                 } else if ("sggjyzbjg".equals(entity) || "sggjycgjgrow".equals(entity) || "sggjyjgcgtable".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), ResultSggjyzbjgDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
                 } else if ("t_hyzx".equals(entity)) {
 
@@ -237,6 +243,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgrowDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
                     startActivity(intent);
                 }
             }

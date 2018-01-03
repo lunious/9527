@@ -29,7 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/d38"
             android:layout_alignParentBottom="true"
-            android:background="#6600bfdc"
+            android:background="#6621a9ff"
             android:orientation="horizontal"
             android:paddingLeft="@dimen/d10"
             android:paddingRight="@dimen/d10">
