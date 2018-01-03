@@ -57,33 +57,34 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
 
     LinearLayout llIvBack = null;
     AppCompatTextView mainBarName = null;
-    TextView tvMianDingbiaoTime = null;
+    private AppCompatTextView tvMianDingbiaoTime = null;
     MultipleStatusView xcgggDetailStatusView = null;
-    TextView tvMainTitle = null;
-    TextView tvMainArea = null;
-    TextView tvMainCaigouMethod = null;
-    TextView tvMainPubTime = null;
-    TextView tvPubNum = null;
-    TextView tvOwerCainame = null;
-    TextView tvOwerName = null;
-    TextView tvOwerDaili = null;
-    TextView tvOwerBaoshu = null;
-    TextView tvOwerJine = null;
-    TextView tvOwerBaojia = null;
-    TextView tvOwerMingdan = null;
-    TextView tvOwerLianxi = null;
-    TextView tvOwerLianxi2 = null;
-    TextView tvOwerLianxiNumber = null;
-    TextView tvOwerLianxiLink = null;
-    TextView tvOwerPinshen = null;
-    TextView tvOwerA = null;
-    TextView tvOwerB = null;
-    TextView tvOwerC = null;
-    TextView tvOwerD = null;
-    TextView tvOwerE = null;
-    TextView tvOwerF = null;
-    TextView tvOwerG = null;
-    TextView tvOwerH = null;
+    private AppCompatTextView tvYw = null;
+    private AppCompatTextView tvMainTitle = null;
+    private AppCompatTextView tvMainArea = null;
+    private AppCompatTextView tvMainCaigouMethod = null;
+    private AppCompatTextView tvMainPubTime = null;
+    private AppCompatTextView tvPubNum = null;
+    private AppCompatTextView tvOwerCainame = null;
+    private AppCompatTextView tvOwerName = null;
+    private AppCompatTextView tvOwerDaili = null;
+    private AppCompatTextView tvOwerBaoshu = null;
+    private AppCompatTextView tvOwerJine = null;
+    private AppCompatTextView tvOwerBaojia = null;
+    private AppCompatTextView tvOwerMingdan = null;
+    private AppCompatTextView tvOwerLianxi = null;
+    private AppCompatTextView tvOwerLianxi2 = null;
+    private AppCompatTextView tvOwerLianxiNumber = null;
+    private AppCompatTextView tvOwerLianxiLink = null;
+    private AppCompatTextView tvOwerPinshen = null;
+    private AppCompatTextView tvOwerA = null;
+    private AppCompatTextView tvOwerB = null;
+    private AppCompatTextView tvOwerC = null;
+    private AppCompatTextView tvOwerD = null;
+    private AppCompatTextView tvOwerE = null;
+    private AppCompatTextView tvOwerF = null;
+    private AppCompatTextView tvOwerG = null;
+    private AppCompatTextView tvOwerH = null;
     ImageView ivFav = null;
     LinearLayout llFav = null;
     LinearLayout llMainCaigouMethod = null;
@@ -187,6 +188,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
         tvOwerLianxiNumber = getView().findViewById(R.id.tv_ower_lianxi_number);
         tvOwerLianxiLink = getView().findViewById(R.id.tv_ower_lianxi_link);
         tvOwerPinshen = getView().findViewById(R.id.tv_ower_pinshen);
+        tvYw = getView().findViewById(R.id.tv_yw);
         tvOwerA = getView().findViewById(R.id.tv_ower_a);
         tvOwerB = getView().findViewById(R.id.tv_ower_b);
         tvOwerC = getView().findViewById(R.id.tv_ower_c);
@@ -238,6 +240,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
         llQQBoShare.setOnClickListener(this);
         llWeixinBoShare.setOnClickListener(this);
         llPyqShare.setOnClickListener(this);
+        tvYw.setOnClickListener(this);
 
 
     }
@@ -916,6 +919,12 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                 break;
             case R.id.ll_share:
                 toShare(mEntityId, shareTitle, shareContent, BiaoXunTongApi.SHARE_URL + shareUrl);
+                break;
+            case R.id.tv_yw:
+                Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                intent.putExtra("url", shareUrl);
+                intent.putExtra("title", shareTitle);
+                startActivity(intent);
                 break;
             default:
                 break;

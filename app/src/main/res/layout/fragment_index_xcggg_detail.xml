@@ -13,17 +13,17 @@
         android:id="@+id/xcggg_detail_status_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         app:emptyView="@layout/custom_empty_view"
         app:errorView="@layout/custom_error_view"
         app:loadingView="@layout/custom_loading_view"
-        app:noNetworkView="@layout/custom_no_network_view"
-        android:background="@color/white">
+        app:noNetworkView="@layout/custom_no_network_view">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
             android:background="@color/white"
+            android:orientation="vertical"
             android:paddingLeft="@dimen/d8"
             android:paddingRight="@dimen/d8"
             android:paddingTop="@dimen/d4">
@@ -33,8 +33,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/d0"
                 android:layout_weight="1"
-                android:scrollbars="none"
                 android:paddingBottom="@dimen/d10"
+                android:scrollbars="none"
                 tools:ignore="RtlHardcoded">
 
                 <LinearLayout
@@ -160,15 +160,15 @@
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/p35"
-                        android:layout_marginTop="@dimen/d10"
-                        android:background="#f9eeeeee" />
+                        android:layout_marginTop="@dimen/d12"
+                        android:background="#88eeeeee" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/d12"
+                        android:layout_marginTop="@dimen/d18"
                         android:gravity="center"
-                        android:layout_marginTop="@dimen/d16"
-                        android:layout_marginBottom="@dimen/d10"
                         android:orientation="horizontal">
 
 
@@ -176,11 +176,11 @@
                             android:id="@+id/ll_weibo_share"
                             android:layout_width="@dimen/d0"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bg_share"
+                            android:layout_marginRight="@dimen/d2"
                             android:layout_weight="1"
+                            android:background="@drawable/bg_share"
                             android:gravity="center"
-                            android:padding="@dimen/d4"
-                            android:layout_marginRight="@dimen/d2">
+                            android:padding="@dimen/d4">
 
                             <ImageView
                                 android:layout_width="@dimen/d14"
@@ -190,10 +190,10 @@
                             <android.support.v7.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="微博"
                                 android:paddingLeft="@dimen/d6"
-                                android:textSize="@dimen/d12"
-                                android:textColor="#ff6666"/>
+                                android:text="微博"
+                                android:textColor="#ff6666"
+                                android:textSize="@dimen/d12" />
 
 
                         </LinearLayout>
@@ -202,11 +202,11 @@
                             android:id="@+id/ll_qq_share"
                             android:layout_width="@dimen/d0"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bg_share"
+                            android:layout_marginRight="@dimen/d2"
                             android:layout_weight="1"
+                            android:background="@drawable/bg_share"
                             android:gravity="center"
-                            android:padding="@dimen/d4"
-                            android:layout_marginRight="@dimen/d2">
+                            android:padding="@dimen/d4">
 
                             <ImageView
                                 android:layout_width="@dimen/d14"
@@ -216,10 +216,10 @@
                             <android.support.v7.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="QQ"
                                 android:paddingLeft="@dimen/d6"
-                                android:textSize="@dimen/d12"
-                                android:textColor="#11a9ff"/>
+                                android:text="QQ"
+                                android:textColor="#11a9ff"
+                                android:textSize="@dimen/d12" />
 
 
                         </LinearLayout>
@@ -228,11 +228,11 @@
                             android:id="@+id/ll_chat_share"
                             android:layout_width="@dimen/d0"
                             android:layout_height="wrap_content"
+                            android:layout_marginRight="@dimen/d2"
                             android:layout_weight="1"
                             android:background="@drawable/bg_share"
                             android:gravity="center"
-                            android:padding="@dimen/d4"
-                            android:layout_marginRight="@dimen/d2">
+                            android:padding="@dimen/d4">
 
                             <ImageView
                                 android:layout_width="@dimen/d14"
@@ -242,14 +242,13 @@
                             <android.support.v7.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="微信"
                                 android:paddingLeft="@dimen/d6"
-                                android:textSize="@dimen/d12"
-                                android:textColor="#339933"/>
+                                android:text="微信"
+                                android:textColor="#339933"
+                                android:textSize="@dimen/d12" />
 
 
                         </LinearLayout>
-
 
 
                         <LinearLayout
@@ -257,8 +256,8 @@
                             android:layout_width="@dimen/d0"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:gravity="center"
                             android:background="@drawable/bg_share"
+                            android:gravity="center"
                             android:padding="@dimen/d4">
 
                             <ImageView
@@ -269,10 +268,10 @@
                             <android.support.v7.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="朋友圈"
                                 android:paddingLeft="@dimen/d6"
-                                android:textSize="@dimen/d12"
-                                android:textColor="#009966"/>
+                                android:text="朋友圈"
+                                android:textColor="#009966"
+                                android:textSize="@dimen/d12" />
 
 
                         </LinearLayout>
@@ -283,7 +282,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="@dimen/d5"
+                        android:layout_marginTop="@dimen/d6"
                         android:orientation="vertical">
 
                         <LinearLayout
@@ -385,20 +384,28 @@
                             android:layout_marginTop="@dimen/d10"
                             android:orientation="vertical">
 
-                            <android.support.v7.widget.AppCompatTextView
+                            <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="项目包个数"
-                                android:textColor="#ff434343"
-                                android:textSize="@dimen/s16" />
+                                android:layout_marginTop="@dimen/d4"
+                                android:orientation="horizontal">
 
-                            <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/tv_ower_baoshu"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/d4"
-                                android:text=""
-                                android:textSize="@dimen/s15" />
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="项目包个数:"
+                                    android:textColor="#ff434343"
+                                    android:textSize="@dimen/s16" />
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/tv_ower_baoshu"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="@dimen/d4"
+                                    android:text=""
+                                    android:textSize="@dimen/s16" />
+                            </LinearLayout>
+
 
                             <View
                                 android:layout_width="match_parent"
@@ -415,27 +422,27 @@
                             android:layout_marginTop="@dimen/d10"
                             android:orientation="vertical">
 
-                            <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="各包描述"
-                                android:textColor="#ff434343"
-                                android:textSize="@dimen/s16" />
-
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/bg_rect"
-                                android:layout_marginTop="@dimen/d4">
+                                android:layout_marginTop="@dimen/d4"
+                                android:orientation="horizontal">
+
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="各包描述:"
+                                    android:textColor="#ff434343"
+                                    android:textSize="@dimen/s16" />
 
                                 <android.support.v7.widget.AppCompatTextView
                                     android:id="@+id/tv_ower_jine"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_margin="@dimen/d2"
+                                    android:layout_marginLeft="@dimen/d4"
                                     android:text=""
                                     android:textColor="@color/blue"
-                                    android:textSize="@dimen/s15" />
+                                    android:textSize="@dimen/s16" />
 
                             </LinearLayout>
 
@@ -898,19 +905,45 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/bg_rect"
-                                android:layout_marginTop="@dimen/d4">
+                                android:layout_marginTop="@dimen/d4"
+                                android:background="@drawable/bg_rect">
 
-                            <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/tv_ower_h"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_margin="@dimen/d2"
-                                android:text=""
-                                android:textColor="@color/blue"
-                                android:textSize="@dimen/s15" />
+                                <android.support.v7.widget.AppCompatTextView
+                                    android:id="@+id/tv_ower_h"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="@dimen/d2"
+                                    android:text=""
+                                    android:textColor="@color/blue"
+                                    android:textSize="@dimen/s15" />
 
                             </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/d26"
+                            android:layout_marginTop="@dimen/d14"
+                            android:orientation="horizontal">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="公告原文:"
+                                android:textSize="@dimen/s16" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_yw"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/d10"
+                                android:text="点击查看"
+                                android:textColor="@color/blue"
+                                android:textSize="@dimen/s16" />
+
 
                         </LinearLayout>
 
