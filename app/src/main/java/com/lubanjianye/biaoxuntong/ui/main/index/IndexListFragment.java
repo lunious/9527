@@ -147,7 +147,7 @@ public class IndexListFragment extends BaseFragment {
                 final int entityId = data.getEntityId();
                 final String entity = data.getEntity();
 
-                Log.d("BASJHDHJSADASDA", entity);
+                Log.d("BASJHDHJSADASDA", entity+entityId);
 
                 Intent intent = null;
                 if ("sggjy".equals(entity)) {

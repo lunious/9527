@@ -25,6 +25,7 @@ import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
@@ -58,17 +59,19 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
     private MultipleStatusView indexSggjyDetailStatusView = null;
-    private TextView tvMainTitle = null;
-    private TextView tvMainArea = null;
-    private TextView tvPubTime = null;
-    private TextView tvDeadTime = null;
-    private TextView tv1 = null;
-    private TextView tv2 = null;
-    private TextView tv3 = null;
-    private TextView tv4 = null;
-    private TextView tv5 = null;
-    private TextView tv6 = null;
-    private TextView tv7 = null;
+    private AppCompatTextView tvMainTitle = null;
+    private AppCompatTextView tvMainArea = null;
+    private AppCompatTextView tvPubTime = null;
+    private AppCompatTextView tvDeadTime = null;
+    private AppCompatTextView tvFbt = null;
+    private AppCompatTextView tvYw = null;
+    private AppCompatTextView tv1 = null;
+    private AppCompatTextView tv2 = null;
+    private AppCompatTextView tv3 = null;
+    private AppCompatTextView tv4 = null;
+    private AppCompatTextView tv5 = null;
+    private AppCompatTextView tv6 = null;
+    private AppCompatTextView tv7 = null;
     private ImageView ivFav = null;
     private LinearLayout llFav = null;
     private LinearLayout llShare = null;
@@ -138,6 +141,8 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
         tvMainArea = getView().findViewById(R.id.tv_main_area);
         tvPubTime = getView().findViewById(R.id.tv_pub_time);
         tvDeadTime = getView().findViewById(R.id.tv_dead_time);
+        tvFbt = getView().findViewById(R.id.tv_fbt);
+        tvYw = getView().findViewById(R.id.tv_yw);
         tv1 = getView().findViewById(R.id.tv1);
         tv2 = getView().findViewById(R.id.tv2);
         tv3 = getView().findViewById(R.id.tv3);
@@ -162,6 +167,7 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
         llQQBoShare.setOnClickListener(this);
         llWeixinBoShare.setOnClickListener(this);
         llPyqShare.setOnClickListener(this);
+        tvYw.setOnClickListener(this);
     }
 
     @Override
@@ -296,6 +302,12 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                                     } else {
                                         tvDeadTime.setText("/");
                                     }
+                                    String entryName = data.getString("entryName");
+                                    if (!TextUtils.isEmpty(entryName)) {
+                                        tvFbt.setText(entryName);
+                                    } else {
+                                        tvFbt.setText("");
+                                    }
                                     String squone = data.getString("squone");
                                     if (!TextUtils.isEmpty(squone)) {
                                         //将所有<*a标签替换成html标签
@@ -398,6 +410,12 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                                         tvDeadTime.setText(deadTime);
                                     } else {
                                         tvDeadTime.setText("/");
+                                    }
+                                    String entryName = data.getString("entryName");
+                                    if (!TextUtils.isEmpty(entryName)) {
+                                        tvFbt.setText(entryName);
+                                    } else {
+                                        tvFbt.setText("");
                                     }
                                     String squone = data.getString("squone");
                                     if (!TextUtils.isEmpty(squone)) {
@@ -515,7 +533,7 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                             public void onCancel() {
                                 ToastUtil.shortToast(getContext(), "分享取消");
                             }
-                        },this);
+                        }, this);
                 break;
             case R.id.ll_chat_share:
                 OpenBuilder.with(getActivity())
@@ -616,6 +634,12 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                     //未登录去登陆
                     startActivity(new Intent(getActivity(), SignInActivity.class));
                 }
+                break;
+            case R.id.tv_yw:
+                Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                intent.putExtra("url", shareUrl);
+                intent.putExtra("title", shareTitle);
+                startActivity(intent);
                 break;
             default:
                 break;
