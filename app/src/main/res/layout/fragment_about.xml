@@ -268,9 +268,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_selected"
-                    android:padding="@dimen/d6"
                     android:gravity="center"
-                    android:text="推荐好友使用标讯通"
+                    android:padding="@dimen/d6"
+                    android:text="推荐标讯通给好友"
                     android:textColor="@color/white"
                     android:textSize="@dimen/s15" />
 

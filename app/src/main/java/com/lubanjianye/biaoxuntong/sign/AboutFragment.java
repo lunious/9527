@@ -72,7 +72,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
                 startActivity(intent);
                 break;
             case R.id.ll_tj:
-                toShare(0, "我正在使用【鲁班标讯通】,推荐给你", "你可以随身携带的招投标神器!", "http://www.lubanjianye.com/");
+                toShare(0, "我正在使用【鲁班标讯通】,推荐给你", "你可以随身携带的招投标神器!", "http://101.37.30.136/bxtajax/VersionAjax/getNewVersion");
                 break;
             default:
                 break;
