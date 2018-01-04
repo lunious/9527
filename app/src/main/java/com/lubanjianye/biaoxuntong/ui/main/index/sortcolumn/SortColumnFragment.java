@@ -67,6 +67,8 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
     private ItemTouchHelper mItemTouchHelper;
     private ItemDragAndSwipeCallback mItemDragAndSwipeCallback;
 
+    private int stu = 0;
+
     @Override
     public Object setLayout() {
         return R.layout.fragment_column;
@@ -153,8 +155,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                                         if ("200".equals(status)) {
 
                                             requestData();
-
-                                            EventBus.getDefault().post(new EventMessage(EventMessage.TAB_CHANGE));
+                                            stu = 1;
                                         } else {
                                             ToastUtil.shortToast(getContext(), "删除失败！");
                                         }
@@ -194,7 +195,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                                     if ("200".equals(status)) {
 
                                         requestData();
-                                        EventBus.getDefault().post(new EventMessage(EventMessage.TAB_CHANGE));
+                                        stu = 1;
                                     } else {
                                         ToastUtil.shortToast(getContext(), "添加失败！");
                                     }
@@ -234,7 +235,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                                     if ("200".equals(status)) {
 
                                         requestData();
-                                        EventBus.getDefault().post(new EventMessage(EventMessage.TAB_CHANGE));
+                                        stu = 1;
                                     } else {
                                         ToastUtil.shortToast(getContext(), "添加失败！");
                                     }
@@ -296,7 +297,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                                     String message = object.getString("message");
                                     if ("200".equals(status)) {
                                         requestData();
-                                        EventBus.getDefault().post(new EventMessage(EventMessage.TAB_CHANGE));
+                                        stu = 1;
                                     } else {
                                         ToastUtil.shortToast(getContext(), message);
                                     }
@@ -515,11 +516,22 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.iv_close:
+                if (stu == 1) {
+                    EventBus.getDefault().post(new EventMessage(EventMessage.TAB_CHANGE));
+                }
                 getActivity().onBackPressed();
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public boolean onBackPressedSupport() {
+        if (stu == 1) {
+            EventBus.getDefault().post(new EventMessage(EventMessage.TAB_CHANGE));
+        }
+        return super.onBackPressedSupport();
     }
 
     @Override
