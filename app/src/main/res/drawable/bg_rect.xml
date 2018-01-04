@@ -3,18 +3,18 @@
     android:shape="rectangle">
 
     <!--设置shape的圆角-->
-    <corners android:radius="0dp"/>
+    <corners android:radius="4dp"/>
 
     <!--
     android:dashWidth="0dp"边框设置为实线边框
     android:width="1dp"边框的宽度
     android:color="#ffffff"设置边框的颜色
     -->
-    <stroke android:dashWidth="0dp"
-        android:width="1dp"
-        android:color="#00bfdc"/>
+    <stroke android:dashWidth="@dimen/d0"
+        android:width="@dimen/p1"
+        android:color="#66eeeeee"/>
 
     <!--设置填充色，也就是咱们画的这个shape的颜色-->
-    <solid android:color="@color/white"/>
+    <solid android:color="#88eeeeee"/>
 
 </shape>

@@ -76,6 +76,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
     private AppCompatTextView tvOwerLianxiNumber = null;
     private AppCompatTextView tvOwerLianxiLink = null;
     private AppCompatTextView tvOwerPinshen = null;
+    private AppCompatTextView tvYw = null;
     private ImageView ivFav = null;
     private LinearLayout llFav = null;
     private LinearLayout llShare = null;
@@ -153,6 +154,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
         tvOwerLianxiNumber = getView().findViewById(R.id.tv_ower_lianxi_number);
         tvOwerLianxiLink = getView().findViewById(R.id.tv_ower_lianxi_link);
         tvOwerPinshen = getView().findViewById(R.id.tv_ower_pinshen);
+        tvYw = getView().findViewById(R.id.tv_yw);
         ivFav = getView().findViewById(R.id.iv_fav);
         llFav = getView().findViewById(R.id.ll_fav);
         llShare = getView().findViewById(R.id.ll_share);
@@ -171,6 +173,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
         llQQBoShare.setOnClickListener(this);
         llWeixinBoShare.setOnClickListener(this);
         llPyqShare.setOnClickListener(this);
+        tvYw.setOnClickListener(this);
 
     }
 
@@ -266,9 +269,8 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                     shareTitle = reportTitle;
                                     if (!TextUtils.isEmpty(reportTitle)) {
                                         tvMainTitle.setText(reportTitle);
-//                                            mainBarName.setText(reportTitle);
                                     } else {
-                                        tvMainTitle.setText("/");
+                                        tvMainTitle.setText("暂无");
                                         mainBarName.setText("政府采购结果公告详情");
                                     }
                                     String area = data.getString("administrativeDivision");
@@ -276,104 +278,104 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                         tvMainArea.setVisibility(View.VISIBLE);
                                         tvMainArea.setText(area);
                                     } else {
-                                        tvMainArea.setText("/");
+                                        tvMainArea.setText("暂无");
                                     }
                                     String resource = data.getString("resource");
                                     if (!TextUtils.isEmpty(resource)) {
                                         tvMainPubType.setText(resource);
                                     } else {
-                                        tvMainPubType.setText("/");
+                                        tvMainPubType.setText("暂无");
                                     }
                                     String purchasingType = data.getString("purchasingType");
                                     if (!TextUtils.isEmpty(purchasingType)) {
                                         tvMainPubMethod.setText(purchasingType);
                                     } else {
-                                        tvMainPubMethod.setText("/");
+                                        tvMainPubMethod.setText("暂无");
                                     }
                                     String calibrationTime = data.getString("calibrationTime");
                                     if (!TextUtils.isEmpty(calibrationTime)) {
                                         tvMainPubData.setText(calibrationTime.substring(0, 10));
                                     } else {
-                                        tvMainPubData.setText("/");
+                                        tvMainPubData.setText("暂无");
                                     }
                                     String noticeTime = data.getString("noticeTime");
                                     if (!TextUtils.isEmpty(noticeTime)) {
                                         tvMainPubTime.setText(noticeTime.substring(0, 10));
                                     } else {
-                                        tvMainPubTime.setText("/");
+                                        tvMainPubTime.setText("暂无");
                                     }
                                     String entryNum = data.getString("entryNum");
                                     if (!TextUtils.isEmpty(entryNum)) {
                                         tvPuNum.setText(entryNum);
                                     } else {
-                                        tvPuNum.setText("/");
+                                        tvPuNum.setText("暂无");
                                     }
                                     String entryName = data.getString("entryName");
                                     shareContent = entryName;
                                     if (!TextUtils.isEmpty(entryName)) {
                                         tvOwerCainame.setText(entryName);
                                     } else {
-                                        tvOwerCainame.setText("/");
+                                        tvOwerCainame.setText("暂无");
                                     }
                                     String purchaser = data.getString("purchaser");
                                     if (!TextUtils.isEmpty(purchaser)) {
                                         tvOwerName.setText(purchaser);
                                     } else {
-                                        tvOwerName.setText("/");
+                                        tvOwerName.setText("暂无");
                                     }
                                     String purchasingAgent = data.getString("purchasingAgent");
                                     if (!TextUtils.isEmpty(purchasingAgent)) {
                                         tvOwerDaili.setText(purchasingAgent);
                                     } else {
-                                        tvOwerDaili.setText("/");
+                                        tvOwerDaili.setText("暂无");
                                     }
                                     String noticeCount = data.getString("noticeCount");
                                     if (!TextUtils.isEmpty(noticeCount)) {
                                         tvOwerBaoshu.setText(noticeCount);
                                     } else {
-                                        tvOwerBaoshu.setText("/");
+                                        tvOwerBaoshu.setText("暂无");
                                     }
                                     String allTotal = data.getString("allTotal");
                                     if (!TextUtils.isEmpty(allTotal)) {
                                         tvOwerJine.setText(allTotal);
                                     } else {
-                                        tvOwerJine.setText("/");
+                                        tvOwerJine.setText("暂无");
                                     }
                                     String eachPackage = data.getString("eachPackage");
                                     if (!TextUtils.isEmpty(eachPackage)) {
                                         tvOwerBaojia.setText(eachPackage);
                                     } else {
-                                        tvOwerBaojia.setText("/");
+                                        tvOwerBaojia.setText("暂无");
                                     }
                                     String memberList = data.getString("memberList");
                                     if (!TextUtils.isEmpty(memberList)) {
                                         tvOwerMingdan.setText(memberList);
                                     } else {
-                                        tvOwerMingdan.setText("/");
+                                        tvOwerMingdan.setText("暂无");
                                     }
                                     String purchaserContact = data.getString("purchaserContact");
                                     if (!TextUtils.isEmpty(purchaserContact)) {
                                         tvOwerLianxi.setText(purchaserContact);
                                     } else {
-                                        tvOwerLianxi.setText("/");
+                                        tvOwerLianxi.setText("暂无");
                                     }
                                     String purchasingAgentContact = data.getString("purchasingAgentContact");
                                     if (!TextUtils.isEmpty(purchasingAgentContact)) {
                                         tvOwerLianxi2.setText(purchasingAgentContact);
                                     } else {
-                                        tvOwerLianxi2.setText("/");
+                                        tvOwerLianxi2.setText("暂无");
                                     }
                                     String nameAndphone = data.getString("nameAndphone");
                                     if (!TextUtils.isEmpty(nameAndphone)) {
                                         tvOwerLianxiNumber.setText(nameAndphone);
                                     } else {
-                                        tvOwerLianxiNumber.setText("/");
+                                        tvOwerLianxiNumber.setText("暂无");
                                     }
                                     final String link = data.getString("link");
 
                                     shareUrl = link;
                                     if (!TextUtils.isEmpty(link) && !"/".equals(link)) {
-                                        tvOwerLianxiLink.setText("点击查看详情");
+                                        tvOwerLianxiLink.setText("点击查看");
                                         tvOwerLianxiLink.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -430,9 +432,8 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                     shareTitle = reportTitle;
                                     if (!TextUtils.isEmpty(reportTitle)) {
                                         tvMainTitle.setText(reportTitle);
-//                                            mainBarName.setText(reportTitle);
                                     } else {
-                                        tvMainTitle.setText("/");
+                                        tvMainTitle.setText("暂无");
                                         mainBarName.setText("政府采购结果公告详情");
                                     }
                                     String area = data.getString("administrativeDivision");
@@ -440,104 +441,104 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                         tvMainArea.setVisibility(View.VISIBLE);
                                         tvMainArea.setText(area);
                                     } else {
-                                        tvMainArea.setText("/");
+                                        tvMainArea.setText("暂无");
                                     }
                                     String resource = data.getString("resource");
                                     if (!TextUtils.isEmpty(resource)) {
                                         tvMainPubType.setText(resource);
                                     } else {
-                                        tvMainPubType.setText("/");
+                                        tvMainPubType.setText("暂无");
                                     }
                                     String purchasingType = data.getString("purchasingType");
                                     if (!TextUtils.isEmpty(purchasingType)) {
                                         tvMainPubMethod.setText(purchasingType);
                                     } else {
-                                        tvMainPubMethod.setText("/");
+                                        tvMainPubMethod.setText("暂无");
                                     }
                                     String calibrationTime = data.getString("calibrationTime");
                                     if (!TextUtils.isEmpty(calibrationTime)) {
                                         tvMainPubData.setText(calibrationTime.substring(0, 10));
                                     } else {
-                                        tvMainPubData.setText("/");
+                                        tvMainPubData.setText("暂无");
                                     }
                                     String noticeTime = data.getString("noticeTime");
                                     if (!TextUtils.isEmpty(noticeTime)) {
                                         tvMainPubTime.setText(noticeTime.substring(0, 10));
                                     } else {
-                                        tvMainPubTime.setText("/");
+                                        tvMainPubTime.setText("暂无");
                                     }
                                     String entryNum = data.getString("entryNum");
                                     if (!TextUtils.isEmpty(entryNum)) {
                                         tvPuNum.setText(entryNum);
                                     } else {
-                                        tvPuNum.setText("/");
+                                        tvPuNum.setText("暂无");
                                     }
                                     String entryName = data.getString("entryName");
                                     shareContent = entryName;
                                     if (!TextUtils.isEmpty(entryName)) {
                                         tvOwerCainame.setText(entryName);
                                     } else {
-                                        tvOwerCainame.setText("/");
+                                        tvOwerCainame.setText("暂无");
                                     }
                                     String purchaser = data.getString("purchaser");
                                     if (!TextUtils.isEmpty(purchaser)) {
                                         tvOwerName.setText(purchaser);
                                     } else {
-                                        tvOwerName.setText("/");
+                                        tvOwerName.setText("暂无");
                                     }
                                     String purchasingAgent = data.getString("purchasingAgent");
                                     if (!TextUtils.isEmpty(purchasingAgent)) {
                                         tvOwerDaili.setText(purchasingAgent);
                                     } else {
-                                        tvOwerDaili.setText("/");
+                                        tvOwerDaili.setText("暂无");
                                     }
                                     String noticeCount = data.getString("noticeCount");
                                     if (!TextUtils.isEmpty(noticeCount)) {
                                         tvOwerBaoshu.setText(noticeCount);
                                     } else {
-                                        tvOwerBaoshu.setText("/");
+                                        tvOwerBaoshu.setText("暂无");
                                     }
                                     String allTotal = data.getString("allTotal");
                                     if (!TextUtils.isEmpty(allTotal)) {
                                         tvOwerJine.setText(allTotal);
                                     } else {
-                                        tvOwerJine.setText("/");
+                                        tvOwerJine.setText("暂无");
                                     }
                                     String eachPackage = data.getString("eachPackage");
                                     if (!TextUtils.isEmpty(eachPackage)) {
                                         tvOwerBaojia.setText(eachPackage);
                                     } else {
-                                        tvOwerBaojia.setText("/");
+                                        tvOwerBaojia.setText("暂无");
                                     }
                                     String memberList = data.getString("memberList");
                                     if (!TextUtils.isEmpty(memberList)) {
                                         tvOwerMingdan.setText(memberList);
                                     } else {
-                                        tvOwerMingdan.setText("/");
+                                        tvOwerMingdan.setText("暂无");
                                     }
                                     String purchaserContact = data.getString("purchaserContact");
                                     if (!TextUtils.isEmpty(purchaserContact)) {
                                         tvOwerLianxi.setText(purchaserContact);
                                     } else {
-                                        tvOwerLianxi.setText("/");
+                                        tvOwerLianxi.setText("暂无");
                                     }
                                     String purchasingAgentContact = data.getString("purchasingAgentContact");
                                     if (!TextUtils.isEmpty(purchasingAgentContact)) {
                                         tvOwerLianxi2.setText(purchasingAgentContact);
                                     } else {
-                                        tvOwerLianxi2.setText("/");
+                                        tvOwerLianxi2.setText("暂无");
                                     }
                                     String nameAndphone = data.getString("nameAndphone");
                                     if (!TextUtils.isEmpty(nameAndphone)) {
                                         tvOwerLianxiNumber.setText(nameAndphone);
                                     } else {
-                                        tvOwerLianxiNumber.setText("/");
+                                        tvOwerLianxiNumber.setText("暂无");
                                     }
                                     final String link = data.getString("link");
 
                                     shareUrl = link;
                                     if (!TextUtils.isEmpty(link) && !"/".equals(link)) {
-                                        tvOwerLianxiLink.setText("点击查看详情");
+                                        tvOwerLianxiLink.setText("点击查看");
                                         tvOwerLianxiLink.setOnClickListener(new View.OnClickListener() {
                                             @Override
                                             public void onClick(View v) {
@@ -727,6 +728,12 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                     //未登录去登陆
                     startActivity(new Intent(getActivity(), SignInActivity.class));
                 }
+                break;
+            case R.id.tv_yw:
+                Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                intent.putExtra("url", shareUrl);
+                intent.putExtra("title", shareTitle);
+                startActivity(intent);
                 break;
             default:
                 break;

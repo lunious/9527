@@ -115,121 +115,7 @@
                         android:background="#88eeeeee" />
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/d10"
-                        android:layout_marginTop="@dimen/d18"
-                        android:gravity="center"
-                        android:orientation="horizontal">
-
-
-                        <LinearLayout
-                            android:id="@+id/ll_weibo_share"
-                            android:layout_width="@dimen/d0"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/d2"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_share"
-                            android:gravity="center"
-                            android:padding="@dimen/d4">
-
-                            <ImageView
-                                android:layout_width="@dimen/d14"
-                                android:layout_height="@dimen/d14"
-                                android:src="@mipmap/ic_login_3party_weibo" />
-
-                            <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="@dimen/d6"
-                                android:text="微博"
-                                android:textColor="#ff6666"
-                                android:textSize="@dimen/d12" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/ll_qq_share"
-                            android:layout_width="@dimen/d0"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/d2"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_share"
-                            android:gravity="center"
-                            android:padding="@dimen/d4">
-
-                            <ImageView
-                                android:layout_width="@dimen/d14"
-                                android:layout_height="@dimen/d14"
-                                android:src="@mipmap/ic_login_3party_qq" />
-
-                            <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="@dimen/d6"
-                                android:text="QQ"
-                                android:textColor="#11a9ff"
-                                android:textSize="@dimen/d12" />
-
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:id="@+id/ll_chat_share"
-                            android:layout_width="@dimen/d0"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="@dimen/d2"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_share"
-                            android:gravity="center"
-                            android:padding="@dimen/d4">
-
-                            <ImageView
-                                android:layout_width="@dimen/d14"
-                                android:layout_height="@dimen/d14"
-                                android:src="@mipmap/ic_login_3party_wechat" />
-
-                            <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="@dimen/d6"
-                                android:text="微信"
-                                android:textColor="#339933"
-                                android:textSize="@dimen/d12" />
-
-
-                        </LinearLayout>
-
-
-                        <LinearLayout
-                            android:id="@+id/ll_pyq_share"
-                            android:layout_width="@dimen/d0"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:background="@drawable/bg_share"
-                            android:gravity="center"
-                            android:padding="@dimen/d4">
-
-                            <ImageView
-                                android:layout_width="@dimen/d14"
-                                android:layout_height="@dimen/d14"
-                                android:src="@mipmap/ic_action_moments" />
-
-                            <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:paddingLeft="@dimen/d6"
-                                android:text="朋友圈"
-                                android:textColor="#009966"
-                                android:textSize="@dimen/d12" />
-
-
-                        </LinearLayout>
-
-
-                    </LinearLayout>
+                    <include layout="@layout/share_item" />
 
 
                     <android.support.v7.widget.AppCompatTextView
@@ -371,6 +257,7 @@
 
 
                     </LinearLayout>
+
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
 
