@@ -25,6 +25,7 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
     private AppCompatTextView mainBarName = null;
     private AppCompatTextView tvVersionName = null;
     private AppCompatTextView tvLuban = null;
+    private LinearLayout llTj = null;
 
     @Override
     public Object setLayout() {
@@ -37,8 +38,10 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
         mainBarName = getView().findViewById(R.id.main_bar_name);
         tvVersionName = getView().findViewById(R.id.tv_version_name);
         tvLuban = getView().findViewById(R.id.tv_luban);
+        llTj = getView().findViewById(R.id.ll_tj);
         llIvBack.setOnClickListener(this);
         tvLuban.setOnClickListener(this);
+        llTj.setOnClickListener(this);
 
 
     }
@@ -67,6 +70,9 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
                 intent.putExtra("url", "http://www.lubanjianye.com/");
                 intent.putExtra("title", "鲁班建业通-招投标神器");
                 startActivity(intent);
+                break;
+            case R.id.ll_tj:
+                toShare(0, "我正在使用【鲁班标讯通】,推荐给你", "你可以随身携带的招投标神器!", "http://www.lubanjianye.com/");
                 break;
             default:
                 break;
