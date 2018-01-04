@@ -147,7 +147,7 @@ public class IndexListFragment extends BaseFragment {
                 final int entityId = data.getEntityId();
                 final String entity = data.getEntity();
 
-                Log.d("BASJHDHJSADASDA", entity+entityId);
+                Log.d("BASJHDHJSADASDA", entity + entityId);
 
                 Intent intent = null;
                 if ("sggjy".equals(entity)) {
@@ -237,12 +237,11 @@ public class IndexListFragment extends BaseFragment {
         initAdapter();
         initRefreshLayout();
         indexRefresh.setRefreshing(false);
-        requestData(0);
     }
 
     @Override
     public void initEvent() {
-
+        requestData(0);
     }
 
     private long id = 0;

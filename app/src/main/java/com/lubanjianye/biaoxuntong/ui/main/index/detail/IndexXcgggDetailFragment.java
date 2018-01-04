@@ -10,8 +10,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
@@ -84,7 +82,6 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
     private AppCompatTextView tvOwerE = null;
     private AppCompatTextView tvOwerF = null;
     private AppCompatTextView tvOwerG = null;
-    private AppCompatTextView tvOwerH = null;
     ImageView ivFav = null;
     LinearLayout llFav = null;
     LinearLayout llMainCaigouMethod = null;
@@ -110,7 +107,6 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
     LinearLayout llOwerE = null;
     LinearLayout llOwerF = null;
     LinearLayout llOwerG = null;
-    LinearLayout llOwerH = null;
     NestedScrollView detailNsv = null;
     LinearLayout llShare = null;
 
@@ -196,7 +192,6 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
         tvOwerE = getView().findViewById(R.id.tv_ower_e);
         tvOwerF = getView().findViewById(R.id.tv_ower_f);
         tvOwerG = getView().findViewById(R.id.tv_ower_g);
-        tvOwerH = getView().findViewById(R.id.tv_ower_h);
         ivFav = getView().findViewById(R.id.iv_fav);
         llFav = getView().findViewById(R.id.ll_fav);
         llMainCaigouMethod = getView().findViewById(R.id.ll_main_caigou_method);
@@ -222,7 +217,6 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
         llOwerE = getView().findViewById(R.id.ll_ower_e);
         llOwerF = getView().findViewById(R.id.ll_ower_f);
         llOwerG = getView().findViewById(R.id.ll_ower_g);
-        llOwerH = getView().findViewById(R.id.ll_ower_h);
         detailNsv = getView().findViewById(R.id.detail_nsv);
         llShare = getView().findViewById(R.id.ll_share);
 
@@ -521,22 +515,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                                         tvOwerG.setText("/");
                                         llOwerG.setVisibility(View.GONE);
                                     }
-                                    final String link = data.getString("link");
-                                    if (!TextUtils.isEmpty(link)) {
-                                        tvOwerH.setText("点击查看详情");
-                                        llOwerH.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                Intent intent = new Intent(getActivity(), BrowserActivity.class);
-                                                intent.putExtra("url", link);
-                                                intent.putExtra("title", shareTitle);
-                                                startActivity(intent);
-                                            }
-                                        });
-                                    } else {
-                                        tvOwerH.setText("/");
-                                        llOwerH.setVisibility(View.GONE);
-                                    }
+
                                 } else {
                                     xcgggDetailStatusView.showError();
                                 }
@@ -738,22 +717,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                                         tvOwerG.setText("/");
                                         llOwerG.setVisibility(View.GONE);
                                     }
-                                    final String link = data.getString("link");
-                                    if (!TextUtils.isEmpty(link)) {
-                                        tvOwerH.setText("点击查看详情");
-                                        llOwerH.setOnClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                Intent intent = new Intent(getActivity(), BrowserActivity.class);
-                                                intent.putExtra("url", link);
-                                                intent.putExtra("title", shareTitle);
-                                                startActivity(intent);
-                                            }
-                                        });
-                                    } else {
-                                        tvOwerH.setText("/");
-                                        llOwerH.setVisibility(View.GONE);
-                                    }
+
                                 } else {
                                     xcgggDetailStatusView.showError();
                                 }
