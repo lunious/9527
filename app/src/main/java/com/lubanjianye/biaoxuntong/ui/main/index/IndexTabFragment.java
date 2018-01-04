@@ -21,6 +21,7 @@ import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.ui.loader.BiaoXunTongLoader;
 import com.lubanjianye.biaoxuntong.ui.main.index.search.IndexSearchActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.sortcolumn.SortColumnActivity;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
@@ -118,7 +119,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                 indexStlTab.setViewPager(indexVp);
                 indexStlTab.notifyDataSetChanged();
             }
-            requestData();
+            requestData(2);
 
         } else {
             //TODO
@@ -129,7 +130,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
     public void initData() {
         //创建对象
         promptDialog = new PromptDialog(getActivity());
-        requestData();
+        requestData(1);
 
     }
 
@@ -139,7 +140,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
     }
 
 
-    public void requestData() {
+    public void requestData(int stu) {
 
         if (!NetUtil.isNetworkConnected(getContext())) {
             ToastUtil.shortToast(getContext(), "网络出错，请检查网络设置！");
@@ -163,7 +164,9 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
             mAdapter.notifyDataSetChanged();
 
         } else {
-
+            if (stu == 1) {
+                BiaoXunTongLoader.showLoading(getContext());
+            }
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                 //得到用个户userId
                 List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
@@ -180,6 +183,8 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                             public void onSuccess(Headers headers, String response) {
 
                                 if ("200".equals(response) || "400".equals(response)) {
+
+                                    BiaoXunTongLoader.stopLoading();
                                     RestClient.builder()
                                             .url(BiaoXunTongApi.URL_INDEXTAB)
                                             .params("userId", userId)
@@ -194,7 +199,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
                                                     if ("200".equals(status)) {
                                                         final JSONArray ownerList = object.getJSONArray("data");
-
+                                                        BiaoXunTongLoader.stopLoading();
                                                         if (mList.size() > 0) {
                                                             mList.clear();
                                                         }
@@ -221,8 +226,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                             .post();
 
                                 } else {
-
-
                                     //后台清除登陆信息
                                     DatabaseManager.getInstance().getDao().deleteAll();
                                     AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
@@ -241,7 +244,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
                                                     if ("200".equals(status)) {
                                                         final JSONArray ownerList = object.getJSONArray("data");
-
+                                                        BiaoXunTongLoader.stopLoading();
                                                         if (mList.size() > 0) {
                                                             mList.clear();
                                                         }
@@ -282,7 +285,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
                                                             if ("200".equals(status)) {
                                                                 final JSONArray ownerList = object.getJSONArray("data");
-
+                                                                BiaoXunTongLoader.stopLoading();
                                                                 if (mList.size() > 0) {
                                                                     mList.clear();
                                                                 }
@@ -342,7 +345,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
                                 if ("200".equals(status)) {
                                     final JSONArray ownerList = object.getJSONArray("data");
-
+                                    BiaoXunTongLoader.stopLoading();
                                     if (mList.size() > 0) {
                                         mList.clear();
                                     }
