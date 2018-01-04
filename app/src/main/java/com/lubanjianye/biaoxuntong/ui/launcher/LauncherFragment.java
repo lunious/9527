@@ -29,11 +29,7 @@ import static com.lubanjianye.biaoxuntong.app.BiaoXunTong.getApplicationContext;
  * 描述:     TODO
  */
 
-public class LauncherFragment extends BaseFragment implements View.OnClickListener, BDLocationListener {
-
-    private AppCompatTextView atv_timer = null;
-
-    private CountDownTimer mTimer = null;
+public class LauncherFragment extends BaseFragment implements BDLocationListener {
 
 
     public LocationClient mLocationClient = null;
@@ -59,9 +55,6 @@ public class LauncherFragment extends BaseFragment implements View.OnClickListen
 
         mLocationClient.setLocOption(option);
 
-
-        atv_timer = getView().findViewById(R.id.tv_launcher_timer);
-        atv_timer.setOnClickListener(this);
     }
 
     @Override
@@ -71,52 +64,15 @@ public class LauncherFragment extends BaseFragment implements View.OnClickListen
 
     @Override
     public void initEvent() {
-        initTimer();
+
+        checkIsShowScroll();
 
 
-    }
-
-    private void initTimer() {
-
-        mTimer = new CountDownTimer(2 * 1000, 1000) {
-
-            @SuppressLint("DefaultLocale")
-            @Override
-            public void onTick(long millisUntilFinished) {
-
-                atv_timer.setText(String.format("%s%s%d%s",
-                        "跳过", "(", millisUntilFinished / 1000, ")"));
-            }
-
-            @Override
-            public void onFinish() {
-                checkIsShowScroll();
-
-            }
-        }.start();
-
-    }
-
-
-    @Override
-    public void onClick(View view) {
-
-        switch (view.getId()) {
-            case R.id.tv_launcher_timer:
-                if (mTimer != null) {
-                    mTimer.cancel();
-                    mTimer = null;
-                }
-                checkIsShowScroll();
-                break;
-            default:
-        }
     }
 
 
     //判断是否显示滑动启动页
     private void checkIsShowScroll() {
-
 
         if (!AppSharePreferenceMgr.contains(getContext(), "first_into_app")) {
             getSupportDelegate().start(new LauncherScrollFragment(), SINGLETASK);
@@ -125,10 +81,6 @@ public class LauncherFragment extends BaseFragment implements View.OnClickListen
             Intent intent = new Intent(getActivity(), LauncherScrollActivity.class);
             startActivity(intent);
             if (getActivity() != null) {
-                if (mTimer != null) {
-                    mTimer.cancel();
-                    mTimer = null;
-                }
                 getActivity().onBackPressed();
             }
         } else {
@@ -136,10 +88,6 @@ public class LauncherFragment extends BaseFragment implements View.OnClickListen
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
             if (getActivity() != null) {
-                if (mTimer != null) {
-                    mTimer.cancel();
-                    mTimer = null;
-                }
                 getActivity().onBackPressed();
             }
 

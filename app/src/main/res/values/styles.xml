@@ -16,6 +16,7 @@
     <!-- 闪页主题 -->
     <style name="AppTheme.Launcher">
         <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@mipmap/welcome</item>
     </style>
 
     <!-- 主页主题 -->
