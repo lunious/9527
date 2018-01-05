@@ -2,12 +2,7 @@ package com.lubanjianye.biaoxuntong.app;
 
 import android.app.Activity;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-
-import okhttp3.Interceptor;
 
 /**
  * 项目名:   AppLunious
