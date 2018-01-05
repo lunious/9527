@@ -141,14 +141,15 @@ public class PushService extends MixPushIntentService {
             intent.putExtra("url", mUrl);
             intent.putExtra("title", mTitle);
         }
-        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         PendingIntent pIntent = PendingIntent.getActivity(getApplicationContext(),
                 requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         int largeIcon = R.mipmap.log;
         int smallIcon = R.mipmap.log;
         String ticker = mTitle;
-        String title = mTitle;
+        String title = "鲁班标讯通";
         String content = mContent;
         //实例化工具类，并且调用接口
         NotifyUtil notify = new NotifyUtil(getApplicationContext(), requestCode);
