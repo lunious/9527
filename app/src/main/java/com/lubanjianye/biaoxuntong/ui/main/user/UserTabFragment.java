@@ -278,34 +278,32 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
                         urls.add(url_3);
                         banner.setImages(urls).setImageLoader(new GlideImageLoader()).start();
                         banner.setDelayTime(4000);
-                        banner.setOnBannerListener(new OnBannerListener() {
-                            @Override
-                            public void OnBannerClick(int position) {
-                                Intent intent = null;
-                                if (position == 0) {
-                                    intent = new Intent(getActivity(), BrowserActivity.class);
-                                    intent.putExtra("url", detail_1);
-                                    intent.putExtra("title", "鲁班建业通-招投标神器");
-                                    startActivity(intent);
-                                } else if (position == 1) {
-                                    intent = new Intent(getActivity(), BrowserActivity.class);
-                                    intent.putExtra("url", detail_2);
-                                    intent.putExtra("title", "鲁班建业通-招投标神器");
-                                    startActivity(intent);
-                                } else {
-                                    intent = new Intent(getActivity(), BrowserActivity.class);
-                                    intent.putExtra("url", detail_3);
-                                    intent.putExtra("title", "鲁班建业通-招投标神器");
-                                    startActivity(intent);
-                                }
-                            }
-                        });
-
 
                     }
                 })
                 .build()
                 .post();
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                Intent intent = null;
+                if (position == 0) {
+                    toShare(0, "我正在使用【鲁班标讯通】,推荐给你", "企业资质、人员资格、业绩、信用奖惩、经营风险、法律诉讼一键查询！", detail_1);
+                } else if (position == 1) {
+                    intent = new Intent(getActivity(), BrowserActivity.class);
+                    intent.putExtra("url", detail_2);
+                    intent.putExtra("title", "鲁班建业通-招投标神器");
+                    startActivity(intent);
+                } else {
+                    intent = new Intent(getActivity(), BrowserActivity.class);
+                    intent.putExtra("url", detail_3);
+                    intent.putExtra("title", "鲁班建业通-招投标神器");
+                    startActivity(intent);
+                }
+            }
+        });
+
+
     }
 
 

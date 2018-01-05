@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.util.AppConfig;
@@ -268,7 +269,6 @@ public class ShareDialog extends BottomDialog implements OpenBuilder.Callback,
                             @Override
                             public void onError(UiError uiError) {
                                 hideWaitDialog();
-                                ToastUtil.shortToast(getContext(),"抱歉,您未安装该应用,不能分享");
                             }
 
                             @Override
@@ -327,7 +327,7 @@ public class ShareDialog extends BottomDialog implements OpenBuilder.Callback,
             if (!TextUtils.isEmpty(url)) {
                 Uri uri = Uri.fromFile(new File(url));
                 activity.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
-                ToastUtil.shortToast(BiaoXunTong.getApplicationContext(),"保存成功");
+                ToastUtil.shortToast(BiaoXunTong.getApplicationContext(), "保存成功");
             }
         }
     }
