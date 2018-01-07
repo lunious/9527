@@ -187,7 +187,7 @@ public class IndexListFragment extends BaseFragment {
             }
         });
         //设置列表动画
-//        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
+        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mAdapter.setLoadMoreView(new CustomLoadMoreView());
         indexRecycler.setAdapter(mAdapter);
 
