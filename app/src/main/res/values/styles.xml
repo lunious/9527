@@ -10,6 +10,7 @@
         <item name="windowNoTitle">true</item>
         <!--在无需多点触控的页面上，建议关闭多点触控-->
         <item name="android:splitMotionEvents">false</item>
+        <item name="android:windowTranslucentStatus">true</item>
 
     </style>
 
@@ -21,7 +22,7 @@
 
     <!-- 主页主题 -->
     <style name="AppTheme.Main">
-        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 
     <style name="time_dialog" parent="android:style/Theme.Dialog">

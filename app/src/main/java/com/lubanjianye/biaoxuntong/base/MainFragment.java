@@ -81,6 +81,7 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
             mFragments[FOUR] = findChildFragment(ResultTabFragment.class);
             mFragments[FIVE] = findChildFragment(UserTabFragment.class);
         }
+
     }
 
     @Override
