@@ -80,18 +80,6 @@ public class PushService extends MixPushIntentService {
      */
     private void notify_normal_moreLine(String mType, int mEntityId, String mEntity, String mTitle, String mContent, String mUrl, String mId) {
 
-        RestClient.builder().url(BiaoXunTongApi.URL_GETUITASK)
-                .params("type",2)
-                .params("id",mId)
-                .success(new ISuccess() {
-                    @Override
-                    public void onSuccess(Headers headers, String response) {
-                        Log.d("BDIJASBDJHBAIJSD",response);
-                    }
-                })
-                .build()
-                .post();
-
 
         //根据type去跳转页面
         if ("1".equals(mType)) {
@@ -100,36 +88,43 @@ public class PushService extends MixPushIntentService {
                 intent.putExtra("entityId", mEntityId);
                 intent.putExtra("entity", mEntity);
                 intent.putExtra("ajaxlogtype", "1");
+                intent.putExtra("mId", mId);
             } else if ("sggjyzbjg".equals(mEntity) || "sggjycgjgrow".equals(mEntity) || "sggjyjgcgtable".equals(mEntity)) {
                 intent = new Intent(BiaoXunTong.getApplicationContext(), ResultSggjyzbjgDetailActivity.class);
                 intent.putExtra("entityId", mEntityId);
                 intent.putExtra("entity", mEntity);
                 intent.putExtra("ajaxlogtype", "1");
+                intent.putExtra("mId", mId);
             } else if ("sggjy".equals(mEntity)) {
                 intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
                 intent.putExtra("entityId", mEntityId);
                 intent.putExtra("entity", mEntity);
                 intent.putExtra("ajaxlogtype", "1");
+                intent.putExtra("mId", mId);
             } else if ("xcggg".equals(mEntity)) {
                 intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
                 intent.putExtra("entityId", mEntityId);
                 intent.putExtra("entity", mEntity);
                 intent.putExtra("ajaxlogtype", "1");
+                intent.putExtra("mId", mId);
             } else if ("bxtgdj".equals(mEntity)) {
                 intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
                 intent.putExtra("entityId", mEntityId);
                 intent.putExtra("entity", mEntity);
                 intent.putExtra("ajaxlogtype", "1");
+                intent.putExtra("mId", mId);
             } else if ("sggjycgtable".equals(mEntity)) {
                 intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
                 intent.putExtra("entityId", mEntityId);
                 intent.putExtra("entity", mEntity);
                 intent.putExtra("ajaxlogtype", "1");
+                intent.putExtra("mId", mId);
             } else if ("sggjycgrow".equals(mEntity)) {
                 intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgrowDetailActivity.class);
                 intent.putExtra("entityId", mEntityId);
                 intent.putExtra("entity", mEntity);
                 intent.putExtra("ajaxlogtype", "1");
+                intent.putExtra("mId", mId);
             } else if ("scggg".equals(mEntity)) {
 
             }

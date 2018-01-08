@@ -210,6 +210,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
 
                 } else if ("xcggg".equals(entity)) {
@@ -217,18 +218,21 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
                 } else if ("bxtgdj".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
                 } else if ("sggjycgtable".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
 
                 }

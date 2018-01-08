@@ -100,6 +100,7 @@ public class ResultListFragment extends BaseFragment {
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
 
                 } else if ("sggjyzbjg".equals(entity) || "sggjycgjgrow".equals(entity) || "sggjyjgcgtable".equals(entity)) {
@@ -107,6 +108,7 @@ public class ResultListFragment extends BaseFragment {
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
                 }
 

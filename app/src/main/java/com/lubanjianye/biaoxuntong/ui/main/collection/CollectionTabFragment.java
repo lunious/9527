@@ -203,18 +203,21 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
                 } else if ("xcggg".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexXcgggDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
                 } else if ("bxtgdj".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
                 } else if ("sggjycgtable".equals(entity)) {
 
@@ -222,6 +225,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
 
                 } else if ("xjggg".equals(entity) || "sjggg".equals(entity)) {
@@ -229,6 +233,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
 
                 } else if ("sggjyzbjg".equals(entity) || "sggjycgjgrow".equals(entity) || "sggjyjgcgtable".equals(entity)) {
@@ -236,6 +241,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
                 } else if ("t_hyzx".equals(entity)) {
 
@@ -244,6 +250,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
                 }
             }

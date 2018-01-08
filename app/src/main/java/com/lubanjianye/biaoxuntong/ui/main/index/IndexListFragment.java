@@ -132,6 +132,7 @@ public class IndexListFragment extends BaseFragment {
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
 
                 } else if ("xcggg".equals(entity)) {
@@ -139,24 +140,28 @@ public class IndexListFragment extends BaseFragment {
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
                 } else if ("bxtgdj".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexBxtgdjDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
                 } else if ("sggjycgtable".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgtableDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
                 } else if ("sggjycgrow".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjycgrowDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
                     intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
                 } else if ("scggg".equals(entity)) {
 
