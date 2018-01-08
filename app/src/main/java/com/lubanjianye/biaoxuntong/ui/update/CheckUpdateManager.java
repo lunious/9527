@@ -3,6 +3,7 @@ package com.lubanjianye.biaoxuntong.ui.update;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -52,6 +53,8 @@ public class CheckUpdateManager {
         }
 
         int versionCode = AppApplicationMgr.getVersionCode(BiaoXunTong.getApplicationContext());
+
+        Log.d("JHBHJASBDASDAS", versionCode + "");
 
         RestClient.builder()
                 .url(BiaoXunTongApi.URL_UPDATE)
