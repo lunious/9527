@@ -261,7 +261,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
             }
         });
         //设置列表动画
-        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+//        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mAdapter.setLoadMoreView(new CustomLoadMoreView());
         collectRecycler.setAdapter(mAdapter);
 

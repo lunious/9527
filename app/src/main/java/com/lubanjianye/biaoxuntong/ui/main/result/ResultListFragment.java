@@ -126,7 +126,7 @@ public class ResultListFragment extends BaseFragment {
             }
         });
         //设置列表动画
-        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+//        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
         mAdapter.setLoadMoreView(new CustomLoadMoreView());
         resultRecycler.setAdapter(mAdapter);
 
