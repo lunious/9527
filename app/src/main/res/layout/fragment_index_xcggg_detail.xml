@@ -784,9 +784,6 @@
                             <android.support.v7.widget.AppCompatTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:background="@drawable/bg_rect"
-                                android:gravity="center"
-                                android:padding="@dimen/d4"
                                 android:text="补充信息"
                                 android:textColor="#ff434343"
                                 android:textSize="@dimen/s16" />
