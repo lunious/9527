@@ -286,7 +286,7 @@
                     android:textSize="@dimen/s15" />
 
 
-                <android.support.v7.widget.AppCompatButton
+                <Button
                     android:id="@+id/btn_add"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -356,7 +356,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <android.support.v7.widget.AppCompatButton
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/btn_update"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/d40"
@@ -366,6 +366,7 @@
                 android:layout_marginRight="@dimen/d5"
                 android:background="@drawable/button_selected"
                 android:text="提  交"
+                android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/s20"
                 android:visibility="visible" />

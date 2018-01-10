@@ -50,12 +50,12 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
     private AppCompatTextView tvZy = null;
     private AppCompatTextView tvDj = null;
     private AppCompatTextView tvQy = null;
-    private AppCompatButton btnAdd = null;
+    private Button btnAdd = null;
     private View view = null;
     private AppCompatTextView text01 = null;
     private ImageView iv1 = null;
     private LinearLayout ll1 = null;
-    private Button btnUpdate = null;
+    private AppCompatTextView btnUpdate = null;
     private LinearLayout ll = null;
 
 

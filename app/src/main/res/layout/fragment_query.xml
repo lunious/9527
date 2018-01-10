@@ -365,13 +365,14 @@
             android:orientation="horizontal">
 
 
-            <Button
+            <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/btn_start_search"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/d38"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/button_selected"
                 android:text="开始查询"
+                android:gravity="center"
                 android:textColor="@color/white"
                 android:textSize="@dimen/s16" />
 

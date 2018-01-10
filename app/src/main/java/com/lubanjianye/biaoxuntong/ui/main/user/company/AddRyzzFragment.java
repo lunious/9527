@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -55,11 +56,11 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
     private AppCompatTextView tvMc = null;
     private AppCompatTextView tvMcDj = null;
     private AppCompatTextView tvZy = null;
-    private AppCompatButton btnAdd = null;
+    private Button btnAdd = null;
     private View view6 = null;
     private AppCompatTextView text01 = null;
     private ImageView iv1 = null;
-    private AppCompatButton btnUpdate = null;
+    private AppCompatTextView btnUpdate = null;
     private LinearLayout ll = null;
     private LinearLayout lll = null;
 

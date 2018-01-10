@@ -76,7 +76,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     private Button btnAdd = null;
     private View view = null;
     private LinearLayout ll = null;
-    private Button btnStartSearch = null;
+    private AppCompatTextView btnStartSearch = null;
     private SimpleMarqueeView scrollView = null;
     private AppCompatTextView vipDetail = null;
     private LinearLayout llSearch = null;
