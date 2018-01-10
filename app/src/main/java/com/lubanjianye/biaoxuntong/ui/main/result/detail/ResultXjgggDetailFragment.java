@@ -104,6 +104,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
     private String shareUrl = "";
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
     private String ajaxType = "0";
+    private String ywUrl = "";
 
 
     @Override
@@ -378,7 +379,8 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                         tvOwerLianxiNumber.setText("暂无");
                                     }
                                     final String link = data.getString("link");
-
+                                    final  String url = data.getString("url");
+                                    ywUrl = url;
                                     shareUrl = link;
                                     if (!TextUtils.isEmpty(link) && !"/".equals(link)) {
                                         tvOwerLianxiLink.setText("点击查看");
@@ -555,7 +557,8 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                         tvOwerLianxiNumber.setText("暂无");
                                     }
                                     final String link = data.getString("link");
-
+                                    final  String url = data.getString("url");
+                                    ywUrl = url;
                                     shareUrl = link;
                                     if (!TextUtils.isEmpty(link) && !"/".equals(link)) {
                                         tvOwerLianxiLink.setText("点击查看");
@@ -765,7 +768,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                 break;
             case R.id.tv_yw:
                 Intent intent = new Intent(getActivity(), BrowserActivity.class);
-                intent.putExtra("url", shareUrl);
+                intent.putExtra("url", ywUrl);
                 intent.putExtra("title", shareTitle);
                 startActivity(intent);
                 break;
