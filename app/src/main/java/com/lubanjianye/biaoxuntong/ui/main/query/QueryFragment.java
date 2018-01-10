@@ -51,6 +51,7 @@ import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import okhttp3.Headers;
 
 /**
@@ -217,8 +218,6 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     public void initData() {
         mainBarName.setVisibility(View.VISIBLE);
         mainBarName.setText("资质查询");
-
-        scrollView.startFlipping();
 
         initRecyclerView();
         initAdapter();
