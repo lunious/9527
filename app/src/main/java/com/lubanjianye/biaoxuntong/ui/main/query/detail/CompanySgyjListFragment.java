@@ -221,7 +221,7 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
             if ("0.0".equals(zbje)) {
                 bean.setZbje("暂无");
             } else {
-                bean.setZbje(list.getString("zbje"));
+                bean.setZbje(list.getString("zbje")+"万元");
             }
             mDataList.add(bean);
             d++;

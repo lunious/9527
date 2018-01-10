@@ -534,7 +534,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                 if ("0.0".equals(zbje)) {
                     bean.setZbje("暂无");
                 } else {
-                    bean.setZbje(list.getString("zbje"));
+                    bean.setZbje(list.getString("zbje")+"万元");
                 }
                 mQyyjDataList.add(bean);
                 d++;

@@ -24,7 +24,6 @@ import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.ui.main.query.detail.CompanySgyjListAdapter;
-import com.lubanjianye.biaoxuntong.ui.main.query.detail.CompanySgyjListFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -222,7 +221,7 @@ public class MyCompanyQyyjAllListFragment extends BaseFragment implements View.O
             if ("0.0".equals(zbje)) {
                 bean.setZbje("暂无");
             } else {
-                bean.setZbje(list.getString("zbje"));
+                bean.setZbje(list.getString("zbje")+"万元");
             }
             mDataList.add(bean);
             d++;

@@ -499,7 +499,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                                                                                     if ("0.0".equals(zbje)) {
                                                                                         bean.setZbje("暂无");
                                                                                     } else {
-                                                                                        bean.setZbje(list.getString("zbje"));
+                                                                                        bean.setZbje(list.getString("zbje")+"万元");
                                                                                     }
                                                                                     mQyyjDataList.add(bean);
                                                                                     mQyyjAdapter.notifyDataSetChanged();
@@ -520,7 +520,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                                                                                     if ("0.0".equals(zbje)) {
                                                                                         bean.setZbje("暂无");
                                                                                     } else {
-                                                                                        bean.setZbje(list.getString("zbje"));
+                                                                                        bean.setZbje(list.getString("zbje")+"万元");
                                                                                     }
                                                                                     mQyyjDataList.add(bean);
                                                                                     mQyyjAdapter.notifyDataSetChanged();
