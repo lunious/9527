@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.lubanjianye.biaoxuntong.ui.share.ShareDialog;
 import com.lubanjianye.biaoxuntong.util.HTMLUtil;
-import com.lubanjianye.biaoxuntong.util.StringUtils;
 
 import me.yokeyword.fragmentation_swipeback.SwipeBackFragment;
 
@@ -60,21 +59,19 @@ public abstract class BaseFragment extends SwipeBackFragment {
     protected ShareDialog mAlertDialog;
 
     @SuppressWarnings({"LoopStatementThatDoesntLoop", "SuspiciousMethodCalls"})
-    protected void toShare(int id,String title, String content, String url) {
-        if (TextUtils.isEmpty(title) || TextUtils.isEmpty(url)){
+    protected void toShare(int id, String title, String content, String url) {
+        if (TextUtils.isEmpty(title) || TextUtils.isEmpty(url)) {
             return;
         }
         String imageUrl = null;
         content = content.trim();
         if (content.length() > 55) {
-            content = HTMLUtil.delHTMLTag(content);
-            if (content.length() > 55){
-                content = StringUtils.getSubString(0, 55, content);
-            }
+            content = content.substring(0, 55);
+
         } else {
             content = HTMLUtil.delHTMLTag(content);
         }
-        if (TextUtils.isEmpty(content)){
+        if (TextUtils.isEmpty(content)) {
             content = "";
         }
 
@@ -95,7 +92,7 @@ public abstract class BaseFragment extends SwipeBackFragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (mAlertDialog != null){
+        if (mAlertDialog != null) {
             mAlertDialog.hideProgressDialog();
         }
     }

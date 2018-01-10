@@ -81,6 +81,9 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
     private LinearLayout llFav = null;
     private LinearLayout llShare = null;
     private NestedScrollView detailNsv = null;
+    LinearLayout llBucai = null;
+    private AppCompatTextView tvBucai = null;
+
 
     private LinearLayout llWeiBoShare = null;
     private LinearLayout llQQBoShare = null;
@@ -159,6 +162,9 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
         llFav = getView().findViewById(R.id.ll_fav);
         llShare = getView().findViewById(R.id.ll_share);
         detailNsv = getView().findViewById(R.id.detail_nsv);
+        llBucai = getView().findViewById(R.id.ll_bucai);
+        tvBucai = getView().findViewById(R.id.tv_bucai);
+
 
         llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
         llQQBoShare = getView().findViewById(R.id.ll_qq_share);
@@ -402,6 +408,20 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                     } else {
                                         tvOwerPinshen.setText("暂无");
                                     }
+                                    String specialFields = data.getString("specialFields");
+                                    if (!TextUtils.isEmpty(specialFields)) {
+                                        llBucai.setVisibility(View.VISIBLE);
+                                        String s = specialFields.replace("*", "").replace("</", "\n").replace("<", "\n\n");
+                                        String ss = s.substring(0,s.indexOf("temp"));
+                                        if (!TextUtils.isEmpty(ss)){
+                                            llBucai.setVisibility(View.VISIBLE);
+                                            tvBucai.setText(ss);
+                                        }else {
+                                            llBucai.setVisibility(View.GONE);
+                                        }
+                                    } else {
+                                        llBucai.setVisibility(View.GONE);
+                                    }
                                 } else {
                                     xjgggDetailStatusView.showError();
                                 }
@@ -564,6 +584,20 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
 
                                     } else {
                                         tvOwerPinshen.setText("暂无");
+                                    }
+                                    String specialFields = data.getString("specialFields");
+                                    if (!TextUtils.isEmpty(specialFields)) {
+                                        llBucai.setVisibility(View.VISIBLE);
+                                        String s = specialFields.replace("*", "").replace("</", "\n").replace("<", "\n\n");
+                                        String ss = s.substring(0,s.indexOf("temp"));
+                                        if (!TextUtils.isEmpty(ss)){
+                                            llBucai.setVisibility(View.VISIBLE);
+                                            tvBucai.setText(ss);
+                                        }else {
+                                            llBucai.setVisibility(View.GONE);
+                                        }
+                                    } else {
+                                        llBucai.setVisibility(View.GONE);
                                     }
                                 } else {
                                     xjgggDetailStatusView.showError();
