@@ -6,10 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
@@ -107,6 +109,8 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
     LinearLayout llOwerE = null;
     LinearLayout llOwerF = null;
     LinearLayout llOwerG = null;
+    LinearLayout llBucai = null;
+    private AppCompatTextView tvBucai = null;
     NestedScrollView detailNsv = null;
     LinearLayout llShare = null;
 
@@ -219,6 +223,8 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
         llOwerG = getView().findViewById(R.id.ll_ower_g);
         detailNsv = getView().findViewById(R.id.detail_nsv);
         llShare = getView().findViewById(R.id.ll_share);
+        llBucai = getView().findViewById(R.id.ll_bucai);
+        tvBucai = getView().findViewById(R.id.tv_bucai);
 
         llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
         llQQBoShare = getView().findViewById(R.id.ll_qq_share);
@@ -516,6 +522,15 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                                         llOwerG.setVisibility(View.GONE);
                                     }
 
+                                    String specialFields = data.getString("specialFields");
+                                    if (!TextUtils.isEmpty(specialFields)) {
+                                        llBucai.setVisibility(View.VISIBLE);
+                                        String s = specialFields.replace("*", "").replace("</", "\n").replace("<","\n\n");
+                                        tvBucai.setText(s);
+                                    } else {
+                                        llBucai.setVisibility(View.GONE);
+                                    }
+
                                 } else {
                                     xcgggDetailStatusView.showError();
                                 }
@@ -717,6 +732,14 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                                         tvOwerG.setText("/");
                                         llOwerG.setVisibility(View.GONE);
                                     }
+                                    String specialFields = data.getString("specialFields");
+                                    if (!TextUtils.isEmpty(specialFields)) {
+                                        llBucai.setVisibility(View.VISIBLE);
+                                        String s = specialFields.replace("*", "").replace("</", "\n").replace("<","\n\n");
+                                        tvBucai.setText(s);
+                                    } else {
+                                        llBucai.setVisibility(View.GONE);
+                                    }
 
                                 } else {
                                     xcgggDetailStatusView.showError();
@@ -782,7 +805,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                             public void onCancel() {
                                 ToastUtil.shortToast(getContext(), "分享取消");
                             }
-                        },this);
+                        }, this);
                 break;
             case R.id.ll_chat_share:
                 OpenBuilder.with(getActivity())
