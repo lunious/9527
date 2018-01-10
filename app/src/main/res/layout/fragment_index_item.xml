@@ -39,7 +39,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginLeft="@dimen/d6"
                     android:layout_marginRight="@dimen/d4"
-                    android:layout_marginTop="@dimen/d6"
+                    android:layout_marginTop="@dimen/d12"
                     android:orientation="horizontal">
 
 
@@ -59,7 +59,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="@dimen/d4"
-                    android:layout_marginTop="@dimen/d6"
+                    android:layout_marginTop="@dimen/d12"
                     android:orientation="horizontal">
 
 
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/d4"
                 android:layout_marginLeft="@dimen/d6"
-                android:layout_marginTop="@dimen/d6"
+                android:layout_marginTop="@dimen/d4"
                 android:background="#ffffff">
 
 
@@ -144,8 +144,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="@dimen/p1"
-            android:layout_below="@+id/tv_item_time"
-            android:layout_marginTop="@dimen/d8"
+            android:layout_marginTop="@dimen/d6"
             android:layout_marginLeft="@dimen/d6"
             android:background="@color/dark_view" />
 

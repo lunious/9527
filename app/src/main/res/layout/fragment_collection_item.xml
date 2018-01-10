@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_item_title"
             android:orientation="vertical"
-            android:paddingTop="@dimen/d4">
+            android:paddingTop="@dimen/d12">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_item_area"
@@ -72,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/p1"
             android:layout_below="@+id/tv_item_time"
-            android:layout_marginTop="@dimen/d8"
+            android:layout_marginTop="@dimen/d6"
             android:background="@color/dark_view" />
 
     </RelativeLayout>
