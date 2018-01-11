@@ -6,6 +6,7 @@ import android.support.v7.widget.ContentFrameLayout;
 
 import com.lubanjianye.biaoxuntong.R;
 
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import me.yokeyword.fragmentation_swipeback.SwipeBackActivity;
 
@@ -55,9 +56,4 @@ public abstract class BaseActivity extends SwipeBackActivity {
     }
 
 
-    @Override
-    public FragmentAnimator onCreateFragmentAnimator() {
-        // 设置默认Fragment动画  默认竖向(和安卓5.0以上的动画相同)
-        return super.onCreateFragmentAnimator();
-    }
 }

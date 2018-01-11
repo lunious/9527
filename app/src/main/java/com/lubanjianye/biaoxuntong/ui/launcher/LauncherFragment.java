@@ -1,11 +1,7 @@
 package com.lubanjianye.biaoxuntong.ui.launcher;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.os.CountDownTimer;
-import android.support.v7.widget.AppCompatTextView;
 import android.util.Log;
-import android.view.View;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;

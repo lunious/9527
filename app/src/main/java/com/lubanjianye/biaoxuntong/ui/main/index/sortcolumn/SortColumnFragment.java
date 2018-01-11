@@ -37,6 +37,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
+import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import okhttp3.Headers;
 
@@ -537,6 +538,6 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public FragmentAnimator onCreateFragmentAnimator() {
-        return new DefaultHorizontalAnimator();
+        return new DefaultNoAnimator();
     }
 }

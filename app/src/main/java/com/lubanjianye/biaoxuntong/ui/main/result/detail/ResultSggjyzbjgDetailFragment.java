@@ -40,6 +40,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
+import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
+import me.yokeyword.fragmentation.anim.FragmentAnimator;
 import okhttp3.Headers;
 
 /**
@@ -751,4 +753,5 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
     public void onSuccess() {
 
     }
+
 }

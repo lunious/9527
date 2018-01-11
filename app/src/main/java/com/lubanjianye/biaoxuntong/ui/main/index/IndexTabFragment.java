@@ -184,7 +184,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
                                 if ("200".equals(response) || "400".equals(response)) {
 
-                                    BiaoXunTongLoader.stopLoading();
                                     RestClient.builder()
                                             .url(BiaoXunTongApi.URL_INDEXTAB)
                                             .params("userId", userId)
@@ -214,7 +213,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                         indexVp.setAdapter(mAdapter);
                                                         indexStlTab.setViewPager(indexVp);
                                                         mAdapter.notifyDataSetChanged();
-
+                                                        BiaoXunTongLoader.stopLoading();
 
                                                     } else {
                                                         ToastUtil.shortToast(getContext(), message);
@@ -244,7 +243,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
                                                     if ("200".equals(status)) {
                                                         final JSONArray ownerList = object.getJSONArray("data");
-                                                        BiaoXunTongLoader.stopLoading();
+
                                                         if (mList.size() > 0) {
                                                             mList.clear();
                                                         }
@@ -259,7 +258,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                         indexVp.setAdapter(mAdapter);
                                                         indexStlTab.setViewPager(indexVp);
                                                         mAdapter.notifyDataSetChanged();
-
+                                                        BiaoXunTongLoader.stopLoading();
                                                     } else {
                                                         ToastUtil.shortToast(getContext(), message);
                                                     }
@@ -285,7 +284,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
                                                             if ("200".equals(status)) {
                                                                 final JSONArray ownerList = object.getJSONArray("data");
-                                                                BiaoXunTongLoader.stopLoading();
                                                                 if (mList.size() > 0) {
                                                                     mList.clear();
                                                                 }
@@ -300,7 +298,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                                 indexVp.setAdapter(mAdapter);
                                                                 indexStlTab.setViewPager(indexVp);
                                                                 mAdapter.notifyDataSetChanged();
-
+                                                                BiaoXunTongLoader.stopLoading();
                                                             } else {
                                                                 ToastUtil.shortToast(getContext(), message);
                                                             }
@@ -345,7 +343,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
                                 if ("200".equals(status)) {
                                     final JSONArray ownerList = object.getJSONArray("data");
-                                    BiaoXunTongLoader.stopLoading();
                                     if (mList.size() > 0) {
                                         mList.clear();
                                     }
@@ -360,6 +357,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                     indexVp.setAdapter(mAdapter);
                                     indexStlTab.setViewPager(indexVp);
                                     mAdapter.notifyDataSetChanged();
+                                    BiaoXunTongLoader.stopLoading();
                                 } else {
                                     ToastUtil.shortToast(getContext(), message);
                                 }
