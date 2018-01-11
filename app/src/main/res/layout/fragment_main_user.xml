@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/d180"
             android:background="@mipmap/avatar_bg"
-            android:visibility="gone">
+            android:visibility="invisible">
 
 
             <LinearLayout
@@ -95,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/d180"
             android:background="@mipmap/avatar_bg"
-            android:visibility="visible">
+            android:visibility="invisible">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/atv_me"
