@@ -199,6 +199,7 @@
         android:layout_marginLeft="@dimen/d4"
         android:layout_marginTop="@dimen/d4"
         android:background="@color/white"
+        android:overScrollMode="never"
         android:scrollbars="none">
 
         <LinearLayout
@@ -348,7 +349,9 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rlv_query"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:scrollbars="none">
 
             </android.support.v7.widget.RecyclerView>
 

@@ -37,6 +37,7 @@
         android:layout_height="@dimen/d0"
         android:layout_weight="1"
         android:scrollbars="none"
+        android:overScrollMode="never"
         tools:ignore="RtlHardcoded">
 
 
@@ -82,7 +83,9 @@
                 android:id="@+id/old_column_rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/d10" />
+                android:padding="@dimen/d10"
+                android:overScrollMode="never"
+                android:scrollbars="none"/>
 
             <View
                 android:layout_width="match_parent"
@@ -111,7 +114,9 @@
                 android:id="@+id/new_column_rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/d10" />
+                android:padding="@dimen/d10"
+                android:overScrollMode="never"
+                android:scrollbars="none"/>
 
             <View
                 android:layout_width="match_parent"
@@ -140,7 +145,9 @@
                 android:id="@+id/area_column_rv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:padding="@dimen/d10" />
+                android:padding="@dimen/d10"
+                android:overScrollMode="never"
+                android:scrollbars="none"/>
 
 
         </LinearLayout>

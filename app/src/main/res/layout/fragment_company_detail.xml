@@ -32,6 +32,7 @@
                 android:layout_height="@dimen/d0"
                 android:layout_weight="1"
                 android:scrollbars="none"
+                android:overScrollMode="never"
                 tools:ignore="RtlHardcoded">
 
 
@@ -218,7 +219,9 @@
                             android:id="@+id/rlv_qyzz"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingBottom="@dimen/d10" />
+                            android:paddingBottom="@dimen/d10"
+                            android:overScrollMode="never"
+                            android:scrollbars="none"/>
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/tv_qyzz_tip"
@@ -302,7 +305,9 @@
                             android:id="@+id/rlv_ryzz"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingBottom="@dimen/d10" />
+                            android:paddingBottom="@dimen/d10"
+                            android:overScrollMode="never"
+                            android:scrollbars="none"/>
 
 
                         <android.support.v7.widget.AppCompatTextView
@@ -389,7 +394,9 @@
                             android:layout_height="wrap_content"
                             android:paddingBottom="@dimen/d10"
                             android:paddingEnd="@dimen/d6"
-                            android:paddingStart="@dimen/d6" />
+                            android:paddingStart="@dimen/d6"
+                            android:overScrollMode="never"
+                            android:scrollbars="none"/>
 
 
                         <android.support.v7.widget.AppCompatTextView

@@ -74,6 +74,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
         return R.layout.fragment_column;
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();

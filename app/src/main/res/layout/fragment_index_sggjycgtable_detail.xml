@@ -33,6 +33,7 @@
                 android:layout_height="@dimen/d0"
                 android:layout_weight="1"
                 android:scrollbars="none"
+                android:overScrollMode="never"
                 tools:ignore="RtlHardcoded">
 
                 <LinearLayout
@@ -576,6 +577,38 @@
                                 android:textSize="@dimen/s15"
                                 android:layout_marginTop="@dimen/d2"
                                 android:text=""/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/ll_bucai"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/d12"
+                            android:orientation="vertical"
+                            android:visibility="gone">
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="补充信息"
+                                android:textColor="#ff434343"
+                                android:textSize="@dimen/s16" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_bucai"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/d10"
+                                android:text=""
+                                android:textSize="@dimen/s15" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/p1"
+                                android:layout_marginTop="@dimen/d10"
+                                android:background="#eeeeee" />
+
 
                         </LinearLayout>
 

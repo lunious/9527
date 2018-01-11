@@ -127,10 +127,29 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
 
 
     private void initRecyclerView() {
+        LinearLayoutManager layoutManager1 = new LinearLayoutManager(getContext());
+        layoutManager1.setSmoothScrollbarEnabled(true);
+        layoutManager1.setAutoMeasureEnabled(true);
 
-        rlvQyzz.setLayoutManager(new GridLayoutManager(getContext(), 1));
-        rlvRyzz.setLayoutManager(new GridLayoutManager(getContext(), 1));
-        rlvQyyj.setLayoutManager(new LinearLayoutManager(getContext()));
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getContext());
+        layoutManager2.setSmoothScrollbarEnabled(true);
+        layoutManager2.setAutoMeasureEnabled(true);
+
+        LinearLayoutManager layoutManager3 = new LinearLayoutManager(getContext());
+        layoutManager3.setSmoothScrollbarEnabled(true);
+        layoutManager3.setAutoMeasureEnabled(true);
+
+        rlvQyzz.setLayoutManager(layoutManager1);
+        rlvRyzz.setLayoutManager(layoutManager2);
+        rlvQyyj.setLayoutManager(layoutManager3);
+
+        rlvQyzz.setHasFixedSize(true);
+        rlvQyzz.setNestedScrollingEnabled(false);
+        rlvRyzz.setHasFixedSize(true);
+        rlvRyzz.setNestedScrollingEnabled(false);
+        rlvQyyj.setHasFixedSize(true);
+        rlvQyyj.setNestedScrollingEnabled(false);
+
 
 
     }

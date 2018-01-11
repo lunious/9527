@@ -81,6 +81,9 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
     LinearLayout llFav = null;
     LinearLayout llShare = null;
     NestedScrollView detailNsv = null;
+    LinearLayout llBucai = null;
+    private AppCompatTextView tvBucai = null;
+
 
     private LinearLayout llWeiBoShare = null;
     private LinearLayout llQQBoShare = null;
@@ -161,6 +164,8 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
         llFav = getView().findViewById(R.id.ll_fav);
         llShare = getView().findViewById(R.id.ll_share);
         detailNsv = getView().findViewById(R.id.detail_nsv);
+        llBucai = getView().findViewById(R.id.ll_bucai);
+        tvBucai = getView().findViewById(R.id.tv_bucai);
 
         llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
         llQQBoShare = getView().findViewById(R.id.ll_qq_share);
@@ -407,6 +412,14 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
                                     } else {
                                         tvOwerCaigouxiangmu.setText("/");
                                     }
+                                    String specialFields = data.getString("specialFields");
+                                    if (!TextUtils.isEmpty(specialFields)) {
+                                        llBucai.setVisibility(View.VISIBLE);
+                                        String s = specialFields.replace("*", "").replace("</", "\n").replace("<","\n\n");
+                                        tvBucai.setText(s);
+                                    } else {
+                                        llBucai.setVisibility(View.GONE);
+                                    }
                                     sggjycgtableDetailStatusView.showContent();
                                 } else {
                                     sggjycgtableDetailStatusView.showError();
@@ -562,6 +575,14 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
                                         tvOwerCaigouxiangmu.setText(nameAndphone);
                                     } else {
                                         tvOwerCaigouxiangmu.setText("/");
+                                    }
+                                    String specialFields = data.getString("specialFields");
+                                    if (!TextUtils.isEmpty(specialFields)) {
+                                        llBucai.setVisibility(View.VISIBLE);
+                                        String s = specialFields.replace("*", "").replace("</", "\n").replace("<","\n\n");
+                                        tvBucai.setText(s);
+                                    } else {
+                                        llBucai.setVisibility(View.GONE);
                                     }
 
                                 } else {

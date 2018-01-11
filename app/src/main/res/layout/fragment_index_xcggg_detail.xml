@@ -35,6 +35,7 @@
                 android:layout_weight="1"
                 android:paddingBottom="@dimen/d10"
                 android:scrollbars="none"
+                android:overScrollMode="never"
                 tools:ignore="RtlHardcoded">
 
                 <LinearLayout
