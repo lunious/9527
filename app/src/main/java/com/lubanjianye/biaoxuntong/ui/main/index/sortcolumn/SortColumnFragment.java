@@ -536,8 +536,4 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
         return super.onBackPressedSupport();
     }
 
-    @Override
-    public FragmentAnimator onCreateFragmentAnimator() {
-        return new DefaultNoAnimator();
-    }
 }
