@@ -10,7 +10,7 @@
         android:layout_height="@dimen/d130"
         android:background="@mipmap/default_banner"
         android:visibility="gone"
-        app:indicator_drawable_selected="@color/blue"
+        app:indicator_drawable_selected="@color/main_theme_color"
         app:indicator_drawable_unselected="@android:color/white"
         app:indicator_height="@dimen/d4"
         app:indicator_margin="@dimen/d6"

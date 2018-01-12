@@ -126,14 +126,14 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
 
                     if (!TextUtils.isEmpty(smsCode)) {
                         btRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                        btRetrieveSubmit.setTextColor(getResources().getColor(R.color.white));
+                        btRetrieveSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                     } else {
                         btRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                        btRetrieveSubmit.setTextColor(getResources().getColor(R.color.white));
+                        btRetrieveSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                     }
                 } else {
                     btRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btRetrieveSubmit.setTextColor(getResources().getColor(R.color.white));
+                    btRetrieveSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 }
 
                 if (length > 0 && length < 11) {
@@ -181,10 +181,10 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
                 int length = s.length();
                 if (length > 0 && mMachPhoneNum) {
                     btRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    btRetrieveSubmit.setTextColor(getResources().getColor(R.color.white));
+                    btRetrieveSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 } else {
                     btRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btRetrieveSubmit.setTextColor(getResources().getColor(R.color.white));
+                    btRetrieveSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 }
 
             }

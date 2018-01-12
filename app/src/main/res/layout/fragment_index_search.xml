@@ -3,13 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/blue"
+    android:background="@color/main_theme_color"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/d42"
-        android:background="@color/blue"
+        android:background="@color/main_theme_color"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/d8"
@@ -54,7 +54,7 @@
             android:layout_marginStart="@dimen/d8"
             android:layout_weight="1"
             android:text="搜索"
-            android:textColor="@color/white"
+            android:textColor="@color/main_status_white"
             android:textSize="@dimen/s16"
             android:visibility="gone" />
     </LinearLayout>
@@ -62,7 +62,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/main_status_white"
         android:orientation="vertical">
 
 
@@ -81,7 +81,7 @@
                     android:id="@+id/tv_area"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@color/white"
+                    android:background="@color/main_status_white"
                     android:drawableEnd="@drawable/icon_down"
                     android:gravity="center"
                     android:maxLines="1"
@@ -107,7 +107,7 @@
                     android:id="@+id/tv_type"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@color/white"
+                    android:background="@color/main_status_white"
                     android:drawableEnd="@drawable/icon_down"
                     android:gravity="center"
                     android:maxLines="1"
@@ -141,7 +141,7 @@
             android:id="@+id/search_recycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@color/main_status_white"
             android:overScrollMode="never"
             android:scrollbars="none"/>
     </android.support.v4.widget.SwipeRefreshLayout>

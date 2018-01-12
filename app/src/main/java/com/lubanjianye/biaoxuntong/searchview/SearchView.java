@@ -119,7 +119,7 @@ public class SearchView extends LinearLayout {
         searchBlockHeight = typedArray.getInteger(R.styleable.Search_View_searchBlockHeight, 120);
 
         // 搜索框颜色
-        int defaultColor2 = context.getResources().getColor(R.color.blue); // 默认颜色 = 白色
+        int defaultColor2 = context.getResources().getColor(R.color.main_theme_color); // 默认颜色 = 白色
         searchBlockColor = typedArray.getColor(R.styleable.Search_View_searchBlockColor, defaultColor2);
 
         // 释放资源

@@ -592,7 +592,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                         toLogin.setTextSize(15);
                         promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false);
 
-                        promptDialog.showWarnAlert("共为你查询到" + i + "家企业!", cancel, toLogin, false);
+                        promptDialog.showWarnAlert("共为你查询到" + i + "家企业!", cancel, toLogin);
                     } else {
                         final PromptButton cancel = new PromptButton("重新筛选", new PromptButtonListener() {
                             @Override

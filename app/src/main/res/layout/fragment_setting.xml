@@ -24,7 +24,7 @@
             android:id="@+id/ll_cache_size"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/main_status_white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/d12">
@@ -57,7 +57,7 @@
             android:id="@+id/ll_update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/main_status_white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:padding="@dimen/d12">
@@ -74,7 +74,7 @@
                 android:id="@+id/tv_update"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/blue"
+                android:textColor="@color/main_theme_color"
                 android:textSize="@dimen/s14"
                 android:visibility="gone"
                 tools:ignore="RelativeOverlap"
@@ -104,7 +104,7 @@
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/button_selected"
                 android:text="退出登陆"
-                android:textColor="@color/white"
+                android:textColor="@color/main_status_white"
                 android:textSize="@dimen/s16" />
         </RelativeLayout>
     </LinearLayout>

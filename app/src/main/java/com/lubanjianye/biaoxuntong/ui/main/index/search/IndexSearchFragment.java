@@ -125,7 +125,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
         //重新布局，使其居中
 
         //修改字体颜色
-        searchText.setTextColor(ContextCompat.getColor(getContext(), R.color.blue));
+        searchText.setTextColor(ContextCompat.getColor(getContext(), R.color.main_theme_color));
         searchText.setHintTextColor(ContextCompat.getColor(getContext(), R.color.search_hint));
 
         //根据id-search_mag_icon获取ImageView
@@ -176,7 +176,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
     private void initRefreshLayout() {
 
         searchRefresh.setColorSchemeResources(
-                R.color.blue,
+                R.color.main_theme_color,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light
         );

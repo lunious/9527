@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/main_status_white"
         android:padding="@dimen/d10">
 
         <TextView
@@ -17,7 +17,7 @@
             android:layout_centerVertical="true"
             android:padding="@dimen/d10"
             android:text="取消"
-            android:textColor="@color/blue"
+            android:textColor="@color/main_theme_color"
             android:textSize="@dimen/s16" />
 
         <TextView
@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="请选择时间"
-            android:textColor="@color/blue"
+            android:textColor="@color/main_theme_color"
             android:textSize="@dimen/s18" />
 
         <TextView
@@ -37,7 +37,7 @@
             android:layout_centerVertical="true"
             android:padding="@dimen/d10"
             android:text="确定"
-            android:textColor="@color/blue"
+            android:textColor="@color/main_theme_color"
             android:textSize="@dimen/s16" />
 
     </RelativeLayout>
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/d5"
-            android:background="@color/white"
+            android:background="@color/main_status_white"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/d15"
             android:paddingLeft="@dimen/d20"
@@ -74,7 +74,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="年"
-                android:textColor="@color/blue"
+                android:textColor="@color/main_theme_color"
                 android:textSize="@dimen/s16" />
 
             <com.lubanjianye.biaoxuntong.util.datapicker.DatePickerView
@@ -89,7 +89,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="月"
-                android:textColor="@color/blue"
+                android:textColor="@color/main_theme_color"
                 android:textSize="@dimen/s16" />
 
             <com.lubanjianye.biaoxuntong.util.datapicker.DatePickerView
@@ -104,7 +104,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="日"
-                android:textColor="@color/blue"
+                android:textColor="@color/main_theme_color"
                 android:textSize="@dimen/s16" />
 
             <com.lubanjianye.biaoxuntong.util.datapicker.DatePickerView
@@ -120,7 +120,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="时"
-                android:textColor="@color/blue"
+                android:textColor="@color/main_theme_color"
                 android:textSize="@dimen/s16" />
 
             <com.lubanjianye.biaoxuntong.util.datapicker.DatePickerView
@@ -136,7 +136,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="分"
-                android:textColor="@color/blue"
+                android:textColor="@color/main_theme_color"
                 android:textSize="@dimen/s16" />
 
         </LinearLayout>

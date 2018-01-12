@@ -2,11 +2,11 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 内部颜色 -->
     <solid
-        android:color="#dddd99" />
+        android:color="@color/main_theme_color" />
     <!-- 边缘线条颜色 -->
     <stroke
         android:width="@dimen/p1"
-        android:color="#6c6c6c" />
+        android:color="@color/main_theme_color" />
     <!-- 圆角的幅度 -->
     <corners
         android:radius="@dimen/d4"/>

@@ -517,6 +517,7 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
 
     private Share mShare = new Share();
     private PromptDialog promptDialog = null;
+
     @Override
     public void onClick(View view) {
         mShare.setAppName("鲁班标讯通");
@@ -564,7 +565,7 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
                             public void onCancel() {
                                 ToastUtil.shortToast(getContext(), "分享取消");
                             }
-                        },this);
+                        }, this);
                 break;
             case R.id.ll_chat_share:
                 OpenBuilder.with(getActivity())

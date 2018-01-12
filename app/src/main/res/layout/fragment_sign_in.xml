@@ -2,13 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
         android:orientation="vertical"
         android:paddingBottom="@dimen/d16">
 
@@ -42,7 +40,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/p6"
+            android:layout_height="@dimen/p8"
             android:layout_marginLeft="@dimen/d30"
             android:layout_marginRight="@dimen/d30"
             android:background="#f9eeeeee" />
@@ -78,7 +76,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/p6"
+            android:layout_height="@dimen/p8"
             android:layout_marginLeft="@dimen/d30"
             android:layout_marginRight="@dimen/d30"
             android:background="#eeeeee" />
@@ -102,7 +100,7 @@
                 android:paddingLeft="@dimen/d4"
                 android:paddingTop="@dimen/d4"
                 android:text="忘记密码？"
-                android:textColor="#1196db"
+                android:textColor="@color/main_theme_color"
                 android:textSize="@dimen/s14" />
 
 
@@ -116,7 +114,7 @@
                 android:paddingLeft="@dimen/d4"
                 android:paddingTop="@dimen/d4"
                 android:text="快捷登陆"
-                android:textColor="#1196db"
+                android:textColor="@color/main_theme_color"
                 android:textSize="@dimen/s14" />
         </RelativeLayout>
 
@@ -130,8 +128,8 @@
             android:layout_marginTop="@dimen/d20"
             android:background="@drawable/bg_login_submit"
             android:text="登 陆"
-            android:textColor="#FFFFFF"
-            android:textSize="@dimen/s18" />
+            android:textColor="@color/main_status_white"
+            android:textSize="@dimen/d18" />
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/bt_login_register"

@@ -11,14 +11,14 @@
         android:id="@+id/resultt_stl_tab"
         android:layout_width="match_parent"
         android:layout_height="@dimen/d36"
-        android:background="@color/white"
-        tl:tl_indicator_color="@color/blue"
+        android:background="@color/main_status_white"
+        tl:tl_indicator_color="@color/main_theme_color"
         tl:tl_indicator_height="@dimen/d2"
         tl:tl_indicator_width_equal_title="true"
         tl:tl_tab_padding="@dimen/d6"
         tl:tl_tab_space_equal="true"
         tl:tl_textAllCaps="true"
-        tl:tl_textSelectColor="@color/blue"
+        tl:tl_textSelectColor="@color/main_theme_color"
         tl:tl_textUnselectColor="#6c6c6c"
         tl:tl_textsize="@dimen/s15" />
 
@@ -31,7 +31,7 @@
         android:id="@+id/result_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white" />
+        android:background="@color/main_status_white" />
 
 
 </LinearLayout>

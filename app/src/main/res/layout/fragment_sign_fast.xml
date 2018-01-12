@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/main_status_white"
     android:orientation="vertical">
 
     <include layout="@layout/fragment_main_bar" />
@@ -106,7 +106,7 @@
         android:layout_marginTop="@dimen/d48"
         android:background="@drawable/bg_login_submit_lock"
         android:text="登 陆"
-        android:textColor="@color/white"
+        android:textColor="@color/main_status_white"
         android:textSize="@dimen/s18" />
 
 

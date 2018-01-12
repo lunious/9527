@@ -32,7 +32,7 @@
                     android:layout_marginTop="@dimen/d8"
                     android:gravity="center"
                     android:text="我的企业"
-                    android:textColor="@color/white"
+                    android:textColor="@color/main_status_white"
                     android:textSize="@dimen/d16" />
 
                 <LinearLayout
@@ -47,7 +47,7 @@
                         android:layout_width="@dimen/d66"
                         android:layout_height="@dimen/d66"
                         android:src="@mipmap/widget_default_face"
-                        app:civ_border_color="@color/white"
+                        app:civ_border_color="@color/main_status_white"
                         app:civ_border_width="@dimen/d1" />
 
 
@@ -78,7 +78,7 @@
                             android:paddingStart="@dimen/d8"
                             android:paddingTop="@dimen/d2"
                             android:text="未绑定企业"
-                            android:textColor="@color/white"
+                            android:textColor="@color/main_status_white"
                             android:textSize="@dimen/s15" />
                     </LinearLayout>
 
@@ -104,7 +104,7 @@
                 android:layout_marginTop="@dimen/d30"
                 android:gravity="center"
                 android:text="我"
-                android:textColor="@color/white"
+                android:textColor="@color/main_status_white"
                 android:textSize="@dimen/s14"
                 android:visibility="invisible" />
 
@@ -116,7 +116,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/d8"
                 android:src="@mipmap/widget_default_face"
-                app:civ_border_color="@color/white"
+                app:civ_border_color="@color/main_status_white"
                 app:civ_border_width="@dimen/d1" />
 
             <android.support.v7.widget.AppCompatTextView
@@ -148,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@mipmap/default_banner"
-            app:indicator_drawable_selected="@color/blue"
+            app:indicator_drawable_selected="@color/main_theme_color"
             app:indicator_drawable_unselected="@android:color/white"
             app:indicator_height="@dimen/d1"
             app:indicator_margin="@dimen/d6"

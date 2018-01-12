@@ -379,7 +379,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                         tvOwerLianxiNumber.setText("暂无");
                                     }
                                     final String link = data.getString("link");
-                                    final  String url = data.getString("url");
+                                    final String url = data.getString("url");
                                     ywUrl = url;
                                     shareUrl = link;
                                     if (!TextUtils.isEmpty(link) && !"/".equals(link)) {
@@ -414,11 +414,10 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                     if (!TextUtils.isEmpty(specialFields)) {
                                         llBucai.setVisibility(View.VISIBLE);
                                         String s = specialFields.replace("*", "").replace("</", "\n").replace("<", "\n\n");
-                                        String ss = s.substring(0,s.indexOf("temp"));
-                                        if (!TextUtils.isEmpty(ss)){
+                                        if (!TextUtils.isEmpty(s)) {
                                             llBucai.setVisibility(View.VISIBLE);
-                                            tvBucai.setText(ss);
-                                        }else {
+                                            tvBucai.setText(s);
+                                        } else {
                                             llBucai.setVisibility(View.GONE);
                                         }
                                     } else {
@@ -557,7 +556,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                         tvOwerLianxiNumber.setText("暂无");
                                     }
                                     final String link = data.getString("link");
-                                    final  String url = data.getString("url");
+                                    final String url = data.getString("url");
                                     ywUrl = url;
                                     shareUrl = link;
                                     if (!TextUtils.isEmpty(link) && !"/".equals(link)) {
@@ -592,11 +591,10 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                     if (!TextUtils.isEmpty(specialFields)) {
                                         llBucai.setVisibility(View.VISIBLE);
                                         String s = specialFields.replace("*", "").replace("</", "\n").replace("<", "\n\n");
-                                        String ss = s.substring(0,s.indexOf("temp"));
-                                        if (!TextUtils.isEmpty(ss)){
+                                        if (!TextUtils.isEmpty(s)) {
                                             llBucai.setVisibility(View.VISIBLE);
-                                            tvBucai.setText(ss);
-                                        }else {
+                                            tvBucai.setText(s);
+                                        } else {
                                             llBucai.setVisibility(View.GONE);
                                         }
                                     } else {

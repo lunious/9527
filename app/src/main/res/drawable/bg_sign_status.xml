@@ -12,9 +12,9 @@
     -->
     <stroke android:dashWidth="0dp"
         android:width="1dp"
-        android:color="@color/blue"/>
+        android:color="@color/main_theme_color"/>
 
     <!--设置填充色，也就是咱们画的这个shape的颜色-->
-    <solid android:color="@color/white"/>
+    <solid android:color="@color/main_status_white"/>
 
 </shape>

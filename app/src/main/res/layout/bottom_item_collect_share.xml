@@ -16,7 +16,7 @@
             android:layout_height="@dimen/d40"
             android:layout_alignParentBottom="true"
             android:layout_gravity="end|bottom"
-            android:background="@color/white"
+            android:background="@color/main_status_white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:weightSum="9"

@@ -82,7 +82,7 @@ public class IndexHyzxListFragment extends BaseFragment {
 
     private void initRefreshLayout() {
         indexHyzxRefresh.setColorSchemeResources(
-                R.color.blue,
+                R.color.main_theme_color,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light
         );

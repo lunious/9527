@@ -106,7 +106,7 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
         searchText.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
 
         //修改字体颜色
-        searchText.setTextColor(ContextCompat.getColor(getContext(), R.color.blue));
+        searchText.setTextColor(ContextCompat.getColor(getContext(), R.color.main_theme_color));
         searchText.setHintTextColor(ContextCompat.getColor(getContext(), R.color.search_hint));
 
         //根据id-search_mag_icon获取ImageView

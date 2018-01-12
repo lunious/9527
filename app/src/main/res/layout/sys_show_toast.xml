@@ -16,6 +16,6 @@
         android:paddingLeft="@dimen/d14"
         android:paddingRight="@dimen/d14"
         android:paddingTop="@dimen/d8"
-        android:textColor="@color/white"
+        android:textColor="@color/main_status_white"
         android:textSize="@dimen/s16" />
 </LinearLayout>

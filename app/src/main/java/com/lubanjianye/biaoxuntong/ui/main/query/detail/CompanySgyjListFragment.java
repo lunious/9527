@@ -117,7 +117,7 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
 
     private void initRefreshLayout() {
         companySgyjRefresh.setColorSchemeResources(
-                R.color.blue,
+                R.color.main_theme_color,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light
         );

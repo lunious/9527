@@ -98,14 +98,14 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
                             String regPwd = etNewPwd.getText().toString().trim();
                             if (!TextUtils.isEmpty(smsCode) && !TextUtils.isEmpty(regPwd)) {
 
-                                btNewSubmit.setTextColor(getResources().getColor(R.color.white));
+                                btNewSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                             } else {
                                 btNewSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                                btNewSubmit.setTextColor(getResources().getColor(R.color.white));
+                                btNewSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                             }
                         } else {
                             btNewSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                            btNewSubmit.setTextColor(getResources().getColor(R.color.white));
+                            btNewSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                         }
 
                         if (length > 0 && length < 11) {
@@ -148,10 +148,10 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
                 String pwd = etNewPwd.getText().toString().trim();
                 if (length > 0 && mMachPhoneNum && !TextUtils.isEmpty(pwd)) {
                     btNewSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    btNewSubmit.setTextColor(getResources().getColor(R.color.white));
+                    btNewSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 } else {
                     btNewSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btNewSubmit.setTextColor(getResources().getColor(R.color.white));
+                    btNewSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 }
 
             }
@@ -187,10 +187,10 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
                 String pwd = etNewPwd.getText().toString().trim();
                 if (!TextUtils.isEmpty(pwd)) {
                     btNewSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    btNewSubmit.setTextColor(getResources().getColor(R.color.white));
+                    btNewSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 } else {
                     btNewSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btNewSubmit.setTextColor(getResources().getColor(R.color.white));
+                    btNewSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 }
             }
         });

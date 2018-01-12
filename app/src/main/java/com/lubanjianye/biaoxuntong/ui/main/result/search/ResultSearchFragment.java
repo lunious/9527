@@ -70,7 +70,7 @@ public class ResultSearchFragment extends BaseFragment {
     private void initRefreshLayout() {
 
         resultRefresh.setColorSchemeResources(
-                R.color.blue,
+                R.color.main_theme_color,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light
         );
@@ -105,12 +105,16 @@ public class ResultSearchFragment extends BaseFragment {
                     intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
 
                 } else if ("sggjyzbjg".equals(entity) || "sggjycgjgrow".equals(entity) || "sggjyjgcgtable".equals(entity)) {
                     intent = new Intent(getActivity(), ResultSggjyzbjgDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
                     startActivity(intent);
                 }
 

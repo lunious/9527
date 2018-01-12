@@ -3,7 +3,6 @@ package com.lubanjianye.biaoxuntong.ui.main.user.company;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -172,7 +171,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                 break;
             case R.id.ll_ib_add:
                 PromptButton cancle = new PromptButton("取消", null);
-                cancle.setTextColor(Color.parseColor("#00bfdc"));
+                cancle.setTextColor(getResources().getColor(R.color.main_theme_color));
                 cancle.setTextSize(16);
 
                 PromptButton xzryzz = new PromptButton("新增人员资质", new PromptButtonListener() {

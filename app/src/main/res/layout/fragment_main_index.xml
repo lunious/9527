@@ -3,7 +3,7 @@
     xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/blue"
+    android:background="@color/main_theme_color"
     android:orientation="vertical">
 
     <LinearLayout
@@ -21,7 +21,7 @@
             android:layout_gravity="center"
             android:layout_margin="@dimen/d4"
             android:text="鲁班标讯通"
-            android:textColor="@color/white"
+            android:textColor="@color/main_status_white"
             android:textSize="@dimen/s17" />
 
         <LinearLayout
@@ -71,13 +71,13 @@
             android:layout_width="@dimen/d0"
             android:layout_height="match_parent"
             android:layout_weight="9"
-            android:background="@color/white"
-            tl:tl_indicator_color="@color/blue"
+            android:background="@color/main_status_white"
+            tl:tl_indicator_color="@color/main_theme_color"
             tl:tl_indicator_height="@dimen/d2"
             tl:tl_indicator_width_equal_title="true"
             tl:tl_tab_padding="@dimen/d14"
             tl:tl_textAllCaps="true"
-            tl:tl_textSelectColor="@color/blue"
+            tl:tl_textSelectColor="@color/main_theme_color"
             tl:tl_textUnselectColor="#6c6c6c"
             tl:tl_textsize="@dimen/s15" />
 
@@ -85,7 +85,7 @@
             android:layout_width="@dimen/d0"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/white"
+            android:background="@color/main_status_white"
             android:gravity="center">
 
             <ImageView
@@ -113,6 +113,6 @@
         android:id="@+id/index_vp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white" />
+        android:background="@color/main_status_white" />
 
 </LinearLayout>

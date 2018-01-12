@@ -150,7 +150,7 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
 
     private void initRefreshLayout() {
         companySearchResultRefresh.setColorSchemeResources(
-                R.color.blue,
+                R.color.main_theme_color,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light
         );

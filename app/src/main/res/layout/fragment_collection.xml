@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/main_status_white"
     android:orientation="vertical">
 
     <include layout="@layout/fragment_main_bar" />
@@ -35,7 +35,7 @@
             android:layout_width="@dimen/d110"
             android:layout_height="@dimen/d38"
             android:text="立即登陆"
-            android:textColor="@color/blue"
+            android:textColor="@color/main_theme_color"
             android:textSize="@dimen/s18"
             android:background="@drawable/bg_login_button"
             android:layout_gravity="center_horizontal|center_vertical" />
@@ -44,7 +44,7 @@
 
     <FrameLayout
         android:id="@+id/fl_content"
-        android:background="@color/white"
+        android:background="@color/main_status_white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 

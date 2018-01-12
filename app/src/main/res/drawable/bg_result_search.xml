@@ -15,6 +15,6 @@
         android:color="#dddddd"/>
 
     <!--设置填充色，也就是咱们画的这个shape的颜色-->
-    <solid android:color="@color/white"/>
+    <solid android:color="@color/main_status_white"/>
 
 </shape>

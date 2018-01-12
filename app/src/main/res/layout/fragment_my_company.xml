@@ -102,7 +102,7 @@
                         android:layout_weight="4"
                         android:gravity="center"
                         android:text="企业资质"
-                        android:textColor="@color/white"
+                        android:textColor="@color/main_status_white"
                         android:textSize="@dimen/s16" />
 
 
@@ -140,7 +140,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="查看全部"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/main_theme_color"
                         android:textSize="@dimen/s12"
                         android:visibility="visible" />
 
@@ -150,7 +150,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/main_theme_color"
                         android:textSize="@dimen/s12"
                         android:visibility="visible" />
 
@@ -158,7 +158,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="个企业资质 >"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/main_theme_color"
                         android:textSize="@dimen/s12"
                         android:visibility="visible" />
 
@@ -187,7 +187,7 @@
                         android:layout_weight="4"
                         android:gravity="center"
                         android:text="人员资格"
-                        android:textColor="@color/white"
+                        android:textColor="@color/main_status_white"
                         android:textSize="@dimen/s16" />
 
 
@@ -227,7 +227,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="查看全部"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/main_theme_color"
                         android:textSize="@dimen/s12"
                         android:visibility="visible" />
 
@@ -237,7 +237,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/main_theme_color"
                         android:textSize="@dimen/s12"
                         android:visibility="visible" />
 
@@ -245,7 +245,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="个人员资格 >"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/main_theme_color"
                         android:textSize="@dimen/s12"
                         android:visibility="visible" />
 
@@ -274,7 +274,7 @@
                         android:layout_weight="4"
                         android:gravity="center"
                         android:text="企业业绩"
-                        android:textColor="@color/white"
+                        android:textColor="@color/main_status_white"
                         android:textSize="@dimen/s16" />
 
 
@@ -314,7 +314,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="查看全部"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/main_theme_color"
                         android:textSize="@dimen/s12"
                         android:visibility="visible" />
 
@@ -324,7 +324,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/main_theme_color"
                         android:textSize="@dimen/s12"
                         android:visibility="visible" />
 
@@ -332,7 +332,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="个企业业绩 >"
-                        android:textColor="@color/blue"
+                        android:textColor="@color/main_theme_color"
                         android:textSize="@dimen/s12"
                         android:visibility="visible" />
 

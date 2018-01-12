@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/main_theme_color</item>
+        <item name="colorPrimaryDark">@color/main_status_transparent</item>
+        <item name="colorAccent">@color/main_theme_color</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!--在无需多点触控的页面上，建议关闭多点触控-->
@@ -30,7 +30,7 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowIsFloating">true</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@color/main_status_white</item>
     </style>
 
 
@@ -93,7 +93,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowAnimationStyle">@style/Animation.AppCompat.Dialog</item>
         <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@color/main_status_white</item>
         <item name="windowActionBar">false</item>
         <item name="windowActionModeOverlay">true</item>>
         <item name="android:windowFullscreen">true</item>

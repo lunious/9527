@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/main_status_white"
     android:orientation="vertical">
 
     <include layout="@layout/fragment_main_bar" />
@@ -269,7 +269,7 @@
                     android:gravity="center"
                     android:padding="@dimen/d6"
                     android:text="推荐标讯通给好友"
-                    android:textColor="@color/white"
+                    android:textColor="@color/main_status_white"
                     android:textSize="@dimen/s15" />
 
             </LinearLayout>

@@ -151,10 +151,10 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                 String pwd = etLoginPwd.getText().toString().trim();
                 if (!TextUtils.isEmpty(pwd)) {
                     btLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    btLoginSubmit.setTextColor(getResources().getColor(R.color.white));
+                    btLoginSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 } else {
                     btLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btLoginSubmit.setTextColor(getResources().getColor(R.color.white));
+                    btLoginSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 }
 
             }
@@ -187,10 +187,10 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                 String pwd = etLoginPwd.getText().toString().trim();
                 if (!TextUtils.isEmpty(pwd)) {
                     btLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    btLoginSubmit.setTextColor(getResources().getColor(R.color.white));
+                    btLoginSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 } else {
                     btLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btLoginSubmit.setTextColor(getResources().getColor(R.color.white));
+                    btLoginSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 }
             }
         });

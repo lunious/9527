@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/blue">
+    android:background="@color/main_theme_color">
 
 
     <LinearLayout
@@ -40,7 +40,7 @@
             android:ellipsize="end"
             android:gravity="center"
             android:maxLines="1"
-            android:textColor="@color/white"
+            android:textColor="@color/main_status_white"
             android:textSize="@dimen/s18"
             tools:text="鲁班标讯通" />
 

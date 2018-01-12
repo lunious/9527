@@ -54,7 +54,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:text=""
-                    android:textColor="@color/blue"
+                    android:textColor="@color/main_text_color"
                     android:textSize="@dimen/s13" />
             </LinearLayout>
 
@@ -78,7 +78,7 @@
                 android:text="川内"
                 android:textSize="@dimen/d12"
                 android:padding="@dimen/d1"
-                android:textColor="@color/blue" />
+                android:textColor="@color/main_theme_color" />
 
             <ImageView
                 android:layout_width="@dimen/d0"

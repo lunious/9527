@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@color/white"
+            android:background="@color/main_status_white"
             android:paddingLeft="@dimen/d8"
             android:paddingRight="@dimen/d8"
             android:paddingTop="@dimen/d4">
@@ -80,7 +80,7 @@
                                 android:layout_marginLeft="@dimen/d10"
                                 android:text=""
                                 android:textSize="@dimen/s15"
-                                android:textColor="@color/blue"/>
+                                android:textColor="@color/main_status_blue"/>
 
                         </LinearLayout>
 
@@ -101,7 +101,7 @@
                                 android:text=""
                                 android:layout_marginLeft="@dimen/d10"
                                 android:textSize="@dimen/s15"
-                                android:textColor="@color/blue"/>
+                                android:textColor="@color/main_status_blue"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -121,7 +121,7 @@
                                 android:text=""
                                 android:layout_marginLeft="@dimen/d10"
                                 android:textSize="@dimen/s15"
-                                android:textColor="@color/blue"/>
+                                android:textColor="@color/main_text_color"/>
                         </LinearLayout>
 
                         <LinearLayout
@@ -141,7 +141,7 @@
                                 android:text=""
                                 android:layout_marginLeft="@dimen/d10"
                                 android:textSize="@dimen/s15"
-                                android:textColor="#ff6666"/>
+                                android:textColor="@color/main_status_red"/>
                         </LinearLayout>
 
 
@@ -166,7 +166,7 @@
                             android:text=""
                             android:layout_marginLeft="@dimen/d10"
                             android:textSize="@dimen/s15"
-                            android:textColor="@color/blue"/>
+                            android:textColor="@color/main_text_color"/>
                     </LinearLayout>
 
                     <View

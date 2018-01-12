@@ -52,7 +52,7 @@
             android:maxLines="2"
             android:paddingTop="@dimen/d4"
             android:text="type"
-            android:textColor="@color/blue"
+            android:textColor="@color/main_status_blue"
             android:textSize="@dimen/s13" />
 
         <android.support.v7.widget.AppCompatTextView

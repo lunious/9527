@@ -129,14 +129,14 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
 
                     if (!TextUtils.isEmpty(smsCode)) {
                         btnBindSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                        btnBindSubmit.setTextColor(getResources().getColor(R.color.white));
+                        btnBindSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                     } else {
                         btnBindSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                        btnBindSubmit.setTextColor(getResources().getColor(R.color.white));
+                        btnBindSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                     }
                 } else {
                     btnBindSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btnBindSubmit.setTextColor(getResources().getColor(R.color.white));
+                    btnBindSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 }
 
                 if (length > 0 && length < 11) {
@@ -184,10 +184,10 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
                 int length = s.length();
                 if (length > 0 && mMachPhoneNum) {
                     btnBindSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    btnBindSubmit.setTextColor(getResources().getColor(R.color.white));
+                    btnBindSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 } else {
                     btnBindSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btnBindSubmit.setTextColor(getResources().getColor(R.color.white));
+                    btnBindSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 }
 
             }
