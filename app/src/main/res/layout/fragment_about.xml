@@ -171,13 +171,11 @@
                 <ImageView
                     android:layout_width="@dimen/d24"
                     android:layout_height="@dimen/d24"
-                    android:gravity="center"
                     android:src="@mipmap/ic_share" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_height="@dimen/d24"
                     android:text="成都鲁班建业科技股份有限公司"
                     android:textColor="#434343"
                     android:textSize="@dimen/s15" />
@@ -203,8 +201,8 @@
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/d10"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/d10"
                     android:text="400-028-9997"
                     android:textColor="@color/main_text_color" />
 
@@ -237,10 +235,10 @@
                     android:id="@+id/tv_luban"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/d10"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/d10"
                     android:text="http://www.lubanjianye.com"
-                    android:textColor="@color/blue" />
+                    android:textColor="@color/main_status_blue" />
 
 
             </RelativeLayout>

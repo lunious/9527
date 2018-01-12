@@ -312,11 +312,11 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
         switch (view.getId()) {
             case R.id.img_user_avatar:
                 //跳到个人中心
-                startActivity(new Intent(getActivity(), AvaterActivity.class));
+                startActivity(new Intent(getContext(), AvaterActivity.class));
                 break;
             case R.id.img_default_avatar:
                 //跳到登陆界面
-                startActivity(new Intent(getActivity(), SignInActivity.class));
+                startActivity(new Intent(getContext(), SignInActivity.class));
                 break;
             case R.id.ll_company:
                 if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
@@ -330,18 +330,18 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
                     }
                     if (!TextUtils.isEmpty(companyName)) {
                         //进入我的资质界面
-                        startActivity(new Intent(getActivity(), MyCompanyActivity.class));
+                        startActivity(new Intent(getContext(), MyCompanyActivity.class));
 
                     } else {
                         //进入个人中心界面
                         ToastUtil.shortToast(getContext(), "请先绑定企业");
-                        Intent intent = new Intent(getActivity(), AvaterActivity.class);
+                        Intent intent = new Intent(getContext(), AvaterActivity.class);
                         startActivity(intent);
 
                     }
                 } else {
                     //未登录去登陆
-                    startActivity(new Intent(getActivity(), SignInActivity.class));
+                    startActivity(new Intent(getContext(), SignInActivity.class));
                 }
                 break;
             case R.id.ll_helper:
@@ -352,7 +352,7 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
 
                     }
                 });
-                cancel.setTextColor(Color.parseColor("#cccc33"));
+                cancel.setTextColor(getResources().getColor(R.color.main_status_yellow));
                 cancel.setTextSize(16);
 
                 final PromptButton sure = new PromptButton("拨      打", new PromptButtonListener() {
@@ -363,7 +363,7 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
                         startActivity(intent);
                     }
                 });
-                sure.setTextColor(Color.parseColor("#00bfdc"));
+                sure.setTextColor(getResources().getColor(R.color.main_status_blue));
                 sure.setTextSize(16);
                 promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
                         .round(8).loadingDuration(200);
@@ -372,11 +372,11 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.ll_questions:
                 //关于我们界面
-                startActivity(new Intent(getActivity(), AboutActivity.class));
+                startActivity(new Intent(getContext(), AboutActivity.class));
                 break;
             case R.id.ll_setting:
                 //设置界面
-                startActivity(new Intent(getActivity(), SettingActivity.class));
+                startActivity(new Intent(getContext(), SettingActivity.class));
                 break;
             default:
                 break;
