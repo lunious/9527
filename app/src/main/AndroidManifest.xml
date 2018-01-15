@@ -136,12 +136,6 @@
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".sign.SignFastActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:launchMode="singleTask"
-            android:theme="@style/AppTheme.Main"
-            android:windowSoftInputMode="adjustPan" />
-        <activity
             android:name=".sign.AboutActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"

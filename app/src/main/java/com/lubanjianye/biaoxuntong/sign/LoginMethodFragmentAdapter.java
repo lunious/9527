@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.ui.main.result;
+package com.lubanjianye.biaoxuntong.sign;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,26 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.ui.main.fragment.result
- * 文件名:   ResultFragmentAdapter
- * 创建者:   lunious
- * 创建时间: 2017/12/12  0:24
- * 描述:     TODO
+ * Created by 11645 on 2018/1/15.
  */
 
-public class ResultFragmentAdapter extends FragmentPagerAdapter {
+public class LoginMethodFragmentAdapter extends FragmentPagerAdapter {
 
     private List<String> mList = new ArrayList<>();
     private ArrayList<Fragment> mFragment = new ArrayList<>();
 
-    public ResultFragmentAdapter(List<String> list, FragmentManager fm) {
+    public LoginMethodFragmentAdapter(List<String> list, FragmentManager fm) {
         super(fm);
         this.mList = list;
-
-        for (int i = 0; i < mList.size(); i++) {
-            mFragment.add(ResultListFragment.getInstance(mList.get(i)));
-        }
+        mFragment.add(new ZhLoginFragment());
+        mFragment.add(new YzmLoginFragment());
     }
 
     @Override

@@ -9,7 +9,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -33,18 +32,11 @@ import org.greenrobot.eventbus.EventBus;
 import okhttp3.Headers;
 
 /**
- * 项目名:   AppLunious
- * 包名:     com.lubanjianye.biaoxuntong.sign
- * 文件名:   SignFastFragnent
- * 创建者:   lunious
- * 创建时间: 2017/12/13  21:52
- * 描述:     TODO
+ * Created by 11645 on 2018/1/15.
  */
 
-public class SignFastFragnent extends BaseFragment implements View.OnClickListener {
+public class YzmLoginFragment extends BaseFragment implements View.OnClickListener {
 
-    private LinearLayout llIvBack = null;
-    private AppCompatTextView mainBarName = null;
     private AppCompatEditText etRetrieveTel = null;
     private AppCompatEditText etRetrieveCodeInput = null;
     private AppCompatTextView retrieveSmsCall = null;
@@ -66,18 +58,16 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
 
     @Override
     public Object setLayout() {
-        return R.layout.fragment_sign_fast;
+        return R.layout.yzm_login;
     }
 
     @Override
     public void initView() {
-        llIvBack = getView().findViewById(R.id.ll_iv_back);
-        mainBarName = getView().findViewById(R.id.main_bar_name);
+
         etRetrieveTel = getView().findViewById(R.id.et_retrieve_tel);
         etRetrieveCodeInput = getView().findViewById(R.id.et_retrieve_code_input);
         retrieveSmsCall = getView().findViewById(R.id.retrieve_sms_call);
         btRetrieveSubmit = getView().findViewById(R.id.bt_retrieve_submit);
-        llIvBack.setOnClickListener(this);
         retrieveSmsCall.setOnClickListener(this);
         btRetrieveSubmit.setOnClickListener(this);
 
@@ -86,12 +76,11 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
 
     @Override
     public void initData() {
-        llIvBack.setVisibility(View.VISIBLE);
-        mainBarName.setText("验证码登陆");
         //创建对象
         promptDialog = new PromptDialog(getActivity());
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
+
     }
 
     @Override
@@ -121,22 +110,6 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
                 String input = s.toString();
                 mMachPhoneNum = RichTextParser.machPhoneNum(input);
 
-                //对提交控件的状态判定
-                if (mMachPhoneNum) {
-                    String smsCode = etRetrieveCodeInput.getText().toString().trim();
-
-                    if (!TextUtils.isEmpty(smsCode)) {
-                        btRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                        btRetrieveSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                    } else {
-                        btRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                        btRetrieveSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                    }
-                } else {
-                    btRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btRetrieveSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                }
-
                 if (length > 0 && length < 11) {
 
                     retrieveSmsCall.setAlpha(0.4f);
@@ -151,7 +124,7 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
                         }
                     } else {
 
-                        Toast.makeText(getContext(), "请输入正确的手机号码", Toast.LENGTH_SHORT).show();
+                        ToastUtil.shortBottonToast(getContext(), "请输入正确的手机号码");
                         retrieveSmsCall.setAlpha(0.4f);
                     }
                 } else if (length > 11) {
@@ -165,44 +138,11 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
             }
         });
 
-        etRetrieveCodeInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @SuppressWarnings("deprecation")
-            @Override
-            public void afterTextChanged(Editable s) {
-                int length = s.length();
-                if (length > 0 && mMachPhoneNum) {
-                    btRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    btRetrieveSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                } else {
-                    btRetrieveSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btRetrieveSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                }
-
-            }
-        });
-
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.ll_iv_back:
-                if (mTimer != null) {
-                    mTimer.onFinish();
-                    mTimer.cancel();
-                }
-                getActivity().onBackPressed();
-                break;
             case R.id.retrieve_sms_call:
                 requestSmsCode();
                 break;
@@ -278,7 +218,7 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
                     .post();
 
         } else {
-            ToastUtil.shortToast(getContext(), "别激动，休息一下吧...");
+            ToastUtil.shortBottonToast(getContext(), "别激动，休息一下吧...");
         }
     }
 
@@ -346,7 +286,7 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
                                 promptDialog.dismissImmediately();
                                 getActivity().onBackPressed();
                             } else {
-                                ToastUtil.shortToast(getContext(), message);
+                                ToastUtil.shortBottonToast(getContext(), message);
 
                             }
                         }
@@ -361,8 +301,18 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
                     .post();
 
         } else {
-            ToastUtil.shortToast(getContext(), "手机号或验证码有误");
+            ToastUtil.shortBottonToast(getContext(), "手机号或验证码有误");
         }
 
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        if (mTimer != null) {
+            mTimer.onFinish();
+            mTimer.cancel();
+        }
+        super.onDestroyView();
     }
 }

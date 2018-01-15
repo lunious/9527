@@ -145,7 +145,7 @@
         android:layout_marginLeft="@dimen/d30"
         android:layout_marginRight="@dimen/d30"
         android:layout_marginTop="@dimen/d38"
-        android:background="@drawable/bg_login_submit"
+        android:background="@drawable/button_selected"
         android:text="同意服务条款并注册"
         android:textColor="#FFFFFF"
         android:textSize="@dimen/s18" />

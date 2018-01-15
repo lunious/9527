@@ -1,6 +1,7 @@
 package com.lubanjianye.biaoxuntong.sign;
 
 import android.content.Intent;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
@@ -14,6 +15,7 @@ import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.flyco.tablayout.SlidingTabLayout;
 import com.igexin.sdk.PushManager;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
@@ -24,11 +26,15 @@ import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.ui.main.result.ResultFragmentAdapter;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import me.shaohui.shareutil.LoginUtil;
 import me.shaohui.shareutil.login.LoginListener;
@@ -53,20 +59,17 @@ import okhttp3.Headers;
 
 public class SignInFragment extends BaseFragment implements View.OnClickListener {
 
-    private PromptDialog promptDialog = null;
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
-    private AppCompatEditText etLoginUsername = null;
-    private AppCompatEditText etLoginPwd = null;
-    private AppCompatButton btLoginSubmit = null;
     private AppCompatTextView tvLoginForgetPwd = null;
-    private AppCompatButton btLoginRegister = null;
-    private AppCompatTextView tvLoginFast = null;
+    private AppCompatTextView btLoginRegister = null;
     private LinearLayout ivLoginWx = null;
     private LinearLayout ivLoginQq = null;
-
+    private SlidingTabLayout resulttStlTab = null;
+    private ViewPager resultVp = null;
 
     private LoginListener mLoginListener = null;
+    private PromptDialog promptDialog = null;
 
     private long id = 0;
     private String mobile = "";
@@ -78,6 +81,8 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
 
     private String clientID = PushManager.getInstance().getClientid(BiaoXunTong.getApplicationContext());
 
+    private final List<String> mList = new ArrayList<String>();
+    private LoginMethodFragmentAdapter mAdapter;
 
     @Override
     public Object setLayout() {
@@ -89,20 +94,16 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
 
         llIvBack = getView().findViewById(R.id.ll_iv_back);
         mainBarName = getView().findViewById(R.id.main_bar_name);
-        etLoginUsername = getView().findViewById(R.id.et_login_username);
-        etLoginPwd = getView().findViewById(R.id.et_login_pwd);
-        btLoginSubmit = getView().findViewById(R.id.bt_login_submit);
         tvLoginForgetPwd = getView().findViewById(R.id.tv_login_forget_pwd);
         btLoginRegister = getView().findViewById(R.id.bt_login_register);
-        tvLoginFast = getView().findViewById(R.id.tv_login_fast);
         ivLoginWx = getView().findViewById(R.id.ll_login_wx);
         ivLoginQq = getView().findViewById(R.id.ll_login_qq);
+        resulttStlTab = getView().findViewById(R.id.login_stl_tab);
+        resultVp = getView().findViewById(R.id.result_vp);
 
         llIvBack.setOnClickListener(this);
-        btLoginSubmit.setOnClickListener(this);
         tvLoginForgetPwd.setOnClickListener(this);
         btLoginRegister.setOnClickListener(this);
-        tvLoginFast.setOnClickListener(this);
         ivLoginWx.setOnClickListener(this);
         ivLoginQq.setOnClickListener(this);
 
@@ -112,85 +113,21 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
     @Override
     public void initData() {
         llIvBack.setVisibility(View.VISIBLE);
-        mainBarName.setText("登陆");
+        mainBarName.setText("");
 
-        //初始化控件状态数据
-        String holdUsername = (String) AppSharePreferenceMgr.get(getContext(), "username", "");
-        etLoginUsername.setText(holdUsername);
-        etLoginUsername.setSelection(holdUsername.length());
+        mList.add("密码登陆");
+        mList.add("验证码登陆");
+
+        mAdapter = new LoginMethodFragmentAdapter(mList, getFragmentManager());
+        resultVp.setAdapter(mAdapter);
+        resulttStlTab.setViewPager(resultVp);
 
         //创建对象
         promptDialog = new PromptDialog(getActivity());
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
 
-        etLoginUsername.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @SuppressWarnings("deprecation")
-            @Override
-            public void afterTextChanged(Editable s) {
-                String username = s.toString().trim();
-                if (username.length() > 0) {
-
-                } else {
-
-                }
-
-                String pwd = etLoginPwd.getText().toString().trim();
-                if (!TextUtils.isEmpty(pwd)) {
-                    btLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    btLoginSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                } else {
-                    btLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btLoginSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                }
-
-            }
-        });
-
-        etLoginPwd.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @SuppressWarnings("deprecation")
-            @Override
-            public void afterTextChanged(Editable s) {
-                int length = s.length();
-                if (length > 0) {
-
-                } else {
-                }
-
-                String username = etLoginUsername.getText().toString().trim();
-                if (TextUtils.isEmpty(username)) {
-                    ToastUtil.shortBottonToast(getContext(), "用户名未填写!");
-                }
-                String pwd = etLoginPwd.getText().toString().trim();
-                if (!TextUtils.isEmpty(pwd)) {
-                    btLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    btLoginSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                } else {
-                    btLoginSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btLoginSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                }
-            }
-        });
     }
 
     @Override
@@ -387,19 +324,9 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                 }
                 getActivity().onBackPressed();
                 break;
-            case R.id.bt_login_submit:
-                //账号密码登录
-                loginRequest();
-
-                break;
             case R.id.bt_login_register:
                 //用户注册
                 startActivity(new Intent(getActivity(), SignUpActivity.class));
-                break;
-            case R.id.tv_login_fast:
-                //快捷登陆
-                startActivity(new Intent(getActivity(), SignFastActivity.class));
-                getActivity().onBackPressed();
                 break;
             case R.id.tv_login_forget_pwd:
                 //重置密码
@@ -421,114 +348,4 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
 
     }
 
-
-    @SuppressWarnings("ConstantConditions")
-    private void loginRequest() {
-
-        final String username = etLoginUsername.getText().toString().trim();
-        final String password = etLoginPwd.getText().toString().trim();
-
-        if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(username)) {
-
-
-            promptDialog.showLoading("正在登陆");
-            //登录
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_LOGIN)
-                    .params("username", username)
-                    .params("password", password)
-                    .params("clientId", clientID)
-                    .success(new ISuccess() {
-                        @Override
-                        public void onSuccess(Headers headers, String response) {
-                            final JSONObject profileJson = JSON.parseObject(response);
-                            final String status = profileJson.getString("status");
-                            final String message = profileJson.getString("message");
-
-
-                            if ("200".equals(status)) {
-                                promptDialog.dismissImmediately();
-                                final JSONObject userInfo = JSON.parseObject(response).getJSONObject("data");
-                                id = userInfo.getLong("id");
-                                nickName = userInfo.getString("nickName");
-                                token = userInfo.getString("token");
-                                comid = userInfo.getString("comid");
-                                mobile = userInfo.getString("mobile");
-                                imageUrl = null;
-
-                                Log.d("IUGASUIDGUISADUIGYS", id + "");
-
-                                if (!"0".equals(comid)) {
-                                    RestClient.builder()
-                                            .url(BiaoXunTongApi.URL_GETCOMPANYNAME)
-                                            .params("userId", id)
-                                            .params("comId", comid)
-                                            .success(new ISuccess() {
-                                                @Override
-                                                public void onSuccess(Headers headers, String response) {
-                                                    final JSONObject profileCompany = JSON.parseObject(response);
-                                                    final String status = profileCompany.getString("status");
-                                                    final JSONObject data = profileCompany.getJSONObject("data");
-
-                                                    if ("200".equals(status)) {
-                                                        companyName = data.getString("qy");
-                                                    } else {
-                                                        companyName = null;
-                                                    }
-
-                                                    promptDialog.dismissImmediately();
-                                                    final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
-                                                    DatabaseManager.getInstance().getDao().insert(profile);
-                                                    holdAccount();
-                                                    AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
-                                                    EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
-
-                                                    getActivity().onBackPressed();
-                                                    ToastUtil.shortBottonToast(getContext(), "登陆成功");
-
-
-                                                }
-                                            })
-                                            .build()
-                                            .post();
-
-                                } else {
-
-                                    promptDialog.dismissImmediately();
-                                    final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
-                                    DatabaseManager.getInstance().getDao().insert(profile);
-                                    holdAccount();
-                                    AppSharePreferenceMgr.put(getContext(), EventMessage.LOGIN_SUCCSS, true);
-                                    EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
-                                    getActivity().onBackPressed();
-                                    ToastUtil.shortBottonToast(getContext(), "登陆成功");
-                                }
-
-
-                            } else {
-                                promptDialog.dismissImmediately();
-                                ToastUtil.shortToast(getContext(), message);
-
-                            }
-                        }
-                    })
-                    .build()
-                    .post();
-
-        } else {
-            ToastUtil.shortBottonToast(getContext(), "请输入正确的手机号!");
-        }
-
-    }
-
-    //保存账号信息
-    private void holdAccount() {
-        String username = etLoginUsername.getText().toString().trim();
-        if (!TextUtils.isEmpty(username)) {
-            if (AppSharePreferenceMgr.contains(getContext(), "username")) {
-                AppSharePreferenceMgr.remove(getContext(), "username");
-            }
-            AppSharePreferenceMgr.put(getContext(), "username", username);
-        }
-    }
 }

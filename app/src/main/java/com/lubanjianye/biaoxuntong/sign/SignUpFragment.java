@@ -111,20 +111,6 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                         String input = s.toString();
                         mMachPhoneNum = RichTextParser.machPhoneNum(input);
 
-                        if (mMachPhoneNum) {
-                            String smsCode = etRegisterCode.getText().toString().trim();
-                            String regPwd = etRegisterPwd.getText().toString().trim();
-                            if (!TextUtils.isEmpty(smsCode) && !TextUtils.isEmpty(regPwd)) {
-
-                                btRegisterSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                            } else {
-                                btRegisterSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                                btRegisterSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                            }
-                        } else {
-                            btRegisterSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                            btRegisterSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                        }
 
                         if (length > 0 && length < 11) {
                             tvRegisterSmsCall.setAlpha(0.4f);
@@ -164,13 +150,6 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
             public void afterTextChanged(Editable s) {
                 int length = s.length();
                 String pwd = etRegisterPwd.getText().toString().trim();
-                if (length > 0 && mMachPhoneNum && !TextUtils.isEmpty(pwd)) {
-                    btRegisterSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    btRegisterSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                } else {
-                    btRegisterSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btRegisterSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                }
 
             }
         });
@@ -202,14 +181,6 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                 }
                 if (TextUtils.isEmpty(smsCode)) {
                     ToastUtil.shortToast(getContext(), "验证码未填写");
-                }
-                String pwd = etRegisterPwd.getText().toString().trim();
-                if (!TextUtils.isEmpty(pwd)) {
-                    btRegisterSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    btRegisterSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                } else {
-                    btRegisterSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btRegisterSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 }
             }
         });

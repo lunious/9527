@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tl="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -12,141 +13,82 @@
 
         <include layout="@layout/fragment_main_bar" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/d48"
-            android:layout_marginLeft="@dimen/d30"
-            android:layout_marginRight="@dimen/d30"
-            android:layout_marginTop="@dimen/d28"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/et_login_username"
-                android:layout_width="@dimen/d0"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="请输入手机号"
-                android:maxLines="1"
-                android:minLines="1"
-                android:paddingLeft="@dimen/d4"
-                android:paddingRight="@dimen/d4"
-                android:textColor="#000000"
-                android:textColorHint="#c9c9c9"
-                android:textCursorDrawable="@null"
-                android:textSize="@dimen/s16" />
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/p8"
-            android:layout_marginLeft="@dimen/d30"
-            android:layout_marginRight="@dimen/d30"
-            android:background="#f9eeeeee" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/d48"
-            android:layout_marginLeft="@dimen/d30"
-            android:layout_marginRight="@dimen/d30"
-            android:layout_marginTop="@dimen/d16"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content"
+            android:background="@color/main_theme_color"
+            android:gravity="center_horizontal">
 
-
-            <android.support.v7.widget.AppCompatEditText
-                android:id="@+id/et_login_pwd"
-                android:layout_width="@dimen/d0"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@null"
-                android:hint="请输入密码"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:minLines="1"
-                android:paddingLeft="@dimen/d4"
-                android:paddingRight="@dimen/d4"
-                android:textColor="#000000"
-                android:textColorHint="#c9c9c9"
-                android:textCursorDrawable="@null"
-                android:textSize="@dimen/s16" />
-
+            <ImageView
+                android:layout_width="@dimen/d92"
+                android:layout_height="@dimen/d92"
+                android:src="@mipmap/moren_touxiang" />
         </LinearLayout>
 
-        <View
+        <com.flyco.tablayout.SlidingTabLayout
+            android:id="@+id/login_stl_tab"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/p8"
-            android:layout_marginLeft="@dimen/d30"
-            android:layout_marginRight="@dimen/d30"
-            android:background="#eeeeee" />
+            android:layout_height="@dimen/d45"
+            android:background="@color/main_theme_color"
+            tl:tl_indicator_color="@color/main_status_white"
+            tl:tl_indicator_height="@dimen/d6"
+            tl:tl_indicator_width="@dimen/d14"
+            tl:tl_indicator_style="TRIANGLE"
+            tl:tl_indicator_width_equal_title="true"
+            tl:tl_tab_padding="@dimen/d6"
+            tl:tl_tab_space_equal="true"
+            tl:tl_textAllCaps="true"
+            tl:tl_textSelectColor="@color/main_status_white"
+            tl:tl_textUnselectColor="@color/main_status_white"
+            tl:tl_textsize="@dimen/s16"
+            tl:tl_divider_color="@color/main_status_white"
+            tl:tl_divider_width="@dimen/p2"
+            tl:tl_divider_padding="@dimen/d12"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/result_vp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d200"
+            android:background="@color/main_status_white" />
+
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/d48"
             android:layout_marginLeft="@dimen/d24"
             android:layout_marginRight="@dimen/d24"
-            android:layout_marginTop="@dimen/d12"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tv_login_forget_pwd"
+                android:id="@+id/bt_login_register"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
                 android:gravity="center"
                 android:paddingBottom="@dimen/d4"
                 android:paddingLeft="@dimen/d4"
-                android:paddingTop="@dimen/d4"
-                android:text="忘记密码？"
+                android:paddingTop="@dimen/d2"
+                android:text="立即注册>>"
                 android:textColor="@color/main_theme_color"
                 android:textSize="@dimen/s14" />
 
 
             <android.support.v7.widget.AppCompatTextView
-                android:id="@+id/tv_login_fast"
+                android:id="@+id/tv_login_forget_pwd"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:gravity="center"
                 android:paddingBottom="@dimen/d4"
                 android:paddingLeft="@dimen/d4"
-                android:paddingTop="@dimen/d4"
-                android:text="快捷登陆"
-                android:textColor="@color/main_theme_color"
+                android:paddingTop="@dimen/d2"
+                android:text="忘记密码？"
+                android:textColor="@color/search_hint"
                 android:textSize="@dimen/s14" />
         </RelativeLayout>
 
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/bt_login_submit"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/d48"
-            android:layout_marginLeft="@dimen/d30"
-            android:layout_marginRight="@dimen/d30"
-            android:layout_marginTop="@dimen/d20"
-            android:background="@drawable/bg_login_submit"
-            android:text="登 陆"
-            android:textColor="@color/main_status_white"
-            android:textSize="@dimen/d18" />
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/bt_login_register"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/d48"
-            android:layout_marginLeft="@dimen/d30"
-            android:layout_marginRight="@dimen/d30"
-            android:layout_marginTop="@dimen/d16"
-            android:background="@drawable/bg_login_register"
-            android:text="注 册"
-            android:textColor="#aaaaaa"
-            android:textSize="@dimen/s18" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/d0"
-            android:layout_weight="3" />
 
     </LinearLayout>
 

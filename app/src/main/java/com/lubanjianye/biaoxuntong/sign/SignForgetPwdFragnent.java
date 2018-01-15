@@ -93,20 +93,6 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
                         String input = s.toString();
                         mMachPhoneNum = RichTextParser.machPhoneNum(input);
 
-                        if (mMachPhoneNum) {
-                            String smsCode = etNewCode.getText().toString().trim();
-                            String regPwd = etNewPwd.getText().toString().trim();
-                            if (!TextUtils.isEmpty(smsCode) && !TextUtils.isEmpty(regPwd)) {
-
-                                btNewSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                            } else {
-                                btNewSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                                btNewSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                            }
-                        } else {
-                            btNewSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                            btNewSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                        }
 
                         if (length > 0 && length < 11) {
                             tvNewSmsCall.setAlpha(0.4f);
@@ -132,30 +118,6 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
                 }
         );
 
-        etNewCode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @SuppressWarnings("deprecation")
-            @Override
-            public void afterTextChanged(Editable s) {
-                int length = s.length();
-                String pwd = etNewPwd.getText().toString().trim();
-                if (length > 0 && mMachPhoneNum && !TextUtils.isEmpty(pwd)) {
-                    btNewSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    btNewSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                } else {
-                    btNewSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btNewSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                }
-
-            }
-        });
 
         etNewPwd.addTextChangedListener(new TextWatcher() {
             @Override
@@ -183,14 +145,6 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
                 }
                 if (TextUtils.isEmpty(smsCode)) {
                     ToastUtil.shortToast(getContext(), "验证码未填写！");
-                }
-                String pwd = etNewPwd.getText().toString().trim();
-                if (!TextUtils.isEmpty(pwd)) {
-                    btNewSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    btNewSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                } else {
-                    btNewSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btNewSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
                 }
             }
         });
