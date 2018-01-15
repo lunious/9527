@@ -32,7 +32,7 @@
         android:layout_height="@dimen/d48"
         android:layout_marginLeft="@dimen/d30"
         android:layout_marginRight="@dimen/d30"
-        android:layout_marginTop="@dimen/d48"
+        android:layout_marginTop="@dimen/d38"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -67,7 +67,7 @@
         android:layout_height="@dimen/p6"
         android:layout_marginLeft="@dimen/d30"
         android:layout_marginRight="@dimen/d30"
-        android:background="#f9eeeeee" />
+        android:background="@color/main_status_blue" />
 
     <LinearLayout
 
@@ -104,10 +104,10 @@
             android:alpha="0.4"
             android:background="@drawable/bg_register_call_sms"
             android:gravity="center_vertical"
-            android:paddingBottom="@dimen/d4"
-            android:paddingLeft="@dimen/d6"
-            android:paddingRight="@dimen/d6"
-            android:paddingTop="@dimen/d4"
+            android:paddingBottom="@dimen/d6"
+            android:paddingLeft="@dimen/d8"
+            android:paddingRight="@dimen/d8"
+            android:paddingTop="@dimen/d6"
             android:text="@string/register_sms_hint"
             android:textColorHint="#c9c9c9"
             android:textSize="@dimen/s14" />
@@ -119,7 +119,7 @@
         android:layout_height="@dimen/p6"
         android:layout_marginLeft="@dimen/d30"
         android:layout_marginRight="@dimen/d30"
-        android:background="#f9eeeeee" />
+        android:background="@color/main_status_blue" />
 
     <android.support.v7.widget.AppCompatTextView
         android:id="@+id/btn_bind_submit"
