@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
@@ -56,7 +55,6 @@ public class AboutFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     public void initEvent() {
-
     }
 
     @Override

@@ -31,8 +31,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/d0"
                 android:layout_weight="1"
-                android:scrollbars="none"
                 android:overScrollMode="never"
+                android:scrollbars="none"
                 tools:ignore="RtlHardcoded">
 
                 <LinearLayout
@@ -73,6 +73,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="截止时间"
+                                android:textColor="@color/main_text_color"
                                 android:textSize="@dimen/s15" />
 
                             <android.support.v7.widget.AppCompatTextView
@@ -94,6 +95,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="发布时间"
+                                android:textColor="@color/main_text_color"
                                 android:textSize="@dimen/s15" />
 
                             <android.support.v7.widget.AppCompatTextView
@@ -102,7 +104,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/d10"
                                 android:text=""
-                                android:textColor="@color/main_text_color"
                                 android:textSize="@dimen/s15" />
 
                         </LinearLayout>
@@ -119,6 +120,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="项目编号"
+                            android:textColor="@color/main_text_color"
                             android:textSize="@dimen/s15" />
 
                         <android.support.v7.widget.AppCompatTextView
@@ -127,7 +129,6 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/d10"
                             android:text=""
-                            android:textColor="@color/main_text_color"
                             android:textSize="@dimen/s15" />
                     </LinearLayout>
 

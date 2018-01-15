@@ -7,7 +7,7 @@
     <com.youth.banner.Banner
         android:id="@+id/index_item_banner"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d130"
+        android:layout_height="@dimen/d138"
         android:background="@mipmap/default_banner"
         android:visibility="gone"
         app:indicator_drawable_selected="@color/main_theme_color"
