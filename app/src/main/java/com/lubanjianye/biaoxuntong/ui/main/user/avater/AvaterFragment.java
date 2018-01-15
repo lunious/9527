@@ -144,6 +144,7 @@ public class AvaterFragment extends BaseFragment implements View.OnClickListener
                 if ("点击绑定手机号".equals(tvUserMobile.getText().toString().trim())) {
                     //进入绑定手机号界面
                     startActivity(new Intent(getActivity(), BindMobileActivity.class));
+                    getActivity().onBackPressed();
                 } else {
                     //TODO
                 }

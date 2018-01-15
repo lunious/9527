@@ -29,6 +29,7 @@ import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
+
 import okhttp3.Headers;
 
 /**
@@ -287,6 +288,7 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
         final String username = etRetrieveTel.getText().toString().trim();
         final String password = etRetrieveCodeInput.getText().toString().trim();
 
+
         if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(username)) {
             //登录
             RestClient.builder()
@@ -359,7 +361,7 @@ public class SignFastFragnent extends BaseFragment implements View.OnClickListen
                     .post();
 
         } else {
-            ToastUtil.shortToast(getContext(), "请输入正确的手机号!");
+            ToastUtil.shortToast(getContext(), "手机号或验证码有误");
         }
 
     }

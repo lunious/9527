@@ -1,6 +1,8 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.avater;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.CountDownTimer;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
@@ -23,8 +25,12 @@ import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.IFailure;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
+import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.parser.RichTextParser;
+import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 
 import org.greenrobot.eventbus.EventBus;
@@ -50,7 +56,7 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
     private AppCompatEditText etBindTel = null;
     private AppCompatEditText etBindCode = null;
     private AppCompatTextView tvBindSmsCall = null;
-    private AppCompatButton btnBindSubmit = null;
+    private AppCompatTextView btnBindSubmit = null;
 
     private long id = 0;
     private String mobile = "";
@@ -89,7 +95,7 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
 
     @Override
     public void initData() {
-        mainBarName.setText("绑定手机号");
+        mainBarName.setText("绑定手机");
         llIvBack.setVisibility(View.VISIBLE);
         //创建对象
         promptDialog = new PromptDialog(getActivity());
@@ -124,20 +130,20 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
                 mMachPhoneNum = RichTextParser.machPhoneNum(input);
 
                 //对提交控件的状态判定
-                if (mMachPhoneNum) {
-                    String smsCode = etBindCode.getText().toString().trim();
-
-                    if (!TextUtils.isEmpty(smsCode)) {
-                        btnBindSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                        btnBindSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                    } else {
-                        btnBindSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                        btnBindSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                    }
-                } else {
-                    btnBindSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
-                    btnBindSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
-                }
+//                if (mMachPhoneNum) {
+//                    String smsCode = etBindCode.getText().toString().trim();
+//
+//                    if (!TextUtils.isEmpty(smsCode)) {
+//                        btnBindSubmit.setBackgroundResource(R.drawable.bg_login_submit);
+//                        btnBindSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
+//                    } else {
+//                        btnBindSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+//                        btnBindSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
+//                    }
+//                } else {
+//                    btnBindSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
+//                    btnBindSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
+//                }
 
                 if (length > 0 && length < 11) {
 
@@ -183,8 +189,8 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
             public void afterTextChanged(Editable s) {
                 int length = s.length();
                 if (length > 0 && mMachPhoneNum) {
-                    btnBindSubmit.setBackgroundResource(R.drawable.bg_login_submit);
-                    btnBindSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
+                    btnBindSubmit.setBackgroundResource(R.drawable.bg_other_login);
+                    btnBindSubmit.setTextColor(getResources().getColor(R.color.main_status_blue));
                 } else {
                     btnBindSubmit.setBackgroundResource(R.drawable.bg_login_submit_lock);
                     btnBindSubmit.setTextColor(getResources().getColor(R.color.main_status_white));
@@ -204,7 +210,6 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
                 requestSmsCode();
                 break;
             case R.id.btn_bind_submit:
-                promptDialog.showLoading("绑定中...");
                 BindRequest();
                 break;
             default:
@@ -266,14 +271,44 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
                             final String message = profileJson.getString("message");
 
                             if ("200".equals(status)) {
-                                ToastUtil.shortToast(getContext(), "验证码发送成功");
+                                ToastUtil.shortBottonToast(getContext(), "验证码发送成功");
+                            } else if ("手机号码已被注册".equals(message)) {
+                                if (mTimer != null) {
+                                    mTimer.onFinish();
+                                    mTimer.cancel();
+                                }
+                                final PromptButton cancel = new PromptButton("重新输入", new PromptButtonListener() {
+                                    @Override
+                                    public void onClick(PromptButton button) {
+
+                                    }
+                                });
+                                cancel.setTextColor(getResources().getColor(R.color.main_status_yellow));
+                                cancel.setTextSize(16);
+
+                                final PromptButton sure = new PromptButton("账号登录", new PromptButtonListener() {
+                                    @Override
+                                    public void onClick(PromptButton button) {
+                                        //后台清除登陆信息
+                                        DatabaseManager.getInstance().getDao().deleteAll();
+                                        AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
+                                        EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
+                                        startActivity(new Intent(getActivity(), SignInActivity.class));
+                                        getActivity().onBackPressed();
+                                    }
+                                });
+                                sure.setTextColor(getResources().getColor(R.color.main_status_blue));
+                                sure.setTextSize(16);
+                                promptDialog.getAlertDefaultBuilder().withAnim(true).cancleAble(false).touchAble(false)
+                                        .round(8).loadingDuration(200);
+                                promptDialog.showWarnAlert("该手机号已存在，是否去登录？", cancel, sure, true);
+
                             } else {
                                 if (mTimer != null) {
                                     mTimer.onFinish();
                                     mTimer.cancel();
                                 }
-                                ToastUtil.shortToast(getContext(), message);
-
+                                ToastUtil.shortBottonToast(getContext(), message);
                             }
                         }
                     })
@@ -291,7 +326,7 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
                     .post();
 
         } else {
-            ToastUtil.shortToast(getContext(), "别激动，休息一下吧...");
+            ToastUtil.shortBottonToast(getContext(), "别激动，休息一下吧...");
         }
 
     }
@@ -313,6 +348,8 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
         mobile = username;
 
         if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(username)) {
+
+            promptDialog.showLoading("绑定中...");
 
             //绑定手机号
             RestClient.builder()
@@ -340,14 +377,14 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
                                 DatabaseManager.getInstance().getDao().update(profile);
                                 EventBus.getDefault().post(new EventMessage(EventMessage.BIND_MOBILE_SUCCESS));
                                 getActivity().onBackPressed();
-                                ToastUtil.shortToast(getContext(), "绑定成功");
+                                ToastUtil.shortBottonToast(getContext(), "绑定成功");
                             } else {
                                 promptDialog.dismissImmediately();
                                 if (mTimer != null) {
                                     mTimer.onFinish();
                                     mTimer.cancel();
                                 }
-                                ToastUtil.shortToast(getContext(), message);
+                                ToastUtil.shortBottonToast(getContext(), message);
                             }
                         }
                     })
@@ -355,7 +392,7 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
                     .post();
 
         } else {
-            ToastUtil.shortToast(getContext(), "请输入正确的手机号!");
+            ToastUtil.shortBottonToast(getContext(), "手机号或验证码错误");
         }
 
 
@@ -367,6 +404,11 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
 
         if (promptDialog != null) {
             promptDialog.dismissImmediately();
+        }
+
+        if (mTimer != null) {
+            mTimer.onFinish();
+            mTimer.cancel();
         }
     }
 }
