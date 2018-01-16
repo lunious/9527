@@ -1,6 +1,7 @@
 package com.lubanjianye.biaoxuntong.ui.main.user;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;

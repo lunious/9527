@@ -31,6 +31,7 @@ public class GlideImageLoader extends ImageLoader {
                 .into(imageView);
 
     }
+
     //提供createImageView 方法，如果不用可以不重写这个方法，主要是方便自定义ImageView的创建
     @Override
     public ImageView createImageView(Context context) {

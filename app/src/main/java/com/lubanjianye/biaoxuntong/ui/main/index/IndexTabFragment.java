@@ -30,6 +30,7 @@ import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
@@ -143,7 +144,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
     public void requestData(int stu) {
 
         if (!NetUtil.isNetworkConnected(getContext())) {
-            ToastUtil.shortToast(getContext(), "网络出错，请检查网络设置！");
 
             if (mList.size() > 0) {
                 mList.clear();
@@ -175,7 +175,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                     token = users.get(0).getToken();
                 }
 
-                Log.d("SUHAUDGUGASDAS", "token===" + token);
 
                 OkGo.<String>post(BiaoXunTongApi.URL_CHECKTOKEN)
                         .params("userId", userId)
@@ -189,7 +188,41 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                     OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
                                             .params("userId", userId)
                                             .params("clientId", clientID)
+                                            .cacheMode(CacheMode.IF_NONE_CACHE_REQUEST)
+                                            .cacheTime(3600 * 24000)
                                             .execute(new StringCallback() {
+
+
+                                                @Override
+                                                public void onCacheSuccess(Response<String> response) {
+                                                    final JSONObject object = JSON.parseObject(response.body());
+                                                    String status = object.getString("status");
+                                                    String message = object.getString("message");
+
+                                                    if ("200".equals(status)) {
+                                                        final JSONArray ownerList = object.getJSONArray("data");
+                                                        BiaoXunTongLoader.stopLoading();
+                                                        if (mList.size() > 0) {
+                                                            mList.clear();
+                                                        }
+
+                                                        for (int i = 0; i < ownerList.size(); i++) {
+                                                            final JSONObject list = ownerList.getJSONObject(i);
+                                                            String name = list.getString("name");
+                                                            mList.add(name);
+                                                        }
+
+                                                        mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
+                                                        indexVp.setAdapter(mAdapter);
+                                                        indexStlTab.setViewPager(indexVp);
+                                                        mAdapter.notifyDataSetChanged();
+                                                        BiaoXunTongLoader.stopLoading();
+
+                                                    } else {
+                                                        ToastUtil.shortToast(getContext(), message);
+                                                    }
+                                                }
+
                                                 @Override
                                                 public void onSuccess(Response<String> response) {
 
@@ -228,10 +261,41 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                     AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
                                     EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
 
-
                                     OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
                                             .params("clientId", clientID)
+                                            .cacheMode(CacheMode.IF_NONE_CACHE_REQUEST)
+                                            .cacheTime(3600 * 24000)
                                             .execute(new StringCallback() {
+
+                                                @Override
+                                                public void onCacheSuccess(Response<String> response) {
+                                                    final JSONObject object = JSON.parseObject(response.body());
+                                                    String status = object.getString("status");
+                                                    String message = object.getString("message");
+
+                                                    if ("200".equals(status)) {
+                                                        final JSONArray ownerList = object.getJSONArray("data");
+
+                                                        if (mList.size() > 0) {
+                                                            mList.clear();
+                                                        }
+
+                                                        for (int i = 0; i < ownerList.size(); i++) {
+                                                            final JSONObject list = ownerList.getJSONObject(i);
+                                                            String name = list.getString("name");
+                                                            mList.add(name);
+                                                        }
+
+                                                        mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
+                                                        indexVp.setAdapter(mAdapter);
+                                                        indexStlTab.setViewPager(indexVp);
+                                                        mAdapter.notifyDataSetChanged();
+                                                        BiaoXunTongLoader.stopLoading();
+                                                    } else {
+                                                        ToastUtil.shortToast(getContext(), message);
+                                                    }
+                                                }
+
                                                 @Override
                                                 public void onSuccess(Response<String> response) {
                                                     final JSONObject object = JSON.parseObject(response.body());
@@ -269,6 +333,8 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
                                             OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
                                                     .params("clientId", clientID)
+                                                    .cacheMode(CacheMode.IF_NONE_CACHE_REQUEST)
+                                                    .cacheTime(3600 * 24000)
                                                     .execute(new StringCallback() {
                                                         @Override
                                                         public void onSuccess(Response<String> response) {
@@ -323,7 +389,38 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
             } else {
                 OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
                         .params("clientId", clientID)
+                        .cacheMode(CacheMode.IF_NONE_CACHE_REQUEST)
+                        .cacheTime(3600 * 24000)
                         .execute(new StringCallback() {
+
+                            @Override
+                            public void onCacheSuccess(Response<String> response) {
+                                final JSONObject object = JSON.parseObject(response.body());
+                                String status = object.getString("status");
+                                String message = object.getString("message");
+
+                                if ("200".equals(status)) {
+                                    final JSONArray ownerList = object.getJSONArray("data");
+                                    if (mList.size() > 0) {
+                                        mList.clear();
+                                    }
+
+                                    for (int i = 0; i < ownerList.size(); i++) {
+                                        final JSONObject list = ownerList.getJSONObject(i);
+                                        String name = list.getString("name");
+                                        mList.add(name);
+                                    }
+
+                                    mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
+                                    indexVp.setAdapter(mAdapter);
+                                    indexStlTab.setViewPager(indexVp);
+                                    mAdapter.notifyDataSetChanged();
+                                    BiaoXunTongLoader.stopLoading();
+                                } else {
+                                    ToastUtil.shortToast(getContext(), message);
+                                }
+                            }
+
                             @Override
                             public void onSuccess(Response<String> response) {
                                 final JSONObject object = JSON.parseObject(response.body());

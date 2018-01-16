@@ -20,10 +20,6 @@ import com.lubanjianye.biaoxuntong.R;
 
 public class ToastUtil {
 
-
-    //对话框时长号(毫秒)
-    private static int duration = 100;
-
     //自定义toast对象
     private static Toast toast;
 
@@ -47,6 +43,7 @@ public class ToastUtil {
         } else {
             TextView textView = (TextView) toast.getView().findViewById(R.id.sys_show_toast_txt);
             textView.setText(message);
+            toast.setDuration(Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.CENTER, 0, 0);
             toast.show();
         }
@@ -66,6 +63,7 @@ public class ToastUtil {
         } else {
             TextView textView = (TextView) toast.getView().findViewById(R.id.sys_show_toast_txt);
             textView.setText(message);
+            toast.setDuration(Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.BOTTOM, 0, 240);
             toast.show();
         }

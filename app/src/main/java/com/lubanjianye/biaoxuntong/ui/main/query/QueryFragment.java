@@ -47,6 +47,7 @@ import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
@@ -160,7 +161,23 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
         datas = new ArrayList<>();
 
         OkGo.<String>post("http://www.lubanjianye.com/query/vipNames")
+                .cacheMode(CacheMode.IF_NONE_CACHE_REQUEST)
+                .cacheTime(3600 * 48000)
                 .execute(new StringCallback() {
+
+                    @Override
+                    public void onCacheSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
+                        JSONArray array = object.getJSONArray("data");
+
+                        if (array != null) {
+                            for (int j = 0; j < array.size(); j++) {
+                                datas.add(array.get(j).toString());
+                            }
+                            initMarqueeView();
+                        }
+                    }
+
                     @Override
                     public void onSuccess(Response<String> response) {
                         final JSONObject object = JSON.parseObject(response.body());
