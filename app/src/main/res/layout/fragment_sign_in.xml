@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/d16">
+        android:paddingBottom="@dimen/d12">
 
         <include layout="@layout/fragment_main_bar" />
 
@@ -21,30 +21,30 @@
             android:gravity="center_horizontal">
 
             <ImageView
-                android:layout_width="@dimen/d92"
-                android:layout_height="@dimen/d92"
+                android:layout_width="@dimen/d80"
+                android:layout_height="@dimen/d80"
                 android:src="@mipmap/moren_touxiang" />
         </LinearLayout>
 
         <com.flyco.tablayout.SlidingTabLayout
             android:id="@+id/login_stl_tab"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/d45"
+            android:layout_height="@dimen/d42"
             android:background="@color/main_theme_color"
+            tl:tl_divider_color="@color/main_status_white"
+            tl:tl_divider_padding="@dimen/d12"
+            tl:tl_divider_width="@dimen/p2"
             tl:tl_indicator_color="@color/main_status_white"
-            tl:tl_indicator_height="@dimen/d6"
-            tl:tl_indicator_width="@dimen/d14"
+            tl:tl_indicator_height="@dimen/d4"
             tl:tl_indicator_style="TRIANGLE"
+            tl:tl_indicator_width="@dimen/d12"
             tl:tl_indicator_width_equal_title="true"
             tl:tl_tab_padding="@dimen/d6"
             tl:tl_tab_space_equal="true"
             tl:tl_textAllCaps="true"
             tl:tl_textSelectColor="@color/main_status_white"
             tl:tl_textUnselectColor="@color/main_status_white"
-            tl:tl_textsize="@dimen/s16"
-            tl:tl_divider_color="@color/main_status_white"
-            tl:tl_divider_width="@dimen/p2"
-            tl:tl_divider_padding="@dimen/d12"/>
+            tl:tl_textsize="@dimen/s16" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/result_vp"

@@ -2,15 +2,9 @@ package com.lubanjianye.biaoxuntong.sign;
 
 import android.content.Intent;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.AppCompatButton;
-import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
@@ -26,7 +20,6 @@ import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.net.RestClient;
 import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
-import com.lubanjianye.biaoxuntong.ui.main.result.ResultFragmentAdapter;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
@@ -42,8 +35,6 @@ import me.shaohui.shareutil.login.LoginPlatform;
 import me.shaohui.shareutil.login.LoginResult;
 import me.shaohui.shareutil.login.result.QQToken;
 import me.shaohui.shareutil.login.result.QQUser;
-import me.shaohui.shareutil.login.result.WeiboToken;
-import me.shaohui.shareutil.login.result.WeiboUser;
 import me.shaohui.shareutil.login.result.WxToken;
 import me.shaohui.shareutil.login.result.WxUser;
 import okhttp3.Headers;
@@ -348,4 +339,13 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
 
     }
 
+    @Override
+    public void onSupportVisible() {
+        super.onSupportVisible();
+        if (resulttStlTab != null) {
+            resulttStlTab.setCurrentTab(0);
+            resulttStlTab.setViewPager(resultVp);
+            resulttStlTab.notifyDataSetChanged();
+        }
+    }
 }

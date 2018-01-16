@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -48,7 +47,7 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
     protected EditText etRegisterCode = null;
     protected TextView tvRegisterSmsCall = null;
     protected EditText etRegisterPwd = null;
-    protected Button btRegisterSubmit = null;
+    protected AppCompatTextView btRegisterSubmit = null;
     protected TextView tvZhucexieyi = null;
 
 
@@ -177,10 +176,10 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                 String username = etRegisterUsername.getText().toString().trim();
                 String smsCode = etRegisterCode.getText().toString().trim();
                 if (TextUtils.isEmpty(username)) {
-                    ToastUtil.shortToast(getContext(), "用户名未填写");
+                    ToastUtil.shortBottonToast(getContext(), "用户名未填写");
                 }
                 if (TextUtils.isEmpty(smsCode)) {
-                    ToastUtil.shortToast(getContext(), "验证码未填写");
+                    ToastUtil.shortBottonToast(getContext(), "验证码未填写");
                 }
             }
         });
@@ -227,14 +226,14 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                             final String status = profileJson.getString("status");
                             final String message = profileJson.getString("message");
                             if ("200".equals(status)) {
-                                ToastUtil.shortToast(getContext(), "验证码发送成功");
+                                ToastUtil.shortBottonToast(getContext(), "验证码发送成功");
 
                             } else {
                                 if (mTimer != null) {
                                     mTimer.onFinish();
                                     mTimer.cancel();
                                 }
-                                ToastUtil.shortToast(getContext(), message);
+                                ToastUtil.shortBottonToast(getContext(), message);
                             }
                         }
                     })
@@ -252,74 +251,78 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                     .post();
 
         } else {
-            ToastUtil.shortToast(getContext(), "别激动，休息一下吧...");
+            ToastUtil.shortBottonToast(getContext(), "别激动，休息一下吧...");
         }
     }
 
     //请求注册
     private void requestRegister() {
-        promptDialog.showLoading("正在注册...");
 
         final String mobile = etRegisterUsername.getText().toString().trim();
         final String code = etRegisterCode.getText().toString().trim();
         final String pass = etRegisterPwd.getText().toString().trim();
         if (TextUtils.isEmpty(mobile)) {
-            ToastUtil.shortToast(getContext(), "请输入手机号");
+            ToastUtil.shortBottonToast(getContext(), "请输入手机号");
 
             return;
         }
         if (!mMachPhoneNum || TextUtils.isEmpty(code)) {
-            ToastUtil.shortToast(getContext(), "验证码不正确");
+            ToastUtil.shortBottonToast(getContext(), "验证码不正确");
 
             return;
         }
         if (TextUtils.isEmpty(pass)) {
-            ToastUtil.shortToast(getContext(), "密码格式不对");
+            ToastUtil.shortBottonToast(getContext(), "密码格式不对");
             return;
         }
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_REGISTER)
-                .params("mobile", mobile)
-                .params("code", mobile + "_" + code)
-                .params("pass", pass)
-                .success(new ISuccess() {
-                    @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject profileJson = JSON.parseObject(response);
-                        final String status = profileJson.getString("status");
-                        final String message = profileJson.getString("message");
-                        if ("200".equals(status)) {
+        if (!TextUtils.isEmpty(mobile) && !TextUtils.isEmpty(code) && !TextUtils.isEmpty(pass)) {
+            promptDialog.showLoading("正在注册...");
+
+            RestClient.builder()
+                    .url(BiaoXunTongApi.URL_REGISTER)
+                    .params("mobile", mobile)
+                    .params("code", mobile + "_" + code)
+                    .params("pass", pass)
+                    .success(new ISuccess() {
+                        @Override
+                        public void onSuccess(Headers headers, String response) {
+                            final JSONObject profileJson = JSON.parseObject(response);
+                            final String status = profileJson.getString("status");
+                            final String message = profileJson.getString("message");
+                            if ("200".equals(status)) {
+                                if (mTimer != null) {
+                                    mTimer.onFinish();
+                                    mTimer.cancel();
+                                }
+                                promptDialog.dismissImmediately();
+                                ToastUtil.shortBottonToast(getContext(), "注册成功，请登录！");
+                                //跳到登陆页面
+                                startActivity(new Intent(getActivity(), SignInActivity.class));
+                                getActivity().onBackPressed();
+                                holdAccount();
+                            } else {
+                                promptDialog.dismissImmediately();
+                                ToastUtil.shortBottonToast(getContext(), message);
+                            }
+
+                        }
+                    })
+                    .failure(new IFailure() {
+                        @Override
+                        public void onFailure() {
                             if (mTimer != null) {
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
-                            promptDialog.dismissImmediately();
-                            ToastUtil.shortToast(getContext(), "注册成功，请登录！");
-                            //跳到登陆页面
-                            startActivity(new Intent(getActivity(), SignInActivity.class));
-                            getActivity().onBackPressed();
-                            holdAccount();
-                        } else {
-                            promptDialog.dismissImmediately();
-                            ToastUtil.shortToast(getContext(), message);
+                            ToastUtil.shortBottonToast(getContext(), "注册失败！");
                         }
 
-                    }
-                })
-                .failure(new IFailure() {
-                    @Override
-                    public void onFailure() {
-                        if (mTimer != null) {
-                            mTimer.onFinish();
-                            mTimer.cancel();
-                        }
-                        ToastUtil.shortToast(getContext(), "注册失败！");
-                    }
+                    })
+                    .build()
+                    .post();
+        }
 
-                })
-                .build()
-                .post();
     }
 
     //保存账号信息
@@ -341,7 +344,6 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                     mTimer.onFinish();
                     mTimer.cancel();
                 }
-                getActivity().finish();
                 getActivity().onBackPressed();
                 break;
             case R.id.tv_register_sms_call:
@@ -353,10 +355,19 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                 requestRegister();
                 break;
             case R.id.tv_zhucexieyi:
-                startActivity(new Intent(getActivity(), ZhuCeXYActivity.class));
+                startActivity(new Intent(getContext(), ZhuCeXYActivity.class));
                 break;
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (mTimer != null) {
+            mTimer.onFinish();
+            mTimer.cancel();
+        }
+        super.onDestroyView();
     }
 }

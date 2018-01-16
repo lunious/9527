@@ -15,10 +15,10 @@
 
 
         <ImageView
-            android:layout_width="@dimen/d24"
-            android:layout_height="@dimen/d24"
+            android:layout_width="@dimen/d18"
+            android:layout_height="@dimen/d18"
             android:layout_gravity="center"
-            android:layout_marginLeft="@dimen/d10"
+            android:layout_marginLeft="@dimen/d6"
             android:src="@mipmap/phone_num" />
 
         <android.support.v7.widget.AppCompatEditText
@@ -31,8 +31,7 @@
             android:inputType="phone"
             android:maxLines="1"
             android:minLines="1"
-            android:paddingLeft="@dimen/d6"
-            android:paddingRight="@dimen/d4"
+            android:paddingLeft="@dimen/d8"
             android:textColor="#000000"
             android:textColorHint="#c9c9c9"
             android:textCursorDrawable="@null"
@@ -69,8 +68,7 @@
             android:inputType="text"
             android:maxLines="1"
             android:minLines="1"
-            android:paddingLeft="@dimen/d4"
-            android:paddingRight="@dimen/d4"
+            android:paddingLeft="@dimen/d8"
             android:textColor="#000000"
             android:textColorHint="#c9c9c9"
             android:textCursorDrawable="@null"
@@ -104,7 +102,7 @@
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/bt_retrieve_submit"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d42"
+        android:layout_height="@dimen/d38"
         android:layout_marginLeft="@dimen/d30"
         android:layout_marginRight="@dimen/d30"
         android:layout_marginTop="@dimen/d20"
@@ -112,6 +110,6 @@
         android:gravity="center"
         android:text="登 陆"
         android:textColor="@color/main_status_white"
-        android:textSize="@dimen/d18" />
+        android:textSize="@dimen/d16" />
 
 </LinearLayout>
