@@ -16,9 +16,7 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.AboutActivity;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
@@ -31,6 +29,9 @@ import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.loader.GlideImageLoader;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 
@@ -42,7 +43,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-import okhttp3.Headers;
 
 /**
  * 项目名:   AppLunious
@@ -251,13 +251,13 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
     }
 
     public void initBanner() {
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETINDEXBANNER)
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXBANNER)
                 .params("imgType", 2)
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
 
                         String status = object.getString("status");
 
@@ -277,11 +277,8 @@ public class UserTabFragment extends BaseFragment implements View.OnClickListene
                         urls.add(url_3);
                         banner.setImages(urls).setImageLoader(new GlideImageLoader()).start();
                         banner.setDelayTime(4000);
-
                     }
-                })
-                .build()
-                .post();
+                });
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {

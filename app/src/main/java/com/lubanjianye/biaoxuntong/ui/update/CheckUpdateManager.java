@@ -9,15 +9,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.bean.Version;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.IFailure;
-import com.lubanjianye.biaoxuntong.net.callback.IRequest;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.util.appinfo.AppApplicationMgr;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
-
-import okhttp3.Headers;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 /**
  * 项目名:   AppLunious
@@ -56,20 +53,18 @@ public class CheckUpdateManager {
 
         Log.d("JHBHJASBDASDAS", versionCode + "");
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_UPDATE)
+        OkGo.<String>post(BiaoXunTongApi.URL_UPDATE)
                 .params("versionCode", versionCode)
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
                         if ("200".equals(status)) {
                             final JSONObject data = object.getJSONObject("data");
                             String name = data.getString("name");
                             String content = data.getString("content");
-//                            UpdateActivity.show((Activity) mContext, name, content);
                             UpdateActivity.show((Activity) mContext, name, content);
 
                         } else if ("201".equals(status)) {
@@ -83,36 +78,25 @@ public class CheckUpdateManager {
                         if (mIsShowDialog) {
                             mWaitDialog.dismiss();
                         }
-
                     }
-                })
-                .failure(new IFailure() {
+
                     @Override
-                    public void onFailure() {
+                    public void onError(Response<String> response) {
                         DialogHelper.getMessageDialog(mContext, "网络异常，无法获取新版本信息").show();
-
                         if (mIsShowDialog) {
                             mWaitDialog.dismiss();
                         }
-                    }
-
-
-                })
-                .onRequest(new IRequest() {
-                    @Override
-                    public void onRequestStart() {
-
+                        super.onError(response);
                     }
 
                     @Override
-                    public void onRequestEnd() {
+                    public void onFinish() {
                         if (mIsShowDialog) {
                             mWaitDialog.dismiss();
                         }
+                        super.onFinish();
                     }
-                })
-                .build()
-                .post();
+                });
 
     }
 

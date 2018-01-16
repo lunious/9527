@@ -17,12 +17,13 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -37,7 +38,6 @@ import me.shaohui.shareutil.login.result.QQToken;
 import me.shaohui.shareutil.login.result.QQUser;
 import me.shaohui.shareutil.login.result.WxToken;
 import me.shaohui.shareutil.login.result.WxUser;
-import okhttp3.Headers;
 
 /**
  * 项目名:   AppLunious
@@ -139,37 +139,36 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                         String openid = mToken.getOpenid();
                         imageUrl = user.getqZoneHeadImageLarge();
 
-                        RestClient.builder()
-                                .url(BiaoXunTongApi.URL_QQLOGIN)
+                        OkGo.<String>post(BiaoXunTongApi.URL_QQLOGIN)
                                 .params("Source", "3")
                                 .params("qq", openid)
                                 .params("clientId", clientID)
-                                .success(new ISuccess() {
+                                .execute(new StringCallback() {
                                     @Override
-                                    public void onSuccess(Headers headers, String response) {
-                                        final JSONObject profileJson = JSON.parseObject(response);
+                                    public void onSuccess(Response<String> response) {
+                                        final JSONObject profileJson = JSON.parseObject(response.body());
                                         final String status = profileJson.getString("status");
                                         final String message = profileJson.getString("message");
 
                                         if ("200".equals(status)) {
                                             promptDialog.dismissImmediately();
-                                            final JSONObject userInfo = JSON.parseObject(response).getJSONObject("data");
+                                            final JSONObject userInfo = JSON.parseObject(response.body()).getJSONObject("data");
                                             id = userInfo.getLong("id");
-                                            token = headers.get("token");
+                                            token = response.headers().get("token");
                                             mobile = userInfo.getString("mobile");
                                             comid = userInfo.getString("comid");
 
                                             Log.d("IUGASUIDGUISADUIGYS", id + "");
 
                                             if (!"0".equals(comid)) {
-                                                RestClient.builder()
-                                                        .url(BiaoXunTongApi.URL_GETCOMPANYNAME)
+
+                                                OkGo.<String>post(BiaoXunTongApi.URL_GETCOMPANYNAME)
                                                         .params("userId", id)
                                                         .params("comId", comid)
-                                                        .success(new ISuccess() {
+                                                        .execute(new StringCallback() {
                                                             @Override
-                                                            public void onSuccess(Headers headers, String response) {
-                                                                final JSONObject profileCompany = JSON.parseObject(response);
+                                                            public void onSuccess(Response<String> response) {
+                                                                final JSONObject profileCompany = JSON.parseObject(response.body());
                                                                 final String status = profileCompany.getString("status");
                                                                 final JSONObject data = profileCompany.getJSONObject("data");
                                                                 if ("200".equals(status)) {
@@ -183,11 +182,9 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                                                 EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_SUCCSS));
                                                                 getActivity().onBackPressed();
                                                                 ToastUtil.shortBottonToast(getContext(), "登陆成功");
-
                                                             }
-                                                        })
-                                                        .build()
-                                                        .post();
+                                                        });
+
 
                                             } else {
                                                 final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
@@ -204,9 +201,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                             ToastUtil.shortToast(getContext(), message);
                                         }
                                     }
-                                })
-                                .build()
-                                .post();
+                                });
                         break;
                     case LoginPlatform.WX:
                         WxUser wxUser = (WxUser) result.getUserInfo();
@@ -216,35 +211,33 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                         String Oppenid = wxUser.getOpenId();
                         imageUrl = wxUser.getHeadImageUrl();
 
-                        RestClient.builder()
-                                .url(BiaoXunTongApi.URL_WEIXINLOGIN)
+                        OkGo.<String>post(BiaoXunTongApi.URL_WEIXINLOGIN)
                                 .params("Source", 1)
                                 .params("Oppenid", Oppenid)
                                 .params("clientId", clientID)
-                                .success(new ISuccess() {
+                                .execute(new StringCallback() {
                                     @Override
-                                    public void onSuccess(Headers headers, String response) {
-                                        final JSONObject profileJson = JSON.parseObject(response);
+                                    public void onSuccess(Response<String> response) {
+                                        final JSONObject profileJson = JSON.parseObject(response.body());
                                         final String status = profileJson.getString("status");
                                         final String message = profileJson.getString("message");
                                         if ("200".equals(status)) {
                                             promptDialog.dismissImmediately();
-                                            final JSONObject userInfo = JSON.parseObject(response).getJSONObject("data");
+                                            final JSONObject userInfo = JSON.parseObject(response.body()).getJSONObject("data");
                                             id = userInfo.getLong("id");
-                                            token = headers.get("token");
+                                            token = response.headers().get("token");
                                             comid = userInfo.getString("comid");
                                             mobile = userInfo.getString("mobile");
                                             companyName = null;
 
                                             if (!"0".equals(comid)) {
-                                                RestClient.builder()
-                                                        .url(BiaoXunTongApi.URL_GETCOMPANYNAME)
+                                                OkGo.<String>post(BiaoXunTongApi.URL_GETCOMPANYNAME)
                                                         .params("userId", id)
                                                         .params("comId", comid)
-                                                        .success(new ISuccess() {
+                                                        .execute(new StringCallback() {
                                                             @Override
-                                                            public void onSuccess(Headers headers, String response) {
-                                                                final JSONObject profileCompany = JSON.parseObject(response);
+                                                            public void onSuccess(Response<String> response) {
+                                                                final JSONObject profileCompany = JSON.parseObject(response.body());
                                                                 final String status = profileCompany.getString("status");
                                                                 final JSONObject data = profileCompany.getJSONObject("data");
 
@@ -260,9 +253,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                                                 getActivity().onBackPressed();
                                                                 ToastUtil.shortBottonToast(getContext(), "登陆成功");
                                                             }
-                                                        })
-                                                        .build()
-                                                        .post();
+                                                        });
 
                                             } else {
                                                 final UserProfile profile = new UserProfile(id, mobile, nickName, token, comid, imageUrl, companyName);
@@ -279,10 +270,7 @@ public class SignInFragment extends BaseFragment implements View.OnClickListener
                                             ToastUtil.shortToast(getContext(), message);
                                         }
                                     }
-                                })
-                                .build()
-                                .post();
-
+                                });
 
                         break;
                     default:

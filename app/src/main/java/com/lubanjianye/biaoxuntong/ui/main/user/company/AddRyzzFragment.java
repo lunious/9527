@@ -1,7 +1,6 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.company;
 
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
@@ -19,20 +18,20 @@ import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.util.datapicker.CustomDatePicker;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import okhttp3.Headers;
 
 /**
  * 项目名:   LBBXT
@@ -177,7 +176,7 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
             case R.id.btn_add:
                 //添加条件
                 if (one == null) {
-                    ToastUtil.shortToast(getContext(),"请添加完整条件！");
+                    ToastUtil.shortToast(getContext(), "请添加完整条件！");
                 }
                 if (one != null) {
                     text01.setText(one + (two == null ? "" : ("+" + two)) + (three == null ? "" : ("+" + three)) + (four == null ? "" : ("+" + four)));
@@ -197,7 +196,7 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
 
 
                 if (!hasTJ) {
-                    ToastUtil.shortToast(getContext(),"请添加人员资质条件！");
+                    ToastUtil.shortToast(getContext(), "请添加人员资质条件！");
                 } else {
 
                     List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
@@ -212,13 +211,11 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
 
 
                     if (TextUtils.isEmpty(ryname)) {
-                        ToastUtil.shortToast(getContext(),"请输入人员姓名!");
+                        ToastUtil.shortToast(getContext(), "请输入人员姓名!");
                     } else {
                         promptDialog.showLoading("提交中");
 
-
-                        RestClient.builder()
-                                .url(BiaoXunTongApi.URL_ADDRYZZ)
+                        OkGo.<String>post(BiaoXunTongApi.URL_ADDRYZZ)
                                 .params("t_ryzz_query_bxts[0].lx_id", lx_id)
                                 .params("t_ryzz_query_bxts[0].user_id", id)
                                 .params("t_ryzz_query_bxts[0].ry_id", "")
@@ -231,11 +228,10 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
                                 .params("t_ryzz_query_bxts[0].yxq_from", stratTime)
                                 .params("t_ryzz_query_bxts[0].yxq_to", endTime)
                                 .params("t_ryzz_query_bxts[0].ryname", ryname)
-                                .success(new ISuccess() {
+                                .execute(new StringCallback() {
                                     @Override
-                                    public void onSuccess(Headers headers, String response) {
-
-                                        final JSONObject object = JSON.parseObject(response);
+                                    public void onSuccess(Response<String> response) {
+                                        final JSONObject object = JSON.parseObject(response.body());
                                         String status = object.getString("status");
                                         String message = object.getString("message");
                                         if ("200".equals(status)) {
@@ -243,11 +239,9 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
                                         } else {
                                             promptDialog.showError(message);
                                         }
-
                                     }
-                                })
-                                .build()
-                                .post();
+                                });
+
 
                     }
 
@@ -336,21 +330,19 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
      */
     public void loadZZlX() {
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETALLRYLX)
+        OkGo.<String>post(BiaoXunTongApi.URL_GETALLRYLX)
                 .params("lx_code", "")
                 .params("zg_code", "")
                 .params("zg_mcdj", "")
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
                         if ("200".equals(status)) {
 
-                            final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
 
                             for (int i = 0; i < array.size(); i++) {
 
@@ -404,11 +396,9 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
                                 }
                             });
                         }
-
                     }
-                })
-                .build()
-                .post();
+                });
+
 
     }
 
@@ -418,21 +408,20 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
      */
     public void loadMC(final String lx_code) {
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETALLRYLX)
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETALLRYLX)
                 .params("lx_code", lx_code)
                 .params("zg_code", "")
                 .params("zg_mcdj", "")
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
                         if ("200".equals(status)) {
 
-                            final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
 
                             for (int i = 0; i < array.size(); i++) {
 
@@ -487,9 +476,7 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
                         }
 
                     }
-                })
-                .build()
-                .post();
+                });
 
     }
 
@@ -498,21 +485,19 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
      */
     public void loadMCDJ(String zg_code) {
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETALLRYLX)
+        OkGo.<String>post(BiaoXunTongApi.URL_GETALLRYLX)
                 .params("lx_code", "")
                 .params("zg_code", zg_code)
                 .params("zg_mcdj", "")
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
                         if ("200".equals(status)) {
 
-                            final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
 
                             for (int i = 0; i < array.size(); i++) {
 
@@ -564,11 +549,9 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
                                 }
                             });
                         }
-
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
     /**
@@ -576,22 +559,20 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
      */
     public void loadZY(String zg_mcdj) {
 
-
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETALLRYLX)
+        OkGo.<String>post(BiaoXunTongApi.URL_GETALLRYLX)
                 .params("lx_code", "")
                 .params("zg_code", "")
                 .params("zg_mcdj", zg_mcdj)
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
+                    public void onSuccess(Response<String> response) {
 
-                        final JSONObject object = JSON.parseObject(response);
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
                         if ("200".equals(status)) {
 
-                            final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
 
                             for (int i = 0; i < array.size(); i++) {
 
@@ -635,9 +616,8 @@ public class AddRyzzFragment extends BaseFragment implements View.OnClickListene
                         }
 
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
     @Override

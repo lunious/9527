@@ -23,14 +23,13 @@ import com.lubanjianye.biaoxuntong.bean.CompanySgyjListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
 
 /**
  * 项目名:   LBBXT
@@ -150,7 +149,6 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
         rlvQyyj.setNestedScrollingEnabled(false);
 
 
-
     }
 
     @Override
@@ -226,14 +224,14 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
             token = users.get(0).getToken();
         }
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_SUITRESULTDETAIl + sfId)
+
+        OkGo.<String>post(BiaoXunTongApi.URL_SUITRESULTDETAIl + sfId)
                 .params("token", token)
                 .params("userId", id)
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
                         if ("200".equals(status)) {
                             companyDetailStatusView.showContent();
@@ -276,11 +274,8 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                             }
 
                         }
-
                     }
-                })
-                .build()
-                .post();
+                });
 
     }
 
@@ -321,15 +316,14 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
             id = users.get(0).getId();
             token = users.get(0).getToken();
         }
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_COMPANYQYZZ + sfId)
+
+        OkGo.<String>post(BiaoXunTongApi.URL_COMPANYQYZZ + sfId)
                 .params("userId", id)
                 .params("token", token)
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         final JSONArray array = object.getJSONArray("data");
 
                         if (array.size() > 0) {
@@ -347,12 +341,8 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                                 tvQyzzTip.setVisibility(View.VISIBLE);
                             }
                         }
-
-
                     }
-                })
-                .build()
-                .post();
+                });
 
 
     }
@@ -366,15 +356,13 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
             token = users.get(0).getToken();
         }
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_COMPANYRYZZ + sfId)
+        OkGo.<String>post(BiaoXunTongApi.URL_COMPANYRYZZ + sfId)
                 .params("userId", id)
                 .params("token", token)
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         final JSONArray array = object.getJSONArray("data");
 
                         if (array.size() > 0) {
@@ -392,12 +380,9 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                                 tvRyzzTip.setVisibility(View.VISIBLE);
                             }
                         }
-
-
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
     public void requestQyyjData() {
@@ -410,15 +395,13 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
             token = users.get(0).getToken();
         }
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_COMPANYSGYJ + sfId)
+        OkGo.<String>post(BiaoXunTongApi.URL_COMPANYSGYJ + sfId)
                 .params("userId", id)
                 .params("token", token)
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
                         final JSONArray array = object.getJSONArray("data");
 
@@ -439,12 +422,9 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                             }
 
                         }
-
-
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
 
@@ -552,7 +532,7 @@ public class CompanyDetailFragment extends BaseFragment implements View.OnClickL
                 if ("0.0".equals(zbje)) {
                     bean.setZbje("暂无");
                 } else {
-                    bean.setZbje(list.getString("zbje")+"万元");
+                    bean.setZbje(list.getString("zbje") + "万元");
                 }
                 mQyyjDataList.add(bean);
                 d++;

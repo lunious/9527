@@ -6,11 +6,10 @@ import android.util.Log;
 
 import com.lubanjianye.biaoxuntong.base.BaseActivity;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
-
-import okhttp3.Headers;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 /**
  * 项目名:   Lunious
@@ -41,20 +40,19 @@ public class IndexBxtgdjDetailActivity extends BaseActivity {
 
         Log.d("JABNDJBSJDJASDA", mId);
         if (!TextUtils.isEmpty(mId)) {
-            RestClient.builder().url(BiaoXunTongApi.URL_GETUITASK)
+
+            OkGo.<String>post(BiaoXunTongApi.URL_GETUITASK)
                     .params("type", 2)
                     .params("id", mId)
-                    .success(new ISuccess() {
+                    .execute(new StringCallback() {
                         @Override
-                        public void onSuccess(Headers headers, String response) {
-                            Log.d("BDIJASBDJHBAIJSD", response);
+                        public void onSuccess(Response<String> response) {
+
                         }
-                    })
-                    .build()
-                    .post();
+                    });
         }
 
-        final IndexBxtgdjDetailFragment fragment = IndexBxtgdjDetailFragment.create(mEntityId, mEntity,ajaxType);
+        final IndexBxtgdjDetailFragment fragment = IndexBxtgdjDetailFragment.create(mEntityId, mEntity, ajaxType);
         return fragment;
     }
 }

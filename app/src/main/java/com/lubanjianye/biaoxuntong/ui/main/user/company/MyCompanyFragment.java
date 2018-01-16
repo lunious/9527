@@ -19,18 +19,17 @@ import com.lubanjianye.biaoxuntong.bean.MyCompanyQyzzAllListBean;
 import com.lubanjianye.biaoxuntong.bean.MyCompanyRyzzAllListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.main.query.detail.CompanySgyjListAdapter;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
 
 /**
  * 项目名:   LBBXT
@@ -277,17 +276,16 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
         for (int i = 0; i < users.size(); i++) {
             id = users.get(0).getId();
         }
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETALLCOMPANYQYZZ)
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETALLCOMPANYQYZZ)
                 .params("userId", id)
                 .params("type", 0)
                 .params("size", 5)
                 .params("page", page)
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
                         if ("200".equals(status)) {
@@ -341,12 +339,8 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
 
                         } else {
                         }
-
-
                     }
-                })
-                .build()
-                .post();
+                });
 
 
     }
@@ -361,17 +355,16 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
             token = users.get(0).getToken();
         }
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETALLCOMPANYRYZZ)
+        OkGo.<String>post(BiaoXunTongApi.URL_GETALLCOMPANYRYZZ)
                 .params("userId", id)
                 .params("type", 0)
                 .params("size", 5)
                 .params("page", page)
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
+                    public void onSuccess(Response<String> response) {
 
-                        final JSONObject object = JSON.parseObject(response);
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
                         if ("200".equals(status)) {
@@ -428,12 +421,9 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                             }
                         } else {
                         }
-
-
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
 
@@ -446,31 +436,27 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
 
         String companyname = tvMyCompany.getText().toString().trim();
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETSUITCOMPANY)
+        OkGo.<String>post(BiaoXunTongApi.URL_GETSUITCOMPANY)
                 .params("name", companyname)
                 .params("userid", id)
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-
-                        final JSONArray data = JSON.parseObject(response).getJSONArray("data");
+                    public void onSuccess(Response<String> response) {
+                        final JSONArray data = JSON.parseObject(response.body()).getJSONArray("data");
                         if (data.size() > 0) {
                             //根据返回的id去查询公司名称
                             qyId = data.toString();
 
                             //得到绑定公司的sfId
-                            RestClient.builder()
-                                    .url(BiaoXunTongApi.URL_SUITRESULT)
+                            OkGo.<String>post(BiaoXunTongApi.URL_SUITRESULT)
                                     .params("userId", id)
                                     .params("token", token)
                                     .params("provinceCode", "510000")
                                     .params("qyIds", qyId)
-                                    .success(new ISuccess() {
+                                    .execute(new StringCallback() {
                                         @Override
-                                        public void onSuccess(Headers headers, String response) {
-
-                                            final JSONObject object = JSON.parseObject(response);
+                                        public void onSuccess(Response<String> response) {
+                                            final JSONObject object = JSON.parseObject(response.body());
                                             final String status = object.getString("status");
                                             final String message = object.getString("message");
                                             final JSONArray array = object.getJSONArray("data");
@@ -480,15 +466,13 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                                                     JSONObject data = (JSONObject) array.get(i);
                                                     sfId = data.getString("sfId");
 
-                                                    RestClient.builder()
-                                                            .url(BiaoXunTongApi.URL_COMPANYSGYJ + sfId)
+                                                    OkGo.<String>post(BiaoXunTongApi.URL_COMPANYSGYJ + sfId)
                                                             .params("userId", id)
                                                             .params("token", token)
-                                                            .success(new ISuccess() {
+                                                            .execute(new StringCallback() {
                                                                 @Override
-                                                                public void onSuccess(Headers headers, String response) {
-
-                                                                    final JSONObject object = JSON.parseObject(response);
+                                                                public void onSuccess(Response<String> response) {
+                                                                    final JSONObject object = JSON.parseObject(response.body());
                                                                     String status = object.getString("status");
 
                                                                     if ("200".equals(status)) {
@@ -557,29 +541,22 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                                                                             }
                                                                         }
                                                                     }
-
                                                                 }
-                                                            })
-                                                            .build()
-                                                            .post();
+                                                            });
 
                                                 }
 
                                             } else {
 
                                             }
-
-
                                         }
-                                    })
-                                    .build()
-                                    .post();
+                                    });
+
 
                         }
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
 

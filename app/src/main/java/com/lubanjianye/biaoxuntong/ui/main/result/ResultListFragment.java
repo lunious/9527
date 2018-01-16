@@ -21,9 +21,7 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.search.ResultSearchActivity;
@@ -31,11 +29,12 @@ import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
-
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.Headers;
 
 /**
  * 项目名:   AppLunious
@@ -210,17 +209,17 @@ public class ResultListFragment extends BaseFragment {
                 for (int i = 0; i < users.size(); i++) {
                     id = users.get(0).getId();
                 }
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_GETRESULTLIST)
+
+                OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
                         .params("type", mType)
                         .params("userid", id)
                         .params("page", page)
                         .params("size", 10)
                         .params("deviceId", deviceId)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
-                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+                            public void onSuccess(Response<String> response) {
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
@@ -239,24 +238,20 @@ public class ResultListFragment extends BaseFragment {
                                     resultRefresh.setEnabled(false);
                                 }
 
-
                             }
-                        })
-                        .build()
-                        .post();
+                        });
+
             } else {
                 //未登录的数据请求
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_GETRESULTLIST)
+                OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
                         .params("type", mType)
                         .params("page", page)
                         .params("size", 10)
                         .params("deviceId", deviceId)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
-
-                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+                            public void onSuccess(Response<String> response) {
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
@@ -275,11 +270,8 @@ public class ResultListFragment extends BaseFragment {
                                     resultRefresh.setEnabled(false);
                                 }
 
-
                             }
-                        })
-                        .build()
-                        .post();
+                        });
             }
 
         }

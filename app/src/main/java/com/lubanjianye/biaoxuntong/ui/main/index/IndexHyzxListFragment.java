@@ -19,17 +19,16 @@ import com.lubanjianye.biaoxuntong.bean.IndexHyzxListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexHyzxDetailActivity;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
 
 /**
  * 项目名:   LBBXT
@@ -162,15 +161,14 @@ public class IndexHyzxListFragment extends BaseFragment {
                     id = users.get(0).getId();
                 }
 
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_GETINDEXHYZXLIST)
+                OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXHYZXLIST)
                         .params("userid", id)
                         .params("page", page)
                         .params("size", 10)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
-                                final JSONObject object = JSON.parseObject(response);
+                            public void onSuccess(Response<String> response) {
+                                final JSONObject object = JSON.parseObject(response.body());
                                 final JSONObject data = object.getJSONObject("data");
                                 final JSONArray array = data.getJSONArray("list");
                                 final boolean nextPage = data.getBoolean("nextpage");
@@ -187,23 +185,18 @@ public class IndexHyzxListFragment extends BaseFragment {
                                     loadingStatus.showEmpty();
                                     indexHyzxRefresh.setEnabled(false);
                                 }
-
-
                             }
-                        })
-                        .build()
-                        .post();
+                        });
+
             } else {
                 //未登录的数据请求
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_GETINDEXHYZXLIST)
+                OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXHYZXLIST)
                         .params("page", page)
                         .params("size", 10)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
-
-                                final JSONObject object = JSON.parseObject(response);
+                            public void onSuccess(Response<String> response) {
+                                final JSONObject object = JSON.parseObject(response.body());
                                 final JSONObject data = object.getJSONObject("data");
                                 final JSONArray array = data.getJSONArray("list");
                                 final boolean nextPage = data.getBoolean("nextpage");
@@ -220,11 +213,8 @@ public class IndexHyzxListFragment extends BaseFragment {
                                     loadingStatus.showEmpty();
                                     indexHyzxRefresh.setEnabled(false);
                                 }
-
                             }
-                        })
-                        .build()
-                        .post();
+                        });
             }
         }
 

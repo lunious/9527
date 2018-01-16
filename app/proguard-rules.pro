@@ -52,3 +52,11 @@
  -dontwarn com.alibaba.fastjson.**
  -keepattributes Signature
  -keepattributes *Annotation*
+
+ #okhttp
+ -dontwarn okhttp3.**
+ -keep class okhttp3.**{*;}
+
+ #okio
+ -dontwarn okio.**
+ -keep class okio.**{*;}

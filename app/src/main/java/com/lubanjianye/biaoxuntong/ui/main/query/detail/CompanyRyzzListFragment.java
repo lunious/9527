@@ -7,7 +7,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -21,14 +20,13 @@ import com.lubanjianye.biaoxuntong.bean.CompanyRyzzListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
 
 /**
  * 项目名:   LBBXT
@@ -171,17 +169,13 @@ public class CompanyRyzzListFragment extends BaseFragment implements View.OnClic
             token = users.get(0).getToken();
         }
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_COMPANYRYZZ + sfId)
+        OkGo.<String>post(BiaoXunTongApi.URL_COMPANYRYZZ + sfId)
                 .params("userId", id)
                 .params("token", token)
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-
-                        Log.d("ASDASDASDAS", response);
-
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         final JSONArray array = object.getJSONArray("data");
 
                         if (array.size() > 0) {
@@ -197,12 +191,9 @@ public class CompanyRyzzListFragment extends BaseFragment implements View.OnClic
                                 companyRyzzRefresh.setRefreshing(false);
                             }
                         }
-
-
                     }
-                })
-                .build()
-                .post();
+                });
+
 
     }
 

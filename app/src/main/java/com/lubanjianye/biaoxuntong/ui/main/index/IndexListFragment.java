@@ -21,9 +21,7 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjyDetailActivity;
@@ -36,14 +34,15 @@ import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
 
 /**
  * 项目名:   LBBXT
@@ -243,13 +242,13 @@ public class IndexListFragment extends BaseFragment {
     }
 
     public void getImage() {
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETINDEXBANNER)
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXBANNER)
                 .params("imgType", 1)
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
 
                         String status = object.getString("status");
                         String message = object.getString("message");
@@ -267,11 +266,8 @@ public class IndexListFragment extends BaseFragment {
                             ToastUtil.shortToast(getContext(), message);
                         }
                         initBanner();
-
                     }
-                })
-                .build()
-                .post();
+                });
 
         indexItemBanner.setOnBannerListener(new OnBannerListener() {
             @Override
@@ -315,18 +311,17 @@ public class IndexListFragment extends BaseFragment {
                     id = users.get(0).getId();
                 }
 
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_GETINDEXLIST)
+                OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
                         .params("type", mTitle)
                         .params("userid", id)
                         .params("page", page)
                         .params("size", 10)
                         .params("deviceId", deviceId)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
+                            public void onSuccess(Response<String> response) {
 
-                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
@@ -350,24 +345,21 @@ public class IndexListFragment extends BaseFragment {
                                 } else {
                                     ToastUtil.shortToast(getContext(), message);
                                 }
-
                             }
-                        })
-                        .build()
-                        .post();
+                        });
+
             } else {
                 //未登录的数据请求
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_GETINDEXLIST)
+
+                OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
                         .params("type", mTitle)
                         .params("page", page)
                         .params("size", 10)
                         .params("deviceId", deviceId)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
-
-                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+                            public void onSuccess(Response<String> response) {
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
@@ -391,11 +383,9 @@ public class IndexListFragment extends BaseFragment {
                                 } else {
                                     ToastUtil.shortToast(getContext(), message);
                                 }
-
                             }
-                        })
-                        .build()
-                        .post();
+                        });
+
             }
 
         }

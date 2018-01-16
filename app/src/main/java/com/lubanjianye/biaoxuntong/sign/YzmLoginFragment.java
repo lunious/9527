@@ -9,7 +9,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -18,18 +17,16 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.IFailure;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.parser.RichTextParser;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
-
-import okhttp3.Headers;
 
 /**
  * Created by 11645 on 2018/1/15.
@@ -183,14 +180,13 @@ public class YzmLoginFragment extends BaseFragment implements View.OnClickListen
 
             final String phone = etRetrieveTel.getText().toString().trim();
             //获取验证码
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_GETCODE)
+            OkGo.<String>post(BiaoXunTongApi.URL_GETCODE)
                     .params("phone", phone)
                     .params("type", "3")
-                    .success(new ISuccess() {
+                    .execute(new StringCallback() {
                         @Override
-                        public void onSuccess(Headers headers, String response) {
-                            final JSONObject profileJson = JSON.parseObject(response);
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject profileJson = JSON.parseObject(response.body());
                             final String status = profileJson.getString("status");
                             final String message = profileJson.getString("message");
                             if ("200".equals(status)) {
@@ -203,19 +199,16 @@ public class YzmLoginFragment extends BaseFragment implements View.OnClickListen
                                 ToastUtil.shortToast(getContext(), message);
                             }
                         }
-                    })
-                    .failure(new IFailure() {
+
                         @Override
-                        public void onFailure() {
+                        public void onError(Response<String> response) {
                             if (mTimer != null) {
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
-
+                            super.onError(response);
                         }
-                    })
-                    .build()
-                    .post();
+                    });
 
         } else {
             ToastUtil.shortBottonToast(getContext(), "别激动，休息一下吧...");
@@ -231,14 +224,14 @@ public class YzmLoginFragment extends BaseFragment implements View.OnClickListen
 
         if (!TextUtils.isEmpty(password) && !TextUtils.isEmpty(username)) {
             //登录
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_FASTLOGIN)
+
+            OkGo.<String>post(BiaoXunTongApi.URL_FASTLOGIN)
                     .params("mobile", username)
                     .params("code", username + "_" + password)
-                    .success(new ISuccess() {
+                    .execute(new StringCallback() {
                         @Override
-                        public void onSuccess(Headers headers, String response) {
-                            final JSONObject profileJson = JSON.parseObject(response);
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject profileJson = JSON.parseObject(response.body());
                             final String status = profileJson.getString("status");
                             final String message = profileJson.getString("message");
                             if ("200".equals(status)) {
@@ -246,23 +239,22 @@ public class YzmLoginFragment extends BaseFragment implements View.OnClickListen
                                     mTimer.onFinish();
                                     mTimer.cancel();
                                 }
-                                final JSONObject userInfo = JSON.parseObject(response).getJSONObject("data");
+                                final JSONObject userInfo = JSON.parseObject(response.body()).getJSONObject("data");
                                 id = userInfo.getLong("id");
                                 mobile = userInfo.getString("mobile");
-                                token = headers.get("token");
+                                token = response.headers().get("token");
                                 comid = userInfo.getString("comid");
                                 nickName = userInfo.getString("nickName");
                                 imageUrl = null;
 
                                 if (comid != null) {
-                                    RestClient.builder()
-                                            .url(BiaoXunTongApi.URL_GETCOMPANYNAME)
+                                    OkGo.<String>post(BiaoXunTongApi.URL_GETCOMPANYNAME)
                                             .params("userId", id)
                                             .params("comId", comid)
-                                            .success(new ISuccess() {
+                                            .execute(new StringCallback() {
                                                 @Override
-                                                public void onSuccess(Headers headers, String response) {
-                                                    final JSONObject profileCompany = JSON.parseObject(response);
+                                                public void onSuccess(Response<String> response) {
+                                                    final JSONObject profileCompany = JSON.parseObject(response.body());
                                                     final String status = profileCompany.getString("status");
                                                     final JSONObject data = profileCompany.getJSONObject("data");
 
@@ -271,11 +263,8 @@ public class YzmLoginFragment extends BaseFragment implements View.OnClickListen
                                                     } else {
                                                         companyName = null;
                                                     }
-
                                                 }
-                                            })
-                                            .build()
-                                            .post();
+                                            });
 
                                 }
 
@@ -290,15 +279,7 @@ public class YzmLoginFragment extends BaseFragment implements View.OnClickListen
 
                             }
                         }
-                    })
-                    .failure(new IFailure() {
-                        @Override
-                        public void onFailure() {
-                            promptDialog.showError("服务器繁忙，登陆失败");
-                        }
-                    })
-                    .build()
-                    .post();
+                    });
 
         } else {
             ToastUtil.shortBottonToast(getContext(), "手机号或验证码有误");

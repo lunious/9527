@@ -15,14 +15,13 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.IFailure;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.util.parser.RichTextParser;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
-import okhttp3.Headers;
 
 /**
  * 项目名:   AppLunious
@@ -205,14 +204,13 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
 
             final String phone = etNewUsername.getText().toString().trim();
 
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_GETCODE)
+            OkGo.<String>post(BiaoXunTongApi.URL_GETCODE)
                     .params("phone", phone)
                     .params("type", "2")
-                    .success(new ISuccess() {
+                    .execute(new StringCallback() {
                         @Override
-                        public void onSuccess(Headers headers, String response) {
-                            final JSONObject profileJson = JSON.parseObject(response);
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject profileJson = JSON.parseObject(response.body());
                             final String status = profileJson.getString("status");
                             final String message = profileJson.getString("message");
                             if ("200".equals(status)) {
@@ -225,19 +223,17 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
                                 ToastUtil.shortBottonToast(getContext(), message);
                             }
                         }
-                    })
-                    .failure(new IFailure() {
+
                         @Override
-                        public void onFailure() {
+                        public void onError(Response<String> response) {
                             if (mTimer != null) {
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
-
+                            super.onError(response);
                         }
-                    })
-                    .build()
-                    .post();
+                    });
+
 
         } else {
             ToastUtil.shortBottonToast(getContext(), "别激动，休息一下吧...");
@@ -262,14 +258,13 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
             return;
         }
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_FORGETPWD)
+        OkGo.<String>post(BiaoXunTongApi.URL_FORGETPWD)
                 .params("code", mobile + "_" + code)
                 .params("newPass", pass)
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject profileJson = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject profileJson = JSON.parseObject(response.body());
                         final String status = profileJson.getString("status");
                         final String message = profileJson.getString("message");
                         if ("200".equals(status)) {
@@ -284,22 +279,18 @@ public class SignForgetPwdFragnent extends BaseFragment implements View.OnClickL
                         } else {
                             ToastUtil.shortBottonToast(getContext(), message);
                         }
-
                     }
-                })
-                .failure(new IFailure() {
+
                     @Override
-                    public void onFailure() {
+                    public void onError(Response<String> response) {
                         if (mTimer != null) {
                             mTimer.onFinish();
                             mTimer.cancel();
                         }
                         ToastUtil.shortBottonToast(getContext(), "修改失败！");
+                        super.onError(response);
                     }
-
-                })
-                .build()
-                .post();
+                });
     }
 
     @Override

@@ -17,16 +17,15 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
-
-import okhttp3.Headers;
 
 /**
  * Created by 11645 on 2018/1/15.
@@ -159,22 +158,23 @@ public class ZhLoginFragment extends BaseFragment implements View.OnClickListene
 
             promptDialog.showLoading("正在登陆");
             //登录
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_LOGIN)
+            OkGo.<String>post(BiaoXunTongApi.URL_LOGIN)
                     .params("username", username)
                     .params("password", password)
                     .params("clientId", clientID)
-                    .success(new ISuccess() {
+                    .execute(new StringCallback() {
                         @Override
-                        public void onSuccess(Headers headers, String response) {
-                            final JSONObject profileJson = JSON.parseObject(response);
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject profileJson = JSON.parseObject(response.body());
                             final String status = profileJson.getString("status");
                             final String message = profileJson.getString("message");
 
 
+                            Log.d("JBAJHBSDASDAS", response.body());
+
                             if ("200".equals(status)) {
                                 promptDialog.dismissImmediately();
-                                final JSONObject userInfo = JSON.parseObject(response).getJSONObject("data");
+                                final JSONObject userInfo = JSON.parseObject(response.body()).getJSONObject("data");
                                 id = userInfo.getLong("id");
                                 nickName = userInfo.getString("nickName");
                                 token = userInfo.getString("token");
@@ -185,14 +185,14 @@ public class ZhLoginFragment extends BaseFragment implements View.OnClickListene
                                 Log.d("IUGASUIDGUISADUIGYS", id + "");
 
                                 if (!"0".equals(comid)) {
-                                    RestClient.builder()
-                                            .url(BiaoXunTongApi.URL_GETCOMPANYNAME)
+
+                                    OkGo.<String>post(BiaoXunTongApi.URL_GETCOMPANYNAME)
                                             .params("userId", id)
                                             .params("comId", comid)
-                                            .success(new ISuccess() {
+                                            .execute(new StringCallback() {
                                                 @Override
-                                                public void onSuccess(Headers headers, String response) {
-                                                    final JSONObject profileCompany = JSON.parseObject(response);
+                                                public void onSuccess(Response<String> response) {
+                                                    final JSONObject profileCompany = JSON.parseObject(response.body());
                                                     final String status = profileCompany.getString("status");
                                                     final JSONObject data = profileCompany.getJSONObject("data");
 
@@ -211,12 +211,8 @@ public class ZhLoginFragment extends BaseFragment implements View.OnClickListene
 
                                                     getActivity().onBackPressed();
                                                     ToastUtil.shortBottonToast(getContext(), "登陆成功");
-
-
                                                 }
-                                            })
-                                            .build()
-                                            .post();
+                                            });
 
                                 } else {
 
@@ -233,16 +229,15 @@ public class ZhLoginFragment extends BaseFragment implements View.OnClickListene
 
                             } else {
                                 promptDialog.dismissImmediately();
-                                ToastUtil.shortToast(getContext(), message);
+                                ToastUtil.shortBottonToast(getContext(), message);
 
                             }
                         }
-                    })
-                    .build()
-                    .post();
+                    });
+
 
         } else {
-            ToastUtil.shortBottonToast(getContext(), "请输入正确的手机号!");
+            ToastUtil.shortBottonToast(getContext(), "账号或密码错误");
         }
 
     }

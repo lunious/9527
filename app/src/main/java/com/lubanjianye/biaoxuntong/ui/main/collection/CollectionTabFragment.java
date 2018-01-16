@@ -7,7 +7,6 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -25,9 +24,7 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjyDetailActivity;
@@ -38,6 +35,9 @@ import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailAc
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -45,9 +45,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-
-
-import okhttp3.Headers;
 
 /**
  * 项目名:   AppLunious
@@ -298,22 +295,19 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                     id = users.get(0).getId();
                 }
 
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_GETCOLLECTIONLIST)
+                OkGo.<String>post(BiaoXunTongApi.URL_GETCOLLECTIONLIST)
                         .params("userid", id)
                         .params("page", page)
                         .params("size", 10)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
-
-                                final JSONObject object = JSON.parseObject(response);
+                            public void onSuccess(Response<String> response) {
+                                final JSONObject object = JSON.parseObject(response.body());
                                 final JSONObject data = object.getJSONObject("data");
                                 final JSONArray array = data.getJSONArray("list");
                                 final int count = data.getInteger("count");
                                 final boolean nextPage = data.getBoolean("nextpage");
 
-                                Log.d("BDASUJHBDJHBSA", response);
 
                                 if (array.size() > 0) {
                                     setData(isRefresh, array, nextPage);
@@ -324,11 +318,9 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                     collectRefresh.setEnabled(false);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 }
-
                             }
-                        })
-                        .build()
-                        .post();
+                        });
+
             } else {
                 llShow.setVisibility(View.VISIBLE);
             }

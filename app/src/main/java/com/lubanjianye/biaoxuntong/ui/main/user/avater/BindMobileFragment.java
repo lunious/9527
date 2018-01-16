@@ -2,9 +2,7 @@ package com.lubanjianye.biaoxuntong.ui.main.user.avater;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.CountDownTimer;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Editable;
@@ -21,10 +19,7 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.IFailure;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
@@ -32,12 +27,13 @@ import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.parser.RichTextParser;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
-
-import okhttp3.Headers;
 
 /**
  * 项目名:   LBBXT
@@ -258,15 +254,14 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
 
             final String phone = etBindTel.getText().toString().trim();
             //获取验证码
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_GETCODE)
+            OkGo.<String>post(BiaoXunTongApi.URL_GETCODE)
                     .params("phone", phone)
                     .params("userId", id)
                     .params("type", "4")
-                    .success(new ISuccess() {
+                    .execute(new StringCallback() {
                         @Override
-                        public void onSuccess(Headers headers, String response) {
-                            final JSONObject profileJson = JSON.parseObject(response);
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject profileJson = JSON.parseObject(response.body());
                             final String status = profileJson.getString("status");
                             final String message = profileJson.getString("message");
 
@@ -310,20 +305,18 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
                                 }
                                 ToastUtil.shortBottonToast(getContext(), message);
                             }
+
                         }
-                    })
-                    .failure(new IFailure() {
+
                         @Override
-                        public void onFailure() {
+                        public void onError(Response<String> response) {
                             if (mTimer != null) {
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
-
+                            super.onError(response);
                         }
-                    })
-                    .build()
-                    .post();
+                    });
 
         } else {
             ToastUtil.shortBottonToast(getContext(), "别激动，休息一下吧...");
@@ -352,16 +345,15 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
             promptDialog.showLoading("绑定中...");
 
             //绑定手机号
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_BINDMOBILE)
+
+            OkGo.<String>post(BiaoXunTongApi.URL_BINDMOBILE)
                     .params("mobile", username)
                     .params("userId", id)
                     .params("code", id + "10000000_" + password)
-                    .success(new ISuccess() {
+                    .execute(new StringCallback() {
                         @Override
-                        public void onSuccess(Headers headers, String response) {
-
-                            final JSONObject profileJson = JSON.parseObject(response);
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject profileJson = JSON.parseObject(response.body());
 
                             final String status = profileJson.getString("status");
                             final String message = profileJson.getString("message");
@@ -387,9 +379,8 @@ public class BindMobileFragment extends BaseFragment implements View.OnClickList
                                 ToastUtil.shortBottonToast(getContext(), message);
                             }
                         }
-                    })
-                    .build()
-                    .post();
+                    });
+
 
         } else {
             ToastUtil.shortBottonToast(getContext(), "手机号或验证码错误");

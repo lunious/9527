@@ -24,13 +24,14 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.main.query.detail.CompanyDetailActivity;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -38,8 +39,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
 
 /**
  * 项目名:   LBBXT
@@ -231,17 +230,15 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
             token = users.get(0).getToken();
         }
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_SUITRESULT)
+        OkGo.<String>post(BiaoXunTongApi.URL_SUITRESULT)
                 .params("userId", id)
                 .params("token", token)
                 .params("provinceCode", mProvinceCode)
                 .params("qyIds", mqyIds)
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         final String status = object.getString("status");
                         final String message = object.getString("message");
                         final JSONArray array = object.getJSONArray("data");
@@ -276,12 +273,8 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
                             }
 
                         }
-
-
                     }
-                })
-                .build()
-                .post();
+                });
 
 
     }

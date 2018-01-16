@@ -1,8 +1,12 @@
 package com.lubanjianye.biaoxuntong.app;
 
 import android.app.Application;
+
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.ui.push.PushService;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheEntity;
+import com.lzy.okgo.cache.CacheMode;
 import com.mixpush.client.core.MixPushClient;
 import com.mixpush.client.core.MixPushManager;
 import com.mixpush.client.getui.GeTuiManager;
@@ -39,6 +43,8 @@ public class App extends Application {
         initPush();
         // 初始化ShareUtil
         initShareUtil();
+        //初始化okgo
+        okgo();
 
     }
 
@@ -109,5 +115,10 @@ public class App extends Application {
                 .weiboRedirectUrl("https://api.weibo.com/oauth2/default.html")
                 .wxSecret("5e85681e8a0c78d140dd7f49e4be3117");
         ShareManager.init(config);
+    }
+
+    private void okgo() {
+        OkGo.getInstance().init(this)
+                .setRetryCount(3);
     }
 }

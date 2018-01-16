@@ -3,6 +3,7 @@ package com.lubanjianye.biaoxuntong.ui.main.index;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -17,9 +18,7 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.loader.BiaoXunTongLoader;
 import com.lubanjianye.biaoxuntong.ui.main.index.search.IndexSearchActivity;
@@ -30,6 +29,9 @@ import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -37,8 +39,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
 
 import static com.lubanjianye.biaoxuntong.app.BiaoXunTong.getApplicationContext;
 
@@ -175,24 +175,25 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                     token = users.get(0).getToken();
                 }
 
-                RestClient.builder().url(BiaoXunTongApi.URL_CHECKTOKEN)
+                Log.d("SUHAUDGUGASDAS", "token===" + token);
+
+                OkGo.<String>post(BiaoXunTongApi.URL_CHECKTOKEN)
                         .params("userId", userId)
                         .params("token", token)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
+                            public void onSuccess(Response<String> response) {
 
-                                if ("200".equals(response) || "400".equals(response)) {
+                                if ("200".equals(response.body()) || "400".equals(response.body())) {
 
-                                    RestClient.builder()
-                                            .url(BiaoXunTongApi.URL_INDEXTAB)
+                                    OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
                                             .params("userId", userId)
                                             .params("clientId", clientID)
-                                            .success(new ISuccess() {
+                                            .execute(new StringCallback() {
                                                 @Override
-                                                public void onSuccess(Headers headers, String response) {
+                                                public void onSuccess(Response<String> response) {
 
-                                                    final JSONObject object = JSON.parseObject(response);
+                                                    final JSONObject object = JSON.parseObject(response.body());
                                                     String status = object.getString("status");
                                                     String message = object.getString("message");
 
@@ -218,11 +219,8 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                     } else {
                                                         ToastUtil.shortToast(getContext(), message);
                                                     }
-
                                                 }
-                                            })
-                                            .build()
-                                            .post();
+                                            });
 
                                 } else {
                                     //后台清除登陆信息
@@ -231,13 +229,12 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                     EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
 
 
-                                    RestClient.builder()
-                                            .url(BiaoXunTongApi.URL_INDEXTAB)
+                                    OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
                                             .params("clientId", clientID)
-                                            .success(new ISuccess() {
+                                            .execute(new StringCallback() {
                                                 @Override
-                                                public void onSuccess(Headers headers, String response) {
-                                                    final JSONObject object = JSON.parseObject(response);
+                                                public void onSuccess(Response<String> response) {
+                                                    final JSONObject object = JSON.parseObject(response.body());
                                                     String status = object.getString("status");
                                                     String message = object.getString("message");
 
@@ -262,23 +259,20 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                     } else {
                                                         ToastUtil.shortToast(getContext(), message);
                                                     }
-
                                                 }
-                                            })
-                                            .build()
-                                            .post();
+                                            });
 
 
                                     final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
                                         @Override
                                         public void onClick(PromptButton button) {
-                                            RestClient.builder()
-                                                    .url(BiaoXunTongApi.URL_INDEXTAB)
+
+                                            OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
                                                     .params("clientId", clientID)
-                                                    .success(new ISuccess() {
+                                                    .execute(new StringCallback() {
                                                         @Override
-                                                        public void onSuccess(Headers headers, String response) {
-                                                            final JSONObject object = JSON.parseObject(response);
+                                                        public void onSuccess(Response<String> response) {
+                                                            final JSONObject object = JSON.parseObject(response.body());
                                                             String status = object.getString("status");
                                                             String message = object.getString("message");
 
@@ -302,11 +296,8 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                                             } else {
                                                                 ToastUtil.shortToast(getContext(), message);
                                                             }
-
                                                         }
-                                                    })
-                                                    .build()
-                                                    .post();
+                                                    });
 
                                         }
                                     });
@@ -326,18 +317,16 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
 
                                 }
                             }
-                        })
-                        .build()
-                        .post();
+                        });
+
 
             } else {
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_INDEXTAB)
+                OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
                         .params("clientId", clientID)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
-                                final JSONObject object = JSON.parseObject(response);
+                            public void onSuccess(Response<String> response) {
+                                final JSONObject object = JSON.parseObject(response.body());
                                 String status = object.getString("status");
                                 String message = object.getString("message");
 
@@ -361,11 +350,9 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                 } else {
                                     ToastUtil.shortToast(getContext(), message);
                                 }
-
                             }
-                        })
-                        .build()
-                        .post();
+                        });
+
             }
 
         }

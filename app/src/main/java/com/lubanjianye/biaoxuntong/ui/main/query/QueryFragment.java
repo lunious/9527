@@ -36,9 +36,7 @@ import com.lubanjianye.biaoxuntong.bean.QueryBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
@@ -48,11 +46,12 @@ import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
 
 /**
  * 项目名:   AppLunious
@@ -160,12 +159,11 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     private void getScrollViewData() {
         datas = new ArrayList<>();
 
-        RestClient.builder()
-                .url("http://www.lubanjianye.com/query/vipNames")
-                .success(new ISuccess() {
+        OkGo.<String>post("http://www.lubanjianye.com/query/vipNames")
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         JSONArray array = object.getJSONArray("data");
 
                         if (array != null) {
@@ -174,11 +172,9 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                             }
                             initMarqueeView();
                         }
-
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
     @Override
@@ -632,16 +628,13 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
 
                             final String name = etQuery.getText().toString().trim();
 
-                            RestClient.builder()
-                                    .url(BiaoXunTongApi.URL_GETSUITCOMPANY)
+                            OkGo.<String>post(BiaoXunTongApi.URL_GETSUITCOMPANY)
                                     .params("name", name)
                                     .params("userid", id)
-//                            .params("token", id + "_" + token)
-                                    .success(new ISuccess() {
+                                    .execute(new StringCallback() {
                                         @Override
-                                        public void onSuccess(Headers headers, String response) {
-
-                                            final JSONArray data = JSON.parseObject(response).getJSONArray("data");
+                                        public void onSuccess(Response<String> response) {
+                                            final JSONArray data = JSON.parseObject(response.body()).getJSONArray("data");
                                             if (data.size() > 0) {
                                                 //根据返回的id去查询公司名称
                                                 promptDialog.dismissImmediately();
@@ -654,9 +647,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                 ToastUtil.shortToast(getContext(), "查询结果为0");
                                             }
                                         }
-                                    })
-                                    .build()
-                                    .post();
+                                    });
 
                         } else {
                             ToastUtil.shortToast(getContext(), "请先绑定手机号");
@@ -683,13 +674,12 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
         jsonString.setEntrySign(entrySign);
         String userJson = JSON.toJSONString(jsonString);
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETSUITIDS)
+        OkGo.<String>post(BiaoXunTongApi.URL_GETSUITIDS)
                 .params("JSONString", userJson)
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject jsonObject = JSONObject.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject jsonObject = JSONObject.parseObject(response.body());
                         String status = jsonObject.getString("status");
 
                         if ("200".equals(status)) {
@@ -710,9 +700,8 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                             ToastUtil.shortToast(getContext(), "服务器错误");
                         }
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
 
@@ -755,22 +744,22 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
      */
 
     public void loadZZLX() {
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETZZLXLIST)
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
                 .params("lx_code", "")
                 .params("dl_code", "")
                 .params("xl_code", "")
                 .params("zy_code", "")
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
+                    public void onSuccess(Response<String> response) {
 
-                        final JSONObject object = JSON.parseObject(response);
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
                         if ("200".equals(status)) {
 
-                            final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
 
                             for (int i = 0; i < array.size(); i++) {
 
@@ -856,9 +845,7 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                         }
 
                     }
-                })
-                .build()
-                .post();
+                });
     }
 
     /**
@@ -866,20 +853,19 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
      */
     public void loadDL(final String lx_code) {
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETZZLXLIST)
+        OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
                 .params("lx_code", lx_code)
                 .params("dl_code", "")
                 .params("xl_code", "")
                 .params("zy_code", "")
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
                         if ("200".equals(status)) {
-                            final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
 
                             if ("监理".equals(tvZzlx.getText().toString())) {
                                 Dllist.add(array.getJSONObject(0).getString("dl_name"));
@@ -895,20 +881,20 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                         tvZy.setVisibility(View.GONE);
 
                                         //TODO 得到listZy_ids
-                                        RestClient.builder()
-                                                .url(BiaoXunTongApi.URL_GETZZLXLIST)
+
+                                        OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
                                                 .params("lx_code", lx_code)
                                                 .params("dl_code", "")
                                                 .params("xl_code", "")
                                                 .params("zy_code", "")
-                                                .success(new ISuccess() {
+                                                .execute(new StringCallback() {
                                                     @Override
-                                                    public void onSuccess(Headers headers, String response) {
-                                                        final JSONObject object = JSON.parseObject(response);
+                                                    public void onSuccess(Response<String> response) {
+                                                        final JSONObject object = JSON.parseObject(response.body());
                                                         String status = object.getString("status");
 
                                                         if ("200".equals(status)) {
-                                                            final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                                                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
                                                             //得到listzy_ids
                                                             if (zyIds.size() > 0) {
                                                                 zyIds.clear();
@@ -922,11 +908,9 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                             }
 
                                                         }
-
                                                     }
-                                                })
-                                                .build()
-                                                .post();
+                                                });
+
                                     } else {
                                         Dllist.add(name);
                                     }
@@ -1027,32 +1011,30 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                 }
                             });
                         }
-
-
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
     /**
      * 加载小类列表
      */
     public void loadXL(final String dl_code) {
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETZZLXLIST)
+
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
                 .params("lx_code", "")
                 .params("dl_code", dl_code)
                 .params("xl_code", "")
                 .params("zy_code", "")
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
                         if ("200".equals(status)) {
-                            final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
 
                             for (int i = 0; i < array.size(); i++) {
 
@@ -1064,20 +1046,19 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                     tvZy.setVisibility(View.GONE);
 
                                     //TODO 得到listZy_ids
-                                    RestClient.builder()
-                                            .url(BiaoXunTongApi.URL_GETZZLXLIST)
+                                    OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
                                             .params("lx_code", "")
                                             .params("dl_code", dl_code)
                                             .params("xl_code", "")
                                             .params("zy_code", "")
-                                            .success(new ISuccess() {
+                                            .execute(new StringCallback() {
                                                 @Override
-                                                public void onSuccess(Headers headers, String response) {
-                                                    final JSONObject object = JSON.parseObject(response);
+                                                public void onSuccess(Response<String> response) {
+                                                    final JSONObject object = JSON.parseObject(response.body());
                                                     String status = object.getString("status");
 
                                                     if ("200".equals(status)) {
-                                                        final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                                                        final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
                                                         //得到listzy_ids
                                                         if (zyIds.size() > 0) {
                                                             zyIds.clear();
@@ -1091,11 +1072,8 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                         }
 
                                                     }
-
                                                 }
-                                            })
-                                            .build()
-                                            .post();
+                                            });
 
 
                                 } else {
@@ -1180,12 +1158,9 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                 }
                             });
                         }
-
-
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
     /**
@@ -1193,20 +1168,19 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
      */
     public void loadZY(final String xl_code) {
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETZZLXLIST)
+        OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
                 .params("lx_code", "")
                 .params("dl_code", "")
                 .params("xl_code", xl_code)
                 .params("zy_code", "")
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
                         if ("200".equals(status)) {
-                            final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
 
                             for (int i = 0; i < array.size(); i++) {
 
@@ -1217,20 +1191,19 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                     tvZy.setVisibility(View.GONE);
 
                                     //TODO 得到listZy_ids
-                                    RestClient.builder()
-                                            .url(BiaoXunTongApi.URL_GETZZLXLIST)
+                                    OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
                                             .params("lx_code", "")
                                             .params("dl_code", "")
                                             .params("xl_code", xl_code)
                                             .params("zy_code", "")
-                                            .success(new ISuccess() {
+                                            .execute(new StringCallback() {
                                                 @Override
-                                                public void onSuccess(Headers headers, String response) {
-                                                    final JSONObject object = JSON.parseObject(response);
+                                                public void onSuccess(Response<String> response) {
+                                                    final JSONObject object = JSON.parseObject(response.body());
                                                     String status = object.getString("status");
 
                                                     if ("200".equals(status)) {
-                                                        final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                                                        final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
                                                         //得到listzy_ids
                                                         if (zyIds.size() > 0) {
                                                             zyIds.clear();
@@ -1244,12 +1217,8 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                         }
 
                                                     }
-
                                                 }
-                                            })
-                                            .build()
-                                            .post();
-
+                                            });
 
                                 } else {
                                     Zylist.add(name);
@@ -1296,20 +1265,20 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                     String zy_code = array.getJSONObject(position).getString("zy_code");
 
                                     //TODO 得到listZy_ids
-                                    RestClient.builder()
-                                            .url(BiaoXunTongApi.URL_GETZZLXLIST)
+
+                                    OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXLIST)
                                             .params("lx_code", "")
                                             .params("dl_code", "")
                                             .params("xl_code", "")
                                             .params("zy_code", zy_code)
-                                            .success(new ISuccess() {
+                                            .execute(new StringCallback() {
                                                 @Override
-                                                public void onSuccess(Headers headers, String response) {
-                                                    final JSONObject object = JSON.parseObject(response);
+                                                public void onSuccess(Response<String> response) {
+                                                    final JSONObject object = JSON.parseObject(response.body());
                                                     String status = object.getString("status");
 
                                                     if ("200".equals(status)) {
-                                                        final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                                                        final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
                                                         //得到listzy_ids
                                                         if (zyIds.size() > 0) {
                                                             zyIds.clear();
@@ -1323,12 +1292,8 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                                         }
 
                                                     }
-
                                                 }
-                                            })
-                                            .build()
-                                            .post();
-
+                                            });
 
                                 }
                             });
@@ -1354,12 +1319,9 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                 }
                             });
                         }
-
-
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
     /**

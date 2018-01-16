@@ -20,17 +20,16 @@ import com.lubanjianye.biaoxuntong.bean.MyCompanyQyzzAllListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
 
 /**
  * 项目名:   LBBXT
@@ -157,14 +156,14 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
                                             public void onClick(DialogInterface dialogInterface, int i) {
 
                                                 promptDialog.showLoading("正在删除……");
-                                                RestClient.builder()
-                                                        .url(BiaoXunTongApi.URL_DELEQYZZ)
+
+                                                OkGo.<String>post(BiaoXunTongApi.URL_DELEQYZZ)
                                                         .params("userId", id)
                                                         .params("zy_id", zy_id)
-                                                        .success(new ISuccess() {
+                                                        .execute(new StringCallback() {
                                                             @Override
-                                                            public void onSuccess(Headers headers, String response) {
-                                                                final JSONObject object = JSON.parseObject(response);
+                                                            public void onSuccess(Response<String> response) {
+                                                                final JSONObject object = JSON.parseObject(response.body());
                                                                 final String status = object.getString("status");
 
                                                                 if ("200".equals(status)) {
@@ -177,11 +176,9 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
                                                                 } else {
                                                                     promptDialog.showError("删除失败！");
                                                                 }
-
                                                             }
-                                                        })
-                                                        .build()
-                                                        .post();
+                                                        });
+
 
                                             }
                                         }).show();
@@ -231,17 +228,16 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
             for (int i = 0; i < users.size(); i++) {
                 id = users.get(0).getId();
             }
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_GETALLCOMPANYQYZZ)
+
+            OkGo.<String>post(BiaoXunTongApi.URL_GETALLCOMPANYQYZZ)
                     .params("userId", id)
                     .params("type", 0)
                     .params("page", page)
                     .params("size", 20)
-                    .success(new ISuccess() {
+                    .execute(new StringCallback() {
                         @Override
-                        public void onSuccess(Headers headers, String response) {
-
-                            final JSONObject object = JSON.parseObject(response);
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject object = JSON.parseObject(response.body());
                             String status = object.getString("status");
 
 
@@ -272,11 +268,8 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
                             } else {
                                 //TODO 请求数据失败的处理
                             }
-
                         }
-                    })
-                    .build()
-                    .post();
+                    });
 
         }
 

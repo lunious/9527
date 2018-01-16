@@ -15,21 +15,21 @@ import com.lubanjianye.biaoxuntong.bean.Version;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.update.CheckUpdateManager;
 import com.lubanjianye.biaoxuntong.ui.update.DownloadService;
 import com.lubanjianye.biaoxuntong.util.cache.AppCleanMgr;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-import okhttp3.Headers;
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -131,12 +131,11 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                         for (int j = 0; j < users.size(); j++) {
                             id = users.get(0).getId();
                         }
-                        RestClient.builder()
-                                .url(BiaoXunTongApi.URL_LOGOUT)
+                        OkGo.<String>post(BiaoXunTongApi.URL_LOGOUT)
                                 .params("id", id)
-                                .success(new ISuccess() {
+                                .execute(new StringCallback() {
                                     @Override
-                                    public void onSuccess(Headers headers, String response) {
+                                    public void onSuccess(Response<String> response) {
                                         if (llCacheSize != null) {
                                             llCancel.setVisibility(View.INVISIBLE);
                                         }
@@ -145,9 +144,7 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                                         EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
                                         ToastUtil.shortBottonToast(getContext(), "退出成功");
                                     }
-                                })
-                                .build()
-                                .post();
+                                });
                     }
                 }).show();
 

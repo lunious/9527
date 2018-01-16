@@ -24,21 +24,20 @@ import com.lubanjianye.biaoxuntong.bean.BindCompanyBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
 
 /**
  * 项目名:   9527
@@ -168,13 +167,13 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
         }
 
         if (isRefresh) {
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_GETSUITCOMPANY)
+
+            OkGo.<String>post(BiaoXunTongApi.URL_GETSUITCOMPANY)
                     .params("name", mKeyWord)
-                    .success(new ISuccess() {
+                    .execute(new StringCallback() {
                         @Override
-                        public void onSuccess(Headers headers, String response) {
-                            final JSONObject object = JSON.parseObject(response);
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject object = JSON.parseObject(response.body());
                             String status = object.getString("status");
 
                             if ("200".equals(status)) {
@@ -193,11 +192,9 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                             } else {
                                 ToastUtil.shortToast(getContext(), "服务器错误！");
                             }
-
                         }
-                    })
-                    .build()
-                    .post();
+                    });
+
 
         } else {
             requestData(false);
@@ -245,20 +242,16 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                 final PromptButton cancel = new PromptButton("确定", new PromptButtonListener() {
                     @Override
                     public void onClick(PromptButton button) {
-                        RestClient.builder()
-                                .url(BiaoXunTongApi.URL_USERBINDCOMPANY)
+
+                        OkGo.<String>post(BiaoXunTongApi.URL_USERBINDCOMPANY)
                                 .params("userId", userId)
                                 .params("sf_id", sfId)
-                                .success(new ISuccess() {
+                                .execute(new StringCallback() {
                                     @Override
-                                    public void onSuccess(Headers headers, String response) {
-
+                                    public void onSuccess(Response<String> response) {
 
                                     }
-
-                                })
-                                .build()
-                                .post();
+                                });
                         final UserProfile profile = new UserProfile(userId, mobile, nickName, token, comid, imageUrl, companyName);
                         DatabaseManager.getInstance().getDao().update(profile);
                         EventBus.getDefault().post(new EventMessage(EventMessage.BIND_COMPANY_SUCCESS));
@@ -306,17 +299,15 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                 token = users.get(0).getToken();
             }
 
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_SUITRESULT)
+            OkGo.<String>post(BiaoXunTongApi.URL_SUITRESULT)
                     .params("userId", id)
                     .params("token", token)
                     .params("provinceCode", mProvinceCode)
                     .params("qyIds", mqyIds)
-                    .success(new ISuccess() {
+                    .execute(new StringCallback() {
                         @Override
-                        public void onSuccess(Headers headers, String response) {
-
-                            final JSONObject object = JSON.parseObject(response);
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject object = JSON.parseObject(response.body());
                             String status = object.getString("status");
 
                             if ("200".equals(status)) {
@@ -350,11 +341,9 @@ public class BindCompanyFragment extends BaseFragment implements View.OnClickLis
                             } else {
                                 bindCimpanyStatusView.showError();
                             }
-
                         }
-                    })
-                    .build()
-                    .post();
+                    });
+
         }
 
     }

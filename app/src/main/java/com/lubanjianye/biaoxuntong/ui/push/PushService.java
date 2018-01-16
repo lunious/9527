@@ -3,15 +3,12 @@ package com.lubanjianye.biaoxuntong.ui.push;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.SystemClock;
-import android.util.Log;
+
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjyDetailActivity;
@@ -24,7 +21,6 @@ import com.lubanjianye.biaoxuntong.util.notify.NotifyUtil;
 import com.mixpush.client.core.MixPushIntentService;
 import com.mixpush.client.core.MixPushMessage;
 
-import okhttp3.Headers;
 
 /**
  * 项目名:   AppLunious

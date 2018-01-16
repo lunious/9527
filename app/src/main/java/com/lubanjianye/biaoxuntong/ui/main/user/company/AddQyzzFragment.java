@@ -1,7 +1,6 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.company;
 
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,17 +17,16 @@ import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
 
 /**
  * 项目名:   LBBXT
@@ -163,7 +161,7 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
                     ll1.setVisibility(View.VISIBLE);
                     hasTJ = true;
                 } else {
-                    ToastUtil.shortToast(getContext(),"请选择条件！");
+                    ToastUtil.shortToast(getContext(), "请选择条件！");
                 }
                 break;
             case R.id.iv1:
@@ -172,7 +170,7 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
                 break;
             case R.id.btn_update:
                 if (!hasTJ) {
-                    ToastUtil.shortToast(getContext(),"请添加条件！");
+                    ToastUtil.shortToast(getContext(), "请添加条件！");
                 } else {
                     promptDialog.showLoading("正在提交...");
 
@@ -197,8 +195,7 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
                         mobile = users.get(0).getMobile();
                     }
 
-                    RestClient.builder()
-                            .url(BiaoXunTongApi.URL_ADDQYZZ)
+                    OkGo.<String>post(BiaoXunTongApi.URL_ADDQYZZ)
                             .params("t_qyzz_query_bxts[0].user_id", id)
                             .params("t_qyzz_query_bxts[0].lx_id", lx_id)
                             .params("t_qyzz_query_bxts[0].dl_id", dl_id)
@@ -206,10 +203,10 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
                             .params("t_qyzz_query_bxts[0].zy_id", zy_id)
                             .params("t_qyzz_query_bxts[0].dj_id", dj_id)
                             .params("t_qyzz_query_bxts[0].ly", "")
-                            .success(new ISuccess() {
+                            .execute(new StringCallback() {
                                 @Override
-                                public void onSuccess(Headers headers, String response) {
-                                    final JSONObject object = JSON.parseObject(response);
+                                public void onSuccess(Response<String> response) {
+                                    final JSONObject object = JSON.parseObject(response.body());
                                     String status = object.getString("status");
                                     String message = object.getString("message");
                                     if ("200".equals(status)) {
@@ -217,12 +214,8 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
                                     } else {
                                         promptDialog.showError(message);
                                     }
-
                                 }
-                            })
-                            .build()
-                            .post();
-
+                            });
 
                 }
                 break;
@@ -272,22 +265,21 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
 
     public void loadZZLX() {
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETZZLXALLLIST)
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXALLLIST)
                 .params("lx_code", "")
                 .params("dl_code", "")
                 .params("xl_code", "")
                 .params("zy_code", "")
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
                         if ("200".equals(status)) {
 
-                            final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
 
                             for (int i = 0; i < array.size(); i++) {
 
@@ -344,11 +336,9 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
                                 }
                             });
                         }
-
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
     /**
@@ -356,20 +346,20 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
      */
     public void loadDL(String lx_code) {
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETZZLXALLLIST)
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXALLLIST)
                 .params("lx_code", lx_code)
                 .params("dl_code", "")
                 .params("xl_code", "")
                 .params("zy_code", "")
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
                         if ("200".equals(status)) {
-                            final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
 
 
                             for (int i = 0; i < array.size(); i++) {
@@ -465,31 +455,29 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
                             });
                         }
 
-
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
     /**
      * 加载小类列表
      */
     public void loadXL(String dl_code) {
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETZZLXALLLIST)
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXALLLIST)
                 .params("lx_code", "")
                 .params("dl_code", dl_code)
                 .params("xl_code", "")
                 .params("zy_code", "")
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
                         if ("200".equals(status)) {
-                            final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
 
                             for (int i = 0; i < array.size(); i++) {
 
@@ -579,12 +567,9 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
                                 }
                             });
                         }
-
-
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
     /**
@@ -592,20 +577,20 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
      */
     public void loadZY(String xl_code) {
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETZZLXALLLIST)
+
+        OkGo.<String>post(BiaoXunTongApi.URL_GETZZLXALLLIST)
                 .params("lx_code", "")
                 .params("dl_code", "")
                 .params("xl_code", xl_code)
                 .params("zy_code", "")
-                .success(new ISuccess() {
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
                         if ("200".equals(status)) {
-                            final JSONArray array = JSON.parseObject(response).getJSONArray("data");
+                            final JSONArray array = JSON.parseObject(response.body()).getJSONArray("data");
 
                             for (int i = 0; i < array.size(); i++) {
 
@@ -688,11 +673,9 @@ public class AddQyzzFragment extends BaseFragment implements View.OnClickListene
                             });
                         }
 
-
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
     /**

@@ -21,13 +21,14 @@ import com.lubanjianye.biaoxuntong.bean.SortColumnBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -35,11 +36,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
-import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
-import okhttp3.Headers;
 
 /**
  * 项目名:   LBBXT
@@ -145,14 +141,13 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                     int min = 7;
                     if (id > min) {
                         //删除栏目
-                        RestClient.builder()
-                                .url(BiaoXunTongApi.URL_DELEITEMLABEL)
+                        OkGo.<String>post(BiaoXunTongApi.URL_DELEITEMLABEL)
                                 .params("userId", userId)
                                 .params("labelId", id)
-                                .success(new ISuccess() {
+                                .execute(new StringCallback() {
                                     @Override
-                                    public void onSuccess(Headers headers, String response) {
-                                        final JSONObject object = JSON.parseObject(response);
+                                    public void onSuccess(Response<String> response) {
+                                        final JSONObject object = JSON.parseObject(response.body());
                                         String status = object.getString("status");
                                         if ("200".equals(status)) {
 
@@ -162,9 +157,8 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                                             ToastUtil.shortToast(getContext(), "删除失败！");
                                         }
                                     }
-                                })
-                                .build()
-                                .post();
+                                });
+
                     } else {
                         ToastUtil.shortToast(getContext(), "官方推荐栏目，请保留!");
                     }
@@ -185,14 +179,13 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
 
                 if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                     //添加栏目
-                    RestClient.builder()
-                            .url(BiaoXunTongApi.URL_ADDITEMLABEL)
+                    OkGo.<String>post(BiaoXunTongApi.URL_ADDITEMLABEL)
                             .params("userId", userId)
                             .params("labelId", id)
-                            .success(new ISuccess() {
+                            .execute(new StringCallback() {
                                 @Override
-                                public void onSuccess(Headers headers, String response) {
-                                    final JSONObject object = JSON.parseObject(response);
+                                public void onSuccess(Response<String> response) {
+                                    final JSONObject object = JSON.parseObject(response.body());
                                     String status = object.getString("status");
                                     if ("200".equals(status)) {
 
@@ -202,9 +195,8 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                                         ToastUtil.shortToast(getContext(), "添加失败！");
                                     }
                                 }
-                            })
-                            .build()
-                            .post();
+                            });
+
                 } else {
                     startActivity(new Intent(getActivity(), SignInActivity.class));
                 }
@@ -225,14 +217,13 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                 if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                     //添加栏目
 
-                    RestClient.builder()
-                            .url(BiaoXunTongApi.URL_ADDITEMLABEL)
+                    OkGo.<String>post(BiaoXunTongApi.URL_ADDITEMLABEL)
                             .params("userId", userId)
                             .params("labelId", id)
-                            .success(new ISuccess() {
+                            .execute(new StringCallback() {
                                 @Override
-                                public void onSuccess(Headers headers, String response) {
-                                    final JSONObject object = JSON.parseObject(response);
+                                public void onSuccess(Response<String> response) {
+                                    final JSONObject object = JSON.parseObject(response.body());
                                     String status = object.getString("status");
                                     if ("200".equals(status)) {
 
@@ -242,9 +233,7 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                                         ToastUtil.shortToast(getContext(), "添加失败！");
                                     }
                                 }
-                            })
-                            .build()
-                            .post();
+                            });
 
 
                 } else {
@@ -286,15 +275,14 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                         userId = users.get(0).getId();
                     }
 
-                    RestClient.builder()
-                            .url(BiaoXunTongApi.URL_TABLINE)
+                    OkGo.<String>post(BiaoXunTongApi.URL_TABLINE)
                             .params("userId", userId)
                             .params("oldIndex", oldPosition)
                             .params("newIndex", newPosition)
-                            .success(new ISuccess() {
+                            .execute(new StringCallback() {
                                 @Override
-                                public void onSuccess(Headers headers, String response) {
-                                    final JSONObject object = JSON.parseObject(response);
+                                public void onSuccess(Response<String> response) {
+                                    final JSONObject object = JSON.parseObject(response.body());
                                     String status = object.getString("status");
                                     String message = object.getString("message");
                                     if ("200".equals(status)) {
@@ -304,9 +292,8 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                                         ToastUtil.shortToast(getContext(), message);
                                     }
                                 }
-                            })
-                            .build()
-                            .post();
+                            });
+
                 } else {
                     ToastUtil.shortToast(getContext(), "未登录!");
                 }
@@ -351,13 +338,12 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                     userId = users.get(0).getId();
                 }
 
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_GETALLTAB)
+                OkGo.<String>post(BiaoXunTongApi.URL_GETALLTAB)
                         .params("userId", userId)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
-                                final JSONObject object = JSON.parseObject(response);
+                            public void onSuccess(Response<String> response) {
+                                final JSONObject object = JSON.parseObject(response.body());
                                 final JSONObject data = object.getJSONObject("data");
                                 String status = object.getString("status");
                                 String message = object.getString("message");
@@ -397,16 +383,15 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                                     ToastUtil.shortToast(getContext(), message);
                                 }
                             }
-                        })
-                        .build()
-                        .post();
+                        });
+
             } else {
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_GETALLTAB)
-                        .success(new ISuccess() {
+
+                OkGo.<String>post(BiaoXunTongApi.URL_GETALLTAB)
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
-                                final JSONObject object = JSON.parseObject(response);
+                            public void onSuccess(Response<String> response) {
+                                final JSONObject object = JSON.parseObject(response.body());
                                 final JSONObject data = object.getJSONObject("data");
                                 String status = object.getString("status");
                                 String message = object.getString("message");
@@ -445,11 +430,9 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
                                 } else {
                                     ToastUtil.shortToast(getContext(), message);
                                 }
-
                             }
-                        })
-                        .build()
-                        .post();
+                        });
+
             }
 
         }

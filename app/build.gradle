@@ -60,11 +60,6 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     //fastjson依赖
     compile 'com.alibaba:fastjson:1.2.38'
-    //网络请求依赖
-    compile 'com.squareup.okio:okio:1.13.0'
-    compile 'com.squareup.okhttp3:okhttp:3.9.0'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-scalars:2.3.0'
     //数据库依赖
     compile 'org.greenrobot:greendao-generator:3.2.2'
     compile 'org.greenrobot:greendao:3.2.2'
@@ -91,5 +86,7 @@ dependencies {
     compile 'com.github.joyrun.MixPush:client-getui:1.2.0' // 个推
     //easypermissions依赖
     implementation 'pub.devrel:easypermissions:1.1.1'
+    //okhttp-OkGo
+    compile 'com.lzy.net:okgo:3.0.4'
 
 }

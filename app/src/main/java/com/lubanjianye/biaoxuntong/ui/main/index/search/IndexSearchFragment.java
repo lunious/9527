@@ -30,9 +30,7 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.ui.main.index.IndexListAdapter;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexBxtgdjDetailActivity;
@@ -43,11 +41,12 @@ import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
 
 /**
  * 项目名:   LBBXT
@@ -301,19 +300,18 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                     imageUrl = users.get(0).getImageUrl();
                 }
 
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_GETINDEXLIST)
+                OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
                         .params("userid", id)
                         .params("area", mArea)
                         .params("type", mType)
                         .params("page", page)
                         .params("keyWord", mKeyWord)
                         .params("size", 10)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
+                            public void onSuccess(Response<String> response) {
 
-                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
@@ -340,24 +338,22 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                                     ToastUtil.shortToast(getContext(), message);
 
                                 }
-
                             }
-                        })
-                        .build()
-                        .post();
+                        });
+
             } else {
                 //未登录的数据请求
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_GETINDEXLIST)
+
+                OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
                         .params("page", page)
                         .params("area", mArea)
                         .params("type", mType)
                         .params("keyWord", mKeyWord)
                         .params("size", 10)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
-                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+                            public void onSuccess(Response<String> response) {
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
@@ -384,11 +380,8 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                                     ToastUtil.shortToast(getContext(), message);
                                 }
 
-
                             }
-                        })
-                        .build()
-                        .post();
+                        });
             }
 
         }
@@ -467,12 +460,11 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
 
     public void loadArea() {
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETALLTAB)
-                .success(new ISuccess() {
+        OkGo.<String>post(BiaoXunTongApi.URL_GETALLTAB)
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         final JSONObject data = object.getJSONObject("data");
                         final JSONArray areaList = data.getJSONArray("areaList");
 
@@ -516,23 +508,19 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                                 setTextImage(R.id.tv_area, R.drawable.icon_down);
                             }
                         });
-
-
                     }
-                })
-                .build()
-                .post();
+                });
+
 
     }
 
     public void loadType() {
 
-        RestClient.builder()
-                .url(BiaoXunTongApi.URL_GETALLTAB)
-                .success(new ISuccess() {
+        OkGo.<String>post(BiaoXunTongApi.URL_GETALLTAB)
+                .execute(new StringCallback() {
                     @Override
-                    public void onSuccess(Headers headers, String response) {
-                        final JSONObject object = JSON.parseObject(response);
+                    public void onSuccess(Response<String> response) {
+                        final JSONObject object = JSON.parseObject(response.body());
                         final JSONObject data = object.getJSONObject("data");
                         final JSONArray ownerList = data.getJSONArray("ownerList");
                         final JSONArray typeList = data.getJSONArray("typeList");
@@ -583,11 +571,9 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                                 setTextImage(R.id.tv_type, R.drawable.icon_down);
                             }
                         });
-
                     }
-                })
-                .build()
-                .post();
+                });
+
     }
 
     @Override

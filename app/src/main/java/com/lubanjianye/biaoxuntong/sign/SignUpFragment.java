@@ -8,7 +8,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,16 +16,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.IFailure;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.parser.RichTextParser;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
-
-import okhttp3.Headers;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 /**
  * 项目名:   AppLunious
@@ -215,14 +212,13 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
 
             final String phone = etRegisterUsername.getText().toString().trim();
 
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_GETCODE)
+            OkGo.<String>post(BiaoXunTongApi.URL_GETCODE)
                     .params("phone", phone)
                     .params("type", "1")
-                    .success(new ISuccess() {
+                    .execute(new StringCallback() {
                         @Override
-                        public void onSuccess(Headers headers, String response) {
-                            final JSONObject profileJson = JSON.parseObject(response);
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject profileJson = JSON.parseObject(response.body());
                             final String status = profileJson.getString("status");
                             final String message = profileJson.getString("message");
                             if ("200".equals(status)) {
@@ -236,19 +232,17 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                                 ToastUtil.shortBottonToast(getContext(), message);
                             }
                         }
-                    })
-                    .failure(new IFailure() {
+
                         @Override
-                        public void onFailure() {
+                        public void onError(Response<String> response) {
                             if (mTimer != null) {
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
-
+                            super.onError(response);
                         }
-                    })
-                    .build()
-                    .post();
+                    });
+
 
         } else {
             ToastUtil.shortBottonToast(getContext(), "别激动，休息一下吧...");
@@ -279,15 +273,14 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
         if (!TextUtils.isEmpty(mobile) && !TextUtils.isEmpty(code) && !TextUtils.isEmpty(pass)) {
             promptDialog.showLoading("正在注册...");
 
-            RestClient.builder()
-                    .url(BiaoXunTongApi.URL_REGISTER)
+            OkGo.<String>post(BiaoXunTongApi.URL_REGISTER)
                     .params("mobile", mobile)
                     .params("code", mobile + "_" + code)
                     .params("pass", pass)
-                    .success(new ISuccess() {
+                    .execute(new StringCallback() {
                         @Override
-                        public void onSuccess(Headers headers, String response) {
-                            final JSONObject profileJson = JSON.parseObject(response);
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject profileJson = JSON.parseObject(response.body());
                             final String status = profileJson.getString("status");
                             final String message = profileJson.getString("message");
                             if ("200".equals(status)) {
@@ -305,22 +298,18 @@ public class SignUpFragment extends BaseFragment implements View.OnClickListener
                                 promptDialog.dismissImmediately();
                                 ToastUtil.shortBottonToast(getContext(), message);
                             }
-
                         }
-                    })
-                    .failure(new IFailure() {
+
                         @Override
-                        public void onFailure() {
+                        public void onError(Response<String> response) {
                             if (mTimer != null) {
                                 mTimer.onFinish();
                                 mTimer.cancel();
                             }
                             ToastUtil.shortBottonToast(getContext(), "注册失败！");
+                            super.onError(response);
                         }
-
-                    })
-                    .build()
-                    .post();
+                    });
         }
 
     }

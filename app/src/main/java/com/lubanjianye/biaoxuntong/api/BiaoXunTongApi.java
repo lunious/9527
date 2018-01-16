@@ -1,4 +1,4 @@
-package com.lubanjianye.biaoxuntong.net.api;
+package com.lubanjianye.biaoxuntong.api;
 
 /**
  * 项目名:   LuBanBiaoXunTong

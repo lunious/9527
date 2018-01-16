@@ -19,9 +19,7 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
@@ -33,16 +31,15 @@ import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.UiError;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
-
-import me.yokeyword.fragmentation.anim.DefaultHorizontalAnimator;
-import me.yokeyword.fragmentation.anim.FragmentAnimator;
-import okhttp3.Headers;
 
 /**
  * 项目名:   AppLunious
@@ -249,17 +246,17 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                 for (int i = 0; i < users.size(); i++) {
                     id = users.get(0).getId();
                 }
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_GETRESULTLISTDETAIL)
+
+                OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLISTDETAIL)
                         .params("entityId", mEntityId)
                         .params("entity", mEntity)
                         .params("userid", id)
                         .params("deviceId", deviceId)
                         .params("ajaxlogtype", ajaxType)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
-                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+                            public void onSuccess(Response<String> response) {
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 //判断是否收藏过
                                 final JSONObject object = JSON.parseObject(jiemi);
@@ -417,21 +414,20 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                 }
 
                             }
-                        })
-                        .build()
-                        .post();
+                        });
+
             } else {
                 //未登陆时的数据请求
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_GETRESULTLISTDETAIL)
+
+                OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLISTDETAIL)
                         .params("entityId", mEntityId)
                         .params("entity", mEntity)
                         .params("deviceId", deviceId)
                         .params("ajaxlogtype", ajaxType)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
-                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+                            public void onSuccess(Response<String> response) {
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
                                 String status = object.getString("status");
@@ -581,9 +577,7 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                     sggjyDetailStatusView.showError();
                                 }
                             }
-                        })
-                        .build()
-                        .post();
+                        });
             }
         }
 
@@ -688,15 +682,15 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                     }
 
                     if (myFav == 1) {
-                        RestClient.builder()
-                                .url(BiaoXunTongApi.URL_DELEFAV)
+
+                        OkGo.<String>post(BiaoXunTongApi.URL_DELEFAV)
                                 .params("entityid", mEntityId)
                                 .params("entity", mEntity)
                                 .params("userid", id)
-                                .success(new ISuccess() {
+                                .execute(new StringCallback() {
                                     @Override
-                                    public void onSuccess(Headers headers, String response) {
-                                        final JSONObject object = JSON.parseObject(response);
+                                    public void onSuccess(Response<String> response) {
+                                        final JSONObject object = JSON.parseObject(response.body());
                                         String status = object.getString("status");
                                         if ("200".equals(status)) {
                                             myFav = 0;
@@ -707,19 +701,18 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                             ToastUtil.shortToast(getContext(), "服务器异常");
                                         }
                                     }
-                                })
-                                .build()
-                                .post();
+                                });
+
                     } else if (myFav == 0) {
-                        RestClient.builder()
-                                .url(BiaoXunTongApi.URL_ADDFAV)
+
+                        OkGo.<String>post(BiaoXunTongApi.URL_ADDFAV)
                                 .params("entityid", mEntityId)
                                 .params("entity", mEntity)
                                 .params("userid", id)
-                                .success(new ISuccess() {
+                                .execute(new StringCallback() {
                                     @Override
-                                    public void onSuccess(Headers headers, String response) {
-                                        final JSONObject object = JSON.parseObject(response);
+                                    public void onSuccess(Response<String> response) {
+                                        final JSONObject object = JSON.parseObject(response.body());
                                         String status = object.getString("status");
                                         if ("200".equals(status)) {
                                             myFav = 1;
@@ -730,9 +723,8 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                                             ToastUtil.shortToast(getContext(), "服务器异常");
                                         }
                                     }
-                                })
-                                .build()
-                                .post();
+                                });
+
                     }
                 } else {
                     //未登录去登陆

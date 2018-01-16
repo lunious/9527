@@ -21,9 +21,7 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
-import com.lubanjianye.biaoxuntong.net.RestClient;
-import com.lubanjianye.biaoxuntong.net.api.BiaoXunTongApi;
-import com.lubanjianye.biaoxuntong.net.callback.ISuccess;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.searchview.DCallBack;
 import com.lubanjianye.biaoxuntong.searchview.ICallBack;
 import com.lubanjianye.biaoxuntong.searchview.SCallBack;
@@ -36,11 +34,12 @@ import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
+import com.lzy.okgo.OkGo;
+import com.lzy.okgo.callback.StringCallback;
+import com.lzy.okgo.model.Response;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.Headers;
 
 /**
  * 项目名:   LBBXT
@@ -182,7 +181,7 @@ public class ResultSearchFragment extends BaseFragment {
             public void SearchAciton(String string) {
                 mKeyword = string;
                 if (TextUtils.isEmpty(string)) {
-                    ToastUtil.shortToast(getContext(),"请输入关键字");
+                    ToastUtil.shortToast(getContext(), "请输入关键字");
                 } else {
                     resultRefresh.setVisibility(View.VISIBLE);
                     requestData(0, string);
@@ -205,7 +204,7 @@ public class ResultSearchFragment extends BaseFragment {
             @Override
             public void StartSearch(String string) {
                 if (TextUtils.isEmpty(string)) {
-                    ToastUtil.shortToast(getContext(),"请输入关键字");
+                    ToastUtil.shortToast(getContext(), "请输入关键字");
                 } else {
                     resultRefresh.setVisibility(View.VISIBLE);
                     requestData(0, string);
@@ -239,16 +238,16 @@ public class ResultSearchFragment extends BaseFragment {
                 for (int i = 0; i < users.size(); i++) {
                     id = users.get(0).getId();
                 }
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_GETRESULTLIST)
+
+                OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
                         .params("keyWord", keyword)
                         .params("userid", id)
                         .params("page", page)
                         .params("size", 20)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
-                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+                            public void onSuccess(Response<String> response) {
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
@@ -266,23 +265,20 @@ public class ResultSearchFragment extends BaseFragment {
                                     loadingStatus.showEmpty();
                                     resultRefresh.setEnabled(false);
                                 }
-
-
                             }
-                        })
-                        .build()
-                        .post();
+                        });
+
             } else {
                 //未登录的数据请求
-                RestClient.builder()
-                        .url(BiaoXunTongApi.URL_GETRESULTLIST)
+
+                OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
                         .params("keyWord", keyword)
                         .params("page", page)
                         .params("size", 20)
-                        .success(new ISuccess() {
+                        .execute(new StringCallback() {
                             @Override
-                            public void onSuccess(Headers headers, String response) {
-                                String jiemi = AesUtil.aesDecrypt(response, BiaoXunTongApi.PAS_KEY);
+                            public void onSuccess(Response<String> response) {
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
                                 final JSONObject object = JSON.parseObject(jiemi);
                                 final JSONObject data = object.getJSONObject("data");
@@ -300,12 +296,8 @@ public class ResultSearchFragment extends BaseFragment {
                                     loadingStatus.showEmpty();
                                     resultRefresh.setEnabled(false);
                                 }
-
-
                             }
-                        })
-                        .build()
-                        .post();
+                        });
             }
 
         }

@@ -52,6 +52,7 @@ public class ToastUtil {
         }
     }
 
+
     public static void shortBottonToast(final Context context, final String message) {
         if (null == toast) {
             toast = new Toast(context);
@@ -60,42 +61,22 @@ public class ToastUtil {
             TextView textView = (TextView) view.findViewById(R.id.sys_show_toast_txt);
             textView.setText(message);
             toast.setView(view);
+            toast.setGravity(Gravity.BOTTOM, 0, 240);
             toast.show();
         } else {
             TextView textView = (TextView) toast.getView().findViewById(R.id.sys_show_toast_txt);
             textView.setText(message);
+            toast.setGravity(Gravity.BOTTOM, 0, 240);
             toast.show();
         }
     }
 
-    /**
-     * 自定义长Toast调用
-     *
-     * @param context 上下文
-     * @param message 显示文本
-     * @return void
-     */
-    public static void longToast(final Context context, final String message) {
-        if (null == toast) {
-            toast = new Toast(context);
-            toast.setDuration(Toast.LENGTH_LONG);
-            View view = ((LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.sys_show_toast, null);
-            TextView textView = (TextView) view.findViewById(R.id.sys_show_toast_txt);
-            textView.setText(message);
-            toast.setView(view);
-            toast.show();
-        } else {
-            TextView textView = (TextView) toast.getView().findViewById(R.id.sys_show_toast_txt);
-            textView.setText(message);
-            toast.show();
-        }
-    }
 
     /**
      * 取消显示Toast
      */
     public static void cancelToast() {
-        if (null != toast) {
+        if (toast != null) {
             toast.cancel();
         }
     }
