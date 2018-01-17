@@ -62,7 +62,7 @@
                 android:layout_height="match_parent"
                 android:background="@color/main_status_white"
                 android:overScrollMode="never"
-                android:scrollbars="none"/>
+                android:scrollbars="none" />
         </com.classic.common.MultipleStatusView>
     </android.support.v4.widget.SwipeRefreshLayout>
 

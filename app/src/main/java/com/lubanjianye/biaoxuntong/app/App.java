@@ -5,18 +5,18 @@ import android.app.Application;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.ui.push.PushService;
 import com.lzy.okgo.OkGo;
-import com.lzy.okgo.cache.CacheEntity;
-import com.lzy.okgo.cache.CacheMode;
 import com.mixpush.client.core.MixPushClient;
 import com.mixpush.client.core.MixPushManager;
 import com.mixpush.client.getui.GeTuiManager;
 
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import me.shaohui.shareutil.ShareConfig;
 import me.shaohui.shareutil.ShareManager;
 import me.yokeyword.fragmentation.Fragmentation;
 import me.yokeyword.fragmentation.helper.ExceptionHandler;
+import okhttp3.OkHttpClient;
 
 /**
  * 项目名:   AppLunious
@@ -107,6 +107,7 @@ public class App extends Application {
     }
 
     private void initShareUtil() {
+
         ShareConfig config = ShareConfig.instance()
                 .qqId("1106195613")
                 .wxId("wxd7123ee6007bc26a")
@@ -118,7 +119,16 @@ public class App extends Application {
     }
 
     private void okgo() {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        //全局的读取超时时间
+        builder.readTimeout(10000, TimeUnit.MILLISECONDS);
+        //全局的写入超时时间
+        builder.writeTimeout(10000, TimeUnit.MILLISECONDS);
+        //全局的连接超时时间
+        builder.connectTimeout(10000, TimeUnit.MILLISECONDS);
+
         OkGo.getInstance().init(this)
+                .setOkHttpClient(builder.build())
                 .setRetryCount(3);
     }
 }

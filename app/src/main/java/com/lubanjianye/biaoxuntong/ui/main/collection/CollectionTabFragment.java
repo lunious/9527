@@ -7,6 +7,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -35,7 +36,9 @@ import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailAc
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
@@ -69,6 +72,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
     private ArrayList<CollectionListBean> mDataList = new ArrayList<>();
 
     private int page = 1;
+    private boolean isInitCache = false;
 
     @Override
     public Object setLayout() {
@@ -89,8 +93,8 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
                 initAdapter();
                 initRefreshLayout();
-                requestData(1);
                 mAdapter.setEnableLoadMore(false);
+                requestData(1);
             } else {
                 if (llShow != null) {
                     llShow.setVisibility(View.VISIBLE);
@@ -145,8 +149,8 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         initRecyclerView();
         initAdapter();
         initRefreshLayout();
-        collectRefresh.setRefreshing(false);
-        requestData(0);
+        collectRefresh.setRefreshing(true);
+        requestData(1);
     }
 
     @Override
@@ -168,15 +172,17 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light
         );
-        //设置刷新位置
-//        collectRefresh.setProgressViewOffset(true, 120, 300);
-
         collectRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 //TODO 刷新数据
                 mAdapter.setEnableLoadMore(false);
-                requestData(1);
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                    collectRefresh.setRefreshing(false);
+                } else {
+                    requestData(1);
+                }
 
             }
         });
@@ -261,7 +267,12 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
             @Override
             public void onLoadMoreRequested() {
                 //TODO 去加载更多数据
-                requestData(2);
+                collectRefresh.setRefreshing(false);
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                } else {
+                    requestData(2);
+                }
             }
         });
         //设置列表动画
@@ -276,29 +287,22 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
     public void requestData(final int isRefresh) {
 
-        if (!NetUtil.isNetworkConnected(getActivity())) {
-            loadingStatus.showNoNetwork();
-            collectRefresh.setEnabled(false);
-        } else {
-            if (isRefresh == 0) {
-                loadingStatus.showLoading();
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
+            llShow.setVisibility(View.GONE);
+            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+            for (int i = 0; i < users.size(); i++) {
+                id = users.get(0).getId();
             }
-            if (isRefresh == 0 || isRefresh == 1) {
+
+            if (isRefresh == 1) {
                 page = 1;
-            }
-
-            if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
-                llShow.setVisibility(View.GONE);
-                List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
-
-                for (int i = 0; i < users.size(); i++) {
-                    id = users.get(0).getId();
-                }
-
                 OkGo.<String>post(BiaoXunTongApi.URL_GETCOLLECTIONLIST)
                         .params("userid", id)
                         .params("page", page)
                         .params("size", 10)
+                        .cacheKey("collect_cache" + id)
+                        .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                        .cacheTime(3600 * 48000)
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {
@@ -308,8 +312,60 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                 final int count = data.getInteger("count");
                                 final boolean nextPage = data.getBoolean("nextpage");
 
+                                if (array.size() > 0) {
+                                    page = 2;
+                                    setData(isRefresh, array, nextPage);
+                                    mainBarName.setText("我的收藏(" + "共" + count + "条)");
+                                } else {
+                                    //TODO 内容为空的处理
+                                    loadingStatus.showEmpty();
+                                    collectRefresh.setEnabled(false);
+                                    mainBarName.setText("我的收藏(" + "共" + count + "条)");
+                                }
+                            }
+
+                            @Override
+                            public void onCacheSuccess(Response<String> response) {
+
+                                if (!isInitCache) {
+                                    final JSONObject object = JSON.parseObject(response.body());
+                                    final JSONObject data = object.getJSONObject("data");
+                                    final JSONArray array = data.getJSONArray("list");
+                                    final int count = data.getInteger("count");
+                                    final boolean nextPage = data.getBoolean("nextpage");
+
+                                    if (array.size() > 0) {
+                                        setData(isRefresh, array, nextPage);
+                                        mainBarName.setText("我的收藏(" + "共" + count + "条)");
+                                    } else {
+                                        //TODO 内容为空的处理
+                                        loadingStatus.showEmpty();
+                                        collectRefresh.setEnabled(false);
+                                        mainBarName.setText("我的收藏(" + "共" + count + "条)");
+                                    }
+                                    isInitCache = true;
+
+                                }
+
+                            }
+                        });
+            } else {
+                OkGo.<String>post(BiaoXunTongApi.URL_GETCOLLECTIONLIST)
+                        .params("userid", id)
+                        .params("page", page)
+                        .params("size", 10)
+                        .cacheMode(CacheMode.NO_CACHE)
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onSuccess(Response<String> response) {
+                                final JSONObject object = JSON.parseObject(response.body());
+                                final JSONObject data = object.getJSONObject("data");
+                                final JSONArray array = data.getJSONArray("list");
+                                final int count = data.getInteger("count");
+                                final boolean nextPage = data.getBoolean("nextpage");
 
                                 if (array.size() > 0) {
+                                    page++;
                                     setData(isRefresh, array, nextPage);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 } else {
@@ -320,19 +376,20 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                 }
                             }
                         });
-
-            } else {
-                llShow.setVisibility(View.VISIBLE);
             }
+
+        } else {
+            llShow.setVisibility(View.VISIBLE);
         }
 
+
+        Log.d("JBJADBSDJBASDA", page + "");
 
     }
 
     private void setData(int isRefresh, JSONArray data, boolean nextPage) {
-        page++;
         final int size = data == null ? 0 : data.size();
-        if (isRefresh == 0 || isRefresh == 1) {
+        if (isRefresh == 1) {
             loadingStatus.showContent();
             mDataList.clear();
             for (int i = 0; i < data.size(); i++) {
