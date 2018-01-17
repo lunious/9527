@@ -217,11 +217,12 @@ public class IndexListFragment extends BaseFragment {
         initRecyclerView();
         initAdapter();
         initRefreshLayout();
-        indexRefresh.setRefreshing(false);
+
     }
 
     @Override
     public void initEvent() {
+        indexRefresh.setRefreshing(true);
         requestData(0);
     }
 
@@ -298,9 +299,7 @@ public class IndexListFragment extends BaseFragment {
             loadingStatus.showNoNetwork();
             indexRefresh.setEnabled(false);
         } else {
-            if (isRefresh == 0 && !"最新标讯".equals(mTitle)) {
-                loadingStatus.showLoading();
-            }
+
             if (isRefresh == 0 || isRefresh == 1) {
                 page = 1;
             }

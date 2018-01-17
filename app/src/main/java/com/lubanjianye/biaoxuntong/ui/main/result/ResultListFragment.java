@@ -320,6 +320,9 @@ public class ResultListFragment extends BaseFragment {
                         .params("page", page)
                         .params("size", 10)
                         .params("deviceId", deviceId)
+                        .cacheKey("result_no_login_cache" + mTitle)
+                        .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                        .cacheTime(3600 * 72000)
                         .execute(new StringCallback() {
                             @Override
                             public void onSuccess(Response<String> response) {

@@ -17,6 +17,8 @@ public class EventMessage {
     public static final String TAB_CHANGE = "tab_change";
     public static final String BIND_MOBILE_SUCCESS = "mobile";
     public static final String BIND_COMPANY_SUCCESS = "company";
+    public static final String TOKEN_FALSE = "token_false";
+
 
     public final String message;
 

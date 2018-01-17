@@ -3,7 +3,6 @@ package com.lubanjianye.biaoxuntong.ui.main.index;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,7 +19,6 @@ import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
-import com.lubanjianye.biaoxuntong.ui.loader.BiaoXunTongLoader;
 import com.lubanjianye.biaoxuntong.ui.main.index.search.IndexSearchActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.sortcolumn.SortColumnActivity;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
@@ -30,6 +28,7 @@ import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
@@ -59,8 +58,6 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
     private ImageView ivAdd = null;
 
 
-    private PromptDialog promptDialog;
-
     private String clientID = PushManager.getInstance().getClientid(getApplicationContext());
 
     private IndexFragmentAdapter mAdapter = null;
@@ -75,6 +72,10 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
     private String comid = null;
     private String imageUrl = null;
     private String companyName = null;
+    private PromptDialog promptDialog;
+
+    private Boolean IsToken = true;
+    private boolean isInitCache = false;
 
 
     @Override
@@ -97,6 +98,9 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
         //注册EventBus
         EventBus.getDefault().register(this);
 
+        //创建对象
+        promptDialog = new PromptDialog(getActivity());
+
         indexStlTab = getView().findViewById(R.id.index_stl_tab);
         indexVp = getView().findViewById(R.id.index_vp);
         llSearch = getView().findViewById(R.id.ll_search);
@@ -111,6 +115,7 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void XXXXXX(EventMessage message) {
 
+
         if (EventMessage.LOGIN_SUCCSS.equals(message.getMessage()) || EventMessage.LOGIN_OUT.equals(message.getMessage())
                 || EventMessage.TAB_CHANGE.equals(message.getMessage())) {
             //更新UI
@@ -119,213 +124,98 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                 indexStlTab.setViewPager(indexVp);
                 indexStlTab.notifyDataSetChanged();
             }
-            requestData(2);
-
-        } else {
-            //TODO
+            requestData();
         }
+
+
     }
 
     @Override
     public void initData() {
-        //创建对象
-        promptDialog = new PromptDialog(getActivity());
-        requestData(1);
+
+        requestData();
 
     }
 
     @Override
     public void initEvent() {
 
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.TOKEN_FALSE)) {
+
+            final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
+                @Override
+                public void onClick(PromptButton button) {
+                    AppSharePreferenceMgr.remove(getContext(), EventMessage.TOKEN_FALSE);
+                }
+            });
+            cancel.setTextColor(Color.parseColor("#cccc33"));
+            cancel.setTextSize(16);
+
+            final PromptButton toLogin = new PromptButton("重新登陆", new PromptButtonListener() {
+                @Override
+                public void onClick(PromptButton button) {
+                    AppSharePreferenceMgr.remove(getContext(), EventMessage.TOKEN_FALSE);
+                    startActivity(new Intent(getActivity(), SignInActivity.class));
+                }
+            });
+            toLogin.setTextColor(Color.parseColor("#00bfdc"));
+            toLogin.setTextSize(16);
+            promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false);
+            promptDialog.showWarnAlert("账号登陆过期、请重新登录!", toLogin, cancel, false);
+        }
+
     }
 
 
-    public void requestData(int stu) {
+    public void requestData() {
 
-        if (!NetUtil.isNetworkConnected(getContext())) {
-            ToastUtil.shortToast(getContext(), "网络出错，请检查网络设置！");
-
-            if (mList.size() > 0) {
-                mList.clear();
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
+            //得到用户userId
+            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+            for (int i = 0; i < users.size(); i++) {
+                userId = users.get(0).getId();
+                token = users.get(0).getToken();
             }
 
-            mList.add("最新标讯");
-            mList.add("施工");
-            mList.add("监理");
-            mList.add("勘察");
-            mList.add("设计");
-            mList.add("政府采购");
-            mList.add("行业资讯");
+            OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
+                    .params("userId", userId)
+                    .params("clientId", clientID)
+                    .cacheKey("index_tab_cache_login" + userId)
+                    .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                    .cacheTime(3600 * 48000)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
 
-            mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
-            mAdapter.notifyDataSetChanged();
-            indexVp.setAdapter(mAdapter);
-            indexStlTab.setViewPager(indexVp);
-            mAdapter.notifyDataSetChanged();
+                            final JSONObject object = JSON.parseObject(response.body());
+                            String status = object.getString("status");
+                            String message = object.getString("message");
 
-        } else {
-            if (stu == 1) {
-                BiaoXunTongLoader.showLoading(getContext());
-            }
-            if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
-                //得到用个户userId
-                List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
-                for (int i = 0; i < users.size(); i++) {
-                    userId = users.get(0).getId();
-                    token = users.get(0).getToken();
-                }
-
-                Log.d("SUHAUDGUGASDAS", "token===" + token);
-
-                OkGo.<String>post(BiaoXunTongApi.URL_CHECKTOKEN)
-                        .params("userId", userId)
-                        .params("token", token)
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onSuccess(Response<String> response) {
-
-                                if ("200".equals(response.body()) || "400".equals(response.body())) {
-
-                                    OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
-                                            .params("userId", userId)
-                                            .params("clientId", clientID)
-                                            .execute(new StringCallback() {
-                                                @Override
-                                                public void onSuccess(Response<String> response) {
-
-                                                    final JSONObject object = JSON.parseObject(response.body());
-                                                    String status = object.getString("status");
-                                                    String message = object.getString("message");
-
-                                                    if ("200".equals(status)) {
-                                                        final JSONArray ownerList = object.getJSONArray("data");
-                                                        BiaoXunTongLoader.stopLoading();
-                                                        if (mList.size() > 0) {
-                                                            mList.clear();
-                                                        }
-
-                                                        for (int i = 0; i < ownerList.size(); i++) {
-                                                            final JSONObject list = ownerList.getJSONObject(i);
-                                                            String name = list.getString("name");
-                                                            mList.add(name);
-                                                        }
-
-                                                        mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
-                                                        indexVp.setAdapter(mAdapter);
-                                                        indexStlTab.setViewPager(indexVp);
-                                                        mAdapter.notifyDataSetChanged();
-                                                        BiaoXunTongLoader.stopLoading();
-
-                                                    } else {
-                                                        ToastUtil.shortToast(getContext(), message);
-                                                    }
-                                                }
-                                            });
-
-                                } else {
-                                    //后台清除登陆信息
-                                    DatabaseManager.getInstance().getDao().deleteAll();
-                                    AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
-                                    EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
-
-
-                                    OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
-                                            .params("clientId", clientID)
-                                            .execute(new StringCallback() {
-                                                @Override
-                                                public void onSuccess(Response<String> response) {
-                                                    final JSONObject object = JSON.parseObject(response.body());
-                                                    String status = object.getString("status");
-                                                    String message = object.getString("message");
-
-                                                    if ("200".equals(status)) {
-                                                        final JSONArray ownerList = object.getJSONArray("data");
-
-                                                        if (mList.size() > 0) {
-                                                            mList.clear();
-                                                        }
-
-                                                        for (int i = 0; i < ownerList.size(); i++) {
-                                                            final JSONObject list = ownerList.getJSONObject(i);
-                                                            String name = list.getString("name");
-                                                            mList.add(name);
-                                                        }
-
-                                                        mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
-                                                        indexVp.setAdapter(mAdapter);
-                                                        indexStlTab.setViewPager(indexVp);
-                                                        mAdapter.notifyDataSetChanged();
-                                                        BiaoXunTongLoader.stopLoading();
-                                                    } else {
-                                                        ToastUtil.shortToast(getContext(), message);
-                                                    }
-                                                }
-                                            });
-
-
-                                    final PromptButton cancel = new PromptButton("取      消", new PromptButtonListener() {
-                                        @Override
-                                        public void onClick(PromptButton button) {
-
-                                            OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
-                                                    .params("clientId", clientID)
-                                                    .execute(new StringCallback() {
-                                                        @Override
-                                                        public void onSuccess(Response<String> response) {
-                                                            final JSONObject object = JSON.parseObject(response.body());
-                                                            String status = object.getString("status");
-                                                            String message = object.getString("message");
-
-                                                            if ("200".equals(status)) {
-                                                                final JSONArray ownerList = object.getJSONArray("data");
-                                                                if (mList.size() > 0) {
-                                                                    mList.clear();
-                                                                }
-
-                                                                for (int i = 0; i < ownerList.size(); i++) {
-                                                                    final JSONObject list = ownerList.getJSONObject(i);
-                                                                    String name = list.getString("name");
-                                                                    mList.add(name);
-                                                                }
-
-                                                                mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
-                                                                indexVp.setAdapter(mAdapter);
-                                                                indexStlTab.setViewPager(indexVp);
-                                                                mAdapter.notifyDataSetChanged();
-                                                                BiaoXunTongLoader.stopLoading();
-                                                            } else {
-                                                                ToastUtil.shortToast(getContext(), message);
-                                                            }
-                                                        }
-                                                    });
-
-                                        }
-                                    });
-                                    cancel.setTextColor(Color.parseColor("#cccc33"));
-                                    cancel.setTextSize(16);
-
-                                    final PromptButton toLogin = new PromptButton("重新登陆", new PromptButtonListener() {
-                                        @Override
-                                        public void onClick(PromptButton button) {
-                                            startActivity(new Intent(getActivity(), SignInActivity.class));
-                                        }
-                                    });
-                                    toLogin.setTextColor(Color.parseColor("#00bfdc"));
-                                    toLogin.setTextSize(16);
-                                    promptDialog.getAlertDefaultBuilder().withAnim(false).cancleAble(false).touchAble(false);
-                                    promptDialog.showWarnAlert("账号登陆过期！", toLogin, cancel, false);
-
+                            if ("200".equals(status)) {
+                                final JSONArray ownerList = object.getJSONArray("data");
+                                if (mList.size() > 0) {
+                                    mList.clear();
                                 }
+
+                                for (int i = 0; i < ownerList.size(); i++) {
+                                    final JSONObject list = ownerList.getJSONObject(i);
+                                    String name = list.getString("name");
+                                    mList.add(name);
+                                }
+
+                                mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
+                                indexVp.setAdapter(mAdapter);
+                                indexStlTab.setViewPager(indexVp);
+                                mAdapter.notifyDataSetChanged();
+
+                            } else {
+                                ToastUtil.shortToast(getContext(), message);
                             }
-                        });
+                        }
 
-
-            } else {
-                OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
-                        .params("clientId", clientID)
-                        .execute(new StringCallback() {
-                            @Override
-                            public void onSuccess(Response<String> response) {
+                        @Override
+                        public void onCacheSuccess(Response<String> response) {
+                            if (!isInitCache) {
                                 final JSONObject object = JSON.parseObject(response.body());
                                 String status = object.getString("status");
                                 String message = object.getString("message");
@@ -346,16 +236,84 @@ public class IndexTabFragment extends BaseFragment implements View.OnClickListen
                                     indexVp.setAdapter(mAdapter);
                                     indexStlTab.setViewPager(indexVp);
                                     mAdapter.notifyDataSetChanged();
-                                    BiaoXunTongLoader.stopLoading();
+
                                 } else {
                                     ToastUtil.shortToast(getContext(), message);
                                 }
+                                isInitCache = true;
                             }
-                        });
+                        }
+                    });
 
-            }
+
+        } else {
+            OkGo.<String>post(BiaoXunTongApi.URL_INDEXTAB)
+                    .params("clientId", clientID)
+                    .cacheKey("index_tab_cache_no_login" + userId)
+                    .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                    .cacheTime(3600 * 48000)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject object = JSON.parseObject(response.body());
+                            String status = object.getString("status");
+                            String message = object.getString("message");
+
+                            if ("200".equals(status)) {
+                                final JSONArray ownerList = object.getJSONArray("data");
+                                if (mList.size() > 0) {
+                                    mList.clear();
+                                }
+
+                                for (int i = 0; i < ownerList.size(); i++) {
+                                    final JSONObject list = ownerList.getJSONObject(i);
+                                    String name = list.getString("name");
+                                    mList.add(name);
+                                }
+
+                                mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
+                                indexVp.setAdapter(mAdapter);
+                                indexStlTab.setViewPager(indexVp);
+                                mAdapter.notifyDataSetChanged();
+                            } else {
+                                ToastUtil.shortToast(getContext(), message);
+                            }
+                        }
+
+                        @Override
+                        public void onCacheSuccess(Response<String> response) {
+                            if (!isInitCache) {
+                                final JSONObject object = JSON.parseObject(response.body());
+                                String status = object.getString("status");
+                                String message = object.getString("message");
+
+                                if ("200".equals(status)) {
+                                    final JSONArray ownerList = object.getJSONArray("data");
+                                    if (mList.size() > 0) {
+                                        mList.clear();
+                                    }
+
+                                    for (int i = 0; i < ownerList.size(); i++) {
+                                        final JSONObject list = ownerList.getJSONObject(i);
+                                        String name = list.getString("name");
+                                        mList.add(name);
+                                    }
+
+                                    mAdapter = new IndexFragmentAdapter(getContext(), getFragmentManager(), mList);
+                                    indexVp.setAdapter(mAdapter);
+                                    indexStlTab.setViewPager(indexVp);
+                                    mAdapter.notifyDataSetChanged();
+
+                                } else {
+                                    ToastUtil.shortToast(getContext(), message);
+                                }
+                                isInitCache = true;
+                            }
+                        }
+                    });
 
         }
+
     }
 
 
