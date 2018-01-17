@@ -73,6 +73,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
     private int page = 1;
     private boolean isInitCache = false;
+    private long id = 0;
 
     @Override
     public Object setLayout() {
@@ -94,7 +95,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 initAdapter();
                 initRefreshLayout();
                 mAdapter.setEnableLoadMore(false);
-                requestData(1);
+                requestData(true);
             } else {
                 if (llShow != null) {
                     llShow.setVisibility(View.VISIBLE);
@@ -150,7 +151,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         initAdapter();
         initRefreshLayout();
         collectRefresh.setRefreshing(true);
-        requestData(1);
+        requestData(true);
     }
 
     @Override
@@ -181,7 +182,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
                     collectRefresh.setRefreshing(false);
                 } else {
-                    requestData(1);
+                    requestData(true);
                 }
 
             }
@@ -271,7 +272,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 if (!NetUtil.isNetworkConnected(getActivity())) {
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
                 } else {
-                    requestData(2);
+                    requestData(false);
                 }
             }
         });
@@ -283,9 +284,8 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
     }
 
-    private long id = 0;
 
-    public void requestData(final int isRefresh) {
+    public void requestData(final boolean isRefresh) {
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             llShow.setVisibility(View.GONE);
@@ -294,7 +294,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 id = users.get(0).getId();
             }
 
-            if (isRefresh == 1) {
+            if (isRefresh) {
                 page = 1;
                 OkGo.<String>post(BiaoXunTongApi.URL_GETCOLLECTIONLIST)
                         .params("userid", id)
@@ -365,7 +365,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                 final boolean nextPage = data.getBoolean("nextpage");
 
                                 if (array.size() > 0) {
-                                    page++;
                                     setData(isRefresh, array, nextPage);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 } else {
@@ -383,13 +382,11 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         }
 
 
-        Log.d("JBJADBSDJBASDA", page + "");
-
     }
 
-    private void setData(int isRefresh, JSONArray data, boolean nextPage) {
+    private void setData(boolean isRefresh, JSONArray data, boolean nextPage) {
         final int size = data == null ? 0 : data.size();
-        if (isRefresh == 1) {
+        if (isRefresh) {
             loadingStatus.showContent();
             mDataList.clear();
             for (int i = 0; i < data.size(); i++) {
@@ -416,6 +413,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
 
         } else {
+            page++;
             loadingStatus.showContent();
             if (size > 0) {
                 for (int i = 0; i < data.size(); i++) {

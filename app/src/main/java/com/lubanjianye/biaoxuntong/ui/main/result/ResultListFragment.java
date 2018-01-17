@@ -29,9 +29,12 @@ import com.lubanjianye.biaoxuntong.util.aes.AesUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,8 +60,11 @@ public class ResultListFragment extends BaseFragment {
     private ResultListAdapter mAdapter;
     private ArrayList<ResultListBean> mDataList = new ArrayList<>();
 
-    private int page = 1;
+
     private String deviceId = AppSysMgr.getPsuedoUniqueID();
+    private boolean isInitCache = false;
+    private long id = 0;
+    private int page = 1;
 
 
     private void initRefreshLayout() {
@@ -74,7 +80,13 @@ public class ResultListFragment extends BaseFragment {
             public void onRefresh() {
                 //TODO 刷新数据
                 mAdapter.setEnableLoadMore(false);
-                requestData(1);
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                    resultRefresh.setRefreshing(false);
+                } else {
+                    requestData(true);
+                }
+
 
             }
         });
@@ -123,7 +135,12 @@ public class ResultListFragment extends BaseFragment {
             @Override
             public void onLoadMoreRequested() {
                 //TODO 去加载更多数据
-                requestData(2);
+                resultRefresh.setRefreshing(false);
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                } else {
+                    requestData(false);
+                }
             }
         });
         //设置列表动画
@@ -151,27 +168,26 @@ public class ResultListFragment extends BaseFragment {
         resultRefresh = getView().findViewById(R.id.result_refresh);
         loadingStatus = getView().findViewById(R.id.result_list_status_view);
 
-        if ("政府采购结果公告".equals(mTitle)) {
-            mType = "采购";
-        } else if ("工程招标中标公示".equals(mTitle)) {
-            mType = "工程";
-        }
 
     }
 
     @Override
     public void initData() {
-        initRecyclerView();
-        initAdapter();
-        addHeadView();
-        initRefreshLayout();
-        resultRefresh.setRefreshing(false);
-        requestData(0);
+        if ("政府采购结果公告".equals(mTitle)) {
+            mType = "采购";
+        } else if ("工程招标中标公示".equals(mTitle)) {
+            mType = "工程";
+        }
     }
 
     @Override
     public void initEvent() {
-
+        initRecyclerView();
+        initAdapter();
+        addHeadView();
+        initRefreshLayout();
+        resultRefresh.setRefreshing(true);
+        requestData(true);
     }
 
     private void addHeadView() {
@@ -187,29 +203,81 @@ public class ResultListFragment extends BaseFragment {
     }
 
 
-    private long id = 0;
+    public void requestData(final boolean isRefresh) {
 
-    public void requestData(final int isRefresh) {
 
-        if (!NetUtil.isNetworkConnected(getActivity())) {
-            loadingStatus.showNoNetwork();
-            resultRefresh.setEnabled(false);
-        } else {
-            if (isRefresh == 0) {
-                loadingStatus.showLoading();
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
+            //已登录的数据请求
+            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+
+            for (int i = 0; i < users.size(); i++) {
+                id = users.get(0).getId();
             }
-            if (isRefresh == 0 || isRefresh == 1) {
+
+            if (isRefresh) {
                 page = 1;
-            }
+                OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
+                        .params("type", mType)
+                        .params("userid", id)
+                        .params("page", page)
+                        .params("size", 10)
+                        .params("deviceId", deviceId)
+                        .cacheKey("result_login_cache" + mTitle)
+                        .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                        .cacheTime(3600 * 72000)
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onSuccess(Response<String> response) {
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
 
-            if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
-                //已登录的数据请求
-                List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+                                final JSONObject object = JSON.parseObject(jiemi);
+                                final JSONObject data = object.getJSONObject("data");
+                                final JSONArray array = data.getJSONArray("list");
+                                final boolean nextPage = data.getBoolean("nextpage");
 
-                for (int i = 0; i < users.size(); i++) {
-                    id = users.get(0).getId();
-                }
+                                if (array.size() > 0) {
+                                    page = 2;
+                                    setData(isRefresh, array, nextPage);
+                                } else {
+                                    if (mDataList != null) {
+                                        mDataList.clear();
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                    //TODO 内容为空的处理
+                                    loadingStatus.showEmpty();
+                                    resultRefresh.setEnabled(false);
+                                }
 
+                            }
+
+                            @Override
+                            public void onCacheSuccess(Response<String> response) {
+                                if (!isInitCache) {
+                                    String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+
+                                    final JSONObject object = JSON.parseObject(jiemi);
+                                    final JSONObject data = object.getJSONObject("data");
+                                    final JSONArray array = data.getJSONArray("list");
+                                    final boolean nextPage = data.getBoolean("nextpage");
+
+                                    if (array.size() > 0) {
+                                        setData(isRefresh, array, nextPage);
+                                    } else {
+                                        if (mDataList != null) {
+                                            mDataList.clear();
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                        //TODO 内容为空的处理
+                                        loadingStatus.showEmpty();
+                                        resultRefresh.setEnabled(false);
+                                    }
+
+                                    isInitCache = true;
+                                }
+                            }
+                        });
+
+            } else {
                 OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
                         .params("type", mType)
                         .params("userid", id)
@@ -240,9 +308,67 @@ public class ResultListFragment extends BaseFragment {
 
                             }
                         });
+            }
 
+
+        } else {
+            //未登录的数据请求
+            if (isRefresh) {
+                page = 1;
+                OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
+                        .params("type", mType)
+                        .params("page", page)
+                        .params("size", 10)
+                        .params("deviceId", deviceId)
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onSuccess(Response<String> response) {
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+
+                                final JSONObject object = JSON.parseObject(jiemi);
+                                final JSONObject data = object.getJSONObject("data");
+                                final JSONArray array = data.getJSONArray("list");
+                                final boolean nextPage = data.getBoolean("nextpage");
+
+                                if (array.size() > 0) {
+                                    page = 2;
+                                    setData(isRefresh, array, nextPage);
+                                } else {
+                                    if (mDataList != null) {
+                                        mDataList.clear();
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                    //TODO 内容为空的处理
+                                    loadingStatus.showEmpty();
+                                    resultRefresh.setEnabled(false);
+                                }
+
+                            }
+
+                            @Override
+                            public void onCacheSuccess(Response<String> response) {
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+
+                                final JSONObject object = JSON.parseObject(jiemi);
+                                final JSONObject data = object.getJSONObject("data");
+                                final JSONArray array = data.getJSONArray("list");
+                                final boolean nextPage = data.getBoolean("nextpage");
+
+                                if (array.size() > 0) {
+                                    setData(isRefresh, array, nextPage);
+                                } else {
+                                    if (mDataList != null) {
+                                        mDataList.clear();
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                    //TODO 内容为空的处理
+                                    loadingStatus.showEmpty();
+                                    resultRefresh.setEnabled(false);
+                                }
+
+                            }
+                        });
             } else {
-                //未登录的数据请求
                 OkGo.<String>post(BiaoXunTongApi.URL_GETRESULTLIST)
                         .params("type", mType)
                         .params("page", page)
@@ -274,15 +400,15 @@ public class ResultListFragment extends BaseFragment {
                         });
             }
 
+
         }
 
 
     }
 
-    private void setData(int isRefresh, JSONArray data, boolean nextPage) {
-        page++;
+    private void setData(boolean isRefresh, JSONArray data, boolean nextPage) {
         final int size = data == null ? 0 : data.size();
-        if (isRefresh == 0 || isRefresh == 1) {
+        if (isRefresh) {
             loadingStatus.showContent();
             mDataList.clear();
             for (int i = 0; i < data.size(); i++) {
@@ -298,6 +424,7 @@ public class ResultListFragment extends BaseFragment {
             mAdapter.setEnableLoadMore(true);
             mAdapter.notifyDataSetChanged();
         } else {
+            page++;
             loadingStatus.showContent();
             if (size > 0) {
                 for (int i = 0; i < data.size(); i++) {
