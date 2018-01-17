@@ -25,6 +25,7 @@ import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 
@@ -92,6 +93,9 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
     private String zzbm_id = "";
     private String zgzy_id = "";
     private String name = "";
+
+    private boolean isQyzzCache = false;
+    private boolean isRyzzCache = false;
 
 
     private List<String> zy_code = new ArrayList<String>();
@@ -282,9 +286,13 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                 .params("type", 0)
                 .params("size", 5)
                 .params("page", page)
+                .cacheKey("my_qyzz_cache" + id)
+                .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                .cacheTime(3600 * 48000)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
+
                         final JSONObject object = JSON.parseObject(response.body());
                         String status = object.getString("status");
 
@@ -314,6 +322,10 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                                     tvQyzzTip.setVisibility(View.GONE);
                                 }
 
+                                if (mQyzzDataList.size() > 0) {
+                                    mQyzzDataList.clear();
+                                }
+
                                 int d = 1;
                                 for (int i = 0; i < array.size(); i++) {
                                     MyCompanyQyzzAllListBean bean = new MyCompanyQyzzAllListBean();
@@ -339,6 +351,71 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
 
                         } else {
                         }
+
+                    }
+
+                    @Override
+                    public void onCacheSuccess(Response<String> response) {
+
+                        if (!isQyzzCache) {
+                            final JSONObject object = JSON.parseObject(response.body());
+                            String status = object.getString("status");
+
+                            if ("200".equals(status)) {
+
+                                final JSONArray array = object.getJSONObject("data").getJSONArray("list");
+                                final int count = object.getJSONObject("data").getInteger("count");
+                                for (int i = 0; i < array.size(); i++) {
+                                    final JSONObject data = array.getJSONObject(i);
+                                    zy_code.add(data.getString("zy_code"));
+                                }
+
+                                if (array.size() >= 5) {
+                                    if (llMoreQyzz != null) {
+                                        llMoreQyzz.setVisibility(View.VISIBLE);
+                                    }
+                                    qyzzCount.setText(count + "");
+                                } else {
+                                    if (llMoreQyzz != null) {
+                                        llMoreQyzz.setVisibility(View.GONE);
+                                    }
+
+                                }
+
+                                if (array.size() > 0) {
+                                    if (tvQyzzTip != null) {
+                                        tvQyzzTip.setVisibility(View.GONE);
+                                    }
+
+                                    int d = 1;
+                                    for (int i = 0; i < array.size(); i++) {
+                                        MyCompanyQyzzAllListBean bean = new MyCompanyQyzzAllListBean();
+                                        JSONObject list = array.getJSONObject(i);
+                                        bean.setLx_name(d + "、" + list.getString("lx_name"));
+                                        bean.setDl_name(list.getString("dl_name"));
+                                        bean.setXl_name(list.getString("xl_name"));
+                                        bean.setZy_name(list.getString("zy_name"));
+                                        bean.setDj(list.getString("dj"));
+                                        bean.setDq(list.getString("dq"));
+                                        mQyzzDataList.add(bean);
+                                        d++;
+                                    }
+
+                                    mQyzzAdapter.notifyDataSetChanged();
+
+                                } else {
+                                    if (tvQyzzTip != null) {
+                                        tvQyzzTip.setVisibility(View.VISIBLE);
+                                    }
+
+                                }
+
+                            } else {
+                            }
+                            isQyzzCache = true;
+                        }
+
+
                     }
                 });
 
@@ -360,6 +437,9 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                 .params("type", 0)
                 .params("size", 5)
                 .params("page", page)
+                .cacheKey("my_ryzz_cache" + id)
+                .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                .cacheTime(3600 * 48000)
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
@@ -399,6 +479,10 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                                 if (tvRyzzTip != null) {
                                     tvRyzzTip.setVisibility(View.GONE);
                                 }
+
+                                if (mRyzzDataList.size() > 0) {
+                                    mRyzzDataList.clear();
+                                }
                                 int d = 1;
                                 for (int i = 0; i < array.size(); i++) {
                                     MyCompanyRyzzAllListBean bean = new MyCompanyRyzzAllListBean();
@@ -422,6 +506,73 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                         } else {
                         }
                     }
+
+                    @Override
+                    public void onCacheSuccess(Response<String> response) {
+
+                        if (!isRyzzCache) {
+                            final JSONObject object = JSON.parseObject(response.body());
+                            String status = object.getString("status");
+
+                            if ("200".equals(status)) {
+
+                                final JSONArray array = object.getJSONObject("data").getJSONArray("list");
+                                final int count = object.getJSONObject("data").getInteger("count");
+
+                                for (int i = 0; i < array.size(); i++) {
+                                    final JSONObject data = array.getJSONObject(i);
+                                    zzbm.add(data.getString("zzbm"));
+                                    zgzy_code.add(data.getString("zgzy_code"));
+                                    ryname.add(data.getString("ryname"));
+                                }
+
+                                if (array.size() >= 5) {
+                                    if (llMoreRyzz != null) {
+                                        llMoreRyzz.setVisibility(View.VISIBLE);
+                                    }
+
+                                    ryzzCount.setText(count + "");
+
+                                } else {
+                                    if (llMoreRyzz != null) {
+                                        llMoreRyzz.setVisibility(View.GONE);
+                                    }
+
+                                }
+
+
+                                if (array.size() > 0) {
+
+                                    if (tvRyzzTip != null) {
+                                        tvRyzzTip.setVisibility(View.GONE);
+                                    }
+                                    int d = 1;
+                                    for (int i = 0; i < array.size(); i++) {
+                                        MyCompanyRyzzAllListBean bean = new MyCompanyRyzzAllListBean();
+                                        JSONObject list = array.getJSONObject(i);
+                                        bean.setLx_name(list.getString("lx_name"));
+                                        bean.setRyname(d + "、" + list.getString("ryname"));
+                                        bean.setZg_mcdj(list.getString("zg_mcdj"));
+                                        bean.setZg_name(list.getString("zg_name"));
+                                        bean.setZgzy(list.getString("zgzy"));
+                                        mRyzzDataList.add(bean);
+                                        d++;
+                                    }
+
+                                    mRyzzAdapter.notifyDataSetChanged();
+                                } else {
+                                    if (tvRyzzTip != null) {
+                                        tvRyzzTip.setVisibility(View.VISIBLE);
+                                    }
+
+                                }
+                            } else {
+                            }
+                            isRyzzCache = true;
+                        }
+
+
+                    }
                 });
 
     }
@@ -442,6 +593,7 @@ public class MyCompanyFragment extends BaseFragment implements View.OnClickListe
                 .execute(new StringCallback() {
                     @Override
                     public void onSuccess(Response<String> response) {
+
                         final JSONArray data = JSON.parseObject(response.body()).getJSONArray("data");
                         if (data.size() > 0) {
                             //根据返回的id去查询公司名称
