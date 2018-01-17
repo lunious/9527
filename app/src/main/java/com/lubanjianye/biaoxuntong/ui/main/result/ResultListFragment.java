@@ -186,8 +186,16 @@ public class ResultListFragment extends BaseFragment {
         initAdapter();
         addHeadView();
         initRefreshLayout();
-        resultRefresh.setRefreshing(true);
-        requestData(true);
+
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            resultRefresh.setRefreshing(false);
+            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+            requestData(true);
+        } else {
+            resultRefresh.setRefreshing(true);
+            mAdapter.setEnableLoadMore(false);
+            requestData(true);
+        }
     }
 
     private void addHeadView() {

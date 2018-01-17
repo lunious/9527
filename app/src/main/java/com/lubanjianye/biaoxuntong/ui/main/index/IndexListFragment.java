@@ -35,6 +35,7 @@ import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
+import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.youth.banner.Banner;
@@ -69,6 +70,7 @@ public class IndexListFragment extends BaseFragment {
     private ArrayList<IndexListBean> mDataList = new ArrayList<>();
 
     private int page = 1;
+    private boolean isInitCache = false;
 
     public String getTitle() {
         return mTitle;
@@ -104,7 +106,14 @@ public class IndexListFragment extends BaseFragment {
             public void onRefresh() {
                 //TODO 刷新数据
                 mAdapter.setEnableLoadMore(false);
-                requestData(1);
+
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                    indexRefresh.setRefreshing(false);
+                } else {
+                    requestData(true);
+                }
+
 
             }
         });
@@ -187,7 +196,12 @@ public class IndexListFragment extends BaseFragment {
             @Override
             public void onLoadMoreRequested() {
                 //TODO 去加载更多数据
-                requestData(2);
+                indexRefresh.setRefreshing(false);
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                } else {
+                    requestData(false);
+                }
             }
         });
         //设置列表动画
@@ -222,8 +236,16 @@ public class IndexListFragment extends BaseFragment {
 
     @Override
     public void initEvent() {
-        indexRefresh.setRefreshing(true);
-        requestData(0);
+
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            indexRefresh.setRefreshing(false);
+            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+            requestData(true);
+        } else {
+            indexRefresh.setRefreshing(true);
+            mAdapter.setEnableLoadMore(false);
+            requestData(true);
+        }
     }
 
     private long id = 0;
@@ -293,23 +315,89 @@ public class IndexListFragment extends BaseFragment {
         });
     }
 
-    public void requestData(final int isRefresh) {
+    public void requestData(final boolean isRefresh) {
 
-        if (!NetUtil.isNetworkConnected(getActivity())) {
-            loadingStatus.showNoNetwork();
-            indexRefresh.setEnabled(false);
-        } else {
-
-            if (isRefresh == 0 || isRefresh == 1) {
-                page = 1;
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
+            //已登录的数据请求
+            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+            for (int i = 0; i < users.size(); i++) {
+                id = users.get(0).getId();
             }
-            if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
-                //已登录的数据请求
-                List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
-                for (int i = 0; i < users.size(); i++) {
-                    id = users.get(0).getId();
-                }
 
+            if (isRefresh) {
+                page = 1;
+                OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
+                        .params("type", mTitle)
+                        .params("userid", id)
+                        .params("page", page)
+                        .params("size", 10)
+                        .params("deviceId", deviceId)
+                        .cacheKey("index_list_login_cache" + mTitle)
+                        .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                        .cacheTime(3600 * 72000)
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onSuccess(Response<String> response) {
+
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+
+                                final JSONObject object = JSON.parseObject(jiemi);
+                                final JSONObject data = object.getJSONObject("data");
+                                final String status = object.getString("status");
+                                final String message = object.getString("message");
+                                final JSONArray array = data.getJSONArray("list");
+                                final boolean nextPage = data.getBoolean("nextpage");
+
+                                if ("200".equals(status)) {
+                                    if (array.size() > 0) {
+                                        page = 2;
+                                        setData(isRefresh, array, nextPage);
+                                    } else {
+                                        if (mDataList != null) {
+                                            mDataList.clear();
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                        //TODO 内容为空的处理
+                                        loadingStatus.showEmpty();
+                                        indexRefresh.setEnabled(false);
+                                    }
+                                } else {
+                                    ToastUtil.shortToast(getContext(), message);
+                                }
+                            }
+
+                            @Override
+                            public void onCacheSuccess(Response<String> response) {
+                                if (!isInitCache) {
+                                    String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+
+                                    final JSONObject object = JSON.parseObject(jiemi);
+                                    final JSONObject data = object.getJSONObject("data");
+                                    final String status = object.getString("status");
+                                    final String message = object.getString("message");
+                                    final JSONArray array = data.getJSONArray("list");
+                                    final boolean nextPage = data.getBoolean("nextpage");
+
+                                    if ("200".equals(status)) {
+                                        if (array.size() > 0) {
+                                            setData(isRefresh, array, nextPage);
+                                        } else {
+                                            if (mDataList != null) {
+                                                mDataList.clear();
+                                                mAdapter.notifyDataSetChanged();
+                                            }
+                                            //TODO 内容为空的处理
+                                            loadingStatus.showEmpty();
+                                            indexRefresh.setEnabled(false);
+                                        }
+                                    } else {
+                                        ToastUtil.shortToast(getContext(), message);
+                                    }
+                                    isInitCache = true;
+                                }
+                            }
+                        });
+            } else {
                 OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
                         .params("type", mTitle)
                         .params("userid", id)
@@ -346,10 +434,86 @@ public class IndexListFragment extends BaseFragment {
                                 }
                             }
                         });
+            }
 
+
+        } else {
+            //未登录的数据请求
+
+            if (isRefresh) {
+                page = 1;
+                OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
+                        .params("type", mTitle)
+                        .params("page", page)
+                        .params("size", 10)
+                        .params("deviceId", deviceId)
+                        .cacheKey("index_list_no_login_cache" + mTitle)
+                        .cacheMode(CacheMode.FIRST_CACHE_THEN_REQUEST)
+                        .cacheTime(3600 * 72000)
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onSuccess(Response<String> response) {
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+
+                                final JSONObject object = JSON.parseObject(jiemi);
+                                final JSONObject data = object.getJSONObject("data");
+                                final String status = object.getString("status");
+                                final String message = object.getString("message");
+                                final JSONArray array = data.getJSONArray("list");
+                                final boolean nextPage = data.getBoolean("nextpage");
+
+                                if ("200".equals(status)) {
+                                    if (array.size() > 0) {
+                                        page = 2;
+                                        setData(isRefresh, array, nextPage);
+                                    } else {
+                                        if (mDataList != null) {
+                                            mDataList.clear();
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                        //TODO 内容为空的处理
+                                        loadingStatus.showEmpty();
+                                        indexRefresh.setEnabled(false);
+                                    }
+                                } else {
+                                    ToastUtil.shortToast(getContext(), message);
+                                }
+
+                            }
+
+                            @Override
+                            public void onCacheSuccess(Response<String> response) {
+                                if (!isInitCache) {
+                                    String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+
+                                    final JSONObject object = JSON.parseObject(jiemi);
+                                    final JSONObject data = object.getJSONObject("data");
+                                    final String status = object.getString("status");
+                                    final String message = object.getString("message");
+                                    final JSONArray array = data.getJSONArray("list");
+                                    final boolean nextPage = data.getBoolean("nextpage");
+
+                                    if ("200".equals(status)) {
+                                        if (array.size() > 0) {
+                                            page = 2;
+                                            setData(isRefresh, array, nextPage);
+                                        } else {
+                                            if (mDataList != null) {
+                                                mDataList.clear();
+                                                mAdapter.notifyDataSetChanged();
+                                            }
+                                            //TODO 内容为空的处理
+                                            loadingStatus.showEmpty();
+                                            indexRefresh.setEnabled(false);
+                                        }
+                                    } else {
+                                        ToastUtil.shortToast(getContext(), message);
+                                    }
+                                    isInitCache = true;
+                                }
+                            }
+                        });
             } else {
-                //未登录的数据请求
-
                 OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
                         .params("type", mTitle)
                         .params("page", page)
@@ -384,18 +548,17 @@ public class IndexListFragment extends BaseFragment {
                                 }
                             }
                         });
-
             }
+
 
         }
 
 
     }
 
-    private void setData(int isRefresh, JSONArray data, boolean nextPage) {
-        page++;
+    private void setData(boolean isRefresh, JSONArray data, boolean nextPage) {
         final int size = data == null ? 0 : data.size();
-        if (isRefresh == 0 || isRefresh == 1) {
+        if (isRefresh) {
             loadingStatus.showContent();
             mDataList.clear();
             for (int i = 0; i < data.size(); i++) {
@@ -419,6 +582,7 @@ public class IndexListFragment extends BaseFragment {
             mAdapter.setEnableLoadMore(true);
             mAdapter.notifyDataSetChanged();
         } else {
+            page++;
             loadingStatus.showContent();
             if (size > 0) {
                 for (int i = 0; i < data.size(); i++) {

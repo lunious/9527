@@ -150,8 +150,17 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         initRecyclerView();
         initAdapter();
         initRefreshLayout();
-        collectRefresh.setRefreshing(true);
-        requestData(true);
+
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            collectRefresh.setRefreshing(false);
+            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+            requestData(true);
+        } else {
+            collectRefresh.setRefreshing(true);
+            mAdapter.setEnableLoadMore(false);
+            requestData(true);
+        }
+
     }
 
     @Override
