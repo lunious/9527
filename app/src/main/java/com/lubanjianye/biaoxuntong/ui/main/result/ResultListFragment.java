@@ -106,7 +106,7 @@ public class ResultListFragment extends BaseFragment {
 
                 Intent intent = null;
 
-                if ("xjggg".equals(entity) || "sjggg".equals(entity) || "sggjy".equals(entity)) {
+                if ("xjggg".equals(entity) || "sjggg".equals(entity) || "sggjy".equals(entity) || "sggjycgjgtable".equals(entity)) {
                     intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
                     intent.putExtra("entityId", entityId);
                     intent.putExtra("entity", entity);

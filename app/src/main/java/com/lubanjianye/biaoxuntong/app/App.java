@@ -1,6 +1,8 @@
 package com.lubanjianye.biaoxuntong.app;
 
 import android.app.Application;
+import android.content.Context;
+import android.support.multidex.MultiDex;
 
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.ui.push.PushService;
@@ -130,5 +132,11 @@ public class App extends Application {
         OkGo.getInstance().init(this)
                 .setOkHttpClient(builder.build())
                 .setRetryCount(3);
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
     }
 }
