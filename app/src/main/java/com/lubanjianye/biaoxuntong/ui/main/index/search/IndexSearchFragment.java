@@ -8,6 +8,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -203,6 +204,8 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                 final int entityId = data.getEntityId();
                 final String entity = data.getEntity();
 
+                Log.d("BASUHDUSADASDAS", entity + "_____" + entityId);
+
                 Intent intent = null;
                 if ("sggjy".equals(entity)) {
                     intent = new Intent(BiaoXunTong.getApplicationContext(), IndexSggjyDetailActivity.class);
@@ -233,6 +236,8 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                     intent.putExtra("ajaxlogtype", "0");
                     intent.putExtra("mId", "");
                     startActivity(intent);
+
+                } else if ("scggg".equals(entity)) {
 
                 }
             }
