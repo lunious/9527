@@ -1,7 +1,6 @@
 package com.lubanjianye.biaoxuntong.ui.main.index;
 
 import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,7 +19,6 @@ import com.lubanjianye.biaoxuntong.bean.IndexListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexBxtgdjDetailActivity;
@@ -126,7 +124,7 @@ public class IndexListFragment extends BaseFragment {
             }
         });
 
-        indexRefresh.autoRefresh();
+//        indexRefresh.autoRefresh();
 
 
     }
@@ -234,6 +232,14 @@ public class IndexListFragment extends BaseFragment {
 
     @Override
     public void initEvent() {
+
+
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+        } else {
+            requestData(true);
+        }
+
     }
 
     private long id = 0;
@@ -347,7 +353,7 @@ public class IndexListFragment extends BaseFragment {
                                         }
                                         //TODO 内容为空的处理
                                         loadingStatus.showEmpty();
-                                        indexRefresh.setEnabled(false);
+                                        indexRefresh.setEnableRefresh(false);
                                     }
                                 } else {
                                     ToastUtil.shortToast(getContext(), message);
@@ -376,7 +382,7 @@ public class IndexListFragment extends BaseFragment {
                                             }
                                             //TODO 内容为空的处理
                                             loadingStatus.showEmpty();
-                                            indexRefresh.setEnabled(false);
+                                            indexRefresh.setEnableRefresh(false);
                                         }
                                     } else {
                                         ToastUtil.shortToast(getContext(), message);
@@ -415,7 +421,7 @@ public class IndexListFragment extends BaseFragment {
                                         }
                                         //TODO 内容为空的处理
                                         loadingStatus.showEmpty();
-                                        indexRefresh.setEnabled(false);
+                                        indexRefresh.setEnableRefresh(false);
                                     }
                                 } else {
                                     ToastUtil.shortToast(getContext(), message);
@@ -461,7 +467,7 @@ public class IndexListFragment extends BaseFragment {
                                         }
                                         //TODO 内容为空的处理
                                         loadingStatus.showEmpty();
-                                        indexRefresh.setEnabled(false);
+                                        indexRefresh.setEnableRefresh(false);
                                     }
                                 } else {
                                     ToastUtil.shortToast(getContext(), message);
@@ -492,7 +498,7 @@ public class IndexListFragment extends BaseFragment {
                                             }
                                             //TODO 内容为空的处理
                                             loadingStatus.showEmpty();
-                                            indexRefresh.setEnabled(false);
+                                            indexRefresh.setEnableRefresh(false);
                                         }
                                     } else {
                                         ToastUtil.shortToast(getContext(), message);
@@ -529,7 +535,7 @@ public class IndexListFragment extends BaseFragment {
                                         }
                                         //TODO 内容为空的处理
                                         loadingStatus.showEmpty();
-                                        indexRefresh.setEnabled(false);
+                                        indexRefresh.setEnableRefresh(false);
                                     }
                                 } else {
                                     ToastUtil.shortToast(getContext(), message);
