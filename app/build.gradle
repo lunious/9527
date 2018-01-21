@@ -88,5 +88,7 @@ dependencies {
     implementation 'pub.devrel:easypermissions:1.1.1'
     //okhttp-OkGo
     compile 'com.lzy.net:okgo:3.0.4'
+    //SmartRefreshLayout
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.4-7'
 
 }

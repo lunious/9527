@@ -41,6 +41,10 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -64,7 +68,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
     private AppCompatButton btnToLogin = null;
     private LinearLayout llShow = null;
     private RecyclerView collectRecycler = null;
-    private SwipeRefreshLayout collectRefresh = null;
+    private SmartRefreshLayout collectRefresh = null;
     private MultipleStatusView loadingStatus = null;
 
 
@@ -151,16 +155,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         initAdapter();
         initRefreshLayout();
 
-        if (!NetUtil.isNetworkConnected(getActivity())) {
-            collectRefresh.setRefreshing(false);
-            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-            requestData(true);
-        } else {
-            collectRefresh.setRefreshing(true);
-            mAdapter.setEnableLoadMore(false);
-            requestData(true);
-        }
-
     }
 
     @Override
@@ -177,25 +171,35 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
     private void initRefreshLayout() {
 
-        collectRefresh.setColorSchemeResources(
-                R.color.main_theme_color,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
-        );
-        collectRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+        collectRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                //TODO 刷新数据
-                mAdapter.setEnableLoadMore(false);
+            public void onRefresh(RefreshLayout refreshlayout) {
+
                 if (!NetUtil.isNetworkConnected(getActivity())) {
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-                    collectRefresh.setRefreshing(false);
+                    collectRefresh.finishRefresh(2000, false);
                 } else {
                     requestData(true);
                 }
-
             }
         });
+
+        collectRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+
+                //TODO 去加载更多数据
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                } else {
+                    requestData(false);
+                }
+            }
+        });
+
+
+        collectRefresh.autoRefresh();
     }
 
     private void initRecyclerView() {
@@ -273,21 +277,8 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
     private void initAdapter() {
         mAdapter = new CollectionListAdapter(R.layout.fragment_collection_item, mDataList);
 
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                //TODO 去加载更多数据
-                collectRefresh.setRefreshing(false);
-                if (!NetUtil.isNetworkConnected(getActivity())) {
-                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-                } else {
-                    requestData(false);
-                }
-            }
-        });
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         collectRecycler.setAdapter(mAdapter);
 
 
@@ -328,7 +319,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                 } else {
                                     //TODO 内容为空的处理
                                     loadingStatus.showEmpty();
-                                    collectRefresh.setEnabled(false);
+                                    collectRefresh.setEnableRefresh(false);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 }
                             }
@@ -349,7 +340,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                     } else {
                                         //TODO 内容为空的处理
                                         loadingStatus.showEmpty();
-                                        collectRefresh.setEnabled(false);
+                                        collectRefresh.setEnableRefresh(false);
                                         mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                     }
                                     isInitCache = true;
@@ -379,7 +370,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                 } else {
                                     //TODO 内容为空的处理
                                     loadingStatus.showEmpty();
-                                    collectRefresh.setEnabled(false);
+                                    collectRefresh.setEnableRefresh(false);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 }
                             }
@@ -409,16 +400,15 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 bean.setEntity(list.getString("entity"));
                 mDataList.add(bean);
             }
-            collectRefresh.setRefreshing(false);
-            mAdapter.setEnableLoadMore(true);
-            mAdapter.notifyDataSetChanged();
 
             if (!nextPage) {
                 //第一页如果不够一页就不显示没有更多数据布局
-                mAdapter.loadMoreEnd();
+                collectRefresh.setEnableLoadmore(false);
             } else {
-                mAdapter.loadMoreComplete();
+                collectRefresh.setEnableLoadmore(true);
             }
+            mAdapter.notifyDataSetChanged();
+            collectRefresh.finishRefresh(0, true);
 
 
         } else {
@@ -436,14 +426,16 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                     bean.setEntity(list.getString("entity"));
                     mDataList.add(bean);
                 }
-                mAdapter.notifyDataSetChanged();
+
             }
             if (!nextPage) {
                 //第一页如果不够一页就不显示没有更多数据布局
-                mAdapter.loadMoreEnd();
+                collectRefresh.setEnableLoadmore(false);
             } else {
-                mAdapter.loadMoreComplete();
+                collectRefresh.setEnableLoadmore(true);
             }
+            mAdapter.notifyDataSetChanged();
+            collectRefresh.finishLoadmore(0, true);
         }
 
 
