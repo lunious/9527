@@ -11,7 +11,6 @@
         android:id="@+id/ll_show"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#eeeeee"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:paddingTop="@dimen/d80"
@@ -54,15 +53,16 @@
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/collect_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/main_status_white">
 
             <com.scwang.smartrefresh.layout.header.ClassicsHeader
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/d50"
                 app:srlDrawableProgressSize="@dimen/d14"
                 app:srlDrawableSize="@dimen/d14"
-                app:srlTextSizeTitle="@dimen/s14"
-                app:srlTextSizeTime="@dimen/s12"/>
+                app:srlTextSizeTime="@dimen/s12"
+                app:srlTextSizeTitle="@dimen/s14" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/collect_recycler"
@@ -75,8 +75,8 @@
             <com.scwang.smartrefresh.layout.footer.ClassicsFooter
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/d50"
-                app:srlTextSizeTitle="@dimen/s14"
-                app:srlDrawableProgressSize="@dimen/d14"/>
+                app:srlDrawableProgressSize="@dimen/d14"
+                app:srlTextSizeTitle="@dimen/s14" />
 
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </com.classic.common.MultipleStatusView>

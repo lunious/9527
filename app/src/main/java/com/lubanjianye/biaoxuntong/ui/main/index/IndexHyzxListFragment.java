@@ -29,6 +29,10 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +49,7 @@ import java.util.List;
 public class IndexHyzxListFragment extends BaseFragment {
 
     private RecyclerView indexHyzxRecycler = null;
-    private SwipeRefreshLayout indexHyzxRefresh = null;
+    private SmartRefreshLayout indexHyzxRefresh = null;
     private MultipleStatusView loadingStatus = null;
 
 
@@ -79,39 +83,41 @@ public class IndexHyzxListFragment extends BaseFragment {
 
     @Override
     public void initEvent() {
-        if (!NetUtil.isNetworkConnected(getActivity())) {
-            indexHyzxRefresh.setRefreshing(false);
-            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-            requestData(true);
-        } else {
-            indexHyzxRefresh.setRefreshing(true);
-            mAdapter.setEnableLoadMore(false);
-            requestData(true);
-        }
+
     }
 
     private void initRefreshLayout() {
-        indexHyzxRefresh.setColorSchemeResources(
-                R.color.main_theme_color,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
-        );
 
-        indexHyzxRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        indexHyzxRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                //TODO 刷新数据
-                mAdapter.setEnableLoadMore(false);
+            public void onRefresh(RefreshLayout refreshlayout) {
 
                 if (!NetUtil.isNetworkConnected(getActivity())) {
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-                    indexHyzxRefresh.setRefreshing(false);
+                    indexHyzxRefresh.finishRefresh(2000, false);
                 } else {
                     requestData(true);
                 }
-
             }
         });
+
+        indexHyzxRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+
+                //TODO 去加载更多数据
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                } else {
+                    requestData(false);
+                }
+            }
+        });
+
+
+        indexHyzxRefresh.autoRefresh();
+
+
     }
 
 
@@ -139,22 +145,9 @@ public class IndexHyzxListFragment extends BaseFragment {
 
     private void initAdapter() {
         mAdapter = new IndexHyzxListAdapter(R.layout.fragment_index_hyzx_item, mDataList);
-
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                //TODO 去加载更多数据
-                if (!NetUtil.isNetworkConnected(getActivity())) {
-                    indexHyzxRefresh.setRefreshing(false);
-                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-                } else {
-                    requestData(false);
-                }
-            }
-        });
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        mAdapter.setLoadMoreView(new CustomLoadMoreView());
+
         indexHyzxRecycler.setAdapter(mAdapter);
 
 
@@ -200,7 +193,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                                     }
                                     //TODO 内容为空的处理
                                     loadingStatus.showEmpty();
-                                    indexHyzxRefresh.setEnabled(false);
+                                    indexHyzxRefresh.setEnableRefresh(false);
                                 }
                             }
 
@@ -224,7 +217,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                                         }
                                         //TODO 内容为空的处理
                                         loadingStatus.showEmpty();
-                                        indexHyzxRefresh.setEnabled(false);
+                                        indexHyzxRefresh.setEnableRefresh(false);
                                     }
                                     isInitCache = true;
                                 }
@@ -254,7 +247,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                                     }
                                     //TODO 内容为空的处理
                                     loadingStatus.showEmpty();
-                                    indexHyzxRefresh.setEnabled(false);
+                                    indexHyzxRefresh.setEnableRefresh(false);
                                 }
                             }
                         });
@@ -288,7 +281,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                                     }
                                     //TODO 内容为空的处理
                                     loadingStatus.showEmpty();
-                                    indexHyzxRefresh.setEnabled(false);
+                                    indexHyzxRefresh.setEnableRefresh(false);
                                 }
                             }
 
@@ -311,7 +304,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                                         }
                                         //TODO 内容为空的处理
                                         loadingStatus.showEmpty();
-                                        indexHyzxRefresh.setEnabled(false);
+                                        indexHyzxRefresh.setEnableRefresh(false);
                                     }
                                     isInitCache = true;
                                 }
@@ -341,7 +334,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                                     }
                                     //TODO 内容为空的处理
                                     loadingStatus.showEmpty();
-                                    indexHyzxRefresh.setEnabled(false);
+                                    indexHyzxRefresh.setEnableRefresh(false);
                                 }
                             }
                         });
@@ -377,9 +370,9 @@ public class IndexHyzxListFragment extends BaseFragment {
                 bean.setImg(imgs.get(i));
                 mDataList.add(bean);
             }
-            indexHyzxRefresh.setRefreshing(false);
-            mAdapter.setEnableLoadMore(true);
-            mAdapter.notifyDataSetChanged();
+            indexHyzxRefresh.finishRefresh(0, true);
+
+
         } else {
             page++;
             loadingStatus.showContent();
@@ -401,16 +394,17 @@ public class IndexHyzxListFragment extends BaseFragment {
                     bean.setImg(imgs.get(i));
                     mDataList.add(bean);
                 }
-                mAdapter.notifyDataSetChanged();
             }
+
+            indexHyzxRefresh.finishLoadmore(0, true);
         }
         if (!nextPage) {
             //第一页如果不够一页就不显示没有更多数据布局
-            mAdapter.loadMoreEnd();
+            indexHyzxRefresh.setEnableLoadmore(false);
         } else {
-            mAdapter.loadMoreComplete();
+            indexHyzxRefresh.setEnableLoadmore(true);
         }
-
+        mAdapter.notifyDataSetChanged();
 
     }
 }

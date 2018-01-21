@@ -38,6 +38,10 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.listener.OnBannerListener;
@@ -57,7 +61,7 @@ import java.util.List;
 public class IndexListFragment extends BaseFragment {
 
     private RecyclerView indexRecycler = null;
-    private SwipeRefreshLayout indexRefresh = null;
+    private SmartRefreshLayout indexRefresh = null;
     private MultipleStatusView loadingStatus = null;
 
 
@@ -95,28 +99,35 @@ public class IndexListFragment extends BaseFragment {
 
     private void initRefreshLayout() {
 
-        indexRefresh.setColorSchemeResources(
-                R.color.main_theme_color,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
-        );
 
-        indexRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        indexRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                //TODO 刷新数据
-                mAdapter.setEnableLoadMore(false);
+            public void onRefresh(RefreshLayout refreshlayout) {
 
                 if (!NetUtil.isNetworkConnected(getActivity())) {
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-                    indexRefresh.setRefreshing(false);
+                    indexRefresh.finishRefresh(2000, false);
                 } else {
                     requestData(true);
                 }
-
-
             }
         });
+
+        indexRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+
+                //TODO 去加载更多数据
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                } else {
+                    requestData(false);
+                }
+            }
+        });
+
+        indexRefresh.autoRefresh();
+
 
     }
 
@@ -192,21 +203,8 @@ public class IndexListFragment extends BaseFragment {
             mAdapter = new IndexListAdapter(R.layout.fragment_index_item, mDataList);
         }
 
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                //TODO 去加载更多数据
-                indexRefresh.setRefreshing(false);
-                if (!NetUtil.isNetworkConnected(getActivity())) {
-                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-                } else {
-                    requestData(false);
-                }
-            }
-        });
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         indexRecycler.setAdapter(mAdapter);
 
 
@@ -236,16 +234,6 @@ public class IndexListFragment extends BaseFragment {
 
     @Override
     public void initEvent() {
-
-        if (!NetUtil.isNetworkConnected(getActivity())) {
-            indexRefresh.setRefreshing(false);
-            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-            requestData(true);
-        } else {
-            indexRefresh.setRefreshing(true);
-            mAdapter.setEnableLoadMore(false);
-            requestData(true);
-        }
     }
 
     private long id = 0;
@@ -576,11 +564,8 @@ public class IndexListFragment extends BaseFragment {
                 bean.setSignstauts(list.getString("signstauts"));
                 mDataList.add(bean);
             }
-            if (indexRefresh != null) {
-                indexRefresh.setRefreshing(false);
-            }
-            mAdapter.setEnableLoadMore(true);
-            mAdapter.notifyDataSetChanged();
+            indexRefresh.finishRefresh(0, true);
+
         } else {
             page++;
             loadingStatus.showContent();
@@ -600,16 +585,18 @@ public class IndexListFragment extends BaseFragment {
                     bean.setSignstauts(list.getString("signstauts"));
                     mDataList.add(bean);
                 }
-                mAdapter.notifyDataSetChanged();
+
             }
-        }
-        if (!nextPage) {
-            //第一页如果不够一页就不显示没有更多数据布局
-            mAdapter.loadMoreEnd();
-        } else {
-            mAdapter.loadMoreComplete();
+            indexRefresh.finishLoadmore(0, true);
         }
 
+        if (!nextPage) {
+            //第一页如果不够一页就不显示没有更多数据布局
+            indexRefresh.setEnableLoadmore(false);
+        } else {
+            indexRefresh.setEnableLoadmore(true);
+        }
+        mAdapter.notifyDataSetChanged();
 
     }
 }

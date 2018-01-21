@@ -401,13 +401,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 mDataList.add(bean);
             }
 
-            if (!nextPage) {
-                //第一页如果不够一页就不显示没有更多数据布局
-                collectRefresh.setEnableLoadmore(false);
-            } else {
-                collectRefresh.setEnableLoadmore(true);
-            }
-            mAdapter.notifyDataSetChanged();
             collectRefresh.finishRefresh(0, true);
 
 
@@ -428,16 +421,16 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 }
 
             }
-            if (!nextPage) {
-                //第一页如果不够一页就不显示没有更多数据布局
-                collectRefresh.setEnableLoadmore(false);
-            } else {
-                collectRefresh.setEnableLoadmore(true);
-            }
-            mAdapter.notifyDataSetChanged();
             collectRefresh.finishLoadmore(0, true);
-        }
 
+        }
+        if (!nextPage) {
+            //第一页如果不够一页就不显示没有更多数据布局
+            collectRefresh.setEnableLoadmore(false);
+        } else {
+            collectRefresh.setEnableLoadmore(true);
+        }
+        mAdapter.notifyDataSetChanged();
 
     }
 }
