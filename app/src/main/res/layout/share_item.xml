@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginTop="@dimen/d16"
+        android:layout_marginTop="@dimen/d18"
         android:layout_marginBottom="@dimen/d10"
         android:orientation="horizontal">
 

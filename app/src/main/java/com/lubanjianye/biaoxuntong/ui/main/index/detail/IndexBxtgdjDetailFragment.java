@@ -56,6 +56,8 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
     private AppCompatTextView mainBarName = null;
     private MultipleStatusView bxtgdjDetailStatusView = null;
     private AppCompatTextView tvMainTitle = null;
+    private LinearLayout llType = null;
+    private AppCompatTextView tvType = null;
     private AppCompatTextView tvMainArea = null;
     private AppCompatTextView tvMainPubTime = null;
     private AppCompatTextView tvMainDeadTime = null;
@@ -129,6 +131,8 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
         mainBarName = getView().findViewById(R.id.main_bar_name);
         bxtgdjDetailStatusView = getView().findViewById(R.id.bxtgdj_detail_status_view);
         tvMainTitle = getView().findViewById(R.id.tv_main_title);
+        llType = getView().findViewById(R.id.ll_type);
+        tvType = getView().findViewById(R.id.tv_type);
         tvMainArea = getView().findViewById(R.id.tv_main_area);
         tvMainPubTime = getView().findViewById(R.id.tv_main_pub_time);
         tvMainDeadTime = getView().findViewById(R.id.tv_main_dead_time);
@@ -271,6 +275,13 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
                                     } else {
                                         tvMainTitle.setText("/");
                                     }
+                                    String entryType = data.getString("entryType");
+                                    if (!TextUtils.isEmpty(entryType)) {
+                                        tvType.setText(entryType);
+                                    } else {
+                                        llType.setVisibility(View.GONE);
+                                    }
+
                                     String area = data.getString("area");
                                     if (!TextUtils.isEmpty(area)) {
                                         tvMainArea.setText(area);
@@ -401,6 +412,15 @@ public class IndexBxtgdjDetailFragment extends BaseFragment implements View.OnCl
                                     } else {
                                         tvMainTitle.setText("/");
                                     }
+
+                                    String entryType = data.getString("entryType");
+                                    if (!TextUtils.isEmpty(entryType)) {
+                                        tvType.setText(entryType);
+                                    } else {
+                                        llType.setVisibility(View.GONE);
+                                    }
+
+
                                     String area = data.getString("area");
                                     if (!TextUtils.isEmpty(area)) {
                                         tvMainArea.setText(area);
