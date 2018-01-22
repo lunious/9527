@@ -157,7 +157,11 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+            collectRefresh.setEnableRefresh(false);
+            requestData(true);
         } else {
+            collectRefresh.setEnableRefresh(true);
+            mAdapter.setEnableLoadMore(false);
             requestData(true);
         }
 
@@ -190,20 +194,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 }
             }
         });
-
-        collectRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-
-                //TODO 去加载更多数据
-                if (!NetUtil.isNetworkConnected(getActivity())) {
-                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-                } else {
-                    requestData(false);
-                }
-            }
-        });
-
 
 //        collectRefresh.autoRefresh();
     }
@@ -282,9 +272,22 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
     private void initAdapter() {
         mAdapter = new CollectionListAdapter(R.layout.fragment_collection_item, mDataList);
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                //TODO 去加载更多数据
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                } else {
+                    requestData(false);
+                }
+            }
+        });
+
 
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         collectRecycler.setAdapter(mAdapter);
 
 
@@ -408,8 +411,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
             }
 
             collectRefresh.finishRefresh(0, true);
-
-
+            mAdapter.setEnableLoadMore(true);
         } else {
             page++;
             loadingStatus.showContent();
@@ -430,12 +432,14 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
             collectRefresh.finishLoadmore(0, true);
 
         }
+
         if (!nextPage) {
             //第一页如果不够一页就不显示没有更多数据布局
-            collectRefresh.setEnableLoadmore(false);
+            mAdapter.loadMoreEnd();
         } else {
-            collectRefresh.setEnableLoadmore(true);
+            mAdapter.loadMoreComplete();
         }
+
         mAdapter.notifyDataSetChanged();
 
     }
