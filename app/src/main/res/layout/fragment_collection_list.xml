@@ -40,7 +40,6 @@
 
     </LinearLayout>
 
-
     <com.classic.common.MultipleStatusView
         android:id="@+id/collection_list_status_view"
         android:layout_width="match_parent"
@@ -49,6 +48,8 @@
         app:errorView="@layout/custom_error_view"
         app:loadingView="@layout/custom_loading_view"
         app:noNetworkView="@layout/custom_no_network_view">
+
+
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/collect_refresh"
@@ -63,6 +64,7 @@
                 app:srlDrawableSize="@dimen/d15"
                 app:srlTextSizeTime="@dimen/s12"
                 app:srlTextSizeTitle="@dimen/s15" />
+
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/collect_recycler"

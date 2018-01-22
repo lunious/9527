@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
@@ -22,6 +23,8 @@ import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
+import com.lubanjianye.biaoxuntong.ui.main.query.CompanySearchResultActivity;
+import com.lubanjianye.biaoxuntong.ui.main.user.avater.AvaterActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
@@ -172,6 +175,10 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
         llIvBack.setOnClickListener(this);
         llShare.setOnClickListener(this);
         llFav.setOnClickListener(this);
+
+        tvOwerDiyi.setOnClickListener(this);
+        tvOwerDier.setOnClickListener(this);
+        tvOwerDisan.setOnClickListener(this);
 
         llWeiBoShare.setOnClickListener(this);
         llQQBoShare.setOnClickListener(this);
@@ -587,6 +594,14 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
     private Share mShare = new Share();
     private PromptDialog promptDialog = null;
 
+    String provinceCode = "510000";
+
+    private String nickName = "";
+    private String token = "";
+    private String comid = "";
+    private String imageUrl = "";
+    private String mobile = "";
+
     @Override
     public void onClick(View view) {
         mShare.setAppName("鲁班标讯通");
@@ -729,6 +744,159 @@ public class ResultSggjyzbjgDetailFragment extends BaseFragment implements View.
                 } else {
                     //未登录去登陆
                     startActivity(new Intent(getActivity(), SignInActivity.class));
+                }
+                break;
+            case R.id.tv_ower_diyi:
+
+                if (!"暂无".equals(tvOwerDiyi.getText().toString().trim())) {
+
+                    if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
+                        List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+                        for (int i = 0; i < users.size(); i++) {
+                            id = users.get(0).getId();
+                            nickName = users.get(0).getNickName();
+                            token = users.get(0).getToken();
+                            comid = users.get(0).getComid();
+                            imageUrl = users.get(0).getImageUrl();
+                            mobile = users.get(0).getMobile();
+                        }
+
+                        if (!TextUtils.isEmpty(mobile)) {
+
+                            final String name = tvOwerDiyi.getText().toString().trim();
+
+                            OkGo.<String>post(BiaoXunTongApi.URL_GETSUITCOMPANY)
+                                    .params("name", name)
+                                    .params("userid", id)
+                                    .execute(new StringCallback() {
+                                        @Override
+                                        public void onSuccess(Response<String> response) {
+                                            final JSONArray data = JSON.parseObject(response.body()).getJSONArray("data");
+                                            if (data.size() > 0) {
+                                                //根据返回的id去查询公司名称
+                                                Intent intent = new Intent(getActivity(), CompanySearchResultActivity.class);
+                                                intent.putExtra("provinceCode", provinceCode);
+                                                intent.putExtra("qyIds", data.toString());
+                                                startActivity(intent);
+                                            } else {
+
+                                            }
+                                        }
+                                    });
+
+                        } else {
+                            ToastUtil.shortToast(getContext(), "请先绑定手机号");
+                            startActivity(new Intent(getContext(), AvaterActivity.class));
+                        }
+                    } else {
+                        //未登录去登陆
+                        startActivity(new Intent(getContext(), SignInActivity.class));
+                        ToastUtil.shortBottonToast(getContext(), "请先登录");
+                    }
+                } else {
+
+                }
+                break;
+            case R.id.tv_ower_dier:
+
+                if (!"暂无".equals(tvOwerDier.getText().toString().trim())) {
+
+                    if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
+                        List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+                        for (int i = 0; i < users.size(); i++) {
+                            id = users.get(0).getId();
+                            nickName = users.get(0).getNickName();
+                            token = users.get(0).getToken();
+                            comid = users.get(0).getComid();
+                            imageUrl = users.get(0).getImageUrl();
+                            mobile = users.get(0).getMobile();
+                        }
+
+                        if (!TextUtils.isEmpty(mobile)) {
+
+                            final String name = tvOwerDier.getText().toString().trim();
+
+                            OkGo.<String>post(BiaoXunTongApi.URL_GETSUITCOMPANY)
+                                    .params("name", name)
+                                    .params("userid", id)
+                                    .execute(new StringCallback() {
+                                        @Override
+                                        public void onSuccess(Response<String> response) {
+                                            final JSONArray data = JSON.parseObject(response.body()).getJSONArray("data");
+                                            if (data.size() > 0) {
+                                                //根据返回的id去查询公司名称
+                                                Intent intent = new Intent(getActivity(), CompanySearchResultActivity.class);
+                                                intent.putExtra("provinceCode", provinceCode);
+                                                intent.putExtra("qyIds", data.toString());
+                                                startActivity(intent);
+                                            } else {
+
+                                            }
+                                        }
+                                    });
+
+                        } else {
+                            ToastUtil.shortToast(getContext(), "请先绑定手机号");
+                            startActivity(new Intent(getContext(), AvaterActivity.class));
+                        }
+                    } else {
+                        //未登录去登陆
+                        startActivity(new Intent(getContext(), SignInActivity.class));
+                        ToastUtil.shortBottonToast(getContext(), "请先登录");
+                    }
+                } else {
+
+                }
+                break;
+            case R.id.tv_ower_disan:
+
+                if (!"暂无".equals(tvOwerDisan.getText().toString().trim())) {
+
+                    if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
+                        List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+                        for (int i = 0; i < users.size(); i++) {
+                            id = users.get(0).getId();
+                            nickName = users.get(0).getNickName();
+                            token = users.get(0).getToken();
+                            comid = users.get(0).getComid();
+                            imageUrl = users.get(0).getImageUrl();
+                            mobile = users.get(0).getMobile();
+                        }
+
+                        if (!TextUtils.isEmpty(mobile)) {
+
+                            final String name = tvOwerDisan.getText().toString().trim();
+
+                            OkGo.<String>post(BiaoXunTongApi.URL_GETSUITCOMPANY)
+                                    .params("name", name)
+                                    .params("userid", id)
+                                    .execute(new StringCallback() {
+                                        @Override
+                                        public void onSuccess(Response<String> response) {
+                                            final JSONArray data = JSON.parseObject(response.body()).getJSONArray("data");
+                                            if (data.size() > 0) {
+                                                //根据返回的id去查询公司名称
+                                                Intent intent = new Intent(getActivity(), CompanySearchResultActivity.class);
+                                                intent.putExtra("provinceCode", provinceCode);
+                                                intent.putExtra("qyIds", data.toString());
+                                                startActivity(intent);
+                                            } else {
+
+                                            }
+                                        }
+                                    });
+
+                        } else {
+                            ToastUtil.shortToast(getContext(), "请先绑定手机号");
+                            startActivity(new Intent(getContext(), AvaterActivity.class));
+                        }
+                    } else {
+                        //未登录去登陆
+                        startActivity(new Intent(getContext(), SignInActivity.class));
+                        ToastUtil.shortBottonToast(getContext(), "请先登录");
+                    }
+                } else {
+
                 }
                 break;
             default:

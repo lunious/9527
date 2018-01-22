@@ -27,6 +27,7 @@
     <color name="main_status_dark_gray">#dddddd</color>
     <color name="main_status_white">#FFFFFF</color>
     <color name="main_text_color">#3c3c3c</color>
+    <color name="main_bg_color">#55eeeeee</color>
 
     <color name="main_status_transparent">#00000000</color>
 
