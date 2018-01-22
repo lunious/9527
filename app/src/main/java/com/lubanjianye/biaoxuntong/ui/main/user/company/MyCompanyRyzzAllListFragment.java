@@ -1,9 +1,9 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.company;
 
 import android.content.DialogInterface;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -19,8 +19,8 @@ import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.bean.MyCompanyRyzzAllListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
-import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
@@ -103,6 +103,8 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+            requestData(true);
+            mAdapter.setEnableLoadMore(false);
         } else {
             requestData(true);
         }
@@ -117,21 +119,9 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                 if (!NetUtil.isNetworkConnected(getActivity())) {
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
                     companyRyzzRefresh.finishRefresh(2000, false);
+                    mAdapter.setEnableLoadMore(false);
                 } else {
                     requestData(true);
-                }
-            }
-        });
-
-        companyRyzzRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-
-                //TODO 去加载更多数据
-                if (!NetUtil.isNetworkConnected(getActivity())) {
-                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-                } else {
-                    requestData(false);
                 }
             }
         });
@@ -145,7 +135,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
     private void initRecyclerView() {
 
 
-        companyRyzzRecycler.setLayoutManager(new GridLayoutManager(getContext(), 1));
+        companyRyzzRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
 
         companyRyzzRecycler.addOnItemTouchListener(new OnItemLongClickListener() {
             @Override
@@ -211,8 +201,16 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
     private void initAdapter() {
         mAdapter = new MyCompanyRyzzAllListAdapter(R.layout.fragment_company_ryzz, mDataList);
 
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                //TODO 去加载更多数据
+                requestData(false);
+            }
+        });
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
+        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         companyRyzzRecycler.setAdapter(mAdapter);
 
 
@@ -343,6 +341,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                 d++;
             }
             companyRyzzRefresh.finishRefresh(0, true);
+            mAdapter.setEnableLoadMore(true);
         } else {
             page++;
             loadingStatus.showContent();
@@ -365,10 +364,11 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
 
         if (!nextPage) {
             //第一页如果不够一页就不显示没有更多数据布局
-            companyRyzzRefresh.setEnableLoadmore(false);
+            mAdapter.loadMoreEnd();
         } else {
-            companyRyzzRefresh.setEnableLoadmore(true);
+            mAdapter.loadMoreComplete();
         }
+
         mAdapter.notifyDataSetChanged();
 
 

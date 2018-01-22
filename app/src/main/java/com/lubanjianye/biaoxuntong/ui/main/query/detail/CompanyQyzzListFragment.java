@@ -19,6 +19,7 @@ import com.lubanjianye.biaoxuntong.bean.CompanyQyzzListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
@@ -26,7 +27,6 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
@@ -108,8 +108,10 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+            requestData();
+            mAdapter.setEnableLoadMore(false);
         } else {
-            requestData(true);
+            requestData();
         }
     }
 
@@ -134,24 +136,13 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
                 if (!NetUtil.isNetworkConnected(getActivity())) {
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
                     companyQyzzRefresh.finishRefresh(2000, false);
+                    mAdapter.setEnableLoadMore(false);
                 } else {
-                    requestData(true);
+                    requestData();
                 }
             }
         });
 
-        companyQyzzRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-
-                //TODO 去加载更多数据
-                if (!NetUtil.isNetworkConnected(getActivity())) {
-                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-                } else {
-                    requestData(false);
-                }
-            }
-        });
 
 //        indexRefresh.autoRefresh();
 
@@ -166,7 +157,7 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
         noDataView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestData(true);
+                requestData();
             }
         });
 
@@ -177,13 +168,14 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
 
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
+        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         companyQyzzRecycler.setAdapter(mAdapter);
 
 
     }
 
 
-    public void requestData(final boolean isRefresh) {
+    public void requestData() {
 
         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
         long id = 0;
@@ -193,105 +185,60 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
             token = users.get(0).getToken();
         }
 
-        if (isRefresh) {
-            page = 1;
-            OkGo.<String>post(BiaoXunTongApi.URL_COMPANYQYZZ + sfId)
-                    .params("userId", id)
-                    .params("token", token)
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onSuccess(Response<String> response) {
 
-                            final JSONObject object = JSON.parseObject(response.body());
-                            final JSONArray array = object.getJSONArray("data");
+        OkGo.<String>post(BiaoXunTongApi.URL_COMPANYQYZZ + sfId)
+                .params("userId", id)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
 
-                            if (array.size() > 0) {
-                                page = 2;
-                                setData(isRefresh, array);
-                            } else {
-                                if (mDataList != null) {
-                                    mDataList.clear();
-                                    mAdapter.notifyDataSetChanged();
-                                }
-                                //TODO 内容为空的处理
-                                mAdapter.setEmptyView(noDataView);
-                                if (companyQyzzRefresh != null) {
-                                    companyQyzzRefresh.setEnableRefresh(false);
-                                }
+                        final JSONObject object = JSON.parseObject(response.body());
+                        final JSONArray array = object.getJSONArray("data");
+
+                        if (array.size() > 0) {
+                            setData(array);
+                        } else {
+                            if (mDataList != null) {
+                                mDataList.clear();
+                                mAdapter.notifyDataSetChanged();
+                            }
+                            //TODO 内容为空的处理
+                            mAdapter.setEmptyView(noDataView);
+                            if (companyQyzzRefresh != null) {
+                                companyQyzzRefresh.setEnableRefresh(false);
                             }
                         }
-                    });
-        } else {
-            OkGo.<String>post(BiaoXunTongApi.URL_COMPANYQYZZ + sfId)
-                    .params("userId", id)
-                    .params("token", token)
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onSuccess(Response<String> response) {
-
-                            final JSONObject object = JSON.parseObject(response.body());
-                            final JSONArray array = object.getJSONArray("data");
-
-                            if (array.size() > 0) {
-                                setData(isRefresh, array);
-                            } else {
-                                if (mDataList != null) {
-                                    mDataList.clear();
-                                    mAdapter.notifyDataSetChanged();
-                                }
-                                //TODO 内容为空的处理
-                                mAdapter.setEmptyView(noDataView);
-                                if (companyQyzzRefresh != null) {
-                                    companyQyzzRefresh.setEnableRefresh(false);
-                                }
-                            }
-                        }
-                    });
-        }
+                    }
+                });
 
 
     }
 
 
-    private void setData(boolean isRefresh, JSONArray data) {
+    private void setData(JSONArray data) {
 
         final int size = data == null ? 0 : data.size();
-        if (isRefresh) {
-            mDataList.clear();
-            int d = 1;
-            for (int i = 0; i < data.size(); i++) {
-                CompanyQyzzListBean bean = new CompanyQyzzListBean();
-                JSONObject list = data.getJSONObject(i);
-                bean.setLx(d + "、" + list.getString("lx"));
-                bean.setZzmc(list.getString("zzmc"));
-                mDataList.add(bean);
-                d++;
-            }
-            companyQyzzRefresh.finishRefresh(0, true);
-        } else {
-            page++;
-            if (size > 0) {
-                int d = 1;
-                for (int i = 0; i < data.size(); i++) {
-                    CompanyQyzzListBean bean = new CompanyQyzzListBean();
-                    JSONObject list = data.getJSONObject(i);
-                    bean.setLx(d + "、" + list.getString("lx"));
-                    bean.setZzmc(list.getString("zzmc"));
-                    mDataList.add(bean);
-                    d++;
-                }
-            }
-            companyQyzzRefresh.finishLoadmore(0, true);
+        mDataList.clear();
+        int d = 1;
+        for (int i = 0; i < data.size(); i++) {
+            CompanyQyzzListBean bean = new CompanyQyzzListBean();
+            JSONObject list = data.getJSONObject(i);
+            bean.setLx(d+"、"+list.getString("lx"));
+            bean.setZzmc(list.getString("zzmc"));
+            mDataList.add(bean);
+            d++;
         }
-
+        mAdapter.setEnableLoadMore(true);
         mAdapter.notifyDataSetChanged();
-
+        companyQyzzRefresh.finishRefresh(0, true);
         if (size < pageSize) {
             //第一页如果不够一页就不显示没有更多数据布局
-            companyQyzzRefresh.setEnableLoadmore(false);
+            mAdapter.loadMoreEnd();
         } else {
-            companyQyzzRefresh.setLoadmoreFinished(true);
+            mAdapter.loadMoreComplete();
         }
+
 
     }
 }

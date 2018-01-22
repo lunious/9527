@@ -11,15 +11,16 @@
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/company_sgyj_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/main_status_white">
 
         <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="@dimen/d50"
-            app:srlDrawableProgressSize="@dimen/d14"
-            app:srlDrawableSize="@dimen/d14"
+            android:layout_height="@dimen/d60"
+            app:srlDrawableProgressSize="@dimen/d15"
+            app:srlDrawableSize="@dimen/d15"
             app:srlTextSizeTime="@dimen/s12"
-            app:srlTextSizeTitle="@dimen/s14" />
+            app:srlTextSizeTitle="@dimen/s15" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/company_sgyj_recycler"
@@ -28,11 +29,6 @@
             android:overScrollMode="never"
             android:scrollbars="none" />
 
-        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/d50"
-            app:srlDrawableProgressSize="@dimen/d14"
-            app:srlTextSizeTitle="@dimen/s14" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 

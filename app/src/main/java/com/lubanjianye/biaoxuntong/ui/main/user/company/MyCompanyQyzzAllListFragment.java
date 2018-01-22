@@ -1,7 +1,6 @@
 package com.lubanjianye.biaoxuntong.ui.main.user.company;
 
 import android.content.DialogInterface;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +29,6 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
@@ -91,20 +89,21 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
 
+    }
+
+    @Override
+    public void initEvent() {
         initRecyclerView();
         initAdapter();
         initRefreshLayout();
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+            requestData(true);
+            mAdapter.setEnableLoadMore(false);
         } else {
             requestData(true);
         }
-    }
-
-    @Override
-    public void initEvent() {
-
     }
 
     @Override
@@ -128,21 +127,9 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
                 if (!NetUtil.isNetworkConnected(getActivity())) {
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
                     companyQyzzRefresh.finishRefresh(2000, false);
+                    mAdapter.setEnableLoadMore(false);
                 } else {
                     requestData(true);
-                }
-            }
-        });
-
-        companyQyzzRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-
-                //TODO 去加载更多数据
-                if (!NetUtil.isNetworkConnected(getActivity())) {
-                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-                } else {
-                    requestData(false);
                 }
             }
         });
@@ -216,8 +203,16 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
     private void initAdapter() {
         mAdapter = new MyCompanyQyzzAllListAdapter(R.layout.fragment_company_qyzz, mDataList);
 
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                //TODO 去加载更多数据
+                requestData(false);
+            }
+        });
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
+        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         companyQyzzRecycler.setAdapter(mAdapter);
 
     }
@@ -226,7 +221,6 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
     private long id = 0;
 
     public void requestData(final boolean isRefresh) {
-
 
         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
         long id = 0;
@@ -347,6 +341,7 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
                 d++;
             }
             companyQyzzRefresh.finishRefresh(0, true);
+            mAdapter.setEnableLoadMore(true);
 
         } else {
             page++;
@@ -371,10 +366,11 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
         }
         if (!nextPage) {
             //第一页如果不够一页就不显示没有更多数据布局
-            companyQyzzRefresh.setEnableLoadmore(false);
+            mAdapter.loadMoreEnd();
         } else {
-            companyQyzzRefresh.setEnableLoadmore(true);
+            mAdapter.loadMoreComplete();
         }
+
         mAdapter.notifyDataSetChanged();
 
     }

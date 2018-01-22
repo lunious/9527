@@ -3,7 +3,6 @@ package com.lubanjianye.biaoxuntong.ui.main.user.company;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +28,6 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
@@ -107,8 +105,10 @@ public class MyCompanyQyyjAllListFragment extends BaseFragment implements View.O
         initRefreshLayout();
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+            requestData();
+            mAdapter.setEnableLoadMore(false);
         } else {
-            requestData(true);
+            requestData();
         }
     }
 
@@ -133,23 +133,11 @@ public class MyCompanyQyyjAllListFragment extends BaseFragment implements View.O
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
                     companySgyjRefresh.finishRefresh(2000, false);
                 } else {
-                    requestData(true);
+                    requestData();
                 }
             }
         });
 
-        companySgyjRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-
-                //TODO 去加载更多数据
-                if (!NetUtil.isNetworkConnected(getActivity())) {
-                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-                } else {
-                    requestData(false);
-                }
-            }
-        });
 
 //        indexRefresh.autoRefresh();
 
@@ -162,7 +150,7 @@ public class MyCompanyQyyjAllListFragment extends BaseFragment implements View.O
         noDataView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestData(true);
+                requestData();
             }
         });
 
@@ -172,6 +160,7 @@ public class MyCompanyQyyjAllListFragment extends BaseFragment implements View.O
         mAdapter = new CompanySgyjListAdapter(R.layout.fragment_company_sgyj_list_item, mDataList);
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
+        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         companySgyjRecycler.setAdapter(mAdapter);
 
 
@@ -180,9 +169,8 @@ public class MyCompanyQyyjAllListFragment extends BaseFragment implements View.O
 
     private long id = 0;
     private String token = "";
-    private int page = 1;
 
-    public void requestData(final boolean isRefresh) {
+    public void requestData() {
 
 
         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
@@ -192,127 +180,66 @@ public class MyCompanyQyyjAllListFragment extends BaseFragment implements View.O
             token = users.get(0).getToken();
         }
 
-        if (isRefresh) {
-            page = 1;
+        OkGo.<String>post(BiaoXunTongApi.URL_COMPANYSGYJ + sfId)
+                .params("userId", id)
+                .params("token", token)
+                .execute(new StringCallback() {
+                    @Override
+                    public void onSuccess(Response<String> response) {
 
-            OkGo.<String>post(BiaoXunTongApi.URL_COMPANYSGYJ + sfId)
-                    .params("userId", id)
-                    .params("token", token)
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onSuccess(Response<String> response) {
-
-                            final JSONObject object = JSON.parseObject(response.body());
-                            String status = object.getString("status");
-                            final JSONArray array = object.getJSONArray("data");
+                        final JSONObject object = JSON.parseObject(response.body());
+                        String status = object.getString("status");
+                        final JSONArray array = object.getJSONArray("data");
 
 
-                            if (array.size() > 0) {
-                                page = 2;
-                                setData(isRefresh,array);
-                            } else {
-                                if (mDataList != null) {
-                                    mDataList.clear();
-                                    mAdapter.notifyDataSetChanged();
-                                }
-                                //TODO 内容为空的处理
-                                mAdapter.setEmptyView(noDataView);
-                                if (companySgyjRefresh != null) {
-                                    companySgyjRefresh.setEnableRefresh(false);
-                                }
+                        if (array.size() > 0) {
+                            setData(array);
+                        } else {
+                            if (mDataList != null) {
+                                mDataList.clear();
+                                mAdapter.notifyDataSetChanged();
+                            }
+                            //TODO 内容为空的处理
+                            mAdapter.setEmptyView(noDataView);
+                            if (companySgyjRefresh != null) {
+                                companySgyjRefresh.setEnableRefresh(false);
                             }
                         }
-                    });
-        } else {
-
-            OkGo.<String>post(BiaoXunTongApi.URL_COMPANYSGYJ + sfId)
-                    .params("userId", id)
-                    .params("token", token)
-                    .execute(new StringCallback() {
-                        @Override
-                        public void onSuccess(Response<String> response) {
-
-                            final JSONObject object = JSON.parseObject(response.body());
-                            String status = object.getString("status");
-                            final JSONArray array = object.getJSONArray("data");
-
-
-                            if (array.size() > 0) {
-                                setData(isRefresh,array);
-                            } else {
-                                if (mDataList != null) {
-                                    mDataList.clear();
-                                    mAdapter.notifyDataSetChanged();
-                                }
-                                //TODO 内容为空的处理
-                                mAdapter.setEmptyView(noDataView);
-                                if (companySgyjRefresh != null) {
-                                    companySgyjRefresh.setEnableRefresh(false);
-                                }
-                            }
-                        }
-                    });
-        }
+                    }
+                });
 
 
     }
 
-    private void setData(boolean isRefresh, JSONArray data) {
+    private void setData(JSONArray data) {
         final int size = data == null ? 0 : data.size();
+        mDataList.clear();
+        int d = 1;
+        for (int i = 0; i < data.size(); i++) {
+            CompanySgyjListBean bean = new CompanySgyjListBean();
+            JSONObject list = data.getJSONObject(i);
+            bean.setXmmc(d + "、" + list.getString("xmmc"));
+            bean.setZbsj(list.getString("zbsj"));
+            bean.setXmfzr(list.getString("xmfzr"));
 
-        if (isRefresh) {
-            mDataList.clear();
-            int d = 1;
-            for (int i = 0; i < data.size(); i++) {
-                CompanySgyjListBean bean = new CompanySgyjListBean();
-                JSONObject list = data.getJSONObject(i);
-                bean.setXmmc(d + "、" + list.getString("xmmc"));
-                bean.setZbsj(list.getString("zbsj"));
-                bean.setXmfzr(list.getString("xmfzr"));
-
-                String zbje = list.getString("zbje");
-                if ("0.0".equals(zbje)) {
-                    bean.setZbje("暂无");
-                } else {
-                    bean.setZbje(list.getString("zbje") + "万元");
-                }
-                mDataList.add(bean);
-                d++;
+            String zbje = list.getString("zbje");
+            if ("0.0".equals(zbje)) {
+                bean.setZbje("暂无");
+            } else {
+                bean.setZbje(list.getString("zbje") + "万元");
             }
-            companySgyjRefresh.finishRefresh(0, true);
-        } else {
-            page++;
-            if (size > 0) {
-                mDataList.clear();
-                int d = 1;
-                for (int i = 0; i < data.size(); i++) {
-                    CompanySgyjListBean bean = new CompanySgyjListBean();
-                    JSONObject list = data.getJSONObject(i);
-                    bean.setXmmc(d + "、" + list.getString("xmmc"));
-                    bean.setZbsj(list.getString("zbsj"));
-                    bean.setXmfzr(list.getString("xmfzr"));
-
-                    String zbje = list.getString("zbje");
-                    if ("0.0".equals(zbje)) {
-                        bean.setZbje("暂无");
-                    } else {
-                        bean.setZbje(list.getString("zbje") + "万元");
-                    }
-                    mDataList.add(bean);
-                    d++;
-                }
-            }
-            companySgyjRefresh.finishLoadmore(0, true);
+            mDataList.add(bean);
+            d++;
         }
-
-
+        mAdapter.setEnableLoadMore(true);
         mAdapter.notifyDataSetChanged();
+        companySgyjRefresh.finishRefresh(0, true);
 
         if (size < pageSize) {
             //第一页如果不够一页就不显示没有更多数据布局
-            companySgyjRefresh.setEnableLoadmore(false);
+            mAdapter.loadMoreEnd();
         } else {
-            companySgyjRefresh.setLoadmoreFinished(true);
+            mAdapter.loadMoreComplete();
         }
 
 

@@ -3,7 +3,6 @@ package com.lubanjianye.biaoxuntong.ui.main.index.search;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -30,8 +29,8 @@ import com.lubanjianye.biaoxuntong.bean.IndexListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.ui.dropdown.SpinerPopWindow;
 import com.lubanjianye.biaoxuntong.ui.main.index.IndexListAdapter;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexBxtgdjDetailActivity;
@@ -176,6 +175,8 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+            mAdapter.setEnableLoadMore(false);
+            requestData(true);
         } else {
             requestData(true);
         }
@@ -191,24 +192,14 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                 if (!NetUtil.isNetworkConnected(getActivity())) {
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
                     searchRefresh.finishRefresh(2000, false);
+                    mAdapter.setEnableLoadMore(false);
+                    requestData(true);
                 } else {
                     requestData(true);
                 }
             }
         });
 
-        searchRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-
-                //TODO 去加载更多数据
-                if (!NetUtil.isNetworkConnected(getActivity())) {
-                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-                } else {
-                    requestData(false);
-                }
-            }
-        });
 
 //        indexRefresh.autoRefresh();
 
@@ -279,8 +270,16 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
 
         mAdapter = new IndexListAdapter(R.layout.fragment_index_item, mDataList);
 
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                //TODO 去加载更多数据
+                requestData(false);
+            }
+        });
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
+        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         searchRecycler.setAdapter(mAdapter);
 
 
@@ -508,6 +507,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                 mDataList.add(bean);
             }
             searchRefresh.finishRefresh(0, true);
+            mAdapter.setEnableLoadMore(true);
         } else {
             page++;
             if (size > 0) {
@@ -526,12 +526,14 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
             }
             searchRefresh.finishLoadmore(0, true);
         }
+
         if (!nextPage) {
             //第一页如果不够一页就不显示没有更多数据布局
-            searchRefresh.setEnableLoadmore(false);
+            mAdapter.loadMoreEnd();
         } else {
-            searchRefresh.setEnableLoadmore(true);
+            mAdapter.loadMoreComplete();
         }
+
         mAdapter.notifyDataSetChanged();
 
 
