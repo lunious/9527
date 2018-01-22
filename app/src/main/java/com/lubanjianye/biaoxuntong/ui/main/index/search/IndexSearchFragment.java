@@ -45,6 +45,10 @@ import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,7 +71,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
     private TextView tvSearch = null;
     private LinearLayout llIvBack = null;
     private RecyclerView searchRecycler = null;
-    private SwipeRefreshLayout searchRefresh = null;
+    private SmartRefreshLayout searchRefresh = null;
 
     private com.lubanjianye.biaoxuntong.ui.main.index.IndexListAdapter mAdapter = null;
     private ArrayList<IndexListBean> mDataList = new ArrayList<>();
@@ -169,27 +173,45 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
         initRecyclerView();
         initAdapter();
         initRefreshLayout();
-        searchRefresh.setRefreshing(true);
-        requestData(true);
+
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+        } else {
+            requestData(true);
+        }
     }
 
     private void initRefreshLayout() {
 
-        searchRefresh.setColorSchemeResources(
-                R.color.main_theme_color,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
-        );
 
-        searchRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        searchRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                //TODO 刷新数据
-                mAdapter.setEnableLoadMore(false);
-                requestData(true);
+            public void onRefresh(RefreshLayout refreshlayout) {
 
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                    searchRefresh.finishRefresh(2000, false);
+                } else {
+                    requestData(true);
+                }
             }
         });
+
+        searchRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+
+                //TODO 去加载更多数据
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                } else {
+                    requestData(false);
+                }
+            }
+        });
+
+//        indexRefresh.autoRefresh();
+
     }
 
     private void initRecyclerView() {
@@ -257,16 +279,8 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
 
         mAdapter = new IndexListAdapter(R.layout.fragment_index_item, mDataList);
 
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                //TODO 去加载更多数据
-                requestData(false);
-            }
-        });
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
-        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         searchRecycler.setAdapter(mAdapter);
 
 
@@ -275,9 +289,6 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
 
     public void requestData(final boolean isRefresh) {
 
-        if (isRefresh) {
-            page = 1;
-        }
 
         if ("地区".equals(tvArea.getText().toString().trim()) || "全部".equals(tvArea.getText().toString().trim())) {
             mArea = "";
@@ -290,21 +301,62 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
             mType = tvType.getText().toString().trim();
         }
 
-        if (!NetUtil.isNetworkConnected(getActivity())) {
-            ToastUtil.shortToast(getContext(), "请检查网络设置");
-        } else {
 
-            if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
-                //已登录的数据请求
-                List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
-                for (int i = 0; i < users.size(); i++) {
-                    id = users.get(0).getId();
-                    nickName = users.get(0).getNickName();
-                    token = users.get(0).getToken();
-                    comid = users.get(0).getComid();
-                    imageUrl = users.get(0).getImageUrl();
-                }
+        if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
+            //已登录的数据请求
+            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+            for (int i = 0; i < users.size(); i++) {
+                id = users.get(0).getId();
+                nickName = users.get(0).getNickName();
+                token = users.get(0).getToken();
+                comid = users.get(0).getComid();
+                imageUrl = users.get(0).getImageUrl();
+            }
 
+            if (isRefresh) {
+                page = 1;
+                OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
+                        .params("userid", id)
+                        .params("area", mArea)
+                        .params("type", mType)
+                        .params("page", page)
+                        .params("keyWord", mKeyWord)
+                        .params("size", 10)
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onSuccess(Response<String> response) {
+
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+
+                                final JSONObject object = JSON.parseObject(jiemi);
+                                final JSONObject data = object.getJSONObject("data");
+                                final String status = object.getString("status");
+                                final String message = object.getString("message");
+                                final JSONArray array = data.getJSONArray("list");
+                                final boolean nextPage = data.getBoolean("nextpage");
+
+                                if ("200".equals(status)) {
+                                    if (array.size() > 0) {
+                                        page = 2;
+                                        setData(isRefresh, array, nextPage);
+                                    } else {
+                                        if (mDataList != null) {
+                                            mDataList.clear();
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                        //TODO 内容为空的处理
+                                        mAdapter.setEmptyView(noDataView);
+                                        if (searchRefresh != null) {
+                                            searchRefresh.setEnableRefresh(false);
+                                        }
+                                    }
+                                } else {
+                                    ToastUtil.shortToast(getContext(), message);
+
+                                }
+                            }
+                        });
+            } else {
                 OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
                         .params("userid", id)
                         .params("area", mArea)
@@ -336,7 +388,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                                         //TODO 内容为空的处理
                                         mAdapter.setEmptyView(noDataView);
                                         if (searchRefresh != null) {
-                                            searchRefresh.setRefreshing(false);
+                                            searchRefresh.setEnableRefresh(false);
                                         }
                                     }
                                 } else {
@@ -345,10 +397,54 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                                 }
                             }
                         });
+            }
 
+
+        } else {
+            //未登录的数据请求
+
+            if (isRefresh) {
+                page = 1;
+                OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
+                        .params("page", page)
+                        .params("area", mArea)
+                        .params("type", mType)
+                        .params("keyWord", mKeyWord)
+                        .params("size", 10)
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onSuccess(Response<String> response) {
+                                String jiemi = AesUtil.aesDecrypt(response.body(), BiaoXunTongApi.PAS_KEY);
+
+                                final JSONObject object = JSON.parseObject(jiemi);
+                                final JSONObject data = object.getJSONObject("data");
+                                final String status = object.getString("status");
+                                final String message = object.getString("message");
+                                final JSONArray array = data.getJSONArray("list");
+                                final boolean nextPage = data.getBoolean("nextpage");
+
+                                if ("200".equals(status)) {
+                                    if (array.size() > 0) {
+                                        page = 2;
+                                        setData(isRefresh, array, nextPage);
+                                    } else {
+                                        if (mDataList != null) {
+                                            mDataList.clear();
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                        //TODO 内容为空的处理
+                                        mAdapter.setEmptyView(noDataView);
+                                        if (searchRefresh != null) {
+                                            searchRefresh.setEnableRefresh(false);
+                                        }
+                                    }
+                                } else {
+                                    ToastUtil.shortToast(getContext(), message);
+                                }
+
+                            }
+                        });
             } else {
-                //未登录的数据请求
-
                 OkGo.<String>post(BiaoXunTongApi.URL_GETINDEXLIST)
                         .params("page", page)
                         .params("area", mArea)
@@ -378,7 +474,7 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                                         //TODO 内容为空的处理
                                         mAdapter.setEmptyView(noDataView);
                                         if (searchRefresh != null) {
-                                            searchRefresh.setRefreshing(false);
+                                            searchRefresh.setEnableRefresh(false);
                                         }
                                     }
                                 } else {
@@ -389,13 +485,13 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                         });
             }
 
+
         }
 
 
     }
 
     private void setData(boolean isRefresh, JSONArray data, boolean nextPage) {
-        page++;
         final int size = data == null ? 0 : data.size();
         if (isRefresh) {
             mDataList.clear();
@@ -411,10 +507,9 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                 bean.setSignstauts(list.getString("signstauts"));
                 mDataList.add(bean);
             }
-            searchRefresh.setRefreshing(false);
-            mAdapter.setEnableLoadMore(true);
-            mAdapter.notifyDataSetChanged();
+            searchRefresh.finishRefresh(0, true);
         } else {
+            page++;
             if (size > 0) {
                 for (int i = 0; i < data.size(); i++) {
                     IndexListBean bean = new IndexListBean();
@@ -428,15 +523,16 @@ public class IndexSearchFragment extends BaseFragment implements View.OnClickLis
                     bean.setSignstauts(list.getString("signstauts"));
                     mDataList.add(bean);
                 }
-                mAdapter.notifyDataSetChanged();
             }
+            searchRefresh.finishLoadmore(0, true);
         }
         if (!nextPage) {
             //第一页如果不够一页就不显示没有更多数据布局
-            mAdapter.loadMoreEnd();
+            searchRefresh.setEnableLoadmore(false);
         } else {
-            mAdapter.loadMoreComplete();
+            searchRefresh.setEnableLoadmore(true);
         }
+        mAdapter.notifyDataSetChanged();
 
 
     }

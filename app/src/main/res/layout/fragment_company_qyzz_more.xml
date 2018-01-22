@@ -7,30 +7,43 @@
 
     <include layout="@layout/fragment_main_bar" />
 
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/company_qyzz_refresh"
+    <com.classic.common.MultipleStatusView
+        android:id="@+id/mycompany_all_qyzz_list_status_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        app:emptyView="@layout/custom_empty_view"
+        app:errorView="@layout/custom_error_view"
+        app:loadingView="@layout/custom_loading_view"
+        app:noNetworkView="@layout/custom_no_network_view">
 
-        <com.classic.common.MultipleStatusView
-            android:id="@+id/mycompany_all_qyzz_list_status_view"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/company_qyzz_refresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:emptyView="@layout/custom_empty_view"
-            app:errorView="@layout/custom_error_view"
-            app:loadingView="@layout/custom_loading_view"
-            app:noNetworkView="@layout/custom_no_network_view">
+            android:layout_height="match_parent">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d50"
+                app:srlDrawableProgressSize="@dimen/d14"
+                app:srlDrawableSize="@dimen/d14"
+                app:srlTextSizeTime="@dimen/s12"
+                app:srlTextSizeTitle="@dimen/s14" />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/company_qyzz_recycler"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never"
-                android:scrollbars="none"/>
-        </com.classic.common.MultipleStatusView>
-    </android.support.v4.widget.SwipeRefreshLayout>
+                android:scrollbars="none" />
+
+            <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/d50"
+                app:srlDrawableProgressSize="@dimen/d14"
+                app:srlTextSizeTitle="@dimen/s14" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+    </com.classic.common.MultipleStatusView>
 
 
 </LinearLayout>

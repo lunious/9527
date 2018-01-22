@@ -21,9 +21,15 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +48,7 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
     private RecyclerView companySgyjRecycler = null;
-    private SwipeRefreshLayout companySgyjRefresh = null;
+    private SmartRefreshLayout companySgyjRefresh = null;
 
 
     private CompanySgyjListAdapter mAdapter;
@@ -99,8 +105,13 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
         initRecyclerView();
         initAdapter();
         initRefreshLayout();
-        companySgyjRefresh.setRefreshing(true);
-        requestData();
+
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+        } else {
+            requestData(true);
+        }
+
     }
 
     @Override
@@ -115,21 +126,35 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
     }
 
     private void initRefreshLayout() {
-        companySgyjRefresh.setColorSchemeResources(
-                R.color.main_theme_color,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
-        );
 
-        companySgyjRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        companySgyjRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                //TODO 刷新数据
-                mAdapter.setEnableLoadMore(false);
-                requestData();
+            public void onRefresh(RefreshLayout refreshlayout) {
 
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                    companySgyjRefresh.finishRefresh(2000, false);
+                } else {
+                    requestData(true);
+                }
             }
         });
+
+        companySgyjRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+
+                //TODO 去加载更多数据
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                } else {
+                    requestData(false);
+                }
+            }
+        });
+
+//        indexRefresh.autoRefresh();
+
     }
 
     private void initRecyclerView() {
@@ -139,7 +164,7 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
         noDataView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                requestData();
+                requestData(true);
             }
         });
 
@@ -149,7 +174,7 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
         mAdapter = new CompanySgyjListAdapter(R.layout.fragment_company_sgyj_list_item, mDataList);
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
-        mAdapter.setLoadMoreView(new CustomLoadMoreView());
+
         companySgyjRecycler.setAdapter(mAdapter);
 
 
@@ -159,7 +184,7 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
     private long id = 0;
     private String token = "";
 
-    public void requestData() {
+    public void requestData(final boolean isRefresh) {
 
 
         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
@@ -169,63 +194,121 @@ public class CompanySgyjListFragment extends BaseFragment implements View.OnClic
             token = users.get(0).getToken();
         }
 
-        OkGo.<String>post(BiaoXunTongApi.URL_COMPANYSGYJ + sfId)
-                .params("userId", id)
-                .params("token", token)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        final JSONObject object = JSON.parseObject(response.body());
-                        String status = object.getString("status");
-                        final JSONArray array = object.getJSONArray("data");
+        if (isRefresh) {
+            page = 1;
+            OkGo.<String>post(BiaoXunTongApi.URL_COMPANYSGYJ + sfId)
+                    .params("userId", id)
+                    .params("token", token)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject object = JSON.parseObject(response.body());
+                            String status = object.getString("status");
+                            final JSONArray array = object.getJSONArray("data");
 
-                        if (array.size() > 0) {
-                            setData(array);
-                        } else {
-                            if (mDataList != null) {
-                                mDataList.clear();
-                                mAdapter.notifyDataSetChanged();
-                            }
-                            //TODO 内容为空的处理
-                            mAdapter.setEmptyView(noDataView);
-                            if (companySgyjRefresh != null) {
-                                companySgyjRefresh.setRefreshing(false);
+                            if (array.size() > 0) {
+                                page = 2;
+                                setData(isRefresh, array);
+                            } else {
+                                if (mDataList != null) {
+                                    mDataList.clear();
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                                //TODO 内容为空的处理
+                                mAdapter.setEmptyView(noDataView);
+                                if (companySgyjRefresh != null) {
+                                    companySgyjRefresh.setEnableRefresh(false);
+                                }
                             }
                         }
-                    }
-                });
+                    });
+        } else {
+            OkGo.<String>post(BiaoXunTongApi.URL_COMPANYSGYJ + sfId)
+                    .params("userId", id)
+                    .params("token", token)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject object = JSON.parseObject(response.body());
+                            String status = object.getString("status");
+                            final JSONArray array = object.getJSONArray("data");
+
+                            if (array.size() > 0) {
+                                setData(isRefresh, array);
+                            } else {
+                                if (mDataList != null) {
+                                    mDataList.clear();
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                                //TODO 内容为空的处理
+                                mAdapter.setEmptyView(noDataView);
+                                if (companySgyjRefresh != null) {
+                                    companySgyjRefresh.setEnableRefresh(false);
+                                }
+                            }
+                        }
+                    });
+        }
+
 
     }
 
-    private void setData(JSONArray data) {
+    private void setData(boolean isRefresh, JSONArray data) {
         final int size = data == null ? 0 : data.size();
-        mDataList.clear();
-        int d = 1;
-        for (int i = 0; i < data.size(); i++) {
-            CompanySgyjListBean bean = new CompanySgyjListBean();
-            JSONObject list = data.getJSONObject(i);
-            bean.setXmmc(d + "、" + list.getString("xmmc"));
-            bean.setZbsj(list.getString("zbsj"));
-            bean.setXmfzr(list.getString("xmfzr"));
 
-            String zbje = list.getString("zbje");
-            if ("0.0".equals(zbje)) {
-                bean.setZbje("暂无");
-            } else {
-                bean.setZbje(list.getString("zbje") + "万元");
+        if (isRefresh) {
+            mDataList.clear();
+            int d = 1;
+            for (int i = 0; i < data.size(); i++) {
+                CompanySgyjListBean bean = new CompanySgyjListBean();
+                JSONObject list = data.getJSONObject(i);
+                bean.setXmmc(d + "、" + list.getString("xmmc"));
+                bean.setZbsj(list.getString("zbsj"));
+                bean.setXmfzr(list.getString("xmfzr"));
+
+                String zbje = list.getString("zbje");
+                if ("0.0".equals(zbje)) {
+                    bean.setZbje("暂无");
+                } else {
+                    bean.setZbje(list.getString("zbje") + "万元");
+                }
+                mDataList.add(bean);
+                d++;
             }
-            mDataList.add(bean);
-            d++;
+            companySgyjRefresh.finishRefresh(0, true);
+        } else {
+            page++;
+            if (size > 0) {
+                mDataList.clear();
+                int d = 1;
+                for (int i = 0; i < data.size(); i++) {
+                    CompanySgyjListBean bean = new CompanySgyjListBean();
+                    JSONObject list = data.getJSONObject(i);
+                    bean.setXmmc(d + "、" + list.getString("xmmc"));
+                    bean.setZbsj(list.getString("zbsj"));
+                    bean.setXmfzr(list.getString("xmfzr"));
+
+                    String zbje = list.getString("zbje");
+                    if ("0.0".equals(zbje)) {
+                        bean.setZbje("暂无");
+                    } else {
+                        bean.setZbje(list.getString("zbje") + "万元");
+                    }
+                    mDataList.add(bean);
+                    d++;
+                }
+            }
+            companySgyjRefresh.finishLoadmore(0, true);
+
         }
-        companySgyjRefresh.setRefreshing(false);
-        mAdapter.setEnableLoadMore(true);
+
         mAdapter.notifyDataSetChanged();
 
         if (size < pageSize) {
             //第一页如果不够一页就不显示没有更多数据布局
-            mAdapter.loadMoreEnd();
+            companySgyjRefresh.setEnableLoadmore(false);
         } else {
-            mAdapter.loadMoreComplete();
+            companySgyjRefresh.setLoadmoreFinished(true);
         }
 
 

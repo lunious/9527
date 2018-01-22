@@ -27,11 +27,16 @@ import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.main.query.detail.CompanyDetailActivity;
+import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -54,7 +59,7 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
     private LinearLayout llIvBack = null;
     private AppCompatTextView mainBarName = null;
     private RecyclerView companySearchResultRecycler = null;
-    private SwipeRefreshLayout companySearchResultRefresh = null;
+    private SmartRefreshLayout companySearchResultRefresh = null;
 
     private static final String ARG_PROVINCECODE = "ARG_PROVINCECODE";
     private static final String ARG_QYID = "ARG_QYID";
@@ -142,26 +147,46 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
         initRecyclerView();
         initAdapter();
         initRefreshLayout();
-        companySearchResultRefresh.setRefreshing(true);
-        requestData(true);
+
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+        } else {
+            requestData(true);
+        }
     }
 
 
     private void initRefreshLayout() {
-        companySearchResultRefresh.setColorSchemeResources(
-                R.color.main_theme_color,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
-        );
 
-        companySearchResultRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+        companySearchResultRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                //TODO 刷新数据
-                requestData(true);
+            public void onRefresh(RefreshLayout refreshlayout) {
 
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                    companySearchResultRefresh.finishRefresh(2000, false);
+                } else {
+                    requestData(true);
+                }
             }
         });
+
+        companySearchResultRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+
+                //TODO 去加载更多数据
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                } else {
+                    requestData(false);
+                }
+            }
+        });
+
+//        indexRefresh.autoRefresh();
+
     }
 
     private void initRecyclerView() {
@@ -189,16 +214,8 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
     private void initAdapter() {
         mAdapter = new CompanySearchResultListAdapter(R.layout.fragment_company_search_item, mDataList);
 
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                //TODO 去加载更多数据
-//                requestData(false);
-            }
-        });
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
-        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         companySearchResultRecycler.setAdapter(mAdapter);
 
 
@@ -217,10 +234,6 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
 
     public void requestData(final boolean isRefresh) {
 
-        if (isRefresh) {
-            page = 1;
-        }
-
 
         List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
         long id = 0;
@@ -230,57 +243,106 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
             token = users.get(0).getToken();
         }
 
-        OkGo.<String>post(BiaoXunTongApi.URL_SUITRESULT)
-                .params("userId", id)
-                .params("token", token)
-                .params("provinceCode", mProvinceCode)
-                .params("qyIds", mqyIds)
-                .execute(new StringCallback() {
-                    @Override
-                    public void onSuccess(Response<String> response) {
-                        final JSONObject object = JSON.parseObject(response.body());
-                        final String status = object.getString("status");
-                        final String message = object.getString("message");
-                        final JSONArray array = object.getJSONArray("data");
+        if (isRefresh) {
+            page = 1;
+            OkGo.<String>post(BiaoXunTongApi.URL_SUITRESULT)
+                    .params("userId", id)
+                    .params("token", token)
+                    .params("provinceCode", mProvinceCode)
+                    .params("qyIds", mqyIds)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject object = JSON.parseObject(response.body());
+                            final String status = object.getString("status");
+                            final String message = object.getString("message");
+                            final JSONArray array = object.getJSONArray("data");
 
 
-                        if ("LIMIT_REACHED".equals(message)) {
-                            ToastUtil.shortBottonToast(getContext(), "你今天已达到最大查询次数，请明天再试！");
-                            mAdapter.setEmptyView(noDataView);
-                            companySearchResultRefresh.setRefreshing(false);
-                            companySearchResultRefresh.setEnabled(false);
-                        } else if ("INVALID_TOKEN".equals(message)) {
-                            ToastUtil.shortToast(getContext(), "Token失效，请重新登录!");
+                            if ("LIMIT_REACHED".equals(message)) {
+                                ToastUtil.shortBottonToast(getContext(), "你今天已达到最大查询次数，请明天再试！");
+                                mAdapter.setEmptyView(noDataView);
+                                companySearchResultRefresh.setEnableRefresh(false);
+                                companySearchResultRefresh.setEnabled(false);
+                            } else if ("INVALID_TOKEN".equals(message)) {
+                                ToastUtil.shortToast(getContext(), "Token失效，请重新登录!");
 
-                            DatabaseManager.getInstance().getDao().deleteAll();
-                            AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
-                            EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
-                            startActivity(new Intent(getActivity(), SignInActivity.class));
-                        } else {
-                            if ("200".equals(status)) {
-                                if (array.size() > 0) {
-                                    setData(isRefresh, array);
-                                } else {
-                                    if (mDataList != null) {
-                                        mDataList.clear();
-                                        mAdapter.notifyDataSetChanged();
-                                    }
-                                    //TODO 内容为空的处理
-                                    mAdapter.setEmptyView(noDataView);
-                                }
+                                DatabaseManager.getInstance().getDao().deleteAll();
+                                AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
+                                EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
+                                startActivity(new Intent(getActivity(), SignInActivity.class));
                             } else {
-                                ToastUtil.shortToast(getContext(), message);
-                            }
+                                if ("200".equals(status)) {
+                                    if (array.size() > 0) {
+                                        page = 2;
+                                        setData(isRefresh, array);
+                                    } else {
+                                        if (mDataList != null) {
+                                            mDataList.clear();
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                        //TODO 内容为空的处理
+                                        mAdapter.setEmptyView(noDataView);
+                                    }
+                                } else {
+                                    ToastUtil.shortToast(getContext(), message);
+                                }
 
+                            }
                         }
-                    }
-                });
+                    });
+        } else {
+            OkGo.<String>post(BiaoXunTongApi.URL_SUITRESULT)
+                    .params("userId", id)
+                    .params("token", token)
+                    .params("provinceCode", mProvinceCode)
+                    .params("qyIds", mqyIds)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject object = JSON.parseObject(response.body());
+                            final String status = object.getString("status");
+                            final String message = object.getString("message");
+                            final JSONArray array = object.getJSONArray("data");
+
+
+                            if ("LIMIT_REACHED".equals(message)) {
+                                ToastUtil.shortBottonToast(getContext(), "你今天已达到最大查询次数，请明天再试！");
+                                mAdapter.setEmptyView(noDataView);
+                                companySearchResultRefresh.setEnableRefresh(false);
+                                companySearchResultRefresh.setEnabled(false);
+                            } else if ("INVALID_TOKEN".equals(message)) {
+                                ToastUtil.shortToast(getContext(), "Token失效，请重新登录!");
+
+                                DatabaseManager.getInstance().getDao().deleteAll();
+                                AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
+                                EventBus.getDefault().post(new EventMessage(EventMessage.LOGIN_OUT));
+                                startActivity(new Intent(getActivity(), SignInActivity.class));
+                            } else {
+                                if ("200".equals(status)) {
+                                    if (array.size() > 0) {
+                                        setData(isRefresh, array);
+                                    } else {
+                                        if (mDataList != null) {
+                                            mDataList.clear();
+                                            mAdapter.notifyDataSetChanged();
+                                        }
+                                        //TODO 内容为空的处理
+                                        mAdapter.setEmptyView(noDataView);
+                                    }
+                                } else {
+                                    ToastUtil.shortToast(getContext(), message);
+                                }
+
+                            }
+                        }
+                    });
+        }
 
 
     }
 
     private void setData(boolean isRefresh, JSONArray data) {
-//        page++;
         final int size = data == null ? 0 : data.size();
         if (isRefresh) {
             mDataList.clear();
@@ -293,11 +355,9 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
                 bean.setSfId(list.getString("sfId"));
                 mDataList.add(bean);
             }
-            companySearchResultRefresh.setRefreshing(false);
-            mAdapter.notifyDataSetChanged();
-            mAdapter.loadMoreComplete();
-            mAdapter.loadMoreEnd();
+            companySearchResultRefresh.finishRefresh(0, true);
         } else {
+            page++;
             if (size > 0) {
                 for (int i = 0; i < data.size(); i++) {
                     CompanySearchResultListBean bean = new CompanySearchResultListBean();
@@ -308,10 +368,12 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
                     bean.setSfId(list.getString("sfId"));
                     mDataList.add(bean);
                 }
-                mAdapter.notifyDataSetChanged();
             }
+            companySearchResultRefresh.finishLoadmore(0, true);
         }
 
+        companySearchResultRefresh.setLoadmoreFinished(true);
+        mAdapter.notifyDataSetChanged();
 
     }
 }
