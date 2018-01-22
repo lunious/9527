@@ -33,9 +33,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/d0"
                 android:layout_weight="1"
+                android:overScrollMode="never"
                 android:paddingBottom="@dimen/d10"
                 android:scrollbars="none"
-                android:overScrollMode="never"
                 tools:ignore="RtlHardcoded">
 
                 <LinearLayout
@@ -51,67 +51,82 @@
                         android:textColor="#ff434343"
                         android:textSize="@dimen/s18" />
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:id="@+id/tv_main_area"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/d8"
-                        android:text="四川省甘孜藏族自治州稻城县"
-                        android:textColor="#ff999999"
-                        android:textSize="@dimen/s15" />
 
                     <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingTop="@dimen/d5">
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/d18"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="@dimen/d14"
+                        android:orientation="horizontal">
 
                         <LinearLayout
-
                             android:id="@+id/ll_main_caigou_method"
                             android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:id="@+id/tv_main_caigou_method"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="比选公告"
+                                android:textColor="@color/main_status_blue"
+                                android:textSize="@dimen/s14" />
+
+
+                            <View
+                                android:layout_width="@dimen/p2"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="@dimen/d4"
+                                android:layout_marginLeft="@dimen/d6"
+                                android:layout_marginRight="@dimen/d6"
+                                android:layout_marginTop="@dimen/d4"
+                                android:background="@color/main_status_red" />
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:id="@+id/ll_pub_num"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal">
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="采购方式"
+                                android:text="项目编号:"
                                 android:textColor="@color/main_text_color"
-                                android:textSize="@dimen/s15" />
+                                android:textSize="@dimen/s14" />
 
                             <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/tv_main_caigou_method"
+                                android:id="@+id/tv_pub_num"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/d10"
+                                android:layout_marginLeft="@dimen/d4"
                                 android:text=""
-                                android:textColor="@color/main_status_blue"
-                                android:textSize="@dimen/s15" />
+                                android:textSize="@dimen/s14" />
+
                         </LinearLayout>
+                    </LinearLayout>
 
-                        <LinearLayout
-                            android:id="@+id/ll_mian_dingbiao_time"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:visibility="gone">
 
-                            <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="定标日期"
-                                android:textColor="@color/main_text_color"
-                                android:textSize="@dimen/s15" />
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/tv_main_area"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/d12"
+                        android:text="四川省甘孜藏族自治州稻城县"
+                        android:textColor="#ff999999"
+                        android:textSize="@dimen/s14" />
 
-                            <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/tv_mian_dingbiao_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/d10"
-                                android:text=""
-                                android:textSize="@dimen/s15" />
-                        </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:paddingTop="@dimen/d12">
+
 
                         <LinearLayout
                             android:id="@+id/ll_main_pub_time"
@@ -120,49 +135,28 @@
                             android:orientation="horizontal">
 
                             <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="发布时间"
-                                android:textColor="@color/main_text_color"
-                                android:textSize="@dimen/s15" />
-
-                            <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_main_pub_time"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/d10"
-                                android:text=""
-                                android:textSize="@dimen/s15" />
+                                android:text="2017-1-1"
+                                android:textSize="@dimen/s13" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="发布"
+                                android:textColor="@color/main_text_color"
+                                android:layout_marginLeft="@dimen/d4"
+                                android:textSize="@dimen/s12" />
                         </LinearLayout>
 
                     </LinearLayout>
 
-                    <LinearLayout
-                        android:id="@+id/ll_pub_num"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="项目编号"
-                            android:textColor="@color/main_text_color"
-                            android:textSize="@dimen/s15" />
-
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/tv_pub_num"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/d10"
-                            android:text=""
-                            android:textSize="@dimen/s15" />
-                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/p35"
-                        android:layout_marginTop="@dimen/d12"
+                        android:layout_marginTop="@dimen/d16"
                         android:background="#88eeeeee" />
 
                     <include layout="@layout/share_item" />
@@ -815,17 +809,10 @@
                             android:orientation="horizontal">
 
                             <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="公告原文:"
-                                android:textSize="@dimen/s16" />
-
-                            <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_yw"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/d10"
-                                android:text="点击查看"
+                                android:text="公告原文"
                                 android:textColor="@color/main_status_blue"
                                 android:textSize="@dimen/s16" />
 

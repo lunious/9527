@@ -58,7 +58,6 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
     private MultipleStatusView xjgggDetailStatusView = null;
     private AppCompatTextView tvMainTitle = null;
     private AppCompatTextView tvMainArea = null;
-    private AppCompatTextView tvMainPubType = null;
     private AppCompatTextView tvMainPubMethod = null;
     private AppCompatTextView tvMainPubData = null;
     private AppCompatTextView tvMainPubTime = null;
@@ -79,6 +78,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
     private ImageView ivFav = null;
     private LinearLayout llFav = null;
     private LinearLayout llShare = null;
+    private LinearLayout llType = null;
     private NestedScrollView detailNsv = null;
     LinearLayout llBucai = null;
     private AppCompatTextView tvBucai = null;
@@ -140,7 +140,6 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
         xjgggDetailStatusView = getView().findViewById(R.id.xjggg_detail_status_view);
         tvMainTitle = getView().findViewById(R.id.tv_main_title);
         tvMainArea = getView().findViewById(R.id.tv_main_area);
-        tvMainPubType = getView().findViewById(R.id.tv_main_pub_type);
         tvMainPubMethod = getView().findViewById(R.id.tv_main_pub_method);
         tvMainPubData = getView().findViewById(R.id.tv_main_pub_data);
         tvMainPubTime = getView().findViewById(R.id.tv_main_pub_time);
@@ -164,6 +163,7 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
         detailNsv = getView().findViewById(R.id.detail_nsv);
         llBucai = getView().findViewById(R.id.ll_bucai);
         tvBucai = getView().findViewById(R.id.tv_bucai);
+        llType = getView().findViewById(R.id.ll_type);
 
 
         llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
@@ -284,17 +284,12 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                     } else {
                                         tvMainArea.setText("暂无");
                                     }
-                                    String resource = data.getString("resource");
-                                    if (!TextUtils.isEmpty(resource)) {
-                                        tvMainPubType.setText(resource);
-                                    } else {
-                                        tvMainPubType.setText("暂无");
-                                    }
                                     String purchasingType = data.getString("purchasingType");
                                     if (!TextUtils.isEmpty(purchasingType)) {
                                         tvMainPubMethod.setText(purchasingType);
                                     } else {
                                         tvMainPubMethod.setText("暂无");
+                                        llType.setVisibility(View.GONE);
                                     }
                                     String calibrationTime = data.getString("calibrationTime");
                                     if (!TextUtils.isEmpty(calibrationTime)) {
@@ -459,17 +454,12 @@ public class ResultXjgggDetailFragment extends BaseFragment implements View.OnCl
                                     } else {
                                         tvMainArea.setText("暂无");
                                     }
-                                    String resource = data.getString("resource");
-                                    if (!TextUtils.isEmpty(resource)) {
-                                        tvMainPubType.setText(resource);
-                                    } else {
-                                        tvMainPubType.setText("暂无");
-                                    }
                                     String purchasingType = data.getString("purchasingType");
                                     if (!TextUtils.isEmpty(purchasingType)) {
                                         tvMainPubMethod.setText(purchasingType);
                                     } else {
                                         tvMainPubMethod.setText("暂无");
+                                        llType.setVisibility(View.GONE);
                                     }
                                     String calibrationTime = data.getString("calibrationTime");
                                     if (!TextUtils.isEmpty(calibrationTime)) {

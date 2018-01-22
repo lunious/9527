@@ -85,7 +85,6 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
     ImageView ivFav = null;
     LinearLayout llFav = null;
     LinearLayout llMainCaigouMethod = null;
-    LinearLayout llMianDingbiaoTime = null;
     LinearLayout llMainPubTime = null;
     LinearLayout llPubNum = null;
     LinearLayout llOwerCainame = null;
@@ -167,7 +166,6 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
     public void initView() {
         llIvBack = getView().findViewById(R.id.ll_iv_back);
         mainBarName = getView().findViewById(R.id.main_bar_name);
-        tvMianDingbiaoTime = getView().findViewById(R.id.tv_mian_dingbiao_time);
         xcgggDetailStatusView = getView().findViewById(R.id.xcggg_detail_status_view);
         tvMainTitle = getView().findViewById(R.id.tv_main_title);
         tvMainArea = getView().findViewById(R.id.tv_main_area);
@@ -197,7 +195,6 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
         ivFav = getView().findViewById(R.id.iv_fav);
         llFav = getView().findViewById(R.id.ll_fav);
         llMainCaigouMethod = getView().findViewById(R.id.ll_main_caigou_method);
-        llMianDingbiaoTime = getView().findViewById(R.id.ll_mian_dingbiao_time);
         llMainPubTime = getView().findViewById(R.id.ll_main_pub_time);
         llPubNum = getView().findViewById(R.id.ll_pub_num);
         llOwerCainame = getView().findViewById(R.id.ll_ower_cainame);

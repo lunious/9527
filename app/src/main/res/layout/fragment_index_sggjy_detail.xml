@@ -246,7 +246,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
-                            android:layout_marginLeft="@dimen/d10"
                             android:text="公告原文"
                             android:textColor="@color/main_status_blue"
                             android:textSize="@dimen/s16" />

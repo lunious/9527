@@ -61,7 +61,6 @@
                             android:layout_gravity="center_vertical"
                             android:orientation="horizontal">
 
-
                             <LinearLayout
                                 android:id="@+id/ll_type"
                                 android:layout_width="wrap_content"
@@ -80,10 +79,10 @@
                                 <View
                                     android:layout_width="@dimen/p2"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginBottom="@dimen/d2"
+                                    android:layout_marginBottom="@dimen/d4"
                                     android:layout_marginLeft="@dimen/d6"
                                     android:layout_marginRight="@dimen/d6"
-                                    android:layout_marginTop="@dimen/d2"
+                                    android:layout_marginTop="@dimen/d4"
                                     android:background="@color/main_status_red" />
 
                             </LinearLayout>
@@ -134,12 +133,12 @@
                                     android:layout_height="wrap_content"
                                     android:text="2017-1-1"
                                     android:textColor="@color/status_text_color"
-                                    android:textSize="@dimen/s12" />
+                                    android:textSize="@dimen/s13" />
 
                                 <android.support.v7.widget.AppCompatTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/d8"
+                                    android:layout_marginLeft="@dimen/d4"
                                     android:text="截止"
                                     android:textColor="@color/main_status_red"
                                     android:textSize="@dimen/s12" />
@@ -157,12 +156,12 @@
                                     android:layout_height="wrap_content"
                                     android:text="2017-1-1"
                                     android:textColor="@color/status_text_color"
-                                    android:textSize="@dimen/s12" />
+                                    android:textSize="@dimen/s13" />
 
                                 <android.support.v7.widget.AppCompatTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="@dimen/d8"
+                                    android:layout_marginLeft="@dimen/d4"
                                     android:text="发布"
                                     android:textColor="@color/main_text_color"
                                     android:textSize="@dimen/s12" />
