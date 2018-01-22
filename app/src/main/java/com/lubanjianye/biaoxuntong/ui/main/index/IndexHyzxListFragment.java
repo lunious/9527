@@ -84,6 +84,11 @@ public class IndexHyzxListFragment extends BaseFragment {
     @Override
     public void initEvent() {
 
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+        } else {
+            requestData(true);
+        }
     }
 
     private void initRefreshLayout() {
@@ -115,7 +120,7 @@ public class IndexHyzxListFragment extends BaseFragment {
         });
 
 
-        indexHyzxRefresh.autoRefresh();
+//        indexHyzxRefresh.autoRefresh();
 
 
     }

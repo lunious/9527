@@ -155,6 +155,12 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         initAdapter();
         initRefreshLayout();
 
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+        } else {
+            requestData(true);
+        }
+
     }
 
     @Override
@@ -199,7 +205,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         });
 
 
-        collectRefresh.autoRefresh();
+//        collectRefresh.autoRefresh();
     }
 
     private void initRecyclerView() {

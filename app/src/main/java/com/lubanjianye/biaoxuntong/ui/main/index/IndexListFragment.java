@@ -233,7 +233,6 @@ public class IndexListFragment extends BaseFragment {
     @Override
     public void initEvent() {
 
-
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
         } else {

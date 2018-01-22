@@ -1,7 +1,6 @@
 package com.lubanjianye.biaoxuntong.ui.main.result;
 
 import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -20,7 +19,6 @@ import com.lubanjianye.biaoxuntong.bean.ResultListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
@@ -101,7 +99,7 @@ public class ResultListFragment extends BaseFragment {
         });
 
 
-        resultRefresh.autoRefresh();
+//        resultRefresh.autoRefresh();
 
     }
 
@@ -186,6 +184,12 @@ public class ResultListFragment extends BaseFragment {
         initAdapter();
         addHeadView();
         initRefreshLayout();
+
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+        } else {
+            requestData(true);
+        }
 
     }
 
