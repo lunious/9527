@@ -24,9 +24,14 @@ import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +51,7 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
     private AppCompatTextView mainBarName = null;
 
     private RecyclerView companyQyzzRecycler = null;
-    private SwipeRefreshLayout companyQyzzRefresh = null;
+    private SmartRefreshLayout companyQyzzRefresh = null;
     private MultipleStatusView loadingStatus = null;
 
 
@@ -89,8 +94,12 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
         initRecyclerView();
         initAdapter();
         initRefreshLayout();
-        companyQyzzRefresh.setRefreshing(false);
-        requestData(0);
+
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+        } else {
+            requestData(true);
+        }
     }
 
     @Override
@@ -111,21 +120,36 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
 
 
     private void initRefreshLayout() {
-        companyQyzzRefresh.setColorSchemeResources(
-                R.color.main_theme_color,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
-        );
 
-        companyQyzzRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        companyQyzzRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                //TODO 刷新数据
-                mAdapter.setEnableLoadMore(false);
-                requestData(1);
+            public void onRefresh(RefreshLayout refreshlayout) {
 
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                    companyQyzzRefresh.finishRefresh(2000, false);
+                } else {
+                    requestData(true);
+                }
             }
         });
+
+        companyQyzzRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+
+                //TODO 去加载更多数据
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                } else {
+                    requestData(false);
+                }
+            }
+        });
+
+
+//        resultRefresh.autoRefresh();
+
 
     }
 
@@ -172,7 +196,7 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
                                                                     if (mDataList != null) {
                                                                         mDataList.clear();
                                                                     }
-                                                                    requestData(1);
+                                                                    requestData(true);
                                                                 } else {
                                                                     promptDialog.showError("删除失败！");
                                                                 }
@@ -192,43 +216,69 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
     private void initAdapter() {
         mAdapter = new MyCompanyQyzzAllListAdapter(R.layout.fragment_company_qyzz, mDataList);
 
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                //TODO 去加载更多数据
-                requestData(2);
-            }
-        });
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
-        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         companyQyzzRecycler.setAdapter(mAdapter);
-
 
     }
 
 
     private long id = 0;
 
-    public void requestData(final int isRefresh) {
+    public void requestData(final boolean isRefresh) {
 
-        if (!NetUtil.isNetworkConnected(getActivity())) {
-            loadingStatus.showNoNetwork();
-            companyQyzzRefresh.setEnabled(false);
+
+        List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+        long id = 0;
+        for (int i = 0; i < users.size(); i++) {
+            id = users.get(0).getId();
+        }
+        if (isRefresh) {
+            page = 1;
+            OkGo.<String>post(BiaoXunTongApi.URL_GETALLCOMPANYQYZZ)
+                    .params("userId", id)
+                    .params("type", 0)
+                    .params("page", page)
+                    .params("size", 20)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject object = JSON.parseObject(response.body());
+                            String status = object.getString("status");
+
+                            if ("200".equals(status)) {
+
+                                final JSONObject dataObj = object.getJSONObject("data");
+                                final JSONArray array = dataObj.getJSONArray("list");
+
+                                final boolean nextPage = dataObj.getBoolean("nextpage");
+
+                                for (int i = 0; i < array.size(); i++) {
+                                    final JSONObject data = array.getJSONObject(i);
+                                    zy_code.add(data.getString("zy_code"));
+                                }
+
+                                if (array.size() > 0) {
+                                    page = 2;
+                                    setData(isRefresh, array, nextPage);
+                                } else {
+                                    if (mDataList != null) {
+                                        mDataList.clear();
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                    //TODO 内容为空的处理
+                                    loadingStatus.showEmpty();
+                                    companyQyzzRefresh.setEnableRefresh(false);
+                                }
+
+                            } else {
+                                //TODO 请求数据失败的处理
+                            }
+                        }
+                    });
+
+
         } else {
-            if (isRefresh == 0) {
-                loadingStatus.showLoading();
-            }
-            if (isRefresh == 0 || isRefresh == 1) {
-                page = 1;
-            }
-
-            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
-            long id = 0;
-            for (int i = 0; i < users.size(); i++) {
-                id = users.get(0).getId();
-            }
-
             OkGo.<String>post(BiaoXunTongApi.URL_GETALLCOMPANYQYZZ)
                     .params("userId", id)
                     .params("type", 0)
@@ -262,7 +312,7 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
                                     }
                                     //TODO 内容为空的处理
                                     loadingStatus.showEmpty();
-                                    companyQyzzRefresh.setEnabled(false);
+                                    companyQyzzRefresh.setEnableRefresh(false);
                                 }
 
                             } else {
@@ -277,11 +327,11 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
     }
 
 
-    private void setData(int isRefresh, JSONArray data, boolean nextPage) {
-        page++;
+    private void setData(boolean isRefresh, JSONArray data, boolean nextPage) {
         final int size = data == null ? 0 : data.size();
+
         int d = 1;
-        if (isRefresh == 0 || isRefresh == 1) {
+        if (isRefresh) {
             loadingStatus.showContent();
             mDataList.clear();
             for (int i = 0; i < data.size(); i++) {
@@ -296,12 +346,10 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
                 mDataList.add(bean);
                 d++;
             }
-            companyQyzzRefresh.setRefreshing(false);
-            mAdapter.setEnableLoadMore(true);
-            mAdapter.notifyDataSetChanged();
-
+            companyQyzzRefresh.finishRefresh(0, true);
 
         } else {
+            page++;
             loadingStatus.showContent();
             if (size > 0) {
                 for (int i = 0; i < data.size(); i++) {
@@ -316,16 +364,18 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
                     mDataList.add(bean);
                     d++;
                 }
-                mAdapter.notifyDataSetChanged();
             }
 
-            if (!nextPage) {
-                //第一页如果不够一页就不显示没有更多数据布局
-                mAdapter.loadMoreEnd();
-            } else {
-                mAdapter.loadMoreComplete();
-            }
+            companyQyzzRefresh.finishLoadmore(0, true);
+
         }
+        if (!nextPage) {
+            //第一页如果不够一页就不显示没有更多数据布局
+            companyQyzzRefresh.setEnableLoadmore(false);
+        } else {
+            companyQyzzRefresh.setEnableLoadmore(true);
+        }
+        mAdapter.notifyDataSetChanged();
 
     }
 }

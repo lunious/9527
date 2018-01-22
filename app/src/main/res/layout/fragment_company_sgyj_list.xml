@@ -21,7 +21,6 @@
             app:srlTextSizeTime="@dimen/s12"
             app:srlTextSizeTitle="@dimen/s14" />
 
-
         <android.support.v7.widget.RecyclerView
             android:id="@+id/company_sgyj_recycler"
             android:layout_width="match_parent"

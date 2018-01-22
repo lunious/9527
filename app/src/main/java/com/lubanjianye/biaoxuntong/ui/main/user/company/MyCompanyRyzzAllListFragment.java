@@ -24,9 +24,14 @@ import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
 import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
+import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +51,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
     private AppCompatTextView mainBarName = null;
 
     private RecyclerView companyRyzzRecycler = null;
-    private SwipeRefreshLayout companyRyzzRefresh = null;
+    private SmartRefreshLayout companyRyzzRefresh = null;
     private MultipleStatusView loadingStatus = null;
 
     private MyCompanyRyzzAllListAdapter mAdapter;
@@ -88,34 +93,52 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
         //设置自定义属性
         promptDialog.getDefaultBuilder().touchAble(true).round(3).loadingDuration(3000);
 
-        initRecyclerView();
-        initAdapter();
-        initRefreshLayout();
-        companyRyzzRefresh.setRefreshing(false);
-        requestData(0);
     }
 
     @Override
     public void initEvent() {
+        initRecyclerView();
+        initAdapter();
+        initRefreshLayout();
 
+        if (!NetUtil.isNetworkConnected(getActivity())) {
+            ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+        } else {
+            requestData(true);
+        }
     }
 
     private void initRefreshLayout() {
-        companyRyzzRefresh.setColorSchemeResources(
-                R.color.main_theme_color,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light
-        );
 
-        companyRyzzRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        companyRyzzRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
-            public void onRefresh() {
-                //TODO 刷新数据
-                mAdapter.setEnableLoadMore(false);
-                requestData(1);
+            public void onRefresh(RefreshLayout refreshlayout) {
 
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                    companyRyzzRefresh.finishRefresh(2000, false);
+                } else {
+                    requestData(true);
+                }
             }
         });
+
+        companyRyzzRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+
+                //TODO 去加载更多数据
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                } else {
+                    requestData(false);
+                }
+            }
+        });
+
+
+//        resultRefresh.autoRefresh();
+
     }
 
 
@@ -166,7 +189,7 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                                                                     if (mDataList != null) {
                                                                         mDataList.clear();
                                                                     }
-                                                                    requestData(1);
+                                                                    requestData(true);
                                                                 } else {
                                                                     promptDialog.showError("删除失败！");
                                                                 }
@@ -188,16 +211,8 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
     private void initAdapter() {
         mAdapter = new MyCompanyRyzzAllListAdapter(R.layout.fragment_company_ryzz, mDataList);
 
-        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
-            @Override
-            public void onLoadMoreRequested() {
-                //TODO 去加载更多数据
-                requestData(2);
-            }
-        });
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_BOTTOM);
-        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         companyRyzzRecycler.setAdapter(mAdapter);
 
 
@@ -205,26 +220,63 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
 
     private long id = 0;
 
-    public void requestData(final int isRefresh) {
+    public void requestData(final boolean isRefresh) {
 
-        if (!NetUtil.isNetworkConnected(getActivity())) {
-            loadingStatus.showNoNetwork();
-            companyRyzzRefresh.setEnabled(false);
+        List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+        long id = 0;
+        String token = "";
+        for (int i = 0; i < users.size(); i++) {
+            id = users.get(0).getId();
+            token = users.get(0).getToken();
+        }
+
+
+        if (isRefresh) {
+            page = 1;
+            OkGo.<String>post(BiaoXunTongApi.URL_GETALLCOMPANYRYZZ)
+                    .params("userId", id)
+                    .params("type", 0)
+                    .params("size", 20)
+                    .params("page", page)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(Response<String> response) {
+                            final JSONObject object = JSON.parseObject(response.body());
+                            String status = object.getString("status");
+
+                            if ("200".equals(status)) {
+                                final JSONObject dataObj = object.getJSONObject("data");
+
+                                int pageCount = dataObj.getInteger("pageCount");
+                                final JSONArray array = dataObj.getJSONArray("list");
+                                final boolean nextPage = dataObj.getBoolean("nextpage");
+
+
+                                for (int i = 0; i < array.size(); i++) {
+                                    final JSONObject data = array.getJSONObject(i);
+                                    zzbm.add(data.getString("zzbm"));
+                                    zgzy_code.add(data.getString("zgzy_code"));
+                                    ryname.add(data.getString("ryname"));
+                                }
+
+                                if (array.size() > 0) {
+                                    page = 2;
+                                    setData(isRefresh, array, nextPage);
+                                } else {
+                                    if (mDataList != null) {
+                                        mDataList.clear();
+                                        mAdapter.notifyDataSetChanged();
+                                    }
+                                    //TODO 内容为空的处理
+                                    loadingStatus.showEmpty();
+                                    companyRyzzRefresh.setEnableRefresh(false);
+                                }
+                            } else {
+                                //TODO 请求数据失败的处理
+                            }
+                        }
+                    });
         } else {
-            if (isRefresh == 0) {
-                loadingStatus.showLoading();
-            }
-            if (isRefresh == 0 || isRefresh == 1) {
-                page = 1;
-            }
-
-            List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
-            long id = 0;
-            String token = "";
-            for (int i = 0; i < users.size(); i++) {
-                id = users.get(0).getId();
-                token = users.get(0).getToken();
-            }
             OkGo.<String>post(BiaoXunTongApi.URL_GETALLCOMPANYRYZZ)
                     .params("userId", id)
                     .params("type", 0)
@@ -260,24 +312,23 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                                     }
                                     //TODO 内容为空的处理
                                     loadingStatus.showEmpty();
-                                    companyRyzzRefresh.setEnabled(false);
+                                    companyRyzzRefresh.setEnableRefresh(false);
                                 }
                             } else {
                                 //TODO 请求数据失败的处理
                             }
                         }
                     });
-
         }
 
 
     }
 
-    private void setData(int isRefresh, JSONArray data, boolean nextPage) {
-        page++;
+    private void setData(boolean isRefresh, JSONArray data, boolean nextPage) {
+
         final int size = data == null ? 0 : data.size();
         int d = 1;
-        if (isRefresh == 0 || isRefresh == 1) {
+        if (isRefresh) {
             mDataList.clear();
             loadingStatus.showContent();
             for (int i = 0; i < data.size(); i++) {
@@ -291,10 +342,9 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                 mDataList.add(bean);
                 d++;
             }
-            companyRyzzRefresh.setRefreshing(false);
-            mAdapter.setEnableLoadMore(true);
-            mAdapter.notifyDataSetChanged();
+            companyRyzzRefresh.finishRefresh(0, true);
         } else {
+            page++;
             loadingStatus.showContent();
             if (size > 0) {
                 for (int i = 0; i < data.size(); i++) {
@@ -308,15 +358,18 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                     mDataList.add(bean);
                     d++;
                 }
-                mAdapter.notifyDataSetChanged();
             }
+            companyRyzzRefresh.finishLoadmore(0, true);
+
         }
+
         if (!nextPage) {
             //第一页如果不够一页就不显示没有更多数据布局
-            mAdapter.loadMoreEnd();
+            companyRyzzRefresh.setEnableLoadmore(false);
         } else {
-            mAdapter.loadMoreComplete();
+            companyRyzzRefresh.setEnableLoadmore(true);
         }
+        mAdapter.notifyDataSetChanged();
 
 
     }
