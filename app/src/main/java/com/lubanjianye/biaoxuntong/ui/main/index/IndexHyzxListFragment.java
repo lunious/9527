@@ -86,6 +86,7 @@ public class IndexHyzxListFragment extends BaseFragment {
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+            mAdapter.setEnableLoadMore(false);
         } else {
             requestData(true);
         }
@@ -100,21 +101,9 @@ public class IndexHyzxListFragment extends BaseFragment {
                 if (!NetUtil.isNetworkConnected(getActivity())) {
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
                     indexHyzxRefresh.finishRefresh(2000, false);
+                    mAdapter.setEnableLoadMore(false);
                 } else {
                     requestData(true);
-                }
-            }
-        });
-
-        indexHyzxRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-
-                //TODO 去加载更多数据
-                if (!NetUtil.isNetworkConnected(getActivity())) {
-                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-                } else {
-                    requestData(false);
                 }
             }
         });
@@ -150,9 +139,20 @@ public class IndexHyzxListFragment extends BaseFragment {
 
     private void initAdapter() {
         mAdapter = new IndexHyzxListAdapter(R.layout.fragment_index_hyzx_item, mDataList);
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                //TODO 去加载更多数据
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                } else {
+                    requestData(false);
+                }
+            }
+        });
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
-
+        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         indexHyzxRecycler.setAdapter(mAdapter);
 
 
@@ -376,7 +376,7 @@ public class IndexHyzxListFragment extends BaseFragment {
                 mDataList.add(bean);
             }
             indexHyzxRefresh.finishRefresh(0, true);
-
+            mAdapter.setEnableLoadMore(true);
 
         } else {
             page++;
@@ -405,10 +405,11 @@ public class IndexHyzxListFragment extends BaseFragment {
         }
         if (!nextPage) {
             //第一页如果不够一页就不显示没有更多数据布局
-            indexHyzxRefresh.setEnableLoadmore(false);
+            mAdapter.loadMoreEnd();
         } else {
-            indexHyzxRefresh.setEnableLoadmore(true);
+            mAdapter.loadMoreComplete();
         }
+
         mAdapter.notifyDataSetChanged();
 
     }

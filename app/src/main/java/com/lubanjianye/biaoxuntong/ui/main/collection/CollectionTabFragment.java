@@ -157,11 +157,9 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-            collectRefresh.setEnableRefresh(false);
             requestData(true);
-        } else {
-            collectRefresh.setEnableRefresh(true);
             mAdapter.setEnableLoadMore(false);
+        } else {
             requestData(true);
         }
 
@@ -189,6 +187,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 if (!NetUtil.isNetworkConnected(getActivity())) {
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
                     collectRefresh.finishRefresh(2000, false);
+                    mAdapter.setEnableLoadMore(false);
                 } else {
                     requestData(true);
                 }

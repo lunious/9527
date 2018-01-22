@@ -20,6 +20,7 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.search.ResultSearchActivity;
@@ -79,25 +80,12 @@ public class ResultListFragment extends BaseFragment {
                 if (!NetUtil.isNetworkConnected(getActivity())) {
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
                     resultRefresh.finishRefresh(2000, false);
+                    mAdapter.setEnableLoadMore(false);
                 } else {
                     requestData(true);
                 }
             }
         });
-
-        resultRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-
-                //TODO 去加载更多数据
-                if (!NetUtil.isNetworkConnected(getActivity())) {
-                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-                } else {
-                    requestData(false);
-                }
-            }
-        });
-
 
 //        resultRefresh.autoRefresh();
 
@@ -142,8 +130,21 @@ public class ResultListFragment extends BaseFragment {
     private void initAdapter() {
         mAdapter = new ResultListAdapter(R.layout.fragment_result_item, mDataList);
 
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                //TODO 去加载更多数据
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                } else {
+                    requestData(false);
+                }
+            }
+        });
+
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         resultRecycler.setAdapter(mAdapter);
 
 
@@ -187,6 +188,8 @@ public class ResultListFragment extends BaseFragment {
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+            requestData(true);
+            mAdapter.setEnableLoadMore(false);
         } else {
             requestData(true);
         }
@@ -248,7 +251,7 @@ public class ResultListFragment extends BaseFragment {
                                     }
                                     //TODO 内容为空的处理
                                     loadingStatus.showEmpty();
-                                    resultRefresh.setEnabled(false);
+                                    resultRefresh.setEnableRefresh(false);
                                 }
 
                             }
@@ -272,7 +275,7 @@ public class ResultListFragment extends BaseFragment {
                                         }
                                         //TODO 内容为空的处理
                                         loadingStatus.showEmpty();
-                                        resultRefresh.setEnabled(false);
+                                        resultRefresh.setEnableRefresh(false);
                                     }
 
                                     isInitCache = true;
@@ -306,7 +309,7 @@ public class ResultListFragment extends BaseFragment {
                                     }
                                     //TODO 内容为空的处理
                                     loadingStatus.showEmpty();
-                                    resultRefresh.setEnabled(false);
+                                    resultRefresh.setEnableRefresh(false);
                                 }
 
                             }
@@ -346,7 +349,7 @@ public class ResultListFragment extends BaseFragment {
                                     }
                                     //TODO 内容为空的处理
                                     loadingStatus.showEmpty();
-                                    resultRefresh.setEnabled(false);
+                                    resultRefresh.setEnableRefresh(false);
                                 }
 
                             }
@@ -369,7 +372,7 @@ public class ResultListFragment extends BaseFragment {
                                     }
                                     //TODO 内容为空的处理
                                     loadingStatus.showEmpty();
-                                    resultRefresh.setEnabled(false);
+                                    resultRefresh.setEnableRefresh(false);
                                 }
 
                             }
@@ -399,7 +402,7 @@ public class ResultListFragment extends BaseFragment {
                                     }
                                     //TODO 内容为空的处理
                                     loadingStatus.showEmpty();
-                                    resultRefresh.setEnabled(false);
+                                    resultRefresh.setEnableRefresh(false);
                                 }
 
                             }
@@ -428,7 +431,7 @@ public class ResultListFragment extends BaseFragment {
             }
 
             resultRefresh.finishRefresh(0, true);
-
+            mAdapter.setEnableLoadMore(true);
 
         } else {
             page++;
@@ -451,10 +454,11 @@ public class ResultListFragment extends BaseFragment {
         }
         if (!nextPage) {
             //第一页如果不够一页就不显示没有更多数据布局
-            resultRefresh.setEnableLoadmore(false);
+            mAdapter.loadMoreEnd();
         } else {
-            resultRefresh.setEnableLoadmore(true);
+            mAdapter.loadMoreComplete();
         }
+
         mAdapter.notifyDataSetChanged();
 
     }

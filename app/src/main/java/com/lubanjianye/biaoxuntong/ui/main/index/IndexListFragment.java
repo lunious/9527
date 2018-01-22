@@ -20,6 +20,7 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexBxtgdjDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjyDetailActivity;
@@ -105,24 +106,13 @@ public class IndexListFragment extends BaseFragment {
                 if (!NetUtil.isNetworkConnected(getActivity())) {
                     ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
                     indexRefresh.finishRefresh(2000, false);
+                    mAdapter.setEnableLoadMore(false);
                 } else {
                     requestData(true);
                 }
             }
         });
 
-        indexRefresh.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-
-                //TODO 去加载更多数据
-                if (!NetUtil.isNetworkConnected(getActivity())) {
-                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-                } else {
-                    requestData(false);
-                }
-            }
-        });
 
 //        indexRefresh.autoRefresh();
 
@@ -201,8 +191,22 @@ public class IndexListFragment extends BaseFragment {
             mAdapter = new IndexListAdapter(R.layout.fragment_index_item, mDataList);
         }
 
+
+        mAdapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                //TODO 去加载更多数据
+                if (!NetUtil.isNetworkConnected(getActivity())) {
+                    ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+                } else {
+                    requestData(false);
+                }
+            }
+        });
+
         //设置列表动画
 //        mAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
+        mAdapter.setLoadMoreView(new CustomLoadMoreView());
         indexRecycler.setAdapter(mAdapter);
 
 
@@ -235,6 +239,8 @@ public class IndexListFragment extends BaseFragment {
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
+            requestData(true);
+            mAdapter.setEnableLoadMore(false);
         } else {
             requestData(true);
         }
@@ -570,6 +576,7 @@ public class IndexListFragment extends BaseFragment {
                 mDataList.add(bean);
             }
             indexRefresh.finishRefresh(0, true);
+            mAdapter.setEnableLoadMore(true);
 
         } else {
             page++;
@@ -597,10 +604,11 @@ public class IndexListFragment extends BaseFragment {
 
         if (!nextPage) {
             //第一页如果不够一页就不显示没有更多数据布局
-            indexRefresh.setEnableLoadmore(false);
+            mAdapter.loadMoreEnd();
         } else {
-            indexRefresh.setEnableLoadmore(true);
+            mAdapter.loadMoreComplete();
         }
+
         mAdapter.notifyDataSetChanged();
 
     }
