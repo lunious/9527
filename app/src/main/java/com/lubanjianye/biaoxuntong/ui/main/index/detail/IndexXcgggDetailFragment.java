@@ -7,11 +7,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
@@ -22,6 +25,8 @@ import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
@@ -115,6 +120,9 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
     private LinearLayout llQQBoShare = null;
     private LinearLayout llWeixinBoShare = null;
     private LinearLayout llPyqShare = null;
+
+    private AppCompatTextView tvGz = null;
+    private AppCompatTextView tvJg = null;
 
 
     private static final String ARG_ENTITYID = "ARG_ENTITYID";
@@ -226,6 +234,10 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
         llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
         llPyqShare = getView().findViewById(R.id.ll_pyq_share);
 
+        tvGz = getView().findViewById(R.id.tv_gzgg);
+        tvJg = getView().findViewById(R.id.tv_jggg);
+        tvGz.setOnClickListener(this);
+        tvJg.setOnClickListener(this);
 
         llIvBack.setOnClickListener(this);
         llFav.setOnClickListener(this);
@@ -295,6 +307,11 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
     private String comid = "";
     private String imageUrl = "";
 
+    private String gzEntity = "";
+    private String gzEntityId = "";
+    private String jgEntity = "";
+    private String jgEntityId = "";
+
     private void requestData() {
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
@@ -338,6 +355,26 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                                 if ("200".equals(status)) {
                                     xcgggDetailStatusView.showContent();
                                     final JSONObject data = object.getJSONObject("data");
+                                    //判断是否有更正和结果
+                                    //1、判断有误更正
+                                    final JSONArray arrayGz = data.getJSONArray("listGzId");
+                                    //2、判断有无结果
+                                    final JSONArray arrayJg = data.getJSONArray("listJgId");
+                                    if (arrayGz != null) {
+                                        JSONObject list = arrayGz.getJSONObject(arrayGz.size() - 1);
+                                        gzEntity = list.getString("entity");
+                                        gzEntityId = list.getString("entityId");
+                                    } else {
+                                        tvGz.setVisibility(View.GONE);
+                                    }
+                                    if (arrayJg != null) {
+                                        JSONObject list = arrayJg.getJSONObject(arrayJg.size() - 1);
+                                        jgEntity = list.getString("entity");
+                                        jgEntityId = list.getString("entityId");
+                                    } else {
+                                        tvJg.setVisibility(View.GONE);
+                                    }
+
                                     String reportTitle = data.getString("reportTitle");
                                     shareUrl = data.getString("url");
                                     shareTitle = reportTitle;
@@ -518,7 +555,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                                     String specialFields = data.getString("specialFields");
                                     if (!TextUtils.isEmpty(specialFields)) {
                                         llBucai.setVisibility(View.VISIBLE);
-                                        String s = specialFields.replace("*", "").replace("</", "\n").replace("<","\n\n");
+                                        String s = specialFields.replace("*", "").replace("</", "\n").replace("<", "\n\n");
                                         tvBucai.setText(s);
                                     } else {
                                         llBucai.setVisibility(View.GONE);
@@ -546,6 +583,27 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                                 if ("200".equals(status)) {
                                     xcgggDetailStatusView.showContent();
                                     final JSONObject data = object.getJSONObject("data");
+
+                                    //判断是否有更正和结果
+                                    //1、判断有误更正
+                                    final JSONArray arrayGz = data.getJSONArray("listGzId");
+                                    //2、判断有无结果
+                                    final JSONArray arrayJg = data.getJSONArray("listJgId");
+                                    if (arrayGz != null) {
+                                        JSONObject list = arrayGz.getJSONObject(arrayGz.size() - 1);
+                                        gzEntity = list.getString("entity");
+                                        gzEntityId = list.getString("entityId");
+                                    } else {
+                                        tvGz.setVisibility(View.GONE);
+                                    }
+                                    if (arrayJg != null) {
+                                        JSONObject list = arrayJg.getJSONObject(arrayJg.size() - 1);
+                                        jgEntity = list.getString("entity");
+                                        jgEntityId = list.getString("entityId");
+                                    } else {
+                                        tvJg.setVisibility(View.GONE);
+                                    }
+
                                     String reportTitle = data.getString("reportTitle");
                                     shareUrl = data.getString("url");
                                     shareTitle = reportTitle;
@@ -725,7 +783,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                                     String specialFields = data.getString("specialFields");
                                     if (!TextUtils.isEmpty(specialFields)) {
                                         llBucai.setVisibility(View.VISIBLE);
-                                        String s = specialFields.replace("*", "").replace("</", "\n").replace("<","\n\n");
+                                        String s = specialFields.replace("*", "").replace("</", "\n").replace("<", "\n\n");
                                         tvBucai.setText(s);
                                     } else {
                                         llBucai.setVisibility(View.GONE);
@@ -761,6 +819,30 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
         mShare.setImageUrl(null);
         mShare.setUrl(BiaoXunTongApi.SHARE_URL + shareUrl);
         switch (view.getId()) {
+
+            case R.id.tv_gzgg:
+                Log.d("HIUASDSABDBSADA", "哈哈哈为：" + gzEntity + "___" + gzEntityId);
+
+                break;
+            case R.id.tv_jggg:
+                Log.d("HIUASDSABDBSADA", "哈哈哈为：" + jgEntity + "___" + jgEntityId);
+                if ("xjggg".equals(jgEntity) || "sjggg".equals(jgEntity) || "sggjy".equals(jgEntity) || "sggjycgjgtable".equals(jgEntity)) {
+                    Intent intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
+                    intent.putExtra("entityId", Integer.valueOf(jgEntityId));
+                    intent.putExtra("entity", jgEntity);
+                    intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
+                    startActivity(intent);
+
+                } else if ("sggjyzbjg".equals(jgEntity) || "sggjycgjgrow".equals(jgEntity) || "sggjyjgcgtable".equals(jgEntity)) {
+                    Intent intent = new Intent(getActivity(), ResultSggjyzbjgDetailActivity.class);
+                    intent.putExtra("entityId", Integer.valueOf(jgEntityId));
+                    intent.putExtra("entity", jgEntity);
+                    intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
+                    startActivity(intent);
+                }
+                break;
             case R.id.ll_weibo_share:
                 OpenBuilder.with(getActivity())
                         .useWeibo(OpenConstant.WB_APP_KEY)

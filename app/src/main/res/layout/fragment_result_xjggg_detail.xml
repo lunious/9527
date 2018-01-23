@@ -115,7 +115,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:paddingTop="@dimen/d14">
+                        android:paddingTop="@dimen/d16">
 
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -129,7 +129,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="2017-1-1"
                                 android:textColor="@color/status_text_color"
-                                android:textSize="@dimen/s13" />
+                                android:textSize="@dimen/s14" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
@@ -137,35 +137,41 @@
                                 android:layout_marginLeft="@dimen/d4"
                                 android:text="定标"
                                 android:textColor="@color/main_status_red"
-                                android:textSize="@dimen/s12" />
+                                android:textSize="@dimen/s14" />
                         </LinearLayout>
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:orientation="horizontal">
-
-                            <android.support.v7.widget.AppCompatTextView
-                                android:id="@+id/tv_main_pub_time"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="2017-1-1"
-                                android:textColor="@color/status_text_color"
-                                android:textSize="@dimen/s13" />
-
-                            <android.support.v7.widget.AppCompatTextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="@dimen/d4"
-                                android:text="发布"
-                                android:textColor="@color/main_text_color"
-                                android:textSize="@dimen/s12" />
-
-                        </LinearLayout>
 
                     </RelativeLayout>
 
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="@dimen/d10">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:orientation="horizontal">
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:id="@+id/tv_main_pub_time"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="2017-1-1"
+                            android:textColor="@color/status_text_color"
+                            android:textSize="@dimen/s14" />
+
+                        <android.support.v7.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/d4"
+                            android:text="发布"
+                            android:textColor="@color/main_text_color"
+                            android:textSize="@dimen/s14" />
+
+                    </LinearLayout>
+                </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
