@@ -132,13 +132,12 @@
                             android:layout_alignParentRight="true"
                             android:background="@drawable/bg_rect"
                             android:paddingBottom="@dimen/d2"
-                            android:paddingLeft="@dimen/d4"
-                            android:paddingRight="@dimen/d4"
+                            android:paddingLeft="@dimen/d6"
+                            android:paddingRight="@dimen/d6"
                             android:paddingTop="@dimen/d2"
                             android:text="更正公告"
                             android:textColor="@color/main_status_blue"
-                            android:textSize="@dimen/s14"
-                            android:visibility="gone" />
+                            android:textSize="@dimen/s14"/>
 
                     </RelativeLayout>
 
@@ -181,13 +180,12 @@
                             android:layout_alignParentRight="true"
                             android:background="@drawable/bg_rect"
                             android:paddingBottom="@dimen/d2"
-                            android:paddingLeft="@dimen/d4"
-                            android:paddingRight="@dimen/d4"
+                            android:paddingLeft="@dimen/d6"
+                            android:paddingRight="@dimen/d6"
                             android:paddingTop="@dimen/d2"
                             android:text="结果公告"
                             android:textColor="@color/main_status_blue"
-                            android:textSize="@dimen/s14"
-                            android:visibility="gone" />
+                            android:textSize="@dimen/s14" />
 
 
                     </RelativeLayout>

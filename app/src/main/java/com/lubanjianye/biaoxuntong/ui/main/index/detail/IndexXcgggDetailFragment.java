@@ -11,7 +11,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -822,6 +821,17 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
 
             case R.id.tv_gzgg:
                 Log.d("HIUASDSABDBSADA", "哈哈哈为：" + gzEntity + "___" + gzEntityId);
+                if ("sggjybggg".equals(gzEntity)) {
+
+                } else if ("sggjycgbggg".equals(gzEntity)) {
+
+                } else if ("sgzgg".equals(gzEntity)) {
+
+                } else if ("xgzgg".equals(gzEntity)) {
+
+                } else {
+
+                }
 
                 break;
             case R.id.tv_jggg:
