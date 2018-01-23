@@ -275,6 +275,12 @@
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
         <activity
+            android:name=".ui.main.index.detail.IndexScgggDetailActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Main"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
             android:name=".ui.main.index.search.IndexSearchActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"

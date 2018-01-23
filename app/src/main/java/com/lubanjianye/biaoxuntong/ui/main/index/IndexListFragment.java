@@ -23,6 +23,7 @@ import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexBxtgdjDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexScgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjyDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgrowDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgtableDetailActivity;
@@ -171,7 +172,12 @@ public class IndexListFragment extends BaseFragment {
                     intent.putExtra("mId", "");
                     startActivity(intent);
                 } else if ("scggg".equals(entity)) {
-
+                    intent = new Intent(BiaoXunTong.getApplicationContext(), IndexScgggDetailActivity.class);
+                    intent.putExtra("entityId", entityId);
+                    intent.putExtra("entity", entity);
+                    intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
+                    startActivity(intent);
                 }
             }
         });
