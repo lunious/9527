@@ -306,8 +306,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
     private String comid = "";
     private String imageUrl = "";
 
-    private String gzEntity = "";
-    private String gzEntityId = "";
+    private String gzUrl = "";
     private String jgEntity = "";
     private String jgEntityId = "";
 
@@ -356,13 +355,11 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                                     final JSONObject data = object.getJSONObject("data");
                                     //判断是否有更正和结果
                                     //1、判断有误更正
-                                    final JSONArray arrayGz = data.getJSONArray("listGzId");
+                                    final JSONArray arrayGz = data.getJSONArray("listGzUrl");
                                     //2、判断有无结果
                                     final JSONArray arrayJg = data.getJSONArray("listJgId");
                                     if (arrayGz != null) {
-                                        JSONObject list = arrayGz.getJSONObject(arrayGz.size() - 1);
-                                        gzEntity = list.getString("entity");
-                                        gzEntityId = list.getString("entityId");
+                                        gzUrl = arrayGz.getString(arrayGz.size() - 1);
                                     } else {
                                         tvGz.setVisibility(View.GONE);
                                     }
@@ -585,13 +582,11 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
 
                                     //判断是否有更正和结果
                                     //1、判断有误更正
-                                    final JSONArray arrayGz = data.getJSONArray("listGzId");
+                                    final JSONArray arrayGz = data.getJSONArray("listGzUrl");
                                     //2、判断有无结果
                                     final JSONArray arrayJg = data.getJSONArray("listJgId");
                                     if (arrayGz != null) {
-                                        JSONObject list = arrayGz.getJSONObject(arrayGz.size() - 1);
-                                        gzEntity = list.getString("entity");
-                                        gzEntityId = list.getString("entityId");
+                                        gzUrl = arrayGz.getString(arrayGz.size() - 1);
                                     } else {
                                         tvGz.setVisibility(View.GONE);
                                     }
@@ -817,27 +812,20 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
         mShare.setDescription(shareContent);
         mShare.setImageUrl(null);
         mShare.setUrl(BiaoXunTongApi.SHARE_URL + shareUrl);
+        Intent intent = null;
+
         switch (view.getId()) {
 
             case R.id.tv_gzgg:
-                Log.d("HIUASDSABDBSADA", "哈哈哈为：" + gzEntity + "___" + gzEntityId);
-                if ("sggjybggg".equals(gzEntity)) {
-
-                } else if ("sggjycgbggg".equals(gzEntity)) {
-
-                } else if ("sgzgg".equals(gzEntity)) {
-
-                } else if ("xgzgg".equals(gzEntity)) {
-
-                } else {
-
-                }
-
+                intent = new Intent(getActivity(), BrowserActivity.class);
+                intent.putExtra("url", gzUrl);
+                intent.putExtra("title", "更正公告");
+                startActivity(intent);
                 break;
             case R.id.tv_jggg:
                 Log.d("HIUASDSABDBSADA", "哈哈哈为：" + jgEntity + "___" + jgEntityId);
                 if ("xjggg".equals(jgEntity) || "sjggg".equals(jgEntity) || "sggjy".equals(jgEntity) || "sggjycgjgtable".equals(jgEntity)) {
-                    Intent intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
+                    intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
                     intent.putExtra("entityId", Integer.valueOf(jgEntityId));
                     intent.putExtra("entity", jgEntity);
                     intent.putExtra("ajaxlogtype", "0");
@@ -845,7 +833,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                     startActivity(intent);
 
                 } else if ("sggjyzbjg".equals(jgEntity) || "sggjycgjgrow".equals(jgEntity) || "sggjyjgcgtable".equals(jgEntity)) {
-                    Intent intent = new Intent(getActivity(), ResultSggjyzbjgDetailActivity.class);
+                    intent = new Intent(getActivity(), ResultSggjyzbjgDetailActivity.class);
                     intent.putExtra("entityId", Integer.valueOf(jgEntityId));
                     intent.putExtra("entity", jgEntity);
                     intent.putExtra("ajaxlogtype", "0");
@@ -985,7 +973,7 @@ public class IndexXcgggDetailFragment extends BaseFragment implements View.OnCli
                 toShare(mEntityId, shareTitle, shareContent, BiaoXunTongApi.SHARE_URL + shareUrl);
                 break;
             case R.id.tv_yw:
-                Intent intent = new Intent(getActivity(), BrowserActivity.class);
+                intent = new Intent(getActivity(), BrowserActivity.class);
                 intent.putExtra("url", shareUrl);
                 intent.putExtra("title", shareTitle);
                 startActivity(intent);

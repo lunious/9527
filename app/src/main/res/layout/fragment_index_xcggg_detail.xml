@@ -188,7 +188,7 @@
                             android:textSize="@dimen/s14" />
 
 
-                    </RelativeLayout>
+                </RelativeLayout>
 
 
                     <View

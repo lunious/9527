@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
@@ -81,6 +82,10 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
     private LinearLayout llQQBoShare = null;
     private LinearLayout llWeixinBoShare = null;
     private LinearLayout llPyqShare = null;
+
+    private AppCompatTextView tvGz = null;
+    private AppCompatTextView tvJg = null;
+
 
     private static final String ARG_ENTITYID = "ARG_ENTITYID";
     private static final String ARG_ENTITY = "ARG_ENTITY";
@@ -171,6 +176,11 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
         llPyqShare.setOnClickListener(this);
         tvYw.setOnClickListener(this);
         tvZbjg.setOnClickListener(this);
+
+        tvGz = getView().findViewById(R.id.tv_gzgg);
+        tvJg = getView().findViewById(R.id.tv_jggg);
+        tvGz.setOnClickListener(this);
+        tvJg.setOnClickListener(this);
     }
 
     @Override
@@ -232,6 +242,10 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
     private String comid = "";
     private String imageUrl = "";
 
+    private String gzUrl = "";
+    private String jgEntity = "";
+    private String jgEntityId = "";
+
     private void requestData() {
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
@@ -276,6 +290,25 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                                         ivFav.setImageResource(R.mipmap.ic_fav_pressed);
                                     }
                                     final JSONObject data = object.getJSONObject("data");
+
+                                    //判断是否有更正和结果
+                                    //1、判断有误更正
+                                    final JSONArray arrayGz = data.getJSONArray("listGzUrl");
+                                    //2、判断有无结果
+                                    final JSONArray arrayJg = data.getJSONArray("listJgId");
+                                    if (arrayGz != null) {
+                                        gzUrl = arrayGz.getString(arrayGz.size() - 1);
+                                    } else {
+                                        tvGz.setVisibility(View.GONE);
+                                    }
+                                    if (arrayJg != null) {
+                                        JSONObject list = arrayJg.getJSONObject(arrayJg.size() - 1);
+                                        jgEntity = list.getString("entity");
+                                        jgEntityId = list.getString("entityId");
+                                    } else {
+                                        tvJg.setVisibility(View.GONE);
+                                    }
+
                                     String reportTitle = data.getString("reportTitle");
                                     shareUrl = data.getString("url");
                                     shareTitle = reportTitle;
@@ -389,6 +422,25 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                                 if ("200".equals(status)) {
                                     indexSggjyDetailStatusView.showContent();
                                     final JSONObject data = object.getJSONObject("data");
+
+                                    //判断是否有更正和结果
+                                    //1、判断有误更正
+                                    final JSONArray arrayGz = data.getJSONArray("listGzUrl");
+                                    //2、判断有无结果
+                                    final JSONArray arrayJg = data.getJSONArray("listJgId");
+                                    if (arrayGz != null) {
+                                        gzUrl = arrayGz.getString(arrayGz.size() - 1);
+                                    } else {
+                                        tvGz.setVisibility(View.GONE);
+                                    }
+                                    if (arrayJg != null) {
+                                        JSONObject list = arrayJg.getJSONObject(arrayJg.size() - 1);
+                                        jgEntity = list.getString("entity");
+                                        jgEntityId = list.getString("entityId");
+                                    } else {
+                                        tvJg.setVisibility(View.GONE);
+                                    }
+
                                     String reportTitle = data.getString("reportTitle");
                                     shareUrl = data.getString("url");
                                     shareTitle = reportTitle;
