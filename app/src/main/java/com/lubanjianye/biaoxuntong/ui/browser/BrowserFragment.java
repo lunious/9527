@@ -21,6 +21,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
@@ -276,8 +277,8 @@ public class BrowserFragment extends BaseFragment implements View.OnClickListene
             webSettings.setUseWideViewPort(true);
             webSettings.setLoadWithOverviewMode(true);
         }
-        mWebView.setWebViewClient(new MyWebViewClient());
         mWebView.setWebChromeClient(new MyWebChromeClient());
+        mWebView.setWebViewClient(new MyWebViewClient());
     }
 
 
@@ -303,6 +304,7 @@ public class BrowserFragment extends BaseFragment implements View.OnClickListene
 
             }
         }
+
     }
 
     private class MyWebViewClient extends WebViewClient {
@@ -317,11 +319,9 @@ public class BrowserFragment extends BaseFragment implements View.OnClickListene
             }
             try {
                 if (url.startsWith("weixin://") //微信
-                        || url.startsWith("alipays://") //支付宝
                         || url.startsWith("mailto://") //邮件
                         || url.startsWith("tel://")//电话
                         || url.startsWith("tel:")//电话
-                        || url.startsWith("dianping://")//大众点评
                         //其他自定义的scheme
                         || url.startsWith("mqqwpa://")) {
                     Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
@@ -333,7 +333,10 @@ public class BrowserFragment extends BaseFragment implements View.OnClickListene
             }
 
             //处理http和https开头的url
-            mWebView.loadUrl(url);
+            if (url.startsWith("http://") || url.startsWith("https://")) {
+                mWebView.loadUrl(url);
+                return false;
+            }
             return true;
 
         }
