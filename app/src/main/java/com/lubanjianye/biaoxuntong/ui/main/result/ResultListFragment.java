@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.bean.ResultListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
@@ -188,10 +189,24 @@ public class ResultListFragment extends BaseFragment {
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
-            requestData(true);
             mAdapter.setEnableLoadMore(false);
+            if (!isInitCache) {
+                loadingStatus.showLoading();
+            }
+            BiaoXunTong.getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    requestData(true);
+                }
+            }, 500);
         } else {
-            requestData(true);
+            loadingStatus.showLoading();
+            BiaoXunTong.getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    requestData(true);
+                }
+            }, 500);
         }
 
     }

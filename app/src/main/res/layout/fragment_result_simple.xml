@@ -5,27 +5,27 @@
     android:layout_height="match_parent">
 
 
-    <com.classic.common.MultipleStatusView
-        android:id="@+id/result_list_status_view"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/result_refresh"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:emptyView="@layout/custom_empty_view"
-        app:errorView="@layout/custom_error_view"
-        app:loadingView="@layout/custom_loading_view"
-        app:noNetworkView="@layout/custom_no_network_view">
+        android:layout_height="match_parent">
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/result_refresh"
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="@dimen/d60"
+            app:srlDrawableProgressSize="@dimen/d15"
+            app:srlDrawableSize="@dimen/d15"
+            app:srlTextSizeTime="@dimen/s12"
+            app:srlTextSizeTitle="@dimen/s15" />
 
-            <com.scwang.smartrefresh.layout.header.ClassicsHeader
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/d60"
-                app:srlDrawableProgressSize="@dimen/d15"
-                app:srlDrawableSize="@dimen/d15"
-                app:srlTextSizeTime="@dimen/s12"
-                app:srlTextSizeTitle="@dimen/s15" />
+        <com.classic.common.MultipleStatusView
+            android:id="@+id/result_list_status_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:emptyView="@layout/custom_empty_view"
+            app:errorView="@layout/custom_error_view"
+            app:loadingView="@layout/custom_loading_index_list"
+            app:noNetworkView="@layout/custom_no_network_view">
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/result_recycler"
@@ -34,9 +34,9 @@
                 android:overScrollMode="never"
                 android:scrollbars="none" />
 
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </com.classic.common.MultipleStatusView>
 
-    </com.classic.common.MultipleStatusView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 
 </LinearLayout>
