@@ -7,8 +7,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/d40"
-        android:layout_marginTop="@dimen/d24">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/d25">
 
         <TextView
             android:layout_width="wrap_content"
@@ -16,7 +16,7 @@
             android:layout_centerInParent="true"
             android:text="栏目定制"
             android:textColor="#6c6c6c"
-            android:textSize="@dimen/s18" />
+            android:textSize="@dimen/s16" />
 
         <ImageView
             android:id="@+id/iv_close"
@@ -63,7 +63,7 @@
                         android:layout_marginTop="@dimen/d20"
                         android:text="我的栏目"
                         android:textColor="@color/main_theme_color"
-                        android:textSize="@dimen/s15" />
+                        android:textSize="@dimen/s14" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -106,7 +106,7 @@
                     android:layout_marginTop="@dimen/d10"
                     android:text="点击添加感兴趣的栏目"
                     android:textColor="@color/main_theme_color"
-                    android:textSize="@dimen/s15" />
+                    android:textSize="@dimen/s14" />
 
             </LinearLayout>
 
@@ -137,7 +137,7 @@
                     android:layout_marginTop="@dimen/d10"
                     android:text="点击添加感兴趣的地区"
                     android:textColor="@color/main_theme_color"
-                    android:textSize="@dimen/s15" />
+                    android:textSize="@dimen/s14" />
 
             </LinearLayout>
 

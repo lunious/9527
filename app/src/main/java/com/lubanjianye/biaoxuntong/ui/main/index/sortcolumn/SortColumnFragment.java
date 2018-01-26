@@ -306,9 +306,9 @@ public class SortColumnFragment extends BaseFragment implements View.OnClickList
         mAdapter = new SortColumnAdapter(R.layout.item_column_layout, mData);
         mAdapter1 = new SortColumnAdapter(R.layout.item_column_layout, mData1);
         mAdapter2 = new SortColumnAdapter(R.layout.item_column_layout, mData2);
-        oldColumnRv.addItemDecoration(new SpaceItemDecoration(10));
-        newColumnRv.addItemDecoration(new SpaceItemDecoration(10));
-        areaColumnRv.addItemDecoration(new SpaceItemDecoration(10));
+        oldColumnRv.addItemDecoration(new SpaceItemDecoration(8));
+        newColumnRv.addItemDecoration(new SpaceItemDecoration(8));
+        areaColumnRv.addItemDecoration(new SpaceItemDecoration(8));
         oldColumnRv.setAdapter(mAdapter);
         newColumnRv.setAdapter(mAdapter1);
         areaColumnRv.setAdapter(mAdapter2);

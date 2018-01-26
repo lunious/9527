@@ -1,5 +1,6 @@
 package com.lubanjianye.biaoxuntong.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  * 描述:     TODO
  */
 
-public class JsonString {
+public class JsonString implements Serializable{
 
     private List<Object> zyIds = null;
     private String lxId = null;

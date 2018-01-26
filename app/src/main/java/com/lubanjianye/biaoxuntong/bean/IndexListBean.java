@@ -1,5 +1,7 @@
 package com.lubanjianye.biaoxuntong.bean;
 
+import java.io.Serializable;
+
 /**
  * 项目名:   Lunious
  * 包名:     com.lubanjianye.biaoxuntong.bean
@@ -9,7 +11,7 @@ package com.lubanjianye.biaoxuntong.bean;
  * 描述:     TODO
  */
 
-public class IndexListBean {
+public class IndexListBean implements Serializable{
 
     private int id = 0;
     private String entryName = null;
