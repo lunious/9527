@@ -8,6 +8,7 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.Html;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,6 +26,7 @@ import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
@@ -73,7 +75,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
     private AppCompatTextView tv6 = null;
     private AppCompatTextView tv7 = null;
     private ImageView ivFav = null;
-    private AppCompatTextView tvZbjg = null;
     private LinearLayout llFav = null;
     private LinearLayout llShare = null;
     private NestedScrollView detailNsv = null;
@@ -161,7 +162,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
         llFav = getView().findViewById(R.id.ll_fav);
         llShare = getView().findViewById(R.id.ll_share);
         detailNsv = getView().findViewById(R.id.detail_nsv);
-        tvZbjg = getView().findViewById(R.id.tv_zbjg);
         llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
         llQQBoShare = getView().findViewById(R.id.ll_qq_share);
         llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
@@ -175,7 +175,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
         llWeixinBoShare.setOnClickListener(this);
         llPyqShare.setOnClickListener(this);
         tvYw.setOnClickListener(this);
-        tvZbjg.setOnClickListener(this);
 
         tvGz = getView().findViewById(R.id.tv_gzgg);
         tvJg = getView().findViewById(R.id.tv_jggg);
@@ -392,13 +391,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                                         tv7.setText(Html.fromHtml(squseven));
                                     }
 
-                                    zbjgId = data.getString("sggjyzbjgId");
-                                    if (zbjgId != null) {
-                                        tvZbjg.setVisibility(View.VISIBLE);
-                                    } else {
-                                        tvZbjg.setVisibility(View.INVISIBLE);
-                                    }
-
                                     indexSggjyDetailStatusView.showContent();
                                 } else {
                                     indexSggjyDetailStatusView.showError();
@@ -522,13 +514,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                                         squseven = squseven.replace("<*", "<font color='black'><u>").replace("</*", "</u></font>");
                                         squseven = squseven.replace("\n", "<br/>");
                                         tv7.setText(Html.fromHtml(squseven));
-                                    }
-
-                                    zbjgId = data.getString("sggjyzbjgId");
-                                    if (zbjgId != null) {
-                                        tvZbjg.setVisibility(View.VISIBLE);
-                                    } else {
-                                        tvZbjg.setVisibility(View.INVISIBLE);
                                     }
 
                                 } else {
@@ -697,15 +682,30 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
                 intent.putExtra("title", shareTitle);
                 startActivity(intent);
                 break;
-            case R.id.tv_zbjg:
-
-                int mEnId = Integer.parseInt(zbjgId);
-                intent = new Intent(getContext(), ResultSggjyzbjgDetailActivity.class);
-                intent.putExtra("entityId", mEnId);
-                intent.putExtra("entity", "sggjyzbjg");
-                intent.putExtra("ajaxlogtype", "0");
-                intent.putExtra("mId", "");
+            case R.id.tv_gzgg:
+                intent = new Intent(getActivity(), BrowserActivity.class);
+                intent.putExtra("url", gzUrl);
+                intent.putExtra("title", "更正公告");
                 startActivity(intent);
+                break;
+            case R.id.tv_jggg:
+                Log.d("HIUASDSABDBSADA", "哈哈哈为：" + jgEntity + "___" + jgEntityId);
+                if ("xjggg".equals(jgEntity) || "sjggg".equals(jgEntity) || "sggjy".equals(jgEntity) || "sggjycgjgtable".equals(jgEntity)) {
+                    intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
+                    intent.putExtra("entityId", Integer.valueOf(jgEntityId));
+                    intent.putExtra("entity", jgEntity);
+                    intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
+                    startActivity(intent);
+
+                } else if ("sggjyzbjg".equals(jgEntity) || "sggjycgjgrow".equals(jgEntity) || "sggjyjgcgtable".equals(jgEntity)) {
+                    intent = new Intent(getActivity(), ResultSggjyzbjgDetailActivity.class);
+                    intent.putExtra("entityId", Integer.valueOf(jgEntityId));
+                    intent.putExtra("entity", jgEntity);
+                    intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
+                    startActivity(intent);
+                }
                 break;
             default:
                 break;

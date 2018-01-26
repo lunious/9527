@@ -292,17 +292,6 @@
                             android:textColor="@color/main_status_blue"
                             android:textSize="@dimen/s16" />
 
-                        <android.support.v7.widget.AppCompatTextView
-                            android:id="@+id/tv_zbjg"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginRight="@dimen/d10"
-                            android:text="招标结果"
-                            android:textColor="@color/main_status_blue"
-                            android:textSize="@dimen/s16"
-                            android:visibility="invisible" />
-
 
                     </RelativeLayout>
 
