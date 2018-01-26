@@ -37,7 +37,6 @@ public class IndexSggjycgtableDetailActivity extends BaseActivity {
             mId = intent.getStringExtra("mId");
         }
 
-        Log.d("JABNDJBSJDJASDA", mId);
         if (!TextUtils.isEmpty(mId)) {
 
             OkGo.<String>post(BiaoXunTongApi.URL_GETUITASK)
