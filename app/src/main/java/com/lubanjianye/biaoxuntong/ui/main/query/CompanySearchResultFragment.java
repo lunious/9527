@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,7 +22,6 @@ import com.lubanjianye.biaoxuntong.bean.CompanySearchResultListBean;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.loadmore.CustomLoadMoreView;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
 import com.lubanjianye.biaoxuntong.ui.main.query.detail.CompanyDetailActivity;
@@ -349,7 +347,7 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
             for (int i = 0; i < data.size(); i++) {
                 CompanySearchResultListBean bean = new CompanySearchResultListBean();
                 JSONObject list = data.getJSONObject(i);
-                bean.setQy(i + 1 + "、" + list.getString("qy"));
+                bean.setQy(list.getString("qy"));
                 bean.setLxr(list.getString("lxr"));
                 bean.setEntrySign(list.getString("entrySign"));
                 bean.setSfId(list.getString("sfId"));
@@ -362,7 +360,7 @@ public class CompanySearchResultFragment extends BaseFragment implements View.On
                 for (int i = 0; i < data.size(); i++) {
                     CompanySearchResultListBean bean = new CompanySearchResultListBean();
                     JSONObject list = data.getJSONObject(i);
-                    bean.setQy(i + 1 + "、" + list.getString("qy"));
+                    bean.setQy(list.getString("qy"));
                     bean.setLxr(list.getString("lxr"));
                     bean.setEntrySign(list.getString("entrySign"));
                     bean.setSfId(list.getString("sfId"));

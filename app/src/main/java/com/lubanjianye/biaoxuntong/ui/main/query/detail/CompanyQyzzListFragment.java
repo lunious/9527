@@ -220,14 +220,12 @@ public class CompanyQyzzListFragment extends BaseFragment implements View.OnClic
 
         final int size = data == null ? 0 : data.size();
         mDataList.clear();
-        int d = 1;
         for (int i = 0; i < data.size(); i++) {
             CompanyQyzzListBean bean = new CompanyQyzzListBean();
             JSONObject list = data.getJSONObject(i);
-            bean.setLx(d+"、"+list.getString("lx"));
+            bean.setLx(list.getString("lx"));
             bean.setZzmc(list.getString("zzmc"));
             mDataList.add(bean);
-            d++;
         }
         mAdapter.setEnableLoadMore(true);
         mAdapter.notifyDataSetChanged();

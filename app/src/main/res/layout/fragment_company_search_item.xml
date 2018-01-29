@@ -8,10 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/d8"
+        android:layout_marginBottom="@dimen/d12"
         android:layout_marginLeft="@dimen/d6"
-        android:layout_marginRight="@dimen/d4"
-        android:layout_marginTop="@dimen/d4"
+        android:layout_marginTop="@dimen/d10"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -94,10 +93,9 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/p1"
+        android:layout_height="@dimen/d8"
         android:layout_marginLeft="@dimen/d6"
-        android:layout_marginRight="@dimen/d4"
+        android:layout_marginRight="@dimen/d6"
         android:layout_marginTop="@dimen/d4"
-        android:layout_below="@+id/tv_item_time"
-        android:background="@color/dark_view" />
+        android:background="@color/view" />
 </LinearLayout>

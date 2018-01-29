@@ -214,11 +214,10 @@ public class MyCompanyQyyjAllListFragment extends BaseFragment implements View.O
     private void setData(JSONArray data) {
         final int size = data == null ? 0 : data.size();
         mDataList.clear();
-        int d = 1;
         for (int i = 0; i < data.size(); i++) {
             CompanySgyjListBean bean = new CompanySgyjListBean();
             JSONObject list = data.getJSONObject(i);
-            bean.setXmmc(d + "、" + list.getString("xmmc"));
+            bean.setXmmc(list.getString("xmmc"));
             bean.setZbsj(list.getString("zbsj"));
             bean.setXmfzr(list.getString("xmfzr"));
 
@@ -229,7 +228,6 @@ public class MyCompanyQyyjAllListFragment extends BaseFragment implements View.O
                 bean.setZbje(list.getString("zbje") + "万元");
             }
             mDataList.add(bean);
-            d++;
         }
         mAdapter.setEnableLoadMore(true);
         mAdapter.notifyDataSetChanged();

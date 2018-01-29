@@ -324,21 +324,19 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
     private void setData(boolean isRefresh, JSONArray data, boolean nextPage) {
         final int size = data == null ? 0 : data.size();
 
-        int d = 1;
         if (isRefresh) {
             loadingStatus.showContent();
             mDataList.clear();
             for (int i = 0; i < data.size(); i++) {
                 MyCompanyQyzzAllListBean bean = new MyCompanyQyzzAllListBean();
                 JSONObject list = data.getJSONObject(i);
-                bean.setLx_name(d + "、" + list.getString("lx_name"));
+                bean.setLx_name(list.getString("lx_name"));
                 bean.setDl_name(list.getString("dl_name"));
                 bean.setXl_name(list.getString("xl_name"));
                 bean.setZy_name(list.getString("zy_name"));
                 bean.setDj(list.getString("dj"));
                 bean.setDq(list.getString("dq"));
                 mDataList.add(bean);
-                d++;
             }
             companyQyzzRefresh.finishRefresh(0, true);
             mAdapter.setEnableLoadMore(true);
@@ -350,14 +348,13 @@ public class MyCompanyQyzzAllListFragment extends BaseFragment implements View.O
                 for (int i = 0; i < data.size(); i++) {
                     MyCompanyQyzzAllListBean bean = new MyCompanyQyzzAllListBean();
                     JSONObject list = data.getJSONObject(i);
-                    bean.setLx_name(d + 20 * (page - 2) + "、" + list.getString("lx_name"));
+                    bean.setLx_name(list.getString("lx_name"));
                     bean.setDl_name(list.getString("dl_name"));
                     bean.setXl_name(list.getString("xl_name"));
                     bean.setZy_name(list.getString("zy_name"));
                     bean.setDj(list.getString("dj"));
                     bean.setDq(list.getString("dq"));
                     mDataList.add(bean);
-                    d++;
                 }
             }
 

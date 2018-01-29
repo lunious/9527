@@ -2,7 +2,6 @@ package com.lubanjianye.biaoxuntong.ui.main.user.company;
 
 import android.content.DialogInterface;
 import android.support.v7.widget.AppCompatTextView;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -30,7 +29,6 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
@@ -325,7 +323,6 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
     private void setData(boolean isRefresh, JSONArray data, boolean nextPage) {
 
         final int size = data == null ? 0 : data.size();
-        int d = 1;
         if (isRefresh) {
             mDataList.clear();
             loadingStatus.showContent();
@@ -336,9 +333,8 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                 bean.setZgzy(list.getString("zgzy"));
                 bean.setZg_name(list.getString("zg_name"));
                 bean.setZg_mcdj(list.getString("zg_mcdj"));
-                bean.setRyname(d + "、" + list.getString("ryname"));
+                bean.setRyname(list.getString("ryname"));
                 mDataList.add(bean);
-                d++;
             }
             companyRyzzRefresh.finishRefresh(0, true);
             mAdapter.setEnableLoadMore(true);
@@ -353,9 +349,8 @@ public class MyCompanyRyzzAllListFragment extends BaseFragment implements View.O
                     bean.setZgzy(list.getString("zgzy"));
                     bean.setZg_name(list.getString("zg_name"));
                     bean.setZg_mcdj(list.getString("zg_mcdj"));
-                    bean.setRyname(d + 20 * (page - 2) + "、" + list.getString("ryname"));
+                    bean.setRyname(list.getString("ryname"));
                     mDataList.add(bean);
-                    d++;
                 }
             }
             companyRyzzRefresh.finishLoadmore(0, true);

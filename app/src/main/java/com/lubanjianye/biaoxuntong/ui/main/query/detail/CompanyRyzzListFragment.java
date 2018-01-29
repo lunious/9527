@@ -211,15 +211,13 @@ public class CompanyRyzzListFragment extends BaseFragment implements View.OnClic
     private void setData(JSONArray data) {
         final int size = data == null ? 0 : data.size();
         mDataList.clear();
-        int d = 1;
         for (int i = 0; i < data.size(); i++) {
             CompanyRyzzListBean bean = new CompanyRyzzListBean();
             JSONObject list = data.getJSONObject(i);
-            bean.setRy(d + "、" + list.getString("ry"));
+            bean.setRy(list.getString("ry"));
             bean.setZgMcdj(list.getString("zgMcdj"));
             bean.setZgZy(list.getString("zgZy"));
             mDataList.add(bean);
-            d++;
         }
         mAdapter.setEnableLoadMore(true);
         mAdapter.notifyDataSetChanged();
