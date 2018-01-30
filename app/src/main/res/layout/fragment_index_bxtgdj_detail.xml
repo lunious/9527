@@ -78,7 +78,7 @@
 
                                 <View
                                     android:layout_width="@dimen/p2"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:layout_marginBottom="@dimen/d4"
                                     android:layout_marginLeft="@dimen/d6"
                                     android:layout_marginRight="@dimen/d6"

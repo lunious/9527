@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <!--设置shape的圆角-->
-    <corners android:radius="14dp"/>
+    <corners android:radius="6dp"/>
 
     <!--
     android:dashWidth="0dp"边框设置为实线边框

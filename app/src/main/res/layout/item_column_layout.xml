@@ -13,12 +13,13 @@
         android:gravity="center"
         android:textSize="@dimen/s14"
         android:padding="@dimen/d2"
-        android:layout_marginTop="@dimen/d4" />
+        android:layout_marginTop="@dimen/d5"
+        android:layout_marginLeft="@dimen/d5"/>
 
     <ImageView
         android:id="@+id/test_dele"
-        android:layout_width="@dimen/d12"
-        android:layout_height="@dimen/d12"
+        android:layout_width="@dimen/d13"
+        android:layout_height="@dimen/d13"
         android:src="@mipmap/ic_clear_image" />
 
 </FrameLayout>
