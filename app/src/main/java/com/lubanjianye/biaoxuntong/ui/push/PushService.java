@@ -140,7 +140,7 @@ public class PushService extends MixPushIntentService {
         int largeIcon = R.mipmap.log;
         int smallIcon = R.mipmap.log;
         String ticker = mTitle;
-        String title = "鲁班标讯通";
+        String title = mTitle;
         String content = mContent;
         //实例化工具类，并且调用接口
         NotifyUtil notify = new NotifyUtil(getApplicationContext(), requestCode);
