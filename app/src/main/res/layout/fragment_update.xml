@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="@dimen/d10"
+        android:layout_marginBottom="@dimen/d40"
         android:layout_marginLeft="@dimen/d32"
         android:layout_marginRight="@dimen/d32"
         android:clickable="true"
@@ -21,8 +21,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="@dimen/d16"
-            android:paddingRight="@dimen/d16">
+            android:paddingLeft="@dimen/d18"
+            android:paddingRight="@dimen/d18">
 
             <LinearLayout
                 android:id="@+id/ll_update"
@@ -35,7 +35,7 @@
                 <ImageView
                     android:id="@+id/imageView"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/d84"
+                    android:layout_height="@dimen/d72"
                     android:layout_gravity="center_horizontal"
                     android:contentDescription="检查更新"
                     android:scaleType="centerCrop"

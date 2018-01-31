@@ -145,8 +145,8 @@ public class DownloadService extends Service {
                 fos.write(buffer, 0, readSize);
                 totalSize += readSize;
                 if ((downloadCount == 0)
-                        || (int) (totalSize * 100 / updateTotalSize) - 4 > downloadCount) {
-                    downloadCount += 4;
+                        || (int) (totalSize * 100 / updateTotalSize) - 1 > downloadCount) {
+                    downloadCount += 1;
                     Message msg = mHandler.obtainMessage();
                     msg.what = 1;
                     msg.arg1 = downloadCount;
