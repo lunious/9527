@@ -65,7 +65,8 @@ public class CheckUpdateManager {
                             final JSONObject data = object.getJSONObject("data");
                             String name = data.getString("name");
                             String content = data.getString("content");
-                            UpdateActivity.show((Activity) mContext, name, content);
+                            String url = data.getString("downloadUrl");
+                            UpdateActivity.show((Activity) mContext, name, content,url);
 
                         } else if ("201".equals(status)) {
                             if (mIsShowDialog) {

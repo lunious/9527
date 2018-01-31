@@ -89,8 +89,8 @@
             </LinearLayout>
 
             <ImageView
-                android:layout_width="@dimen/d72"
-                android:layout_height="@dimen/d72"
+                android:layout_width="@dimen/d68"
+                android:layout_height="@dimen/d68"
                 android:layout_marginLeft="@dimen/d22"
                 android:layout_marginTop="@dimen/d2"
                 android:src="@mipmap/roket_update" />

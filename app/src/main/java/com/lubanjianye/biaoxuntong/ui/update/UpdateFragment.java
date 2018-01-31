@@ -33,31 +33,33 @@ import pub.devrel.easypermissions.EasyPermissions;
 public class UpdateFragment extends BaseFragment implements View.OnClickListener,
         EasyPermissions.PermissionCallbacks {
 
-    private static final int RC_EXTERNAL_STORAGE = 0x04;//存储权限
+    //存储权限
+    private static final int RC_EXTERNAL_STORAGE = 0x04;
 
     private AppCompatTextView tvUpdateInfo = null;
     private AppCompatTextView tvUpdateVersionName = null;
     private AppCompatButton button = null;
     private ImageButton close = null;
 
-
-//    static String mUrl = "http://101.37.30.136/bxtajax/VersionAjax/getNewVersion";
-    static String mUrl = "http://openbox.mobilem.360.cn/index/d/sid/3958155";
     static String versionName = "";
     static String mContent = "";
+    static String mUrl = "";
 
 
     private static final String VERSION = "version";
     private static final String CONTENT = "content";
+    private static final String DOWNLOADURL = "downloadUrl";
 
-    public static UpdateFragment create(@NonNull String version, String content) {
+    public static UpdateFragment create(@NonNull String version, String content,String url) {
         final Bundle args = new Bundle();
         args.putString(VERSION, version);
         args.putString(CONTENT, content);
+        args.putString(DOWNLOADURL,url);
         final UpdateFragment fragment = new UpdateFragment();
         fragment.setArguments(args);
         versionName = version;
         mContent = content;
+        mUrl = url;
         return fragment;
     }
 

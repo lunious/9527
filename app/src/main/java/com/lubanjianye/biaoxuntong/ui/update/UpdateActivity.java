@@ -20,20 +20,23 @@ public class UpdateActivity extends BaseActivity {
 
     static String versionName = "";
     static String mContent = "";
+    static String mUrl = "";
 
 
-    public static void show(Activity activity, String name, String content) {
+    public static void show(Activity activity, String name, String content,String url) {
         Intent intent = new Intent(activity, UpdateActivity.class);
         intent.putExtra("version", name);
         intent.putExtra("content", content);
+        intent.putExtra("downloadUrl",url);
         versionName = name;
         mContent = content;
+        mUrl = url;
         activity.startActivityForResult(intent, 0x01);
     }
 
     @Override
     public BaseFragment setRootFragment() {
 
-        return UpdateFragment.create(versionName, mContent);
+        return UpdateFragment.create(versionName, mContent,mUrl);
     }
 }
