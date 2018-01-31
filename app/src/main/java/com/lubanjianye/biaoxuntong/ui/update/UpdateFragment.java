@@ -38,7 +38,8 @@ public class UpdateFragment extends BaseFragment implements View.OnClickListener
 
     private AppCompatTextView tvUpdateInfo = null;
     private AppCompatTextView tvUpdateVersionName = null;
-    private AppCompatButton button = null;
+    private AppCompatTextView button = null;
+    private AppCompatTextView button_ig = null;
     private ImageButton close = null;
 
     static String versionName = "";
@@ -74,9 +75,11 @@ public class UpdateFragment extends BaseFragment implements View.OnClickListener
         tvUpdateInfo = getView().findViewById(R.id.tv_update_info);
         tvUpdateVersionName = getView().findViewById(R.id.tv_update_version_name);
         button = getView().findViewById(R.id.btn_update);
+        button_ig = getView().findViewById(R.id.btn_ignore);
         close = getView().findViewById(R.id.btn_close);
         button.setOnClickListener(this);
         close.setOnClickListener(this);
+        button_ig.setOnClickListener(this);
 
 
     }
@@ -102,6 +105,9 @@ public class UpdateFragment extends BaseFragment implements View.OnClickListener
                 getActivity().onBackPressed();
                 break;
             case R.id.btn_close:
+                getActivity().onBackPressed();
+                break;
+            case R.id.btn_ignore:
                 getActivity().onBackPressed();
                 break;
             default:

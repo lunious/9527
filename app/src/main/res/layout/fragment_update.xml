@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/d40"
-        android:layout_marginLeft="@dimen/d32"
-        android:layout_marginRight="@dimen/d32"
+        android:layout_marginLeft="@dimen/d28"
+        android:layout_marginRight="@dimen/d28"
         android:clickable="true"
         tools:ignore="UselessParent">
 
@@ -76,34 +76,46 @@
                     android:textColor="#666666"
                     android:textSize="@dimen/s15" />
 
-                <android.support.v7.widget.AppCompatButton
+                <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/btn_update"
-                    style="?android:attr/borderlessButtonStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="@dimen/d36"
-                    android:layout_margin="@dimen/d14"
-                    android:background="@drawable/selector_event_sign"
+                    android:layout_height="@dimen/d34"
+                    android:layout_marginLeft="@dimen/d14"
+                    android:layout_marginTop="@dimen/d10"
+                    android:layout_marginRight="@dimen/d14"
+                    android:background="@drawable/button_selected"
                     android:text="立即升级"
-                    android:textSize="@dimen/s15"
-                    android:textColor="@color/main_status_white" />
+                    android:gravity="center"
+                    android:textColor="@color/main_status_white"
+                    android:textSize="@dimen/s15" />
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/btn_ignore"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/d34"
+                    android:text="烦，下次再说"
+                    android:gravity="center"
+                    android:textColor="@color/status_text_color"
+                    android:textSize="@dimen/s14" />
             </LinearLayout>
 
             <ImageView
-                android:layout_width="@dimen/d68"
-                android:layout_height="@dimen/d68"
+                android:layout_width="@dimen/d78"
+                android:layout_height="@dimen/d78"
                 android:layout_marginLeft="@dimen/d22"
                 android:layout_marginTop="@dimen/d2"
                 android:src="@mipmap/roket_update" />
         </FrameLayout>
 
-        <ImageButton
-            android:id="@+id/btn_close"
-            android:layout_width="@dimen/d26"
-            android:layout_height="@dimen/d26"
-            android:layout_gravity="right"
-            android:layout_marginRight="@dimen/d2"
-            android:layout_marginTop="@dimen/d22"
-            android:background="#00000000"
-            android:src="@mipmap/ic_close" />
     </FrameLayout>
+
+    <ImageButton
+        android:id="@+id/btn_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="@dimen/d96"
+        android:layout_marginRight="@dimen/d34"
+        android:background="#00000000"
+        android:src="@mipmap/ic_close" />
 </FrameLayout>
