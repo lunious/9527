@@ -51,11 +51,11 @@ public class UpdateFragment extends BaseFragment implements View.OnClickListener
     private static final String CONTENT = "content";
     private static final String DOWNLOADURL = "downloadUrl";
 
-    public static UpdateFragment create(@NonNull String version, String content,String url) {
+    public static UpdateFragment create(@NonNull String version, String content, String url) {
         final Bundle args = new Bundle();
         args.putString(VERSION, version);
         args.putString(CONTENT, content);
-        args.putString(DOWNLOADURL,url);
+        args.putString(DOWNLOADURL, url);
         final UpdateFragment fragment = new UpdateFragment();
         fragment.setArguments(args);
         versionName = version;
