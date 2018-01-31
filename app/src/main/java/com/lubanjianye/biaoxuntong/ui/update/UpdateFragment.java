@@ -41,7 +41,8 @@ public class UpdateFragment extends BaseFragment implements View.OnClickListener
     private ImageButton close = null;
 
 
-    static String mUrl = "http://101.37.30.136/bxtajax/VersionAjax/getNewVersion";
+//    static String mUrl = "http://101.37.30.136/bxtajax/VersionAjax/getNewVersion";
+    static String mUrl = "http://openbox.mobilem.360.cn/index/d/sid/3958155";
     static String versionName = "";
     static String mContent = "";
 
