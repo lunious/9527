@@ -292,6 +292,17 @@
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.Main"
             android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".ui.main.user.opinion.OpinionActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Main"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
+            android:name=".ui.media.SelectImageActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme.Main"
+            android:windowSoftInputMode="adjustPan" />
 
 
         <service android:name=".ui.push.PushService" />

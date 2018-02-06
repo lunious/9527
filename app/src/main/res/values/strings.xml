@@ -29,4 +29,5 @@
     <string name="state_load_error">加载失败</string>
     <string name="state_refreshing">正在刷新</string>
     <string name="state_loading_more">上拉加载更多</string>
+    <string name="image_select_opt_done">完成</string>
 </resources>

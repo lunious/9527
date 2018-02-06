@@ -21,6 +21,8 @@ import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.ui.main.user.opinion.OpinionActivity;
 import com.lubanjianye.biaoxuntong.ui.update.UpdateAppBean;
 import com.lubanjianye.biaoxuntong.ui.update.UpdateAppManager;
 import com.lubanjianye.biaoxuntong.ui.update.UpdateCallback;
@@ -63,6 +65,8 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
     private LinearLayout llCacheSize = null;
     private AppCompatTextView tvUpdate = null;
 
+    private LinearLayout llOpinion = null;
+
     private Version mVersion;
 
     //存储权限
@@ -82,7 +86,8 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
         llUpdate = getView().findViewById(R.id.ll_update);
         llCacheSize = getView().findViewById(R.id.ll_cache_size);
         tvUpdate = getView().findViewById(R.id.tv_update);
-
+        llOpinion = getView().findViewById(R.id.ll_opinion);
+        llOpinion.setOnClickListener(this);
         llBack.setOnClickListener(this);
         llCancel.setOnClickListener(this);
         llUpdate.setOnClickListener(this);
@@ -128,6 +133,16 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                         ToastUtil.shortBottonToast(getContext(), "缓存清理成功");
                     }
                 }).show();
+                break;
+            case R.id.ll_opinion:
+                //意见反馈界面
+                if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
+                    startActivity(new Intent(getContext(), OpinionActivity.class));
+                } else {
+                    //未登录去登陆
+                    ToastUtil.shortBottonToast(getContext(), "请先登录");
+                    startActivity(new Intent(getContext(), SignInActivity.class));
+                }
                 break;
             case R.id.ll_cancel:
 

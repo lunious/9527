@@ -32,5 +32,10 @@
 
     <color name="main_status_transparent">#00000000</color>
 
+    <color name="black_alpha_48">#30000000</color>
+    <color name="trans">#00000000</color>
+    <color name="white_alpha_16">#10ffffff</color>
+    <color name="white_alpha_240">#f0ffffff</color>
+
 
 </resources>

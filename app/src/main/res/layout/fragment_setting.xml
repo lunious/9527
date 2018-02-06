@@ -54,6 +54,32 @@
 
 
         <LinearLayout
+            android:id="@+id/ll_opinion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/main_status_white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/d12">
+
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="@dimen/d0"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="意见反馈"
+                android:textColor="@color/main_text_color"
+                android:textSize="@dimen/s14" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/d10"
+            android:background="#eeeeee" />
+
+
+        <LinearLayout
             android:id="@+id/ll_update"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
