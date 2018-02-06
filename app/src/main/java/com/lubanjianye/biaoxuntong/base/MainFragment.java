@@ -8,19 +8,34 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.lubanjianye.biaoxuntong.R;
+import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.bean.Version;
 import com.lubanjianye.biaoxuntong.ui.main.index.IndexTabFragment;
 import com.lubanjianye.biaoxuntong.ui.main.query.QueryFragment;
 import com.lubanjianye.biaoxuntong.ui.main.user.UserTabFragment;
 import com.lubanjianye.biaoxuntong.ui.main.result.ResultTabFragment;
 import com.lubanjianye.biaoxuntong.ui.main.collection.CollectionTabFragment;
+import com.lubanjianye.biaoxuntong.ui.update.UpdateAppBean;
+import com.lubanjianye.biaoxuntong.ui.update.UpdateAppManager;
+import com.lubanjianye.biaoxuntong.ui.update.UpdateCallback;
+import com.lubanjianye.biaoxuntong.ui.update.utils.CProgressDialogUtils;
+import com.lubanjianye.biaoxuntong.ui.update.utils.OkGoUpdateHttpUtil;
 import com.lubanjianye.biaoxuntong.ui.view.botton.BottomBar;
 import com.lubanjianye.biaoxuntong.ui.view.botton.BottomBarTab;
+import com.lubanjianye.biaoxuntong.util.appinfo.AppApplicationMgr;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -33,7 +48,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * 描述:     TODO
  */
 
-public class MainFragment extends MainTabFragment implements EasyPermissions.PermissionCallbacks{
+public class MainFragment extends MainTabFragment implements EasyPermissions.PermissionCallbacks {
 
     public static final int FIRST = 0;
     public static final int SECOND = 1;
@@ -112,7 +127,7 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
         });
 
         if (NetUtil.isNetworkConnected(getActivity())) {
-
+            updateDiy();
         }
     }
 
@@ -159,5 +174,114 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
         }
     }
 
+    /**
+     * 自定义接口协议
+     */
+    public void updateDiy() {
+
+        int versionCode = AppApplicationMgr.getVersionCode(BiaoXunTong.getApplicationContext());
+
+        Map<String, String> params = new HashMap<String, String>();
+
+        params.put("versionCode", String.valueOf(versionCode));
+
+
+        new UpdateAppManager
+                .Builder()
+                //必须设置，当前Activity
+                .setActivity(getActivity())
+                //必须设置，实现httpManager接口的对象
+                .setHttpManager(new OkGoUpdateHttpUtil())
+                //必须设置，更新地址
+                .setUpdateUrl(BiaoXunTongApi.URL_UPDATE)
+
+                //以下设置，都是可选
+                //设置请求方式，默认get
+                .setPost(true)
+                //不显示通知栏进度条
+//                .dismissNotificationProgress()
+                //是否忽略版本
+//                .showIgnoreVersion()
+                //添加自定义参数，默认version=1.0.0（app的versionName）；apkKey=唯一表示（在AndroidManifest.xml配置）
+                .setParams(params)
+                //设置点击升级后，消失对话框，默认点击升级后，对话框显示下载进度
+                .hideDialogOnDownloading(false)
+                //设置头部，不设置显示默认的图片，设置图片后自动识别主色调，然后为按钮，进度条设置颜色
+//                .setTopPic(R.mipmap.top_8)
+                //为按钮，进度条设置颜色。
+                .setThemeColor(0xffffac5d)
+                //设置apk下砸路径，默认是在下载到sd卡下/Download/1.0.0/test.apk
+//                .setTargetPath(path)
+                //设置appKey，默认从AndroidManifest.xml获取，如果，使用自定义参数，则此项无效
+//                .setAppKey("ab55ce55Ac4bcP408cPb8c1Aaeac179c5f6f")
+
+                .build()
+                //检测是否有新版本
+                .checkNewApp(new UpdateCallback() {
+                    /**
+                     * 解析json,自定义协议
+                     *
+                     * @param json 服务器返回的json
+                     * @return UpdateAppBean
+                     */
+                    @Override
+                    protected UpdateAppBean parseJson(String json) {
+                        final JSONObject object = JSON.parseObject(json);
+                        String status = object.getString("status");
+                        UpdateAppBean updateAppBean = new UpdateAppBean();
+
+                        if ("200".equals(status)) {
+                            final JSONObject data = object.getJSONObject("data");
+                            String name = data.getString("name");
+                            String content = data.getString("content");
+                            String url = data.getString("downloadUrl");
+
+
+                            String doUrl = "http://openbox.mobilem.360.cn/index/d/sid/3958155";
+
+                            updateAppBean
+                                    //（必须）是否更新Yes,No
+                                    .setUpdate("Yes")
+                                    //（必须）新版本号，
+                                    .setNewVersion(name)
+                                    //（必须）下载地址
+                                    .setApkFileUrl(doUrl)
+                                    //（必须）更新内容
+                                    .setUpdateLog(content)
+                                    //是否强制更新，可以不设置
+                                    .setConstraint(false);
+
+                        }
+                        return updateAppBean;
+                    }
+
+                    @Override
+                    protected void hasNewApp(UpdateAppBean updateApp, UpdateAppManager updateAppManager) {
+                        updateAppManager.showDialogFragment();
+                    }
+
+                    /**
+                     * 网络请求之前
+                     */
+                    @Override
+                    public void onBefore() {
+                    }
+
+                    /**
+                     * 网路请求之后
+                     */
+                    @Override
+                    public void onAfter() {
+                    }
+
+                    /**
+                     * 没有新版本
+                     */
+                    @Override
+                    public void noNewApp() {
+                    }
+                });
+
+    }
 
 }
