@@ -3,13 +3,12 @@
     android:id="@+id/loading_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/d18"
+        android:paddingTop="@dimen/d10"
         android:orientation="vertical">
 
         <View
