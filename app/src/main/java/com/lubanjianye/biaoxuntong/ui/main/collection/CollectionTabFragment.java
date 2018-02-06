@@ -2,12 +2,10 @@ package com.lubanjianye.biaoxuntong.ui.main.collection;
 
 
 import android.content.Intent;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -43,7 +41,6 @@ import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import org.greenrobot.eventbus.EventBus;
@@ -67,9 +64,9 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
     private AppCompatTextView mainBarName = null;
     private AppCompatButton btnToLogin = null;
     private LinearLayout llShow = null;
+    private LinearLayout llEmpty = null;
     private RecyclerView collectRecycler = null;
     private SmartRefreshLayout collectRefresh = null;
-    private MultipleStatusView loadingStatus = null;
 
 
     private CollectionListAdapter mAdapter;
@@ -132,9 +129,9 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         mainBarName = getView().findViewById(R.id.main_bar_name);
         btnToLogin = getView().findViewById(R.id.btn_to_login);
         llShow = getView().findViewById(R.id.ll_show);
+        llEmpty = getView().findViewById(R.id.ll_empty);
         collectRecycler = getView().findViewById(R.id.collect_recycler);
         collectRefresh = getView().findViewById(R.id.collect_refresh);
-        loadingStatus = getView().findViewById(R.id.collection_list_status_view);
 
         btnToLogin.setOnClickListener(this);
 
@@ -158,9 +155,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
             mAdapter.setEnableLoadMore(false);
-            if (!isInitCache) {
-                loadingStatus.showLoading();
-            }
             BiaoXunTong.getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -168,7 +162,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 }
             }, 500);
         } else {
-            loadingStatus.showLoading();
             BiaoXunTong.getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -311,6 +304,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             llShow.setVisibility(View.GONE);
+            llEmpty.setVisibility(View.GONE);
             List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
             for (int i = 0; i < users.size(); i++) {
                 id = users.get(0).getId();
@@ -340,7 +334,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 } else {
                                     //TODO 内容为空的处理
-                                    loadingStatus.showEmpty();
+                                    llEmpty.setVisibility(View.VISIBLE);
                                     collectRefresh.setEnableRefresh(false);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 }
@@ -361,7 +355,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                         mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                     } else {
                                         //TODO 内容为空的处理
-                                        loadingStatus.showEmpty();
+                                        llEmpty.setVisibility(View.VISIBLE);
                                         collectRefresh.setEnableRefresh(false);
                                         mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                     }
@@ -391,7 +385,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 } else {
                                     //TODO 内容为空的处理
-                                    loadingStatus.showEmpty();
+                                    llEmpty.setVisibility(View.VISIBLE);
                                     collectRefresh.setEnableRefresh(false);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 }
@@ -409,7 +403,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
     private void setData(boolean isRefresh, JSONArray data, boolean nextPage) {
         final int size = data == null ? 0 : data.size();
         if (isRefresh) {
-            loadingStatus.showContent();
             mDataList.clear();
             for (int i = 0; i < data.size(); i++) {
                 CollectionListBean bean = new CollectionListBean();
@@ -427,7 +420,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
             mAdapter.setEnableLoadMore(true);
         } else {
             page++;
-            loadingStatus.showContent();
             if (size > 0) {
                 for (int i = 0; i < data.size(); i++) {
                     CollectionListBean bean = new CollectionListBean();
