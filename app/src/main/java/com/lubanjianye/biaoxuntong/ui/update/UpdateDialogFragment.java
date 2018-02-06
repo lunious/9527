@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -47,7 +48,9 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
     public static final String TIPS = "请授权访问存储空间权限，否则App无法更新";
     public static boolean isShow = false;
     private TextView mContentTextView;
-    private Button mUpdateOkButton;
+    private AppCompatTextView mUpdateOkButton;
+    private AppCompatTextView mUpdateIgnore;
+    private AppCompatTextView mUpdateWait;
     private UpdateAppBean mUpdateApp;
     private NumberProgressBar mNumberProgressBar;
     private ImageView mIvClose;
@@ -136,7 +139,11 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
         //标题
         mTitleTextView = (TextView) view.findViewById(R.id.tv_title);
         //更新按钮
-        mUpdateOkButton = (Button) view.findViewById(R.id.btn_ok);
+        mUpdateOkButton = (AppCompatTextView) view.findViewById(R.id.btn_ok);
+        //下次再说
+        mUpdateIgnore = (AppCompatTextView) view.findViewById(R.id.btn_ignore);
+        //稍候
+        mUpdateWait= (AppCompatTextView) view.findViewById(R.id.atv_wait);
         //进度条
         mNumberProgressBar = (NumberProgressBar) view.findViewById(R.id.npb);
         //关闭按钮
@@ -158,8 +165,6 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
 
     private void initData() {
         mUpdateApp = (UpdateAppBean) getArguments().getSerializable(UpdateAppManager.INTENT_KEY);
-        //设置主题色
-        initTheme();
 
 
         if (mUpdateApp != null) {
@@ -181,7 +186,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
             //更新内容
             mContentTextView.setText(msg);
             //标题
-            mTitleTextView.setText(String.format("是否升级到%s版本？", newVersion));
+            mTitleTextView.setText(String.format("版本号：%s", newVersion));
             //强制更新
             if (mUpdateApp.isConstraint()) {
                 mLlClose.setVisibility(View.GONE);
@@ -196,44 +201,6 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
         }
     }
 
-    /**
-     * 初始化主题色
-     */
-    private void initTheme() {
-
-
-        final int color = getArguments().getInt(UpdateAppManager.THEME_KEY, -1);
-
-        final int topResId = getArguments().getInt(UpdateAppManager.TOP_IMAGE_KEY, -1);
-
-
-        if (-1 == topResId) {
-            if (-1 == color) {
-                //默认红色
-                setDialogTheme(mDefaultColor, mDefaultPicResId);
-            } else {
-                setDialogTheme(color, mDefaultPicResId);
-            }
-
-        } else {
-            if (-1 == color) {
-                //自动提色
-//                Palette.from(AppUpdateUtils.drawableToBitmap(this.getResources().getDrawable(topResId))).generate(new Palette.PaletteAsyncListener() {
-//                    @Override
-//                    public void onGenerated(Palette palette) {
-//                        int mDominantColor = palette.getDominantColor(mDefaultColor);
-//                        setDialogTheme(mDominantColor, topResId);
-//                    }
-//                });
-                setDialogTheme(mDefaultColor, topResId);
-            } else {
-                //更加指定的上色
-                setDialogTheme(color, topResId);
-            }
-        }
-
-
-    }
 
     /**
      * 设置
@@ -243,15 +210,14 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
      */
     private void setDialogTheme(int color, int topResId) {
         mTopIv.setImageResource(topResId);
-        mUpdateOkButton.setBackgroundDrawable(DrawableUtil.getDrawable(AppUpdateUtils.dip2px(4, getActivity()), color));
+
         mNumberProgressBar.setProgressTextColor(color);
         mNumberProgressBar.setReachedBarColor(color);
-        //随背景颜色变化
-        mUpdateOkButton.setTextColor(ColorUtil.isTextColorDark(color) ? Color.BLACK : Color.WHITE);
     }
 
     private void initEvents() {
         mUpdateOkButton.setOnClickListener(this);
+        mUpdateIgnore.setOnClickListener(this);
         mIvClose.setOnClickListener(this);
         mIgnore.setOnClickListener(this);
     }
@@ -274,7 +240,9 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
 
             } else {
                 installApp();
-                mUpdateOkButton.setVisibility(View.GONE);
+                mUpdateOkButton.setVisibility(View.INVISIBLE);
+                mUpdateIgnore.setVisibility(View.INVISIBLE);
+                mUpdateWait.setVisibility(View.VISIBLE);
             }
 
         } else if (i == R.id.iv_close) {
@@ -284,6 +252,8 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
             dismiss();
         } else if (i == R.id.tv_ignore) {
             AppUpdateUtils.saveIgnoreVersion(getActivity(), mUpdateApp.getNewVersion());
+            dismiss();
+        } else if (i == R.id.btn_ignore) {
             dismiss();
         }
     }
@@ -309,7 +279,9 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //升级
                 installApp();
-                mUpdateOkButton.setVisibility(View.GONE);
+                mUpdateOkButton.setVisibility(View.INVISIBLE);
+                mUpdateIgnore.setVisibility(View.INVISIBLE);
+                mUpdateWait.setVisibility(View.VISIBLE);
             } else {
                 //提示，并且关闭
                 Toast.makeText(getActivity(), TIPS, Toast.LENGTH_LONG).show();
@@ -340,6 +312,7 @@ public class UpdateDialogFragment extends DialogFragment implements View.OnClick
                 public void onStart() {
                     if (!UpdateDialogFragment.this.isRemoving()) {
                         mNumberProgressBar.setVisibility(View.VISIBLE);
+                        mUpdateWait.setVisibility(View.VISIBLE);
                     }
                 }
 

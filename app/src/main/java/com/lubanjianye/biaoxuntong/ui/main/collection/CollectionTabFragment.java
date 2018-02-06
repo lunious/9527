@@ -332,6 +332,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                     page = 2;
                                     setData(isRefresh, array, nextPage);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
+                                    llEmpty.setVisibility(View.GONE);
                                 } else {
                                     //TODO 内容为空的处理
                                     llEmpty.setVisibility(View.VISIBLE);
@@ -353,6 +354,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                     if (array.size() > 0) {
                                         setData(isRefresh, array, nextPage);
                                         mainBarName.setText("我的收藏(" + "共" + count + "条)");
+                                        llEmpty.setVisibility(View.GONE);
                                     } else {
                                         //TODO 内容为空的处理
                                         llEmpty.setVisibility(View.VISIBLE);
@@ -383,6 +385,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                 if (array.size() > 0) {
                                     setData(isRefresh, array, nextPage);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
+                                    llEmpty.setVisibility(View.GONE);
                                 } else {
                                     //TODO 内容为空的处理
                                     llEmpty.setVisibility(View.VISIBLE);
@@ -395,6 +398,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
         } else {
             llShow.setVisibility(View.VISIBLE);
+            llEmpty.setVisibility(View.GONE);
         }
 
 

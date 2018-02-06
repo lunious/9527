@@ -8,8 +8,9 @@
 
     <LinearLayout
         android:id="@+id/ll_top"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
@@ -20,8 +21,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:background="@drawable/lib_update_app_info_bg"
             android:orientation="vertical"
             android:padding="10dp">
@@ -30,38 +30,105 @@
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="是否升级到4.1.1版本？"
-                android:textColor="@android:color/black"
-                android:textSize="15sp" />
+                android:gravity="center"
+                android:text="版本号：1.0.8"
+                android:textColor="#666"
+                android:textSize="13sp" />
 
             <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
                 android:scrollbars="none">
 
-                <TextView
-                    android:id="@+id/tv_update_info"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="1，xxxxxxxx\n2，ooooooooo"
-                    android:textColor="#666"
-                    android:textSize="14sp" />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="更新内容"
+                        android:textColor="@color/main_text_color"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tv_update_info"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingMultiplier="1.5"
+                        android:paddingLeft="@dimen/d16"
+                        android:paddingTop="@dimen/d8"
+                        android:text="1，xxxxxxxx\n2，ooooooooo"
+                        android:textColor="#666"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
             </ScrollView>
 
 
-            <Button
-                android:id="@+id/btn_ok"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:minHeight="36dp"
-                android:text="立即升级"
-                android:background="@color/main_status_blue"
-                android:textColor="@android:color/white"
-                android:textSize="15sp" />
+                android:layout_marginBottom="@dimen/d6"
+                android:layout_marginTop="@dimen/d10">
+
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/btn_ignore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="@dimen/d18"
+                    android:background="@drawable/update_ignore"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/d5"
+                    android:paddingLeft="@dimen/d10"
+                    android:paddingRight="@dimen/d10"
+                    android:paddingTop="@dimen/d5"
+                    android:text="下次再说"
+                    android:textColor="@color/main_status_white"
+                    android:textSize="@dimen/s14" />
+
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/btn_ok"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="@dimen/d18"
+                    android:background="@drawable/update_ok"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/d5"
+                    android:paddingLeft="@dimen/d10"
+                    android:paddingRight="@dimen/d10"
+                    android:paddingTop="@dimen/d5"
+                    android:text="立即升级"
+                    android:textColor="@color/main_status_white"
+                    android:textSize="@dimen/s14" />
+
+
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/atv_wait"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/d18"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/d5"
+                    android:paddingLeft="@dimen/d10"
+                    android:paddingRight="@dimen/d10"
+                    android:paddingTop="@dimen/d5"
+                    android:text="新版本正在路上，请稍候！"
+                    android:textColor="@color/light_blue"
+                    android:textSize="@dimen/s14"
+                    android:visibility="gone" />
+
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tv_ignore"
@@ -74,6 +141,7 @@
                 android:textSize="14sp"
                 android:visibility="gone" />
 
+
             <com.lubanjianye.biaoxuntong.ui.update.view.NumberProgressBar
                 android:id="@+id/npb"
                 style="@style/UpdateAppNumberProgressBar_Red"
@@ -82,6 +150,7 @@
                 android:visibility="gone" />
 
         </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/ll_close"
@@ -94,7 +163,7 @@
             <View
                 android:id="@+id/line"
                 android:layout_width="1dp"
-                android:layout_height="48dp"
+                android:layout_height="42dp"
                 android:background="#d8d8d8"
                 android:visibility="visible" />
 
