@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
     <external-path
-        name="files_root"
+        name="lib_update_app_files"
         path="Android/data/com.lubanjianye.biaoxuntong/" />
     <external-path
         name="external_storage_root"

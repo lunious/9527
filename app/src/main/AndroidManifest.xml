@@ -143,13 +143,6 @@
             android:windowSoftInputMode="adjustPan" />
 
         <activity
-            android:name=".ui.update.UpdateActivity"
-            android:configChanges="keyboardHidden|orientation"
-            android:label="在线更新"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.Dialog.NoTitle.Translucent" />
-
-        <activity
             android:name=".ui.main.user.avater.AvaterActivity"
             android:configChanges="keyboardHidden|orientation"
             android:launchMode="singleTask"
@@ -301,19 +294,18 @@
             android:windowSoftInputMode="adjustPan" />
 
 
-        <service
-            android:name=".ui.update.DownloadService"
-            android:exported="false" />
         <service android:name=".ui.push.PushService" />
 
+        <service android:name=".ui.update.service.DownloadService" />
+
         <provider
-            android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.lubanjianye.biaoxuntong.provider"
+            android:name=".ui.update.UpdateFileProvider"
+            android:authorities="${applicationId}.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths" />
+                android:resource="@xml/new_app_file_paths" />
         </provider>
 
     </application>

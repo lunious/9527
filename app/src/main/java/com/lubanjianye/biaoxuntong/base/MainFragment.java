@@ -16,8 +16,6 @@ import com.lubanjianye.biaoxuntong.ui.main.query.QueryFragment;
 import com.lubanjianye.biaoxuntong.ui.main.user.UserTabFragment;
 import com.lubanjianye.biaoxuntong.ui.main.result.ResultTabFragment;
 import com.lubanjianye.biaoxuntong.ui.main.collection.CollectionTabFragment;
-import com.lubanjianye.biaoxuntong.ui.update.CheckUpdateManager;
-import com.lubanjianye.biaoxuntong.ui.update.DownloadService;
 import com.lubanjianye.biaoxuntong.ui.view.botton.BottomBar;
 import com.lubanjianye.biaoxuntong.ui.view.botton.BottomBarTab;
 import com.lubanjianye.biaoxuntong.util.dialog.DialogHelper;
@@ -35,7 +33,7 @@ import pub.devrel.easypermissions.EasyPermissions;
  * 描述:     TODO
  */
 
-public class MainFragment extends MainTabFragment implements EasyPermissions.PermissionCallbacks, CheckUpdateManager.RequestPermissions {
+public class MainFragment extends MainTabFragment implements EasyPermissions.PermissionCallbacks{
 
     public static final int FIRST = 0;
     public static final int SECOND = 1;
@@ -115,7 +113,6 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
 
         if (NetUtil.isNetworkConnected(getActivity())) {
 
-            onClickUpdate();
         }
     }
 
@@ -151,26 +148,12 @@ public class MainFragment extends MainTabFragment implements EasyPermissions.Per
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
     }
 
-    //检查更新
-    private void onClickUpdate() {
-
-        CheckUpdateManager manager = new CheckUpdateManager(getActivity(), false);
-        manager.setCaller(this);
-        manager.checkUpdate();
-    }
-
-    @Override
-    public void call(Version version) {
-        this.mVersion = version;
-        requestExternalStorage();
-
-    }
 
     @SuppressLint("InlinedApi")
     @AfterPermissionGranted(RC_EXTERNAL_STORAGE)
     public void requestExternalStorage() {
         if (EasyPermissions.hasPermissions(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            DownloadService.startService(getActivity(), mVersion.getData());
+
         } else {
             EasyPermissions.requestPermissions(this, "", RC_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE);
         }
