@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/lib_update_app_info_bg"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:padding="4dp">
 
             <TextView
                 android:id="@+id/tv_title"
@@ -33,13 +33,13 @@
                 android:gravity="center"
                 android:text="版本号：1.0.8"
                 android:textColor="#666"
-                android:textSize="13sp" />
+                android:textSize="12sp" />
 
             <ScrollView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
                 android:scrollbars="none">
 
                 <LinearLayout
@@ -58,12 +58,12 @@
                         android:id="@+id/tv_update_info"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:lineSpacingMultiplier="1.5"
-                        android:paddingLeft="@dimen/d16"
-                        android:paddingTop="@dimen/d8"
+                        android:lineSpacingMultiplier="1.4"
+                        android:paddingLeft="@dimen/d14"
+                        android:paddingTop="@dimen/d4"
                         android:text="1，xxxxxxxx\n2，ooooooooo"
                         android:textColor="#666"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -73,8 +73,8 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/d6"
-                android:layout_marginTop="@dimen/d10">
+                android:layout_marginBottom="@dimen/d4"
+                android:layout_marginTop="@dimen/d14">
 
 
                 <android.support.v7.widget.AppCompatTextView
@@ -82,13 +82,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
-                    android:layout_marginLeft="@dimen/d18"
+                    android:layout_marginLeft="@dimen/d10"
                     android:background="@drawable/update_ignore"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/d5"
-                    android:paddingLeft="@dimen/d10"
-                    android:paddingRight="@dimen/d10"
-                    android:paddingTop="@dimen/d5"
+                    android:paddingBottom="@dimen/d4"
+                    android:paddingLeft="@dimen/d8"
+                    android:paddingRight="@dimen/d8"
+                    android:paddingTop="@dimen/d4"
                     android:text="下次再说"
                     android:textColor="@color/main_status_white"
                     android:textSize="@dimen/s14" />
@@ -100,13 +100,13 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginRight="@dimen/d18"
+                    android:layout_marginRight="@dimen/d10"
                     android:background="@drawable/update_ok"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/d5"
-                    android:paddingLeft="@dimen/d10"
-                    android:paddingRight="@dimen/d10"
-                    android:paddingTop="@dimen/d5"
+                    android:paddingBottom="@dimen/d4"
+                    android:paddingLeft="@dimen/d8"
+                    android:paddingRight="@dimen/d8"
+                    android:paddingTop="@dimen/d4"
                     android:text="立即升级"
                     android:textColor="@color/main_status_white"
                     android:textSize="@dimen/s14" />
@@ -116,12 +116,11 @@
                     android:id="@+id/atv_wait"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/d18"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/d5"
-                    android:paddingLeft="@dimen/d10"
-                    android:paddingRight="@dimen/d10"
-                    android:paddingTop="@dimen/d5"
+                    android:paddingBottom="@dimen/d4"
+                    android:paddingLeft="@dimen/d8"
+                    android:paddingRight="@dimen/d8"
+                    android:paddingTop="@dimen/d4"
                     android:text="新版本正在路上，请稍候！"
                     android:textColor="@color/light_blue"
                     android:textSize="@dimen/s14"
