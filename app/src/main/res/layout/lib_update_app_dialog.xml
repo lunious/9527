@@ -73,7 +73,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/d4"
+                android:layout_marginBottom="@dimen/d6"
                 android:layout_marginTop="@dimen/d14">
 
 
@@ -85,10 +85,10 @@
                     android:layout_marginLeft="@dimen/d10"
                     android:background="@drawable/update_ignore"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/d4"
+                    android:paddingBottom="@dimen/d2"
                     android:paddingLeft="@dimen/d8"
                     android:paddingRight="@dimen/d8"
-                    android:paddingTop="@dimen/d4"
+                    android:paddingTop="@dimen/d2"
                     android:text="下次再说"
                     android:textColor="@color/main_status_white"
                     android:textSize="@dimen/s14" />
@@ -103,10 +103,10 @@
                     android:layout_marginRight="@dimen/d10"
                     android:background="@drawable/update_ok"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/d4"
+                    android:paddingBottom="@dimen/d2"
                     android:paddingLeft="@dimen/d8"
                     android:paddingRight="@dimen/d8"
-                    android:paddingTop="@dimen/d4"
+                    android:paddingTop="@dimen/d2"
                     android:text="立即升级"
                     android:textColor="@color/main_status_white"
                     android:textSize="@dimen/s14" />
@@ -117,10 +117,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/d4"
+                    android:paddingBottom="@dimen/d2"
                     android:paddingLeft="@dimen/d8"
                     android:paddingRight="@dimen/d8"
-                    android:paddingTop="@dimen/d4"
+                    android:paddingTop="@dimen/d2"
                     android:text="新版本正在路上，请稍候！"
                     android:textColor="@color/light_blue"
                     android:textSize="@dimen/s14"

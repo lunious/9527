@@ -342,7 +342,7 @@ public class ImagePreviewView extends ImageView {
         final int mDrawableHeight = mDrawable.getIntrinsicHeight();
 
         if (mDrawableWidth == 0 || mDrawableHeight == 0) {
-            return;     // nothing to draw (empty bounds)
+            return;     // nothing to draw (ic_empty bounds)
         }
 
         int saveCount = canvas.getSaveCount();
