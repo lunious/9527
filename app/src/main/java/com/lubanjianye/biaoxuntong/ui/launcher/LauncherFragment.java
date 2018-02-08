@@ -9,6 +9,7 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
+import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
 import com.lubanjianye.biaoxuntong.base.MainActivity;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
@@ -92,7 +93,14 @@ public class LauncherFragment extends BaseFragment implements BDLocationListener
                         public void onSuccess(Response<String> response) {
                             if ("200".equals(response.body()) || "400".equals(response.body())) {
                                 //token有效
-                                checkIsShowScroll();
+
+                                BiaoXunTong.getHandler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        checkIsShowScroll();
+                                    }
+                                }, 1500);
+
                             } else {
                                 EventBus.getDefault().post(new EventMessage(EventMessage.TOKEN_FALSE));
 
@@ -100,19 +108,33 @@ public class LauncherFragment extends BaseFragment implements BDLocationListener
                                 DatabaseManager.getInstance().getDao().deleteAll();
                                 AppSharePreferenceMgr.remove(getContext(), EventMessage.LOGIN_SUCCSS);
                                 AppSharePreferenceMgr.put(getContext(), EventMessage.TOKEN_FALSE, true);
-                                checkIsShowScroll();
-
+                                BiaoXunTong.getHandler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        checkIsShowScroll();
+                                    }
+                                }, 1500);
                             }
                         }
 
                         @Override
                         public void onError(Response<String> response) {
-                            checkIsShowScroll();
+                            BiaoXunTong.getHandler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    checkIsShowScroll();
+                                }
+                            }, 1500);
                         }
                     });
 
         } else {
-            checkIsShowScroll();
+            BiaoXunTong.getHandler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    checkIsShowScroll();
+                }
+            }, 1500);
         }
 
     }

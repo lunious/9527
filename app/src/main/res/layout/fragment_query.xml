@@ -176,12 +176,18 @@
                 tools:ignore="RtlHardcoded" />
 
             <android.support.v7.widget.AppCompatTextView
-                android:layout_width="@dimen/d0"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="设置企业资质搜索条件"
                 android:textColor="#6c6c6c"
                 android:textSize="@dimen/s15" />
+            <android.support.v7.widget.AppCompatTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(条件可左右滑动)"
+                android:textColor="#6c6c6c"
+                android:paddingLeft="@dimen/d4"
+                android:textSize="@dimen/s12" />
 
         </LinearLayout>
 
