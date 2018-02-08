@@ -63,7 +63,7 @@
                         android:paddingTop="@dimen/d4"
                         android:text="1，xxxxxxxx\n2，ooooooooo"
                         android:textColor="#666"
-                        android:textSize="12sp" />
+                        android:textSize="13sp" />
 
                 </LinearLayout>
 
@@ -74,7 +74,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/d6"
-                android:layout_marginTop="@dimen/d14">
+                android:layout_marginTop="@dimen/d16">
 
 
                 <android.support.v7.widget.AppCompatTextView
@@ -85,10 +85,10 @@
                     android:layout_marginLeft="@dimen/d10"
                     android:background="@drawable/update_ignore"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/d2"
+                    android:paddingBottom="@dimen/d4"
                     android:paddingLeft="@dimen/d8"
                     android:paddingRight="@dimen/d8"
-                    android:paddingTop="@dimen/d2"
+                    android:paddingTop="@dimen/d4"
                     android:text="下次再说"
                     android:textColor="@color/main_status_white"
                     android:textSize="@dimen/s14" />
@@ -103,10 +103,10 @@
                     android:layout_marginRight="@dimen/d10"
                     android:background="@drawable/update_ok"
                     android:gravity="center"
-                    android:paddingBottom="@dimen/d2"
+                    android:paddingBottom="@dimen/d4"
                     android:paddingLeft="@dimen/d8"
                     android:paddingRight="@dimen/d8"
-                    android:paddingTop="@dimen/d2"
+                    android:paddingTop="@dimen/d4"
                     android:text="立即升级"
                     android:textColor="@color/main_status_white"
                     android:textSize="@dimen/s14" />
