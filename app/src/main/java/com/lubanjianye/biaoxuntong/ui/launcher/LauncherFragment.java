@@ -99,7 +99,7 @@ public class LauncherFragment extends BaseFragment implements BDLocationListener
                                     public void run() {
                                         checkIsShowScroll();
                                     }
-                                }, 1500);
+                                }, 1000);
 
                             } else {
                                 EventBus.getDefault().post(new EventMessage(EventMessage.TOKEN_FALSE));
@@ -113,7 +113,7 @@ public class LauncherFragment extends BaseFragment implements BDLocationListener
                                     public void run() {
                                         checkIsShowScroll();
                                     }
-                                }, 1500);
+                                }, 1000);
                             }
                         }
 
@@ -124,7 +124,7 @@ public class LauncherFragment extends BaseFragment implements BDLocationListener
                                 public void run() {
                                     checkIsShowScroll();
                                 }
-                            }, 1500);
+                            }, 1000);
                         }
                     });
 
@@ -134,7 +134,7 @@ public class LauncherFragment extends BaseFragment implements BDLocationListener
                 public void run() {
                     checkIsShowScroll();
                 }
-            }, 1500);
+            }, 1000);
         }
 
     }
