@@ -40,32 +40,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/ll_empty"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
-        android:paddingTop="@dimen/d86"
-        android:visibility="gone">
-
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_empty" />
-
-        <android.support.v7.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="你还没有收藏过任何内容"
-            android:textSize="@dimen/d14"
-            android:paddingTop="@dimen/d10"/>
-
-
-    </LinearLayout>
-
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/collect_refresh"
         android:layout_width="match_parent"
@@ -80,14 +54,24 @@
             app:srlTextSizeTime="@dimen/s12"
             app:srlTextSizeTitle="@dimen/s15" />
 
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/collect_recycler"
+        <com.classic.common.MultipleStatusView
+            android:id="@+id/collection_list_status_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/main_status_white"
-            android:overScrollMode="never"
-            android:scrollbars="none" />
+            app:emptyView="@layout/custom_empty_view"
+            app:errorView="@layout/custom_error_view"
+            app:loadingView="@layout/custom_loading_index_list"
+            app:noNetworkView="@layout/custom_no_network_view">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/collect_recycler"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/main_status_white"
+                android:overScrollMode="never"
+                android:scrollbars="none" />
+
+        </com.classic.common.MultipleStatusView>
 
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

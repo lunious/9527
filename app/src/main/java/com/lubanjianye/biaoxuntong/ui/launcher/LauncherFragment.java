@@ -1,7 +1,6 @@
 package com.lubanjianye.biaoxuntong.ui.launcher;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.util.Log;
 
 import com.baidu.location.BDLocation;
@@ -15,10 +14,6 @@ import com.lubanjianye.biaoxuntong.base.MainActivity;
 import com.lubanjianye.biaoxuntong.database.DatabaseManager;
 import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
-import com.lubanjianye.biaoxuntong.sign.SignInActivity;
-import com.lubanjianye.biaoxuntong.util.dialog.PromptButton;
-import com.lubanjianye.biaoxuntong.util.dialog.PromptButtonListener;
-import com.lubanjianye.biaoxuntong.util.dialog.PromptDialog;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
@@ -133,14 +128,14 @@ public class LauncherFragment extends BaseFragment implements BDLocationListener
             Intent intent = new Intent(getActivity(), LauncherScrollActivity.class);
             startActivity(intent);
             if (getActivity() != null) {
-                getActivity().onBackPressed();
+                getActivity().finish();
             }
         } else {
             //进入主页
             Intent intent = new Intent(getActivity(), MainActivity.class);
             startActivity(intent);
             if (getActivity() != null) {
-                getActivity().onBackPressed();
+                getActivity().finish();
             }
 
         }

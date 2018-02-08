@@ -1,6 +1,5 @@
 package com.lubanjianye.biaoxuntong.ui.launcher;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;

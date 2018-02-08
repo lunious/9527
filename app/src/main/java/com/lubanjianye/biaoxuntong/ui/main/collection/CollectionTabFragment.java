@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
+import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
 import com.lubanjianye.biaoxuntong.app.BiaoXunTong;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;
@@ -63,9 +64,9 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
     private AppCompatTextView mainBarName = null;
     private AppCompatButton btnToLogin = null;
     private LinearLayout llShow = null;
-    private LinearLayout llEmpty = null;
     private RecyclerView collectRecycler = null;
     private SmartRefreshLayout collectRefresh = null;
+    private MultipleStatusView loadingStatus = null;
 
 
     private CollectionListAdapter mAdapter;
@@ -128,9 +129,9 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         mainBarName = getView().findViewById(R.id.main_bar_name);
         btnToLogin = getView().findViewById(R.id.btn_to_login);
         llShow = getView().findViewById(R.id.ll_show);
-        llEmpty = getView().findViewById(R.id.ll_empty);
         collectRecycler = getView().findViewById(R.id.collect_recycler);
         collectRefresh = getView().findViewById(R.id.collect_refresh);
+        loadingStatus = getView().findViewById(R.id.collection_list_status_view);
 
         btnToLogin.setOnClickListener(this);
 
@@ -154,6 +155,9 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         if (!NetUtil.isNetworkConnected(getActivity())) {
             ToastUtil.shortBottonToast(getContext(), "请检查网络设置");
             mAdapter.setEnableLoadMore(false);
+            if (!isInitCache) {
+                loadingStatus.showLoading();
+            }
             BiaoXunTong.getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -161,6 +165,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 }
             }, 500);
         } else {
+            loadingStatus.showLoading();
             BiaoXunTong.getHandler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -303,7 +308,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             llShow.setVisibility(View.GONE);
-            llEmpty.setVisibility(View.GONE);
             List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
             for (int i = 0; i < users.size(); i++) {
                 id = users.get(0).getId();
@@ -331,10 +335,9 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                     page = 2;
                                     setData(isRefresh, array, nextPage);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
-                                    llEmpty.setVisibility(View.GONE);
                                 } else {
                                     //TODO 内容为空的处理
-                                    llEmpty.setVisibility(View.VISIBLE);
+                                    loadingStatus.showEmpty();
                                     collectRefresh.setEnableRefresh(false);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 }
@@ -353,10 +356,9 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                     if (array.size() > 0) {
                                         setData(isRefresh, array, nextPage);
                                         mainBarName.setText("我的收藏(" + "共" + count + "条)");
-                                        llEmpty.setVisibility(View.GONE);
                                     } else {
                                         //TODO 内容为空的处理
-                                        llEmpty.setVisibility(View.VISIBLE);
+                                        loadingStatus.showEmpty();
                                         collectRefresh.setEnableRefresh(false);
                                         mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                     }
@@ -384,10 +386,9 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                                 if (array.size() > 0) {
                                     setData(isRefresh, array, nextPage);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
-                                    llEmpty.setVisibility(View.GONE);
                                 } else {
                                     //TODO 内容为空的处理
-                                    llEmpty.setVisibility(View.VISIBLE);
+                                    loadingStatus.showEmpty();
                                     collectRefresh.setEnableRefresh(false);
                                     mainBarName.setText("我的收藏(" + "共" + count + "条)");
                                 }
@@ -397,7 +398,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
         } else {
             llShow.setVisibility(View.VISIBLE);
-            llEmpty.setVisibility(View.GONE);
         }
 
 
@@ -406,6 +406,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
     private void setData(boolean isRefresh, JSONArray data, boolean nextPage) {
         final int size = data == null ? 0 : data.size();
         if (isRefresh) {
+            loadingStatus.showContent();
             mDataList.clear();
             for (int i = 0; i < data.size(); i++) {
                 CollectionListBean bean = new CollectionListBean();
@@ -423,6 +424,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
             mAdapter.setEnableLoadMore(true);
         } else {
             page++;
+            loadingStatus.showContent();
             if (size > 0) {
                 for (int i = 0; i < data.size(); i++) {
                     CollectionListBean bean = new CollectionListBean();
