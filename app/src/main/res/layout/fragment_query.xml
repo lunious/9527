@@ -201,7 +201,7 @@
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="@dimen/d36"
-        android:layout_marginBottom="@dimen/d4"
+        android:layout_marginBottom="@dimen/d8"
         android:layout_marginLeft="@dimen/d4"
         android:layout_marginTop="@dimen/d4"
         android:background="@color/main_status_white"
@@ -352,14 +352,14 @@
             android:layout_weight="5"
             android:orientation="vertical">
 
-            <android.support.v7.widget.RecyclerView
+            <com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView
                 android:id="@+id/rlv_query"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:overScrollMode="never"
                 android:scrollbars="none">
 
-            </android.support.v7.widget.RecyclerView>
+            </com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView>
 
         </LinearLayout>
 

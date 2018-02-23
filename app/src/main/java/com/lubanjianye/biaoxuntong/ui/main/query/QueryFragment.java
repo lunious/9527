@@ -14,6 +14,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -50,6 +51,12 @@ import com.lzy.okgo.OkGo;
 import com.lzy.okgo.cache.CacheMode;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.model.Response;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,10 +88,8 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     private SimpleMarqueeView scrollView = null;
     private AppCompatTextView vipDetail = null;
     private LinearLayout llSearch = null;
-    private RecyclerView rlv_query = null;
+    private SwipeMenuRecyclerView rlv_query = null;
 
-    private ItemDragAndSwipeCallback mItemDragAndSwipeCallback;
-    private ItemTouchHelper mItemTouchHelper;
 
     private PromptDialog promptDialog;
     String provinceCode = "510000";
@@ -302,30 +307,34 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
     private void initRecyclerView() {
         rlv_query.setLayoutManager(new LinearLayoutManager(getContext()));
 
-
-    }
-
-    private void initAdapter() {
-
-
-        final Paint paint = new Paint();
-        paint.setAntiAlias(true);
-        paint.setTextSize(40);
-        paint.setColor(Color.WHITE);
-
-
-        OnItemSwipeListener onItemSwipeListener = new OnItemSwipeListener() {
+        rlv_query.setSwipeMenuCreator(new SwipeMenuCreator() {
             @Override
-            public void onItemSwipeStart(RecyclerView.ViewHolder viewHolder, int pos) {
+            public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
+                int width = getResources().getDimensionPixelSize(R.dimen.d45);
+
+                // 1. MATCH_PARENT 自适应高度，保持和Item一样高;
+                // 2. 指定具体的高，比如80;
+                // 3. WRAP_CONTENT，自身高度，不推荐;
+                int height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+                SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity())
+                        .setBackground(R.drawable.selector_red)
+                        .setImage(R.mipmap.ic_action_delete)
+                        .setWidth(width)
+                        .setHeight(height);
+                swipeRightMenu.addMenuItem(deleteItem);
+
             }
+        });
 
+        rlv_query.setSwipeMenuItemClickListener(new SwipeMenuItemClickListener() {
             @Override
-            public void clearView(RecyclerView.ViewHolder viewHolder, int pos) {
-            }
+            public void onItemClick(SwipeMenuBridge menuBridge) {
+                menuBridge.closeMenu();
+                // RecyclerView的Item的position。
+                int adapterPosition = menuBridge.getAdapterPosition();
 
-            @Override
-            public void onItemSwiped(RecyclerView.ViewHolder viewHolder, int pos) {
-                switch (pos) {
+                switch (adapterPosition) {
                     case 0:
                         if (ids_1.size() > 0) {
                             ids_1.clear();
@@ -336,6 +345,8 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                                 ids_3.clear();
                             }
                         }
+                        mDataList.remove(adapterPosition);
+                        mAdapter.notifyDataSetChanged();
                         break;
                     case 1:
                         if (ids_2.size() > 0) {
@@ -343,31 +354,28 @@ public class QueryFragment extends BaseFragment implements View.OnClickListener 
                         } else {
                             ids_3.clear();
                         }
+                        mDataList.remove(adapterPosition);
+                        mAdapter.notifyDataSetChanged();
                         break;
                     case 2:
                         ids_3.clear();
+                        mDataList.remove(adapterPosition);
+                        mAdapter.notifyDataSetChanged();
                         break;
                     default:
                         break;
                 }
 
             }
+        });
 
-            @Override
-            public void onItemSwipeMoving(Canvas canvas, RecyclerView.ViewHolder viewHolder, float dX, float dY, boolean isCurrentlyActive) {
-                canvas.drawColor(ContextCompat.getColor(getContext(), R.color.dark_view));
-                canvas.drawText("继续滑动即可删除", 90, 90, paint);
-            }
-        };
+
+    }
+
+    private void initAdapter() {
+
         mAdapter = new QueryAdapter(R.layout.query_item, mDataList);
 
-        mItemDragAndSwipeCallback = new ItemDragAndSwipeCallback(mAdapter);
-        mItemTouchHelper = new ItemTouchHelper(mItemDragAndSwipeCallback);
-        mItemTouchHelper.attachToRecyclerView(rlv_query);
-
-        mItemDragAndSwipeCallback.setSwipeMoveFlags(ItemTouchHelper.END | ItemTouchHelper.START);
-        mAdapter.enableSwipeItem();
-        mAdapter.setOnItemSwipeListener(onItemSwipeListener);
         rlv_query.setAdapter(mAdapter);
     }
 

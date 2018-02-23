@@ -228,7 +228,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
         collectRecycler.setSwipeMenuCreator(new SwipeMenuCreator() {
             @Override
             public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
-                int width = getResources().getDimensionPixelSize(R.dimen.d70);
+                int width = getResources().getDimensionPixelSize(R.dimen.d64);
 
                 // 1. MATCH_PARENT 自适应高度，保持和Item一样高;
                 // 2. 指定具体的高，比如80;
@@ -238,7 +238,6 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity())
                         .setBackground(R.drawable.selector_red)
                         .setImage(R.mipmap.ic_action_delete)
-                        .setText("删除")
                         .setWidth(width)
                         .setHeight(height);
                 swipeRightMenu.addMenuItem(deleteItem);
