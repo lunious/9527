@@ -6,8 +6,11 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
@@ -32,6 +35,7 @@ import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexSggjycgtableDetailA
 import com.lubanjianye.biaoxuntong.ui.main.index.detail.IndexXcgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
+import com.lubanjianye.biaoxuntong.util.netStatus.AppSysMgr;
 import com.lubanjianye.biaoxuntong.util.netStatus.NetUtil;
 import com.lubanjianye.biaoxuntong.util.sp.AppSharePreferenceMgr;
 import com.lubanjianye.biaoxuntong.util.toast.ToastUtil;
@@ -42,6 +46,13 @@ import com.lzy.okgo.model.Response;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.yanzhenjie.recyclerview.swipe.SwipeItemClickListener;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenu;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuBridge;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuCreator;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItem;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuItemClickListener;
+import com.yanzhenjie.recyclerview.swipe.SwipeMenuRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -64,7 +75,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
     private AppCompatTextView mainBarName = null;
     private AppCompatButton btnToLogin = null;
     private LinearLayout llShow = null;
-    private RecyclerView collectRecycler = null;
+    private SwipeMenuRecyclerView collectRecycler = null;
     private SmartRefreshLayout collectRefresh = null;
     private MultipleStatusView loadingStatus = null;
 
@@ -75,6 +86,8 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
     private int page = 1;
     private boolean isInitCache = false;
     private long id = 0;
+    private String deviceId = AppSysMgr.getPsuedoUniqueID();
+
 
     @Override
     public Object setLayout() {
@@ -212,10 +225,70 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
 
         collectRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        collectRecycler.addOnItemTouchListener(new OnItemClickListener() {
+        collectRecycler.setSwipeMenuCreator(new SwipeMenuCreator() {
             @Override
-            public void onSimpleItemClick(BaseQuickAdapter adapter, View view, int position) {
-                final CollectionListBean data = (CollectionListBean) adapter.getData().get(position);
+            public void onCreateMenu(SwipeMenu swipeLeftMenu, SwipeMenu swipeRightMenu, int viewType) {
+                int width = getResources().getDimensionPixelSize(R.dimen.d70);
+
+                // 1. MATCH_PARENT 自适应高度，保持和Item一样高;
+                // 2. 指定具体的高，比如80;
+                // 3. WRAP_CONTENT，自身高度，不推荐;
+                int height = ViewGroup.LayoutParams.MATCH_PARENT;
+
+                SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity())
+                        .setBackground(R.drawable.selector_red)
+                        .setImage(R.mipmap.ic_action_delete)
+                        .setText("删除")
+                        .setWidth(width)
+                        .setHeight(height);
+                swipeRightMenu.addMenuItem(deleteItem);
+
+            }
+        });
+
+        collectRecycler.setSwipeMenuItemClickListener(new SwipeMenuItemClickListener() {
+            @Override
+            public void onItemClick(final SwipeMenuBridge menuBridge) {
+
+                // RecyclerView的Item的position。
+                int adapterPosition = menuBridge.getAdapterPosition();
+                final CollectionListBean data = mAdapter.getData().get(adapterPosition);
+
+                final int mEntityId = data.getEntityId();
+                final String mEntity = data.getEntity();
+
+                List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
+                for (int i = 0; i < users.size(); i++) {
+                    id = users.get(0).getId();
+                }
+                OkGo.<String>post(BiaoXunTongApi.URL_DELEFAV)
+                        .params("entityid", mEntityId)
+                        .params("entity", mEntity)
+                        .params("userid", id)
+                        .params("deviceId", deviceId)
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onSuccess(Response<String> response) {
+                                final JSONObject object = JSON.parseObject(response.body());
+                                String status = object.getString("status");
+                                if ("200".equals(status)) {
+                                    EventBus.getDefault().post(new EventMessage(EventMessage.CLICK_FAV));
+                                    ToastUtil.shortToast(getContext(), "删除成功");
+                                    menuBridge.closeMenu();
+                                } else if ("500".equals(status)) {
+                                    ToastUtil.shortToast(getContext(), "服务器异常");
+                                }
+                            }
+                        });
+
+            }
+        });
+
+        collectRecycler.setSwipeItemClickListener(new SwipeItemClickListener() {
+            @Override
+            public void onItemClick(View itemView, int position) {
+                final CollectionListBean data = mAdapter.getData().get(position);
+
                 final int entityId = data.getEntityId();
                 final String entity = data.getEntity();
 
@@ -278,6 +351,7 @@ public class CollectionTabFragment extends BaseFragment implements View.OnClickL
                 }
             }
         });
+
     }
 
     private void initAdapter() {

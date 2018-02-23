@@ -37,5 +37,10 @@
     <color name="white_alpha_16">#10ffffff</color>
     <color name="white_alpha_240">#f0ffffff</color>
 
+    //侧滑颜色
+    <color name="red_normal">#FF0000</color>
+    <color name="red_pressed">#FF6666</color>
+
+
 
 </resources>

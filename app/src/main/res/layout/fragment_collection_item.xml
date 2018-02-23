@@ -2,14 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/d4"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/d2"
-        android:layout_marginRight="@dimen/d4"
+        android:layout_marginLeft="@dimen/d6"
+        android:layout_marginRight="@dimen/d10"
         android:background="#ffffff">
 
         <android.support.v7.widget.AppCompatTextView
@@ -20,6 +19,7 @@
             android:maxLines="2"
             android:text="This is main title."
             android:textColor="#ff434343"
+            android:layout_marginTop="@dimen/d6"
             android:textSize="@dimen/s15" />
 
         <LinearLayout
@@ -62,14 +62,15 @@
             android:id="@+id/rl_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_below="@id/linear_temp">
 
 
             <LinearLayout
+                android:id="@+id/ll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_alignParentRight="true"
                 android:orientation="horizontal">
 
                 <ImageView
@@ -91,15 +92,17 @@
             </LinearLayout>
 
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/p1"
+                android:layout_below="@+id/ll"
+                android:layout_marginTop="@dimen/d8"
+                android:background="@color/dark_view" />
+
         </RelativeLayout>
 
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/p1"
-            android:layout_below="@+id/rl_time"
-            android:layout_marginTop="@dimen/d6"
-            android:background="@color/dark_view" />
+
 
     </RelativeLayout>
 
