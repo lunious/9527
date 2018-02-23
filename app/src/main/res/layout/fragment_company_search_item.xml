@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingTop="@dimen/d6">
+                android:paddingTop="@dimen/d14">
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
