@@ -67,7 +67,6 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
 
     private LinearLayout llOpinion = null;
 
-    private Version mVersion;
 
     //存储权限
     private static final int RC_EXTERNAL_STORAGE = 0x04;
@@ -100,7 +99,9 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
         llBack.setVisibility(View.VISIBLE);
         mainBarName.setText("系统设置");
         String cacheSize = AppCleanMgr.getAppClearSize(getContext());
+
         tvCacheSize.setText(cacheSize);
+        tvUpdate.setText(AppApplicationMgr.getVersionName(getContext()));
 
         if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
             llCancel.setVisibility(View.VISIBLE);
@@ -306,7 +307,7 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                      */
                     @Override
                     public void onBefore() {
-                        CProgressDialogUtils.showProgressDialog(getActivity());
+                        CProgressDialogUtils.showProgressDialog(getActivity(),"检查新版本...");
                     }
 
                     /**
@@ -322,7 +323,7 @@ public class Settingfragment extends BaseFragment implements View.OnClickListene
                      */
                     @Override
                     public void noNewApp() {
-                        Toast.makeText(getActivity(), "没有新版本", Toast.LENGTH_SHORT).show();
+                        ToastUtil.shortToast(getActivity(), "当前已是最新版本");
                     }
                 });
 

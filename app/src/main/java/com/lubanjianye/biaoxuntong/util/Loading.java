@@ -56,52 +56,6 @@ public class Loading extends View {
         // default size 2dp
         final int baseSize = (int) (density * 2);
 
-        // Load attributes
-//        final TypedArray a = context.obtainStyledAttributes(
-//                attrs, R.styleable.Loading, defStyleAttr, defStyleRes);
-//
-//        int bgLineSize = a.getDimensionPixelOffset(R.styleable.Loading_gBackgroundLineSize, baseSize);
-//        int fgLineSize = a.getDimensionPixelOffset(R.styleable.Loading_gForegroundLineSize, baseSize);
-//
-//        int bgColor = 0;// transparent color
-//        ColorStateList colorStateList = a.getColorStateList(R.styleable.Loading_gBackgroundColor);
-//        if (colorStateList != null)
-//            bgColor = colorStateList.getDefaultColor();
-//        int fgColorId = a.getResourceId(R.styleable.Loading_gForegroundColor, R.array.g_default_loading_fg);
-//
-//        boolean autoRun = a.getBoolean(R.styleable.Loading_gAutoRun, true);
-//
-//        float progress = a.getFloat(R.styleable.Loading_gProgressFloat, 0);
-//
-//        a.recycle();
-
-//        setProgressStyle();
-//        setAutoRun(autoRun);
-//        setProgress(progress);
-//
-//        setBackgroundLineSize(bgLineSize);
-//        setForegroundLineSize(fgLineSize);
-//        setBackgroundColor(bgColor);
-//
-//        // Check for IDE preview render
-//        if (!isInEditMode()) {
-//            String type = resource.getResourceTypeName(fgColorId);
-//            try {
-//                switch (type) {
-//                    case "color":
-//                        setForegroundColor(resource.getColor(fgColorId));
-//                        break;
-//                    case "array":
-//                        setForegroundColor(resource.getIntArray(fgColorId));
-//                        break;
-//                    default:
-//                        setForegroundColor(resource.getIntArray(R.array.g_default_loading_fg));
-//                        break;
-//                }
-//            } catch (Exception e) {
-//                setForegroundColor(resource.getIntArray(R.array.g_default_loading_fg));
-//            }
-//        }
     }
 
     /**
@@ -332,20 +286,6 @@ public class Loading extends View {
         final int paddingRight = getPaddingRight();
         final int paddingBottom = getPaddingBottom();
 
-        /*
-        int curW = w - paddingLeft - paddingRight;
-        int curH = h - paddingTop - paddingBottom;
-
-        if (curW == curH) {
-            mLoadingDrawable.setBounds(paddingLeft, paddingTop, curW + paddingLeft, curH + paddingTop);
-        } else if (curW > curH) {
-            final int left = paddingLeft + ((curW - curH) >> 1);
-            mLoadingDrawable.setBounds(left, paddingTop, curH + left, curH + paddingTop);
-        } else if (curW < curH) {
-            final int top = paddingTop + ((curH - curW) >> 1);
-            mLoadingDrawable.setBounds(paddingLeft, top, curW + paddingLeft, curW + top);
-        }
-        */
         mLoadingDrawable.setBounds(paddingLeft, paddingTop, w - paddingRight, h - paddingBottom);
     }
 

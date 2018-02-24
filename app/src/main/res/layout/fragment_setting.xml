@@ -70,6 +70,11 @@
                 android:textColor="@color/main_text_color"
                 android:textSize="@dimen/s14" />
 
+            <ImageView
+                android:layout_width="@dimen/d16"
+                android:layout_height="@dimen/d16"
+                android:src="@mipmap/nomal_forward" />
+
 
         </LinearLayout>
 
@@ -100,11 +105,9 @@
                 android:id="@+id/tv_update"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/main_theme_color"
                 android:textSize="@dimen/s14"
-                android:visibility="gone"
                 tools:ignore="RelativeOverlap"
-                tools:text="有更新" />
+                tools:text="" />
 
 
         </LinearLayout>
@@ -117,18 +120,18 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/d10"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:layout_marginBottom="@dimen/d10"
             android:padding="@dimen/d12">
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/ll_cancel"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/d38"
-                android:gravity="center"
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/button_selected"
+                android:gravity="center"
                 android:text="退出登陆"
                 android:textColor="@color/main_status_white"
                 android:textSize="@dimen/s16" />
