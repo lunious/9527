@@ -236,10 +236,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
 
 
     private long id = 0;
-    private String nickName = "";
-    private String token = "";
-    private String comid = "";
-    private String imageUrl = "";
 
     private String gzUrl = "";
     private String jgEntity = "";
@@ -258,10 +254,6 @@ public class IndexSggjyDetailFragment extends BaseFragment implements View.OnCli
 
                 for (int i = 0; i < users.size(); i++) {
                     id = users.get(0).getId();
-                    nickName = users.get(0).getNickName();
-                    token = users.get(0).getToken();
-                    comid = users.get(0).getComid();
-                    imageUrl = users.get(0).getImageUrl();
                 }
 
                 OkGo.<String>post(BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL)

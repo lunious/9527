@@ -2,7 +2,6 @@ package com.lubanjianye.biaoxuntong.ui.main.index.detail;
 
 import android.content.Intent;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.lubanjianye.biaoxuntong.base.BaseActivity;
 import com.lubanjianye.biaoxuntong.base.BaseFragment;

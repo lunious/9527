@@ -209,10 +209,6 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
 
 
     private long id = 0;
-    private String nickName = "";
-    private String token = "";
-    private String comid = "";
-    private String imageUrl = "";
 
     private void requestData() {
 
@@ -225,10 +221,6 @@ public class IndexSggjycgrowDetailFragment extends BaseFragment implements View.
                 List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
                 for (int i = 0; i < users.size(); i++) {
                     id = users.get(0).getId();
-                    nickName = users.get(0).getNickName();
-                    token = users.get(0).getToken();
-                    comid = users.get(0).getComid();
-                    imageUrl = users.get(0).getImageUrl();
                 }
 
                 OkGo.<String>post(BiaoXunTongApi.URL_GETCOLLECTIONLISTDETAIL)
