@@ -7,12 +7,14 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.widget.AppCompatTextView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.classic.common.MultipleStatusView;
 import com.lubanjianye.biaoxuntong.R;
@@ -22,6 +24,9 @@ import com.lubanjianye.biaoxuntong.database.UserProfile;
 import com.lubanjianye.biaoxuntong.eventbus.EventMessage;
 import com.lubanjianye.biaoxuntong.api.BiaoXunTongApi;
 import com.lubanjianye.biaoxuntong.sign.SignInActivity;
+import com.lubanjianye.biaoxuntong.ui.browser.BrowserActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultSggjyzbjgDetailActivity;
+import com.lubanjianye.biaoxuntong.ui.main.result.detail.ResultXjgggDetailActivity;
 import com.lubanjianye.biaoxuntong.ui.share.OpenBuilder;
 import com.lubanjianye.biaoxuntong.ui.share.OpenConstant;
 import com.lubanjianye.biaoxuntong.ui.share.Share;
@@ -55,32 +60,31 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
     LinearLayout llIvBack = null;
     AppCompatTextView mainBarName = null;
     MultipleStatusView sggjycgtableDetailStatusView = null;
-    TextView tvMainTitle = null;
-    TextView tvArea = null;
-    TextView tvMainPubType = null;
-    TextView tvMainCaigouType = null;
-    TextView tvDataBeginTime = null;
-    TextView tvMainDeadTime = null;
-    TextView tvPuNum = null;
-    TextView tvOwerCainame = null;
-    TextView tvOwerName = null;
-    TextView tvOwerDaili = null;
-    TextView tvOwerBaoshu = null;
-    TextView tvOwerJine = null;
-    TextView tvOwerBaojia = null;
-    TextView tvOwerMingdan = null;
-    TextView tvOwerLianxi = null;
-    TextView tvOwerLianxi2 = null;
-    TextView tvOwerLianxiNumber = null;
-    TextView tvOwerLianxiLink = null;
-    TextView tvOwerPinshen = null;
-    TextView tvOwerDailiren = null;
-    TextView tvOwerCaigouxiangmu = null;
+    AppCompatTextView tvMainTitle = null;
+    AppCompatTextView tvArea = null;
+    AppCompatTextView tvMainCaigouType = null;
+    AppCompatTextView tvPuNum = null;
+    AppCompatTextView tvOwerCainame = null;
+    AppCompatTextView tvOwerName = null;
+    AppCompatTextView tvOwerDaili = null;
+    AppCompatTextView tvOwerBaoshu = null;
+    AppCompatTextView tvOwerJine = null;
+    AppCompatTextView tvOwerBaojia = null;
+    AppCompatTextView tvOwerMingdan = null;
+    AppCompatTextView tvOwerLianxi = null;
+    AppCompatTextView tvOwerLianxi2 = null;
+    AppCompatTextView tvOwerLianxiNumber = null;
+    AppCompatTextView tvOwerLianxiLink = null;
+    AppCompatTextView tvOwerPinshen = null;
+    AppCompatTextView tvOwerDailiren = null;
+    AppCompatTextView tvOwerCaigouxiangmu = null;
+    AppCompatTextView tvPubTime = null;
     ImageView ivFav = null;
     LinearLayout llFav = null;
     LinearLayout llShare = null;
     NestedScrollView detailNsv = null;
     LinearLayout llBucai = null;
+    LinearLayout llMainPubTime = null;
     private AppCompatTextView tvBucai = null;
 
 
@@ -88,6 +92,10 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
     private LinearLayout llQQBoShare = null;
     private LinearLayout llWeixinBoShare = null;
     private LinearLayout llPyqShare = null;
+
+
+    private AppCompatTextView tvGz = null;
+    private AppCompatTextView tvJg = null;
 
     private static final String ARG_ENTITYID = "ARG_ENTITYID";
     private static final String ARG_ENTITY = "ARG_ENTITY";
@@ -140,10 +148,7 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
         sggjycgtableDetailStatusView = getView().findViewById(R.id.sggjycgtable_detail_status_view);
         tvMainTitle = getView().findViewById(R.id.tv_main_title);
         tvArea = getView().findViewById(R.id.tv_area);
-        tvMainPubType = getView().findViewById(R.id.tv_main_pub_type);
         tvMainCaigouType = getView().findViewById(R.id.tv_main_caigou_type);
-        tvDataBeginTime = getView().findViewById(R.id.tv_data_begin_time);
-        tvMainDeadTime = getView().findViewById(R.id.tv_main_dead_time);
         tvPuNum = getView().findViewById(R.id.tv_pu_num);
         tvOwerCainame = getView().findViewById(R.id.tv_ower_cainame);
         tvOwerName = getView().findViewById(R.id.tv_ower_name);
@@ -165,12 +170,12 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
         detailNsv = getView().findViewById(R.id.detail_nsv);
         llBucai = getView().findViewById(R.id.ll_bucai);
         tvBucai = getView().findViewById(R.id.tv_bucai);
-
+        tvPubTime = getView().findViewById(R.id.tv_main_pub_time);
         llWeiBoShare = getView().findViewById(R.id.ll_weibo_share);
         llQQBoShare = getView().findViewById(R.id.ll_qq_share);
         llWeixinBoShare = getView().findViewById(R.id.ll_chat_share);
         llPyqShare = getView().findViewById(R.id.ll_pyq_share);
-
+        llMainPubTime = getView().findViewById(R.id.ll_main_pub_time);
 
         llIvBack.setOnClickListener(this);
         llShare.setOnClickListener(this);
@@ -180,6 +185,12 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
         llQQBoShare.setOnClickListener(this);
         llWeixinBoShare.setOnClickListener(this);
         llPyqShare.setOnClickListener(this);
+
+
+        tvGz = getView().findViewById(R.id.tv_gzgg);
+        tvJg = getView().findViewById(R.id.tv_jggg);
+        tvGz.setOnClickListener(this);
+        tvJg.setOnClickListener(this);
 
 
     }
@@ -239,12 +250,16 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
     private String comid = "";
     private String imageUrl = "";
 
+    private String gzUrl = "";
+    private String jgEntity = "";
+    private String jgEntityId = "";
+
     private void requestData() {
 
         if (!NetUtil.isNetworkConnected(getActivity())) {
             sggjycgtableDetailStatusView.showNoNetwork();
         } else {
-
+            sggjycgtableDetailStatusView.showLoading();
             if (AppSharePreferenceMgr.contains(getContext(), EventMessage.LOGIN_SUCCSS)) {
                 List<UserProfile> users = DatabaseManager.getInstance().getDao().loadAll();
                 for (int i = 0; i < users.size(); i++) {
@@ -279,7 +294,25 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
                                 }
 
                                 if ("200".equals(status)) {
+                                    sggjycgtableDetailStatusView.showContent();
                                     final JSONObject data = object.getJSONObject("data");
+                                    //判断是否有更正和结果
+                                    //1、判断有误更正
+                                    final JSONArray arrayGz = data.getJSONArray("listGzUrl");
+                                    //2、判断有无结果
+                                    final JSONArray arrayJg = data.getJSONArray("listJgId");
+                                    if (arrayGz != null) {
+                                        gzUrl = arrayGz.getString(arrayGz.size() - 1);
+                                    } else {
+                                        tvGz.setVisibility(View.GONE);
+                                    }
+                                    if (arrayJg != null) {
+                                        JSONObject list = arrayJg.getJSONObject(arrayJg.size() - 1);
+                                        jgEntity = list.getString("entity");
+                                        jgEntityId = list.getString("entityId");
+                                    } else {
+                                        tvJg.setVisibility(View.GONE);
+                                    }
                                     String reportTitle = data.getString("reportTitle");
                                     shareUrl = data.getString("url");
                                     shareTitle = reportTitle;
@@ -294,30 +327,12 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
                                     } else {
                                         tvArea.setText("/");
                                     }
-                                    String noticeType = data.getString("noticeType");
-                                    if (!TextUtils.isEmpty(noticeType)) {
-                                        tvMainPubType.setText(noticeType);
-                                    } else {
-                                        tvMainPubType.setText("/");
-                                    }
                                     String purchasingType = data.getString("purchasingType");
                                     shareContent = purchasingType;
                                     if (!TextUtils.isEmpty(purchasingType)) {
                                         tvMainCaigouType.setText(purchasingType);
                                     } else {
                                         tvMainCaigouType.setText("/");
-                                    }
-                                    String openingTime = data.getString("openingTime");
-                                    if (!TextUtils.isEmpty(openingTime)) {
-                                        tvDataBeginTime.setText(openingTime);
-                                    } else {
-                                        tvDataBeginTime.setText("/");
-                                    }
-                                    String deadline = data.getString("deadline");
-                                    if (!TextUtils.isEmpty(deadline)) {
-                                        tvMainDeadTime.setText(deadline);
-                                    } else {
-                                        tvMainDeadTime.setText("/");
                                     }
                                     String entryNum = data.getString("entryNum");
                                     if (!TextUtils.isEmpty(entryNum)) {
@@ -397,6 +412,15 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
                                     } else {
                                         tvOwerPinshen.setText("/");
                                     }
+
+                                    String sysTime = data.getString("systime");
+                                    if (!TextUtils.isEmpty(sysTime)) {
+                                        tvPubTime.setText(sysTime.substring(0, 10));
+                                    } else {
+                                        tvOwerDailiren.setText("/");
+                                        llMainPubTime.setVisibility(View.GONE);
+                                    }
+
                                     String purchasingAgentContact = data.getString("purchasingAgentContact");
                                     if (!TextUtils.isEmpty(purchasingAgentContact)) {
                                         tvOwerDailiren.setText(purchasingAgentContact);
@@ -412,7 +436,7 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
                                     String specialFields = data.getString("specialFields");
                                     if (!TextUtils.isEmpty(specialFields)) {
                                         llBucai.setVisibility(View.VISIBLE);
-                                        String s = specialFields.replace("*", "").replace("</", "\n").replace("<","\n\n");
+                                        String s = specialFields.replace("*", "").replace("</", "\n").replace("<", "\n\n");
                                         tvBucai.setText(s);
                                     } else {
                                         llBucai.setVisibility(View.GONE);
@@ -437,9 +461,26 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
 
                                 final JSONObject object = JSON.parseObject(jiemi);
                                 String status = object.getString("status");
-                                final JSONObject data = object.getJSONObject("data");
                                 if ("200".equals(status)) {
                                     sggjycgtableDetailStatusView.showContent();
+                                    final JSONObject data = object.getJSONObject("data");
+                                    //判断是否有更正和结果
+                                    //1、判断有误更正
+                                    final JSONArray arrayGz = data.getJSONArray("listGzUrl");
+                                    //2、判断有无结果
+                                    final JSONArray arrayJg = data.getJSONArray("listJgId");
+                                    if (arrayGz != null) {
+                                        gzUrl = arrayGz.getString(arrayGz.size() - 1);
+                                    } else {
+                                        tvGz.setVisibility(View.GONE);
+                                    }
+                                    if (arrayJg != null) {
+                                        JSONObject list = arrayJg.getJSONObject(arrayJg.size() - 1);
+                                        jgEntity = list.getString("entity");
+                                        jgEntityId = list.getString("entityId");
+                                    } else {
+                                        tvJg.setVisibility(View.GONE);
+                                    }
                                     String reportTitle = data.getString("reportTitle");
                                     shareUrl = data.getString("url");
                                     shareTitle = reportTitle;
@@ -454,30 +495,12 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
                                     } else {
                                         tvArea.setText("/");
                                     }
-                                    String noticeType = data.getString("noticeType");
-                                    if (!TextUtils.isEmpty(noticeType)) {
-                                        tvMainPubType.setText(noticeType);
-                                    } else {
-                                        tvMainPubType.setText("/");
-                                    }
                                     String purchasingType = data.getString("purchasingType");
                                     shareContent = purchasingType;
                                     if (!TextUtils.isEmpty(purchasingType)) {
                                         tvMainCaigouType.setText(purchasingType);
                                     } else {
                                         tvMainCaigouType.setText("/");
-                                    }
-                                    String openingTime = data.getString("openingTime");
-                                    if (!TextUtils.isEmpty(openingTime)) {
-                                        tvDataBeginTime.setText(openingTime);
-                                    } else {
-                                        tvDataBeginTime.setText("/");
-                                    }
-                                    String deadline = data.getString("deadline");
-                                    if (!TextUtils.isEmpty(deadline)) {
-                                        tvMainDeadTime.setText(deadline);
-                                    } else {
-                                        tvMainDeadTime.setText("/");
                                     }
                                     String entryNum = data.getString("entryNum");
                                     if (!TextUtils.isEmpty(entryNum)) {
@@ -557,6 +580,14 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
                                     } else {
                                         tvOwerPinshen.setText("/");
                                     }
+
+                                    String sysTime = data.getString("systime");
+                                    if (!TextUtils.isEmpty(sysTime)) {
+                                        tvPubTime.setText(sysTime.substring(0, 10));
+                                    } else {
+                                        tvOwerDailiren.setText("/");
+                                        llMainPubTime.setVisibility(View.GONE);
+                                    }
                                     String purchasingAgentContact = data.getString("purchasingAgentContact");
                                     if (!TextUtils.isEmpty(purchasingAgentContact)) {
                                         tvOwerDailiren.setText(purchasingAgentContact);
@@ -572,7 +603,7 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
                                     String specialFields = data.getString("specialFields");
                                     if (!TextUtils.isEmpty(specialFields)) {
                                         llBucai.setVisibility(View.VISIBLE);
-                                        String s = specialFields.replace("*", "").replace("</", "\n").replace("<","\n\n");
+                                        String s = specialFields.replace("*", "").replace("</", "\n").replace("<", "\n\n");
                                         tvBucai.setText(s);
                                     } else {
                                         llBucai.setVisibility(View.GONE);
@@ -589,6 +620,7 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
         }
 
     }
+
     private Share mShare = new Share();
     private PromptDialog promptDialog = null;
 
@@ -605,7 +637,33 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
         mShare.setDescription(shareContent);
         mShare.setImageUrl(null);
         mShare.setUrl(BiaoXunTongApi.SHARE_URL + shareUrl);
+        Intent intent = null;
         switch (view.getId()) {
+            case R.id.tv_gzgg:
+                intent = new Intent(getActivity(), BrowserActivity.class);
+                intent.putExtra("url", gzUrl);
+                intent.putExtra("title", "更正公告");
+                startActivity(intent);
+                break;
+            case R.id.tv_jggg:
+                Log.d("HIUASDSABDBSADA", "哈哈哈为：" + jgEntity + "___" + jgEntityId);
+                if ("xjggg".equals(jgEntity) || "sjggg".equals(jgEntity) || "sggjy".equals(jgEntity) || "sggjycgjgtable".equals(jgEntity)) {
+                    intent = new Intent(getActivity(), ResultXjgggDetailActivity.class);
+                    intent.putExtra("entityId", Integer.valueOf(jgEntityId));
+                    intent.putExtra("entity", jgEntity);
+                    intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
+                    startActivity(intent);
+
+                } else if ("sggjyzbjg".equals(jgEntity) || "sggjycgjgrow".equals(jgEntity) || "sggjyjgcgtable".equals(jgEntity)) {
+                    intent = new Intent(getActivity(), ResultSggjyzbjgDetailActivity.class);
+                    intent.putExtra("entityId", Integer.valueOf(jgEntityId));
+                    intent.putExtra("entity", jgEntity);
+                    intent.putExtra("ajaxlogtype", "0");
+                    intent.putExtra("mId", "");
+                    startActivity(intent);
+                }
+                break;
             case R.id.ll_weibo_share:
                 OpenBuilder.with(getActivity())
                         .useWeibo(OpenConstant.WB_APP_KEY)
@@ -639,7 +697,7 @@ public class IndexSggjycgtableDetailFragment extends BaseFragment implements Vie
                             public void onCancel() {
                                 ToastUtil.shortToast(getContext(), "分享取消");
                             }
-                        },this);
+                        }, this);
                 break;
             case R.id.ll_chat_share:
                 OpenBuilder.with(getActivity())
