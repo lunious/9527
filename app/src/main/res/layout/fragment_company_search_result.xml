@@ -19,7 +19,7 @@
             app:srlDrawableProgressSize="@dimen/d14"
             app:srlDrawableSize="@dimen/d14"
             app:srlTextSizeTime="@dimen/d12"
-            app:srlTextSizeTitle="@dimen/s14" />
+            app:srlTextSizeTitle="@dimen/d14" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/company_search_result_recycler"

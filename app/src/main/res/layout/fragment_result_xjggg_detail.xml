@@ -45,7 +45,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#ff434343"
-                        android:textSize="@dimen/s18" />
+                        android:textSize="@dimen/d18" />
 
 
                     <LinearLayout
@@ -68,10 +68,10 @@
                                 android:layout_height="wrap_content"
                                 android:text="比选公告"
                                 android:textColor="@color/main_status_blue"
-                                android:textSize="@dimen/s14" />
+                                android:textSize="@dimen/d14" />
 
                             <View
-                                android:layout_width="@dimen/p2"
+                                android:layout_width="@dimen/d1"
                                 android:layout_height="match_parent"
                                 android:layout_marginBottom="@dimen/d4"
                                 android:layout_marginLeft="@dimen/d6"
@@ -87,7 +87,7 @@
                             android:layout_height="wrap_content"
                             android:text="项目编号:"
                             android:textColor="@color/main_text_color"
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/d14" />
 
                         <android.support.v7.widget.AppCompatTextView
                             android:id="@+id/tv_pu_num"
@@ -95,7 +95,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/d10"
                             android:text=""
-                            android:textSize="@dimen/s14" />
+                            android:textSize="@dimen/d14" />
 
 
                     </LinearLayout>
@@ -108,7 +108,7 @@
                         android:layout_marginTop="@dimen/d12"
                         android:text=""
                         android:textColor="#ff999999"
-                        android:textSize="@dimen/s14"
+                        android:textSize="@dimen/d14"
                         android:visibility="gone" />
 
                     <RelativeLayout
@@ -129,7 +129,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="2017-1-1"
                                 android:textColor="@color/status_text_color"
-                                android:textSize="@dimen/s14" />
+                                android:textSize="@dimen/d14" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
@@ -137,7 +137,7 @@
                                 android:layout_marginLeft="@dimen/d4"
                                 android:text="定标"
                                 android:textColor="@color/main_status_red"
-                                android:textSize="@dimen/s14" />
+                                android:textSize="@dimen/d14" />
                         </LinearLayout>
 
 
@@ -161,7 +161,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="2017-1-1"
                                 android:textColor="@color/status_text_color"
-                                android:textSize="@dimen/s14" />
+                                android:textSize="@dimen/d14" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:layout_width="wrap_content"
@@ -169,14 +169,14 @@
                                 android:layout_marginLeft="@dimen/d4"
                                 android:text="发布"
                                 android:textColor="@color/main_text_color"
-                                android:textSize="@dimen/s14" />
+                                android:textSize="@dimen/d14" />
 
                         </LinearLayout>
                     </RelativeLayout>
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/p35"
+                        android:layout_height="@dimen/d16"
                         android:layout_marginTop="@dimen/d16"
                         android:background="#88eeeeee" />
 
@@ -199,7 +199,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="采购项目名称"
                                 android:textColor="#ff434343"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_ower_cainame"
@@ -207,13 +207,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/d4"
                                 android:text=""
-                                android:textSize="@dimen/s15" />
+                                android:textSize="@dimen/d15" />
 
                         </LinearLayout>
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/p1"
+                            android:layout_height="1px"
                             android:layout_marginTop="@dimen/d12"
                             android:background="@color/view" />
 
@@ -228,7 +228,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="采购人"
                                 android:textColor="#ff434343"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_ower_name"
@@ -236,13 +236,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/d4"
                                 android:text=""
-                                android:textSize="@dimen/s15" />
+                                android:textSize="@dimen/d15" />
 
                         </LinearLayout>
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/p1"
+                            android:layout_height="1px"
                             android:layout_marginTop="@dimen/d12"
                             android:background="@color/view" />
 
@@ -257,7 +257,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="采购代理机构名称"
                                 android:textColor="#ff434343"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_ower_daili"
@@ -265,13 +265,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/d4"
                                 android:text=""
-                                android:textSize="@dimen/s15" />
+                                android:textSize="@dimen/d15" />
 
                         </LinearLayout>
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/p1"
+                            android:layout_height="1px"
                             android:layout_marginTop="@dimen/d12"
                             android:background="@color/view" />
 
@@ -286,7 +286,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="项目包个数:"
                                 android:textColor="#ff434343"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_ower_baoshu"
@@ -294,13 +294,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/d4"
                                 android:text=""
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                         </LinearLayout>
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/p1"
+                            android:layout_height="1px"
                             android:layout_marginTop="@dimen/d12"
                             android:background="@color/view" />
 
@@ -315,7 +315,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="采购结果总金额"
                                 android:textColor="#ff434343"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_ower_jine"
@@ -323,13 +323,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/d4"
                                 android:textColor="#ff434343"
-                                android:textSize="@dimen/s15" />
+                                android:textSize="@dimen/d15" />
 
                         </LinearLayout>
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/p1"
+                            android:layout_height="1px"
                             android:layout_marginTop="@dimen/d12"
                             android:background="@color/view" />
 
@@ -344,7 +344,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="各包中标/成交供应商名称、地址及报价"
                                 android:textColor="#ff434343"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_ower_baojia"
@@ -352,13 +352,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/d4"
                                 android:text=""
-                                android:textSize="@dimen/s15" />
+                                android:textSize="@dimen/d15" />
 
                         </LinearLayout>
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/p1"
+                            android:layout_height="1px"
                             android:layout_marginTop="@dimen/d12"
                             android:background="@color/view" />
 
@@ -373,7 +373,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="评审委员会成员名单"
                                 android:textColor="#ff434343"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_ower_mingdan"
@@ -381,13 +381,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/d4"
                                 android:text=""
-                                android:textSize="@dimen/s15" />
+                                android:textSize="@dimen/d15" />
 
                         </LinearLayout>
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/p1"
+                            android:layout_height="1px"
                             android:layout_marginTop="@dimen/d12"
                             android:background="@color/view" />
 
@@ -403,7 +403,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="候选人公告连接:"
                                 android:textColor="#ff434343"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                             <TextView
                                 android:id="@+id/tv_ower_lianxi_link"
@@ -412,13 +412,13 @@
                                 android:layout_marginLeft="@dimen/d4"
                                 android:text=""
                                 android:textColor="@color/main_status_blue"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                         </LinearLayout>
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/p1"
+                            android:layout_height="1px"
                             android:layout_marginTop="@dimen/d12"
                             android:background="@color/view" />
 
@@ -433,7 +433,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="评审情况:"
                                 android:textColor="#ff434343"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_ower_pinshen"
@@ -442,13 +442,13 @@
                                 android:layout_marginLeft="@dimen/d4"
                                 android:text=""
                                 android:textColor="@color/main_status_blue"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                         </LinearLayout>
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/p1"
+                            android:layout_height="1px"
                             android:layout_marginTop="@dimen/d12"
                             android:background="@color/view" />
 
@@ -463,7 +463,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="采购人地址和联系方式"
                                 android:textColor="#ff434343"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_ower_lianxi"
@@ -471,13 +471,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/d4"
                                 android:text=""
-                                android:textSize="@dimen/s15" />
+                                android:textSize="@dimen/d15" />
 
                         </LinearLayout>
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/p1"
+                            android:layout_height="1px"
                             android:layout_marginTop="@dimen/d12"
                             android:background="@color/view" />
 
@@ -492,7 +492,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="采购代理机构地址和联系方式"
                                 android:textColor="#ff434343"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_ower_lianxi2"
@@ -500,13 +500,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/d4"
                                 android:text=""
-                                android:textSize="@dimen/s15" />
+                                android:textSize="@dimen/d15" />
 
                         </LinearLayout>
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/p1"
+                            android:layout_height="1px"
                             android:layout_marginTop="@dimen/d12"
                             android:background="@color/view" />
 
@@ -521,7 +521,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="采购项目联系人姓名和电话"
                                 android:textColor="#ff434343"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_ower_lianxi_number"
@@ -529,13 +529,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/d4"
                                 android:text=""
-                                android:textSize="@dimen/s15" />
+                                android:textSize="@dimen/d15" />
 
                         </LinearLayout>
 
                         <View
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/p1"
+                            android:layout_height="1px"
                             android:layout_marginTop="@dimen/d12"
                             android:background="@color/view" />
 
@@ -552,7 +552,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="补充信息"
                                 android:textColor="#ff434343"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
                             <android.support.v7.widget.AppCompatTextView
                                 android:id="@+id/tv_bucai"
@@ -560,11 +560,11 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/d10"
                                 android:text=""
-                                android:textSize="@dimen/s15" />
+                                android:textSize="@dimen/d15" />
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/p1"
+                                android:layout_height="1px"
                                 android:layout_marginTop="@dimen/d10"
                                 android:background="#eeeeee" />
 
@@ -584,7 +584,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="公告原文"
                                 android:textColor="@color/main_status_blue"
-                                android:textSize="@dimen/s16" />
+                                android:textSize="@dimen/d16" />
 
 
                         </LinearLayout>

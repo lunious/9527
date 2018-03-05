@@ -11,7 +11,7 @@
     android:color="#ffffff"设置边框的颜色
     -->
     <stroke
-        android:width="@dimen/p1"
+        android:width="1px"
         android:color="#66eeeeee"
         android:dashWidth="@dimen/d0" />
 

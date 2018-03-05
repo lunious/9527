@@ -35,14 +35,14 @@
                 android:layout_weight="1"
                 android:text="清理缓存"
                 android:textColor="@color/main_text_color"
-                android:textSize="@dimen/s14" />
+                android:textSize="@dimen/d14" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_cache_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#6c6c6c"
-                android:textSize="@dimen/s14"
+                android:textSize="@dimen/d14"
                 tools:ignore="RelativeOverlap"
                 tools:text="13M" />
         </LinearLayout>
@@ -68,7 +68,7 @@
                 android:layout_weight="1"
                 android:text="意见反馈"
                 android:textColor="@color/main_text_color"
-                android:textSize="@dimen/s14" />
+                android:textSize="@dimen/d14" />
 
             <ImageView
                 android:layout_width="@dimen/d16"
@@ -99,13 +99,13 @@
                 android:layout_weight="1"
                 android:text="检查更新"
                 android:textColor="@color/main_text_color"
-                android:textSize="@dimen/s14" />
+                android:textSize="@dimen/d14" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_update"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/s14"
+                android:textSize="@dimen/d14"
                 tools:ignore="RelativeOverlap"
                 tools:text="" />
 
@@ -134,7 +134,7 @@
                 android:gravity="center"
                 android:text="退出登陆"
                 android:textColor="@color/main_status_white"
-                android:textSize="@dimen/s16" />
+                android:textSize="@dimen/d16" />
         </RelativeLayout>
     </LinearLayout>
 

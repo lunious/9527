@@ -91,7 +91,7 @@
                     android:paddingTop="@dimen/d4"
                     android:text="下次再说"
                     android:textColor="@color/main_status_white"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/d14" />
 
 
                 <android.support.v7.widget.AppCompatTextView
@@ -109,7 +109,7 @@
                     android:paddingTop="@dimen/d4"
                     android:text="立即升级"
                     android:textColor="@color/main_status_white"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/d14" />
 
 
                 <android.support.v7.widget.AppCompatTextView
@@ -123,7 +123,7 @@
                     android:paddingTop="@dimen/d2"
                     android:text="新版本正在路上，请稍候！"
                     android:textColor="@color/light_blue"
-                    android:textSize="@dimen/s14"
+                    android:textSize="@dimen/d14"
                     android:visibility="gone" />
 
 

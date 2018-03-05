@@ -87,7 +87,7 @@
                     android:maxLines="1"
                     android:padding="@dimen/d5"
                     android:text="地区"
-                    android:textSize="@dimen/s15" />
+                    android:textSize="@dimen/d15" />
             </LinearLayout>
 
             <View

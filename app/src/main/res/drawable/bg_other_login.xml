@@ -11,7 +11,7 @@
     android:color="#ffffff"设置边框的颜色
     -->
     <stroke android:dashWidth="@dimen/d0"
-        android:width="@dimen/p2"
+        android:width="2px"
         android:color="@color/main_status_blue"/>
 
     <!--设置填充色，也就是咱们画的这个shape的颜色-->

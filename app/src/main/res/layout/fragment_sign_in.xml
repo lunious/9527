@@ -33,7 +33,7 @@
             android:background="@color/main_theme_color"
             tl:tl_divider_color="@color/main_status_white"
             tl:tl_divider_padding="@dimen/d12"
-            tl:tl_divider_width="@dimen/p2"
+            tl:tl_divider_width="2px"
             tl:tl_indicator_color="@color/main_status_white"
             tl:tl_indicator_height="@dimen/d4"
             tl:tl_indicator_style="TRIANGLE"
@@ -44,7 +44,7 @@
             tl:tl_textAllCaps="true"
             tl:tl_textSelectColor="@color/main_status_white"
             tl:tl_textUnselectColor="@color/main_status_white"
-            tl:tl_textsize="@dimen/s16" />
+            tl:tl_textsize="@dimen/d16" />
 
         <android.support.v4.view.ViewPager
             android:id="@+id/result_vp"
@@ -72,7 +72,7 @@
                 android:paddingTop="@dimen/d2"
                 android:text="立即注册>>"
                 android:textColor="@color/main_theme_color"
-                android:textSize="@dimen/s14" />
+                android:textSize="@dimen/d14" />
 
 
             <android.support.v7.widget.AppCompatTextView
@@ -86,7 +86,7 @@
                 android:paddingTop="@dimen/d2"
                 android:text="忘记密码？"
                 android:textColor="@color/search_hint"
-                android:textSize="@dimen/s14" />
+                android:textSize="@dimen/d14" />
         </RelativeLayout>
 
 
@@ -118,7 +118,7 @@
 
                 <View
                     android:layout_width="@dimen/d0"
-                    android:layout_height="@dimen/p1"
+                    android:layout_height="1px"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="#dddddd" />
@@ -130,11 +130,11 @@
                     android:gravity="center"
                     android:text="其它登陆方式"
                     android:textColor="#cacaca"
-                    android:textSize="@dimen/s12" />
+                    android:textSize="@dimen/d12" />
 
                 <View
                     android:layout_width="@dimen/d0"
-                    android:layout_height="@dimen/p1"
+                    android:layout_height="1px"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:background="#dddddd" />
@@ -174,7 +174,7 @@
                         android:gravity="center"
                         android:text="QQ登录"
                         android:textColor="@color/main_status_blue"
-                        android:textSize="@dimen/s16" />
+                        android:textSize="@dimen/d16" />
 
                 </LinearLayout>
 
@@ -204,7 +204,7 @@
                         android:gravity="center"
                         android:text="微信登录"
                         android:textColor="@color/main_status_blue"
-                        android:textSize="@dimen/s16" />
+                        android:textSize="@dimen/d16" />
                 </LinearLayout>
 
 

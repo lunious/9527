@@ -58,7 +58,7 @@
                 tools:ignore="UseCompoundDrawables">
 
                 <View
-                    android:layout_width="@dimen/p1"
+                    android:layout_width="1px"
                     android:layout_height="wrap_content"
                     android:background="#9d9d9d"
                     android:layout_marginTop="@dimen/d12"

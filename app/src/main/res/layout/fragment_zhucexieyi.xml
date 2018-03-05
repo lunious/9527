@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textSize="@dimen/s16"
+            android:textSize="@dimen/d16"
             android:lineSpacingMultiplier = "1.2"
             android:text="欢迎使用鲁班标讯通，本协议自开始使用APP时即产生法律效力。成都鲁班建业科技股份有限公司（以下简称鲁班建业科技,也简称鲁班建业通）可能会更新协议内容，并通过网站公告来通知用户。更新结果将在鲁班建业科技通知之日起生效。协议包括鲁班建业通网站内容的使用政策、鲁班建业通隐私政策。您在使用鲁班建业通提供的服务之前，应仔细阅读本服务公约。如您不同意本服务公约或随时对其的修改，您可以主动取消鲁班建业通提供的服务；您一旦使用鲁班建业通服务，即视为您已了解并完全同意本服务公约各项内容，并成为鲁班建业通用户（以下简称“用户”）。\n
 一.引言\n
