@@ -81,7 +81,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/p1"
+            android:layout_height="1px"
             android:layout_below="@+id/rl_time"
             android:layout_marginTop="@dimen/d6"
             android:background="@color/dark_view" />
