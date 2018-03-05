@@ -60,7 +60,7 @@
             android:gravity="center"
             android:text="搜索"
             android:textColor="@color/main_status_white"
-            android:textSize="@dimen/s16" />
+            android:textSize="@dimen/d16" />
 
 
     </LinearLayout>
@@ -88,7 +88,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@color/view"
-                android:dividerHeight="@dimen/p1"
+                android:dividerHeight="@dimen/d1"
                 android:paddingLeft="@dimen/d18">
 
             </com.lubanjianye.biaoxuntong.searchview.SearchListView>
@@ -100,7 +100,7 @@
                 android:background="#66eeeeee"
                 android:gravity="center"
                 android:text="清空搜索历史"
-                android:textSize="@dimen/s15"
+                android:textSize="@dimen/d15"
                 android:visibility="invisible" />
         </LinearLayout>
     </ScrollView>

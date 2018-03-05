@@ -21,9 +21,9 @@
         android:id="@+id/error_view_tv"
         style="@style/MultipleStatusView.Content"
         android:text="@string/error_view_hint"
-        android:paddingTop="@dimen/d10"
+        android:paddingTop="@dimen/d8"
         android:textColor="#6c6c6c"
-        android:textSize="@dimen/s16"/>
+        android:textSize="@dimen/d15"/>
     </LinearLayout>
 
 </LinearLayout>

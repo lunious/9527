@@ -18,7 +18,7 @@
             android:layout_height="@dimen/d50"
             app:srlDrawableProgressSize="@dimen/d14"
             app:srlDrawableSize="@dimen/d14"
-            app:srlTextSizeTime="@dimen/s12"
+            app:srlTextSizeTime="@dimen/d12"
             app:srlTextSizeTitle="@dimen/s14" />
 
         <android.support.v7.widget.RecyclerView
@@ -32,7 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/d50"
             app:srlDrawableProgressSize="@dimen/d14"
-            app:srlTextSizeTitle="@dimen/s14" />
+            app:srlTextSizeTitle="@dimen/d14" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
 

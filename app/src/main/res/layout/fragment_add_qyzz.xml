@@ -40,20 +40,20 @@
                 android:layout_height="wrap_content"
                 android:text="设置企业资质条件"
                 android:textColor="#6c6c6c"
-                android:textSize="@dimen/s15" />
+                android:textSize="@dimen/d15" />
             <android.support.v7.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="(条件可左右滑动)"
                 android:textColor="#6c6c6c"
                 android:paddingLeft="@dimen/d4"
-                android:textSize="@dimen/s12" />
+                android:textSize="@dimen/d12" />
 
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/p1"
+            android:layout_height="@dimen/d1"
             android:background="#eeeeee" />
 
     </LinearLayout>
@@ -86,7 +86,7 @@
                 android:paddingStart="@dimen/d6"
                 android:text="资质类型"
                 android:textColor="#6d6d6d"
-                android:textSize="@dimen/s15" />
+                android:textSize="@dimen/d15" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_dl"
@@ -103,7 +103,7 @@
                 android:drawablePadding="@dimen/d4"
                 android:text="大类"
                 android:textColor="#6d6d6d"
-                android:textSize="@dimen/s15" />
+                android:textSize="@dimen/d15" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_xl"
@@ -120,7 +120,7 @@
                 android:paddingStart="@dimen/d6"
                 android:text="小类"
                 android:textColor="#6d6d6d"
-                android:textSize="@dimen/s15" />
+                android:textSize="@dimen/d15" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_zy"
@@ -137,7 +137,7 @@
                 android:drawablePadding="@dimen/d4"
                 android:text="专业"
                 android:textColor="#6d6d6d"
-                android:textSize="@dimen/s15" />
+                android:textSize="@dimen/d15" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_dj"
@@ -154,7 +154,7 @@
                 android:paddingStart="@dimen/d6"
                 android:text="等级"
                 android:textColor="#6d6d6d"
-                android:textSize="@dimen/s15" />
+                android:textSize="@dimen/d15" />
 
             <android.support.v7.widget.AppCompatTextView
                 android:id="@+id/tv_qy"
@@ -171,7 +171,7 @@
                 android:paddingStart="@dimen/d6"
                 android:text="地区范围"
                 android:textColor="#6d6d6d"
-                android:textSize="@dimen/s15" />
+                android:textSize="@dimen/d15" />
 
             <Button
                 android:id="@+id/btn_add"
@@ -186,7 +186,7 @@
                 android:gravity="center"
                 android:text="添加"
                 android:textColor="@color/main_status_white"
-                android:textSize="@dimen/s15" />
+                android:textSize="@dimen/d15" />
 
         </LinearLayout>
 
@@ -195,7 +195,7 @@
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/p1"
+        android:layout_height="@dimen/d1"
         android:background="#eeeeee" />
 
     <LinearLayout
@@ -234,7 +234,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text=""
-                            android:textSize="@dimen/s16" />
+                            android:textSize="@dimen/d16" />
                     </LinearLayout>
 
                 </HorizontalScrollView>
@@ -266,7 +266,7 @@
             android:gravity="center"
             android:text="提交"
             android:textColor="@color/main_status_white"
-            android:textSize="@dimen/s20"
+            android:textSize="@dimen/d20"
             android:visibility="visible" />
 
         <LinearLayout

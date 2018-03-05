@@ -47,7 +47,7 @@
                 android:maxLines="2"
                 android:text="工程招投标“打招呼”必登记"
                 android:textColor="#ff434343"
-                android:textSize="@dimen/s16" />
+                android:textSize="@dimen/d16" />
 
 
             <RelativeLayout
@@ -63,7 +63,7 @@
                     android:layout_marginRight="@dimen/d4"
                     android:text="2017-7-7"
                     android:textColor="#ffa0a0a0"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/d14" />
 
             </RelativeLayout>
 
@@ -75,7 +75,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/p1"
+        android:layout_height="@dimen/d1"
         android:layout_below="@+id/tv_item_time"
         android:layout_marginTop="@dimen/d8"
         android:layout_marginLeft="@dimen/d6"

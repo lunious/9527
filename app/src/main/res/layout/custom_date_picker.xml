@@ -18,7 +18,7 @@
             android:padding="@dimen/d10"
             android:text="取消"
             android:textColor="@color/main_theme_color"
-            android:textSize="@dimen/s16" />
+            android:textSize="@dimen/d15" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -27,7 +27,7 @@
             android:layout_centerInParent="true"
             android:text="请选择时间"
             android:textColor="@color/main_theme_color"
-            android:textSize="@dimen/s18" />
+            android:textSize="@dimen/d16" />
 
         <TextView
             android:id="@+id/tv_select"
@@ -38,7 +38,7 @@
             android:padding="@dimen/d10"
             android:text="确定"
             android:textColor="@color/main_theme_color"
-            android:textSize="@dimen/s16" />
+            android:textSize="@dimen/d15" />
 
     </RelativeLayout>
 
@@ -75,7 +75,7 @@
                 android:gravity="center"
                 android:text="年"
                 android:textColor="@color/main_theme_color"
-                android:textSize="@dimen/s16" />
+                android:textSize="@dimen/d15" />
 
             <com.lubanjianye.biaoxuntong.util.datapicker.DatePickerView
                 android:id="@+id/month_pv"
@@ -90,7 +90,7 @@
                 android:gravity="center"
                 android:text="月"
                 android:textColor="@color/main_theme_color"
-                android:textSize="@dimen/s16" />
+                android:textSize="@dimen/d15" />
 
             <com.lubanjianye.biaoxuntong.util.datapicker.DatePickerView
                 android:id="@+id/day_pv"
@@ -105,7 +105,7 @@
                 android:gravity="center"
                 android:text="日"
                 android:textColor="@color/main_theme_color"
-                android:textSize="@dimen/s16" />
+                android:textSize="@dimen/d15" />
 
             <com.lubanjianye.biaoxuntong.util.datapicker.DatePickerView
                 android:id="@+id/hour_pv"
@@ -121,7 +121,7 @@
                 android:gravity="center"
                 android:text="时"
                 android:textColor="@color/main_theme_color"
-                android:textSize="@dimen/s16" />
+                android:textSize="@dimen/d15" />
 
             <com.lubanjianye.biaoxuntong.util.datapicker.DatePickerView
                 android:id="@+id/minute_pv"
@@ -137,7 +137,7 @@
                 android:gravity="center"
                 android:text="分"
                 android:textColor="@color/main_theme_color"
-                android:textSize="@dimen/s16" />
+                android:textSize="@dimen/d15" />
 
         </LinearLayout>
 

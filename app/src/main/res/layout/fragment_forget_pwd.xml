@@ -31,14 +31,14 @@
             android:textColor="#000000"
             android:textColorHint="#c9c9c9"
             android:textCursorDrawable="@null"
-            android:textSize="@dimen/s16" />
+            android:textSize="@dimen/d16" />
 
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/p8"
+        android:layout_height="@dimen/d4"
         android:layout_marginLeft="@dimen/d30"
         android:layout_marginRight="@dimen/d30"
         android:background="#f9eeeeee" />
@@ -68,7 +68,7 @@
             android:textColor="#000000"
             android:textColorHint="#c9c9c9"
             android:textCursorDrawable="@null"
-            android:textSize="@dimen/s16" />
+            android:textSize="@dimen/d16" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_new_sms_call"
@@ -84,7 +84,7 @@
             android:paddingTop="@dimen/d6"
             android:text="获取验证码"
             android:textColorHint="#c9c9c9"
-            android:textSize="@dimen/s14"
+            android:textSize="@dimen/d14"
             tools:ignore="RtlHardcoded" />
 
     </LinearLayout>
@@ -92,7 +92,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/p8"
+        android:layout_height="@dimen/d4"
         android:layout_marginLeft="@dimen/d30"
         android:layout_marginRight="@dimen/d30"
         android:background="#f9eeeeee" />
@@ -122,14 +122,14 @@
             android:textColor="#000000"
             android:textColorHint="#c9c9c9"
             android:textCursorDrawable="@null"
-            android:textSize="@dimen/s16" />
+            android:textSize="@dimen/d16" />
 
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/p8"
+        android:layout_height="@dimen/d4"
         android:layout_marginLeft="@dimen/d30"
         android:layout_marginRight="@dimen/d30"
         android:background="#f9eeeeee" />

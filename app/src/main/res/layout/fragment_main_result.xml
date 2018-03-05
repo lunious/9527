@@ -20,11 +20,11 @@
         tl:tl_textAllCaps="true"
         tl:tl_textSelectColor="@color/main_theme_color"
         tl:tl_textUnselectColor="#6c6c6c"
-        tl:tl_textsize="@dimen/s15" />
+        tl:tl_textsize="@dimen/d15" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/p1"
+        android:layout_height="@dimen/d1"
         android:background="#dddddd"/>
 
     <android.support.v4.view.ViewPager

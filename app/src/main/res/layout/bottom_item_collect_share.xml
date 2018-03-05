@@ -8,7 +8,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/p1"
+        android:layout_height="@dimen/d1"
         android:background="#eeeeee"/>
 
         <LinearLayout
@@ -45,7 +45,7 @@
                     android:layout_marginLeft="@dimen/d8"
                     android:text="收藏"
                     android:textColor="#6d6d6d"
-                    android:textSize="@dimen/s15"
+                    android:textSize="@dimen/d15"
                     tools:ignore="HardcodedText,RtlHardcoded" />
             </LinearLayout>
 
@@ -86,7 +86,7 @@
                     android:layout_marginLeft="@dimen/d8"
                     android:text="分享"
                     android:textColor="#6d6d6d"
-                    android:textSize="@dimen/s15"
+                    android:textSize="@dimen/d15"
                     tools:ignore="HardcodedText,RtlHardcoded" />
             </LinearLayout>
 

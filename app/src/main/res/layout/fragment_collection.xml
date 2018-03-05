@@ -36,7 +36,7 @@
             android:layout_height="@dimen/d38"
             android:text="立即登陆"
             android:textColor="@color/main_theme_color"
-            android:textSize="@dimen/s18"
+            android:textSize="@dimen/d18"
             android:background="@drawable/bg_login_button"
             android:layout_gravity="center_horizontal|center_vertical" />
 

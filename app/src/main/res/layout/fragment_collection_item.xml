@@ -20,7 +20,7 @@
             android:text="This is main title."
             android:textColor="#ff434343"
             android:layout_marginTop="@dimen/d6"
-            android:textSize="@dimen/s15" />
+            android:textSize="@dimen/d15" />
 
         <LinearLayout
             android:id="@+id/linear_temp"
@@ -38,7 +38,7 @@
                 android:maxLines="2"
                 android:text="area"
                 android:textColor="#ff999999"
-                android:textSize="@dimen/s13"
+                android:textSize="@dimen/d13"
                 android:visibility="gone" />
 
         </LinearLayout>
@@ -54,7 +54,7 @@
             android:paddingTop="@dimen/d4"
             android:text="type"
             android:textColor="@color/main_status_blue"
-            android:textSize="@dimen/s13"
+            android:textSize="@dimen/d13"
             android:visibility="gone" />
 
 
@@ -87,14 +87,14 @@
                     android:layout_marginRight="@dimen/d4"
                     android:text="2018-1-1"
                     android:textColor="#ffa0a0a0"
-                    android:textSize="@dimen/s13" />
+                    android:textSize="@dimen/d13" />
 
             </LinearLayout>
 
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/p1"
+                android:layout_height="@dimen/d1"
                 android:layout_below="@+id/ll"
                 android:layout_marginTop="@dimen/d8"
                 android:background="@color/dark_view" />

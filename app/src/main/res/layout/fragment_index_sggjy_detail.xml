@@ -45,7 +45,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="#ff434343"
-                        android:textSize="@dimen/s18" />
+                        android:textSize="@dimen/d18" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -59,7 +59,7 @@
                             android:layout_height="wrap_content"
                             android:text="成都"
                             android:textColor="#ff999999"
-                            android:textSize="@dimen/s15" />
+                            android:textSize="@dimen/d15" />
 
                         <RelativeLayout
                             android:layout_width="match_parent"
@@ -78,7 +78,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="2017-12-12"
-                                    android:textSize="@dimen/s15" />
+                                    android:textSize="@dimen/d15" />
 
                                 <android.support.v7.widget.AppCompatTextView
                                     android:layout_width="wrap_content"
@@ -86,7 +86,7 @@
                                     android:layout_marginLeft="@dimen/d10"
                                     android:text="截止"
                                     android:textColor="@color/main_status_red"
-                                    android:textSize="@dimen/s14" />
+                                    android:textSize="@dimen/d14" />
 
                             </LinearLayout>
 
@@ -102,7 +102,7 @@
                                 android:paddingTop="@dimen/d2"
                                 android:text="更正公告"
                                 android:textColor="@color/main_status_blue"
-                                android:textSize="@dimen/s14" />
+                                android:textSize="@dimen/d14" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -122,14 +122,14 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="2017-12-12"
-                                    android:textSize="@dimen/s15" />
+                                    android:textSize="@dimen/d15" />
 
                                 <android.support.v7.widget.AppCompatTextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="@dimen/d10"
                                     android:text="发布"
-                                    android:textSize="@dimen/s14" />
+                                    android:textSize="@dimen/d14" />
 
                             </LinearLayout>
 
@@ -145,7 +145,7 @@
                                 android:paddingTop="@dimen/d2"
                                 android:text="结果公告"
                                 android:textColor="@color/main_status_blue"
-                                android:textSize="@dimen/s14" />
+                                android:textSize="@dimen/d14" />
 
                         </RelativeLayout>
                     </LinearLayout>
@@ -153,7 +153,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/p35"
+                        android:layout_height="@dimen/d16"
                         android:layout_marginTop="@dimen/d12"
                         android:background="#88eeeeee" />
 
@@ -169,7 +169,7 @@
                         android:lineSpacingMultiplier="1.2"
                         android:text="副标题"
                         android:textColor="#434343"
-                        android:textSize="@dimen/s15" />
+                        android:textSize="@dimen/d15" />
 
                     <android.support.v7.widget.AppCompatTextView
                         android:id="@+id/tv1"
@@ -178,11 +178,11 @@
                         android:layout_marginTop="@dimen/d20"
                         android:lineSpacingMultiplier="1.5"
                         android:text=""
-                        android:textSize="@dimen/s16" />
+                        android:textSize="@dimen/d16" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/p1"
+                        android:layout_height="@dimen/d1"
                         android:layout_marginTop="@dimen/d12"
                         android:background="@color/view" />
 
@@ -193,11 +193,11 @@
                         android:layout_marginTop="@dimen/d12"
                         android:lineSpacingMultiplier="1.5"
                         android:text=""
-                        android:textSize="@dimen/s16" />
+                        android:textSize="@dimen/d16" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/p1"
+                        android:layout_height="@dimen/d1"
                         android:layout_marginTop="@dimen/d12"
                         android:background="@color/view" />
 
@@ -208,11 +208,11 @@
                         android:layout_marginTop="@dimen/d12"
                         android:lineSpacingMultiplier="1.5"
                         android:text=""
-                        android:textSize="@dimen/s16" />
+                        android:textSize="@dimen/d16" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/p1"
+                        android:layout_height="@dimen/d1"
                         android:layout_marginTop="@dimen/d12"
                         android:background="@color/view" />
 
@@ -223,11 +223,11 @@
                         android:layout_marginTop="@dimen/d12"
                         android:lineSpacingMultiplier="1.5"
                         android:text=""
-                        android:textSize="@dimen/s16" />
+                        android:textSize="@dimen/d16" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/p1"
+                        android:layout_height="@dimen/d1"
                         android:layout_marginTop="@dimen/d12"
                         android:background="@color/view" />
 
@@ -238,11 +238,11 @@
                         android:layout_marginTop="@dimen/d12"
                         android:lineSpacingMultiplier="1.5"
                         android:text=""
-                        android:textSize="@dimen/s16" />
+                        android:textSize="@dimen/d16" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/p1"
+                        android:layout_height="@dimen/d1"
                         android:layout_marginTop="@dimen/d12"
                         android:background="@color/view" />
 
@@ -253,11 +253,11 @@
                         android:layout_marginTop="@dimen/d12"
                         android:lineSpacingMultiplier="1.5"
                         android:text=""
-                        android:textSize="@dimen/s16" />
+                        android:textSize="@dimen/d16" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/p1"
+                        android:layout_height="@dimen/d1"
                         android:layout_marginTop="@dimen/d12"
                         android:background="@color/view" />
 
@@ -268,11 +268,11 @@
                         android:layout_marginTop="@dimen/d12"
                         android:lineSpacingMultiplier="1.5"
                         android:text=""
-                        android:textSize="@dimen/s16" />
+                        android:textSize="@dimen/d16" />
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/p1"
+                        android:layout_height="@dimen/d1"
                         android:layout_marginTop="@dimen/d12"
                         android:background="@color/view" />
 
@@ -290,7 +290,7 @@
                             android:layout_alignParentLeft="true"
                             android:text="公告原文"
                             android:textColor="@color/main_status_blue"
-                            android:textSize="@dimen/s16" />
+                            android:textSize="@dimen/d16" />
 
 
                     </RelativeLayout>

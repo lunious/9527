@@ -15,8 +15,8 @@
             android:layout_height="@dimen/d60"
             app:srlDrawableProgressSize="@dimen/d15"
             app:srlDrawableSize="@dimen/d15"
-            app:srlTextSizeTime="@dimen/s12"
-            app:srlTextSizeTitle="@dimen/s15" />
+            app:srlTextSizeTime="@dimen/d12"
+            app:srlTextSizeTitle="@dimen/d15" />
 
         <com.classic.common.MultipleStatusView
             android:id="@+id/index_hyzx_list_status_view"

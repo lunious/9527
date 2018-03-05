@@ -24,7 +24,7 @@
             android:paddingTop="@dimen/d6"
             android:text="绑定手机号，可查看全部详情"
             android:textColor="@color/main_status_blue"
-            android:textSize="@dimen/s16" />
+            android:textSize="@dimen/d16" />
     </LinearLayout>
 
     <LinearLayout
@@ -57,14 +57,14 @@
             android:textColor="#ff434343"
             android:textColorHint="#c9c9c9"
             android:textCursorDrawable="@null"
-            android:textSize="@dimen/s16" />
+            android:textSize="@dimen/d16" />
 
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/p6"
+        android:layout_height="@dimen/d4"
         android:layout_marginLeft="@dimen/d30"
         android:layout_marginRight="@dimen/d30"
         android:background="@color/main_status_blue" />
@@ -94,7 +94,7 @@
             android:textColor="#ff434343"
             android:textColorHint="#c9c9c9"
             android:textCursorDrawable="@null"
-            android:textSize="@dimen/s16" />
+            android:textSize="@dimen/d16" />
 
         <android.support.v7.widget.AppCompatTextView
             android:id="@+id/tv_bind_sms_call"
@@ -110,13 +110,13 @@
             android:paddingTop="@dimen/d6"
             android:text="@string/register_sms_hint"
             android:textColorHint="#c9c9c9"
-            android:textSize="@dimen/s14" />
+            android:textSize="@dimen/d14" />
     </LinearLayout>
 
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/p6"
+        android:layout_height="@dimen/d4"
         android:layout_marginLeft="@dimen/d30"
         android:layout_marginRight="@dimen/d30"
         android:background="@color/main_status_blue" />
@@ -132,5 +132,5 @@
         android:gravity="center"
         android:text="点击绑定"
         android:textColor="@color/main_status_white"
-        android:textSize="@dimen/s16" />
+        android:textSize="@dimen/d16" />
 </LinearLayout>

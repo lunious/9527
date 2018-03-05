@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/iv_image"
         android:text="正在下载中..."
-        android:textSize="@dimen/s14" />
+        android:textSize="@dimen/d14" />
 
     <ProgressBar
         android:id="@+id/pb_progress"

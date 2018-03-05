@@ -30,7 +30,7 @@
             android:layout_weight="8"
             android:background="@drawable/bg_searchbox"
             android:textColor="#ff434343"
-            android:textSize="@dimen/s14"
+            android:textSize="@dimen/d14"
             app:iconifiedByDefault="false"
             app:queryBackground="@color/transparent"
             app:queryHint="请输入要绑定的企业名称" />

@@ -52,7 +52,7 @@
                 android:paddingTop="@dimen/d2"
                 android:text="选择图片"
                 android:textColor="@color/main_status_white"
-                android:textSize="@dimen/s16" />
+                android:textSize="@dimen/d16" />
 
         </FrameLayout>
     </RelativeLayout>

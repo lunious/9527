@@ -17,7 +17,7 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="@dimen/d16"
         android:textColor="@color/main_status_white"
-        android:textSize="@dimen/s14"
+        android:textSize="@dimen/d14"
         tools:text="1/10" />
 
     <ImageView

@@ -16,7 +16,7 @@
             android:layout_centerInParent="true"
             android:text="栏目定制"
             android:textColor="#6c6c6c"
-            android:textSize="@dimen/s16" />
+            android:textSize="@dimen/d16" />
 
         <ImageView
             android:id="@+id/iv_close"
@@ -63,7 +63,7 @@
                         android:layout_marginTop="@dimen/d20"
                         android:text="我的栏目"
                         android:textColor="@color/main_theme_color"
-                        android:textSize="@dimen/s14" />
+                        android:textSize="@dimen/d14" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
                         android:layout_marginTop="@dimen/d20"
                         android:text="(点击删除，按住拖动调整顺序)"
                         android:textColor="#6c6c6c"
-                        android:textSize="@dimen/s12" />
+                        android:textSize="@dimen/d12" />
 
                 </LinearLayout>
 
@@ -89,7 +89,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/p1"
+                android:layout_height="@dimen/d1"
                 android:background="@color/view"
                 android:layout_marginLeft="@dimen/d10"
                 android:layout_marginRight="@dimen/d10" />
@@ -106,7 +106,7 @@
                     android:layout_marginTop="@dimen/d10"
                     android:text="点击添加感兴趣的栏目"
                     android:textColor="@color/main_theme_color"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/d14" />
 
             </LinearLayout>
 
@@ -120,7 +120,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/p1"
+                android:layout_height="@dimen/d1"
                 android:background="@color/view"
                 android:layout_marginLeft="@dimen/d10"
                 android:layout_marginRight="@dimen/d10" />
@@ -137,7 +137,7 @@
                     android:layout_marginTop="@dimen/d10"
                     android:text="点击添加感兴趣的地区"
                     android:textColor="@color/main_theme_color"
-                    android:textSize="@dimen/s14" />
+                    android:textSize="@dimen/d14" />
 
             </LinearLayout>
 

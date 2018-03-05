@@ -29,7 +29,7 @@
             android:onClick="onClick"
             android:text="确定"
             android:textColor="#FFFFFF"
-            android:textSize="16sp" />
+            android:textSize="15dp" />
 
         <View
             android:layout_width="1px"
@@ -48,7 +48,7 @@
             android:onClick="onClick"
             android:text="取消"
             android:textColor="#FFF"
-            android:textSize="16sp" />
+            android:textSize="15dp" />
 
     </LinearLayout>
 </FrameLayout>

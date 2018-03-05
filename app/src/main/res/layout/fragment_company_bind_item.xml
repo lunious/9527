@@ -30,7 +30,7 @@
                 android:paddingTop="@dimen/d5"
                 android:text="Main Title"
                 android:textColor="#ff434343"
-                android:textSize="@dimen/s15" />
+                android:textSize="@dimen/d15" />
 
             <LinearLayout
                 android:id="@+id/linear_temp"
@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="联系人："
-                    android:textSize="@dimen/s13" />
+                    android:textSize="@dimen/d13" />
 
                 <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/tv_lxr"
@@ -55,7 +55,7 @@
                     android:maxLines="1"
                     android:text=""
                     android:textColor="@color/main_theme_color"
-                    android:textSize="@dimen/s13" />
+                    android:textSize="@dimen/d13" />
 
 
                 <LinearLayout

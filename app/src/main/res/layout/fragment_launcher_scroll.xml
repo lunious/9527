@@ -42,6 +42,6 @@
         android:layout_height="@dimen/d42"
         android:text="开始体验"
         android:visibility="gone"
-        android:textSize="@dimen/s20" />
+        android:textSize="@dimen/d20" />
 
 </RelativeLayout>

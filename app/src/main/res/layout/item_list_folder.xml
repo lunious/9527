@@ -34,7 +34,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="#111111"
-            android:textSize="@dimen/s18"
+            android:textSize="@dimen/d18"
             tools:text="My Love" />
 
         <TextView
@@ -43,14 +43,14 @@
             android:layout_height="wrap_content"
             android:maxLines="1"
             android:textColor="#AFAFAF"
-            android:textSize="12sp"
+            android:textSize="@dimen/d12"
             tools:text="(1)" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
+        android:layout_height="@dimen/d1"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="@dimen/d16"
         android:background="#DADADA" />
 </LinearLayout>

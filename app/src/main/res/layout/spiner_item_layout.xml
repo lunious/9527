@@ -11,6 +11,6 @@
         android:maxLines="1"
         android:padding="@dimen/d8"
         android:text="fdsfdsfdsfjasb"
-        android:textSize="@dimen/s15" />
+        android:textSize="@dimen/d15" />
 
 </LinearLayout>

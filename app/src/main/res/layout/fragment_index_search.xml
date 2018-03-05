@@ -55,7 +55,7 @@
             android:layout_weight="1"
             android:text="搜索"
             android:textColor="@color/main_status_white"
-            android:textSize="@dimen/s16"
+            android:textSize="@dimen/d16"
             android:visibility="gone" />
     </LinearLayout>
 
@@ -91,7 +91,7 @@
             </LinearLayout>
 
             <View
-                android:layout_width="@dimen/p1"
+                android:layout_width="@dimen/d1"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/d8"
                 android:layout_marginTop="@dimen/d8"
@@ -113,7 +113,7 @@
                     android:maxLines="1"
                     android:padding="@dimen/d5"
                     android:text="类型"
-                    android:textSize="@dimen/s15" />
+                    android:textSize="@dimen/d15" />
 
             </LinearLayout>
 
@@ -123,7 +123,7 @@
         <View
             android:id="@+id/view"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/p1"
+            android:layout_height="@dimen/d1"
             android:background="#cccccc"
             android:paddingBottom="@dimen/d10"
             android:paddingTop="@dimen/d10" />
@@ -142,8 +142,8 @@
             android:layout_height="@dimen/d60"
             app:srlDrawableProgressSize="@dimen/d15"
             app:srlDrawableSize="@dimen/d15"
-            app:srlTextSizeTime="@dimen/s12"
-            app:srlTextSizeTitle="@dimen/s15" />
+            app:srlTextSizeTime="@dimen/d12"
+            app:srlTextSizeTitle="@dimen/d15" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/search_recycler"

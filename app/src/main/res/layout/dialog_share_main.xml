@@ -14,11 +14,11 @@
         android:layout_marginRight="@dimen/d16"
         android:layout_marginTop="@dimen/d8"
         android:text="@string/share_to"
-        android:textSize="@dimen/s14" />
+        android:textSize="@dimen/d14" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/p1"
+        android:layout_height="@dimen/d1"
         android:layout_marginBottom="@dimen/d8"
         android:background="#eeeeee" />
 

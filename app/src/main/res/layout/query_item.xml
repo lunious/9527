@@ -21,12 +21,12 @@
             android:layout_marginTop="@dimen/d6"
             android:text="This is main title."
             android:textColor="#ff6c6c6c"
-            android:textSize="@dimen/s15" />
+            android:textSize="@dimen/d15" />
 
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="@dimen/p1"
+            android:layout_height="@dimen/d1"
             android:layout_marginTop="@dimen/d8"
             android:background="@color/main_status_red" />
 

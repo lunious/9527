@@ -35,12 +35,12 @@
             android:textColor="#000000"
             android:textColorHint="#c9c9c9"
             android:textCursorDrawable="@null"
-            android:textSize="@dimen/s16" />
+            android:textSize="@dimen/d16" />
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/p8"
+        android:layout_height="@dimen/d4"
         android:layout_marginLeft="@dimen/d30"
         android:layout_marginRight="@dimen/d30"
         android:background="#f9eeeeee" />
@@ -77,13 +77,13 @@
             android:textColor="#000000"
             android:textColorHint="#c9c9c9"
             android:textCursorDrawable="@null"
-            android:textSize="@dimen/s16" />
+            android:textSize="@dimen/d16" />
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/p8"
+        android:layout_height="@dimen/d4"
         android:layout_marginLeft="@dimen/d30"
         android:layout_marginRight="@dimen/d30"
         android:background="#eeeeee" />
